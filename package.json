@@ -6,9 +6,16 @@
   "directories": {
     "test": "test"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "test": "node japaFile.js",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -19,7 +26,7 @@
     "erp",
     "api"
   ],
-  "author": "Alexandre Batistella Bellas, Vitor Santana Cordeiro",
+  "author": "AlexandreBellas; vitor-san",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AlexandreBellas/bling-erp-api/issues"
