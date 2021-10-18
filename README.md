@@ -1,6 +1,6 @@
 # Bling ERP API
 
-[![](https://img.shields.io/badge/npm-v1.0.0-orange)](https://www.npmjs.com/package/bling-erp-api)
+[![](https://img.shields.io/npm/v/bling-erp-api.svg)](https://www.npmjs.com/package/bling-erp-api)
 [![install size](https://packagephobia.com/badge?p=bling-erp-api)](https://packagephobia.com/result?p=bling-erp-api)
 [![code coverage](https://coveralls.io/repos/github/AlexandreBellas/bling-erp-api/badge.svg?branch=main)](https://coveralls.io/github/AlexandreBellas/bling-erp-api?branch=main)
 
