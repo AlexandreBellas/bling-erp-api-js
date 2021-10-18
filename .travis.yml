@@ -3,6 +3,7 @@ node_js:
   - 14.18.1
 cache: npm
 install:
+  - npm install
   - npm ci
 script:
   - npm run format
