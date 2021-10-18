@@ -17,8 +17,8 @@
     "test:coveralls": "jest --config jest.config.json --coverage && coveralls < coverage/lcov.info",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
+    "preversion": "npm run format",
+    "version": "npm run lint && git add -A src",
     "postversion": "git push && git push --tags"
   },
   "repository": {
