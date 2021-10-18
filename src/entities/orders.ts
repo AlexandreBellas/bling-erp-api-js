@@ -115,7 +115,7 @@ export default class Orders extends BlingEntity<
   BlingBaseResponse<OrderResponse>,
   OrderError
 > {
-  constructor(api: AxiosInstance) {
+  constructor (api: AxiosInstance) {
     super(api)
 
     this.singularName = 'pedido'

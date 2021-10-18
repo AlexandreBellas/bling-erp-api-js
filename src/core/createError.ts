@@ -20,7 +20,7 @@ export interface IBlingError extends Error {
  * @param {string} [code] The error code (for example, 'ECONNABORTED').
  * @returns {IBlingError} The created error.
  */
-export default function createError(
+export default function createError (
   message: string,
   status: number,
   config: any,

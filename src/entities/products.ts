@@ -134,14 +134,14 @@ export default class Products extends BlingEntity<
   BlingBaseResponse<ProductResponse>,
   ProductError
 > {
-  constructor(api: AxiosInstance) {
+  constructor (api: AxiosInstance) {
     super(api)
 
     this.singularName = 'produto'
     this.pluralName = 'produtos'
   }
 
-  async findBySupplierCode(
+  async findBySupplierCode (
     code: string,
     supplierId: number,
     params: ProductInfos

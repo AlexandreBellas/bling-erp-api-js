@@ -21,7 +21,7 @@ export default class BlingBaseEntity<
   singularName: string
   pluralName: string
 
-  constructor(api: AxiosInstance) {
+  constructor (api: AxiosInstance) {
     this.api = api
 
     this.qs = qs
@@ -31,27 +31,27 @@ export default class BlingBaseEntity<
     this.pluralName = ''
   }
 
-  async all(params?: IFilters): Promise<IEntity[] | IError> {
+  async all (params?: IFilters): Promise<IEntity[] | IError> {
     return await this._getAll(this.pluralName, params)
   }
 
-  async find(id: number | string, params?: IInfos): Promise<IEntity | IError> {
+  async find (id: number | string, params?: IInfos): Promise<IEntity | IError> {
     return await this._getOne(this.singularName, String(id), params)
   }
 
-  async findBy(params?: IFilters & IInfos): Promise<IEntity[] | IError> {
+  async findBy (params?: IFilters & IInfos): Promise<IEntity[] | IError> {
     return await this._getAll(this.pluralName, params)
   }
 
-  async create(data: IEntity): Promise<IEntity | IError> {
+  async create (data: IEntity): Promise<IEntity | IError> {
     return await this._create(this.singularName, data)
   }
 
-  async update(id: number, data: IEntity): Promise<IEntity | IError> {
+  async update (id: number, data: IEntity): Promise<IEntity | IError> {
     return await this._update(this.singularName, id, data)
   }
 
-  async delete(id: number): Promise<IEntity | IError> {
+  async delete (id: number): Promise<IEntity | IError> {
     return await this._delete(this.singularName, id)
   }
 
@@ -65,7 +65,7 @@ export default class BlingBaseEntity<
    * @param {string[]} acceptedParams The actual useful query params for the request.
    * @returns {Array} An array of entities.
    */
-  protected async _getAll(
+  protected async _getAll (
     endpoint: string,
     params?: IFilters
   ): Promise<IEntity[] | IError> {
@@ -106,7 +106,7 @@ export default class BlingBaseEntity<
    * @param {string[]} acceptedParams The actual useful query params for the request.
    * @returns {Object} The found entity.
    */
-  protected async _getOne(
+  protected async _getOne (
     endpoint: string,
     id: string,
     params?: IFilters | IInfos | (IFilters & IInfos)
@@ -130,7 +130,7 @@ export default class BlingBaseEntity<
    * @param endpoint The entity request endpoint.
    * @param data The data for the entity to be created.
    */
-  protected async _create(
+  protected async _create (
     endpoint: string,
     data: IEntity
   ): Promise<IEntity | IError> {
@@ -182,7 +182,7 @@ export default class BlingBaseEntity<
    * @param id The entity code or id.
    * @param data The data for the entity to be updated.
    */
-  protected async _update(
+  protected async _update (
     endpoint: string,
     id: number,
     data: IEntity
@@ -243,7 +243,7 @@ export default class BlingBaseEntity<
    * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
    */
-  protected async _delete(
+  protected async _delete (
     endpoint: string,
     id: number
   ): Promise<IEntity | IError> {
