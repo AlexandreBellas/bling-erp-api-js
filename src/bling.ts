@@ -9,7 +9,7 @@ import createError from './core/createError'
 export default class Bling {
   private api: AxiosInstance
 
-  constructor (apiKey: string) {
+  constructor(apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
       throw createError(
         "The API key wasn't correctly provided for Bling connection.",
@@ -35,11 +35,11 @@ export default class Bling {
     this.api = api
   }
 
-  public products () {
+  public products() {
     return new Products(this.api)
   }
 
-  public orders () {
+  public orders() {
     return new Orders(this.api)
   }
 }
