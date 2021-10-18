@@ -11,6 +11,7 @@ export default class BlingBaseEntity<
   IEntity,
   IFilters,
   IInfos,
+  // eslint-disable-next-line no-unused-vars
   IResponse,
   IError
 > {
