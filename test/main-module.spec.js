@@ -1,35 +1,32 @@
-const it = require('japa')
-
+/* eslint-disable no-undef */
 const Bling = require('../lib/bling').default
 
-it.failing(
-  "shouldn't create Bling entity when missing constructor argument",
-  async (assert) => {
+jest.setTimeout(10000)
+
+test("shouldn't create Bling entity when missing constructor argument", async () => {
+  expect(() => {
     const bling = new Bling()
     return bling
-  }
-)
+  }).toThrow("The API key wasn't correctly provided for Bling connection.")
+})
 
-it.failing(
-  "shouldn't create Bling entity when passing API key as number",
-  async (assert) => {
+test("shouldn't create Bling entity when passing API key as number", async () => {
+  expect(() => {
     const bling = new Bling(1234)
     return bling
-  }
-)
+  }).toThrow("The API key wasn't correctly provided for Bling connection.")
+})
 
-it.failing(
-  "shouldn't create Bling entity when passing API key as object",
-  async (assert) => {
+test("shouldn't create Bling entity when passing API key as object", async () => {
+  expect(() => {
     const bling = new Bling({})
     return bling
-  }
-)
+  }).toThrow("The API key wasn't correctly provided for Bling connection.")
+})
 
-it.failing(
-  "shouldn't create Bling entity when passing API key as array",
-  async (assert) => {
-    const bling = new Bling({})
+test("shouldn't create Bling entity when passing API key as array", async () => {
+  expect(() => {
+    const bling = new Bling([])
     return bling
-  }
-)
+  }).toThrow("The API key wasn't correctly provided for Bling connection.")
+})
