@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - 14.18.1
+cache: npm
+install:
+  - npm ci
+script:
+  - npm run format
+  - npm run lint
+  - npm run build
+  - npm run test:coveralls
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: alexandre.bellas@gmail.com
+  tag: next
+  api_key: $NPM_TOKEN
+  on:
+    branch: main
