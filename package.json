@@ -14,7 +14,7 @@
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint --fix 'src/**/*.ts'",
     "test": "npm run build && jest --config jestconfig.json",
-    "test:coveralls": "jest --coverage && coveralls < coverage/lcov.info",
+    "test:coveralls": "jest --config jestconfig.json --coverage && coveralls < coverage/lcov.info",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
