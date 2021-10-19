@@ -7,7 +7,9 @@ import axios, { AxiosInstance } from 'axios'
 import createError from './core/createError'
 
 export default class Bling {
-  private api: AxiosInstance
+  #api: AxiosInstance
+  #products: Products | undefined
+  #orders: Orders | undefined
 
   constructor (apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -28,18 +30,23 @@ export default class Bling {
         apikey: apiKey,
         ...config.params
       }
-
       return config
     })
 
-    this.api = api
+    this.#api = api
   }
 
   public products () {
-    return new Products(this.api)
+    if (!this.#products) {
+      this.#products = new Products(this.#api)
+    }
+    return this.#products
   }
 
   public orders () {
-    return new Orders(this.api)
+    if (!this.#orders) {
+      this.#orders = new Orders(this.#api)
+    }
+    return this.#orders
   }
 }

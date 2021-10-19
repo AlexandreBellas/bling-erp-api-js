@@ -4,14 +4,14 @@
 [![install size](https://packagephobia.com/badge?p=bling-erp-api)](https://packagephobia.com/result?p=bling-erp-api)
 [![code coverage](https://coveralls.io/repos/github/AlexandreBellas/bling-erp-api/badge.svg?branch=main)](https://coveralls.io/github/AlexandreBellas/bling-erp-api?branch=main)
 
-Pacote de integração com a API do Bling ERP. O mais completo existente (e se não é, será).
-Disponível também para Typescript.
+Pacote de integração com a [API do ERP Bling](https://ajuda.bling.com.br/hc/pt-br/categories/360002186394-API-para-Desenvolvedores). O mais completo existente (e se não é, será).
+Disponível também para **Typescript**.
 
 Em desenvolvimento.
 
 ## Instalação
 
-Para instalar, execute o comando
+Para instalar, execute o comando:
 
 ```bash
 npm i bling-erp-api
@@ -33,8 +33,8 @@ import Bling from 'bling-erp-api'
 
 ## Criação de uma nova conexão
 
-É possível criar uma conexão ao serviço bastando instanciar o objeto com a API
-key em seu construtor.
+Para criar uma conexão ao serviço do Bling, basta instanciar o objeto com a [API
+key](https://ajuda.bling.com.br/hc/pt-br/articles/360046937853-Introdu%C3%A7%C3%A3o-para-a-API-do-Bling-para-desenvolvedores-) em seu construtor.
 
 ```js
 const apiKey = 'sua_api_key'
@@ -43,7 +43,7 @@ const blingConnection = new Bling(apiKey)
 
 ## Entidades disponíveis
 
-As entidades atualmente permitidas para interação são somente
+As entidades atualmente permitidas para interação são somente:
 
 - Produtos
 - Pedidos
@@ -52,21 +52,19 @@ Em breve serão adicionadas mais.
 
 ## Métodos permitidos
 
-Os métodos permitidos são
-
-- `all()`: retornam-se todos os registros da entidade
-- `find()`: retorna-se a entidade desejada através de seu `id` ou `codigo`
-- `findBy()`: retornam-se os registros da entidade que se adequem aos filtros
-  passados
-- `create()`: cria-se um registro de uma entidade
-- `update()`: atualiza-se um registro de uma entidade a partir de seu `id` ou
+- `all()`: retorna todos os registros da entidade
+- `find()`: retorna um registro da entidade desejada através de seu `id` ou `codigo`
+- `findBy()`: retorna os registros da entidade **que se adequem aos filtros
+  passados**
+- `create()`: cria um registro da entidade
+- `update()`: atualiza um registro da entidade a partir de seu `id` ou
   `codigo`
-- `delete()`: remove-se um registro de uma entidade a partir de seu `id` ou
+- `delete()`: remove um registro da entidade a partir de seu `id` ou
   `codigo`
 
 ## Exemplo de uso
 
-Para listar todos os produtos, basta-se executar
+Para listar todos os produtos, basta executar:
 
 ```js
 const Bling = require('bling-erp-api')
@@ -82,7 +80,9 @@ console.log(products)
 ## Autores do projeto
 
 Os contribuidores principais, sem fins lucrativos, para a escolha das
-tecnologias e estrutura do projeto são
+tecnologias e estrutura do projeto são:
 
 - Alexandre Batistella Bellas; [LinkedIn](https://linkedin.com/in/alebatistella/)
-- Vitor Santana Cordeiro; [LikedIn](https://linkedin.com/in/vitorsanc)
+- Vitor Santana Cordeiro; [LinkedIn](https://linkedin.com/in/vitorsanc)
+
+No futuro, contribuições da comunidade serão extremamente apreciadas! Ainda não possuímos as *guidelines de contribuição* definidas (`CONTRIBUTING.md`), mas assim que as tivermos nós iremos apreciar fortemente a contribuição da comunidade, inclusive por meio da abertura de *issues* 😊

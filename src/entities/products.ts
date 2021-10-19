@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import BlingEntity, { BlingBaseResponse } from '../core/entity'
-import { AxiosInstance } from 'axios'
+import BlingEntity, { IBlingBaseResponse } from '../core/entity'
+import { AxiosInstance as IAxiosInstance } from 'axios'
 
-export interface Product {
+export interface IProduct {
   codigo?: string
   codigoItem?: '06' | '21' | '22'
   descricao: string
@@ -89,13 +89,13 @@ export interface Product {
   }
 }
 
-export interface ProductInfos {
+export interface IProductInfos {
   estoque?: 'S'
   loja?: string
   imagem?: 'S'
 }
 
-export interface ProductFilters {
+export interface IProductFilters {
   dataInclusao?: string
   dataAlteracao?: string
   dataAlteracaoLoja?: string
@@ -104,13 +104,13 @@ export interface ProductFilters {
   situacao?: 'A' | 'I'
 }
 
-export interface ProductResponse {
+export interface IProductResponse {
   produtos: {
-    produto: Product
+    produto: IProduct
   }[]
 }
 
-export interface ProductError {
+export interface IProductError {
   code:
     | '40'
     | '41'
@@ -128,13 +128,13 @@ export interface ProductError {
 }
 
 export default class Products extends BlingEntity<
-  Product,
-  ProductFilters,
-  ProductInfos,
-  BlingBaseResponse<ProductResponse>,
-  ProductError
+  IProduct,
+  IProductFilters,
+  IProductInfos,
+  IBlingBaseResponse<IProductResponse>,
+  IProductError
 > {
-  constructor (api: AxiosInstance) {
+  constructor (api: IAxiosInstance) {
     super(api)
 
     this.singularName = 'produto'
@@ -144,7 +144,7 @@ export default class Products extends BlingEntity<
   async findBySupplierCode (
     code: string,
     supplierId: number,
-    params: ProductInfos
+    params: IProductInfos
   ) {
     return await this._getOne(String(supplierId), `produto/${code}`, params)
   }
