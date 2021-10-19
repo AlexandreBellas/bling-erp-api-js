@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios'
 import * as qs from 'querystring'
 import * as xml2js from 'xml2js'
 
-export interface BlingBaseResponse<T> {
+export interface IBlingBaseResponse<T> {
   retorno: T
 }
 

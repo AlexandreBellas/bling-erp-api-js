@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import BlingEntity, { BlingBaseResponse } from '../core/entity'
-import { AxiosInstance } from 'axios'
+import BlingEntity, { IBlingBaseResponse } from '../core/entity'
+import { AxiosInstance as IAxiosInstance } from 'axios'
 
-export interface Order {
+export interface IOrder {
   data?: Date
   data_saida?: Date
   data_prevista?: Date
@@ -88,11 +88,11 @@ export interface Order {
   }
 }
 
-export interface OrderInfos {
+export interface IOrderInfos {
   historico: 'true' | 'false'
 }
 
-export interface OrderFilters {
+export interface IOrderFilters {
   dataEmissao: string
   dataAlteracao: string
   dataPrevista: string
@@ -100,22 +100,22 @@ export interface OrderFilters {
   idContato: string
 }
 
-export interface OrderResponse {
+export interface IOrderResponse {
   pedidos: {
-    pedido: Order
+    pedido: IOrder
   }[]
 }
 
-export interface OrderError {}
+export interface IOrderError {}
 
 export default class Orders extends BlingEntity<
-  Order,
-  OrderFilters,
-  OrderInfos,
-  BlingBaseResponse<OrderResponse>,
-  OrderError
+  IOrder,
+  IOrderFilters,
+  IOrderInfos,
+  IBlingBaseResponse<IOrderResponse>,
+  IOrderError
 > {
-  constructor (api: AxiosInstance) {
+  constructor (api: IAxiosInstance) {
     super(api)
 
     this.singularName = 'pedido'
