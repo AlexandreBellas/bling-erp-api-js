@@ -6,7 +6,7 @@ import axios, { AxiosInstance } from 'axios'
 
 import createError from './core/createError'
 
-export default class Bling {
+export class Bling {
   #api: AxiosInstance
   #products: Products | undefined
   #orders: Orders | undefined

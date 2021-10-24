@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const Bling = require('../lib/bling').default
+const { Bling } = require('../lib/bling')
 
 jest.setTimeout(10000)
 
