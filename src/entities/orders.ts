@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import BlingEntity, { IBlingBaseResponse } from '../core/entity'
+import BlingEntity from '../core/entity'
 import { AxiosInstance as IAxiosInstance } from 'axios'
 
 export interface IOrder {
@@ -100,19 +99,12 @@ export interface IOrderFilters {
   idContato: string
 }
 
-export interface IOrderResponse {
-  pedidos: {
-    pedido: IOrder
-  }[]
-}
-
 export interface IOrderError {}
 
 export default class Orders extends BlingEntity<
   IOrder,
   IOrderFilters,
   IOrderInfos,
-  IBlingBaseResponse<IOrderResponse>,
   IOrderError
 > {
   constructor (api: IAxiosInstance) {

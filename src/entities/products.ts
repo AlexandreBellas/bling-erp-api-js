@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import BlingEntity, { IBlingBaseResponse } from '../core/entity'
+import BlingEntity from '../core/entity'
 import { AxiosInstance as IAxiosInstance } from 'axios'
 
 export interface IProduct {
@@ -104,12 +103,6 @@ export interface IProductFilters {
   situacao?: 'A' | 'I'
 }
 
-export interface IProductResponse {
-  produtos: {
-    produto: IProduct
-  }[]
-}
-
 export interface IProductError {
   code:
     | '40'
@@ -131,7 +124,6 @@ export default class Products extends BlingEntity<
   IProduct,
   IProductFilters,
   IProductInfos,
-  IBlingBaseResponse<IProductResponse>,
   IProductError
 > {
   constructor (api: IAxiosInstance) {
