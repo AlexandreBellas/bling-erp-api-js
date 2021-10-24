@@ -3,18 +3,34 @@ import { AxiosInstance } from 'axios'
 import * as qs from 'querystring'
 import * as xml2js from 'xml2js'
 
-export interface IBlingBaseResponse<T> {
-  retorno: T
+export interface ISingularEntity<T> {
+  [singular: string]: T
 }
 
-export default class BlingBaseEntity<
-  IEntity,
-  IFilters,
-  IInfos,
-  // eslint-disable-next-line no-unused-vars
-  IResponse,
-  IError
-> {
+export interface IPluralEntity<T> {
+  [plural: string]: ISingularEntity<T>[]
+}
+
+export interface ISingularError {
+  erro: {
+    cod: string
+    msg: string
+  }
+}
+
+export interface IPluralError {
+  erros: ISingularError[]
+}
+
+export interface IPluralResponse<T> {
+  retorno: IPluralEntity<T> | IPluralError
+}
+
+export interface ISingularResponse<T> {
+  retorno: ISingularEntity<T> | IPluralError
+}
+
+export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
   api: AxiosInstance
   qs: typeof qs
   xml2js: typeof xml2js
@@ -31,16 +47,32 @@ export default class BlingBaseEntity<
     this.pluralName = ''
   }
 
-  async all (params?: IFilters): Promise<IEntity[] | IError> {
-    return await this._getAll(this.pluralName, params)
+  async all (options?: {
+    params?: IFilters
+    raw?: boolean
+  }): Promise<IEntity[] | IPluralResponse<IEntity>> {
+    return await this._getAll(this.pluralName, options && options.params)
   }
 
-  async find (id: number | string, params?: IInfos): Promise<IEntity | IError> {
-    return await this._getOne(this.singularName, String(id), params)
+  async find (
+    id: number | string,
+    options?: {
+      params?: IInfos
+      raw?: boolean
+    }
+  ): Promise<IEntity | IPluralResponse<IEntity>> {
+    return await this._getOne(
+      this.singularName,
+      String(id),
+      options && options.params,
+      options && options.raw
+    )
   }
 
-  async findBy (params?: IFilters & IInfos): Promise<IEntity[] | IError> {
-    return await this._getAll(this.pluralName, params)
+  async findBy (options?: {
+    params?: IFilters & IInfos
+  }): Promise<IEntity[] | IPluralResponse<IEntity> | IError> {
+    return await this._getAll(this.pluralName, options && options.params)
   }
 
   async create (data: IEntity): Promise<IEntity | IError> {
@@ -60,16 +92,17 @@ export default class BlingBaseEntity<
    * @protected
    * @access protected
    * @async
-   * @param {string} endpoint The entity request endpoint.
-   * @param {Object<IParams>} rawQueryParams The query params for the request sent by the user.
-   * @param {string[]} acceptedParams The actual useful query params for the request.
-   * @returns {Array} An array of entities.
+   * @param endpoint The entity request endpoint.
+   * @param params The query params for the request sent by the user.
+   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
+   * @returns An array of entities.
    */
   protected async _getAll (
     endpoint: string,
-    params?: IFilters
-  ): Promise<IEntity[] | IError> {
-    const entities = []
+    params?: IFilters,
+    raw: boolean = true
+  ): Promise<IEntity[] | IPluralResponse<IEntity>> {
+    const entities: IEntity[] = []
 
     let hasMore = true
     let page = 1
@@ -79,20 +112,35 @@ export default class BlingBaseEntity<
         params
       })
 
-      const rawData = response.data as any
-      const { retorno: data } = rawData
+      const rawData = response.data as IPluralResponse<IEntity>
+      const data = rawData.retorno
 
       if (data.erros) {
         hasMore = false
       } else {
-        // entities.push(...this._extractResponseInformation(data))
-        entities.push(...data)
+        const rawNewEntities = data as IPluralEntity<IEntity>
+        const newEntities = rawNewEntities[this.pluralName].map(
+          (item) => item[this.singularName]
+        )
+        for (const entity of newEntities) {
+          entities.push(entity)
+        }
       }
 
       page++
     }
 
-    return entities
+    if (raw) {
+      return {
+        retorno: {
+          [this.pluralName]: entities.map((entity) => ({
+            [this.singularName]: entity
+          }))
+        }
+      }
+    } else {
+      return entities
+    }
   }
 
   /**
@@ -100,26 +148,30 @@ export default class BlingBaseEntity<
    * @protected
    * @access protected
    * @async
-   * @param {string} endpoint The entity request endpoint.
-   * @param {number} id The entity id.
-   * @param {Object} rawQueryParams The query params for the request sent by the user.
-   * @param {string[]} acceptedParams The actual useful query params for the request.
-   * @returns {Object} The found entity.
+   * @param endpoint The entity request endpoint.
+   * @param id The entity id.
+   * @param params The query params for the request sent by the user.
+   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
+   * @returns The found entity.
    */
   protected async _getOne (
     endpoint: string,
     id: string,
-    params?: IFilters | IInfos | (IFilters & IInfos)
-  ): Promise<IEntity | IError> {
+    params: IFilters | IInfos | (IFilters & IInfos) | undefined = undefined,
+    raw: boolean | undefined = true
+  ): Promise<IEntity | IPluralResponse<IEntity>> {
     const response = await this.api.get(`/${endpoint}/${id}/json`, {
       params
     })
 
-    const rawData = response.data as any
-    const { retorno: data } = rawData
-
-    // return this._extractResponseInformation(data)[0]
-    return data
+    const data = response.data as IPluralResponse<IEntity>
+    if (raw) {
+      return data
+    } else {
+      const rawResponse = data.retorno as IPluralEntity<IEntity>
+      const rawEntity = rawResponse[this.pluralName][0]
+      return rawEntity[this.singularName]
+    }
   }
 
   /**
@@ -129,6 +181,7 @@ export default class BlingBaseEntity<
    * @async
    * @param endpoint The entity request endpoint.
    * @param data The data for the entity to be created.
+   * @returns The created entity.
    */
   protected async _create (
     endpoint: string,
@@ -168,7 +221,6 @@ export default class BlingBaseEntity<
         'ERR_ENTITY_CREATION_FAILURE'
       )
     } else {
-      // return this._extractResponseInformation(responseData)[0]
       return responseData
     }
   }
@@ -181,6 +233,7 @@ export default class BlingBaseEntity<
    * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
    * @param data The data for the entity to be updated.
+   * @return The updated entity.
    */
   protected async _update (
     endpoint: string,
@@ -230,7 +283,6 @@ export default class BlingBaseEntity<
         'ERR_ENTITY_UPDATING_FAILURE'
       )
     } else {
-      // return this._extractResponseInformation(responseData)[0]
       return responseData
     }
   }
@@ -242,6 +294,7 @@ export default class BlingBaseEntity<
    * @async
    * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
+   * @returns The deleted entity.
    */
   protected async _delete (
     endpoint: string,
@@ -260,32 +313,7 @@ export default class BlingBaseEntity<
         'ERR_ENTITY_DELETION_FAILURE'
       )
     } else {
-      // return this._extractResponseInformation(responseData)[0]
       return responseData
     }
   }
-
-  /**
-   * Extract main information after GET request return data.
-   * @protected
-   * @access protected
-   * @async
-   * @param data The object returned from the request after "retorno".
-   * @returns An array of entities.
-   */
-  // protected _extractResponseInformation (data: IResponse): Array<IEntity> {
-  //   const entities = []
-
-  //   const responseFirstLayer = Object.keys(data)[0] as string
-  //   const arrEntities = data[responseFirstLayer] as any[]
-
-  //   entities.push(
-  //     ...arrEntities.map((item: any) => {
-  //       const responseSecondLayer = Object.keys(item)[0]
-  //       return item[responseSecondLayer]
-  //     })
-  //   )
-
-  //   return entities
-  // }
 }
