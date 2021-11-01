@@ -1,5 +1,5 @@
 import createError from './createError'
-import { AxiosInstance } from 'axios'
+import { AxiosInstance, AxiosError } from 'axios'
 import * as qs from 'querystring'
 import * as xml2js from 'xml2js'
 
@@ -8,7 +8,7 @@ export interface ISingularEntity<T> {
 }
 
 export interface IPluralEntity<T> {
-  [plural: string]: ISingularEntity<T>[]
+  [plural: string]: ISingularEntity<T>[] | ISingularEntity<T>
 }
 
 export interface ISingularError {
@@ -18,8 +18,12 @@ export interface ISingularError {
   }
 }
 
+export interface IDeleteError {
+  [code: string]: string
+}
+
 export interface IPluralError {
-  erros: ISingularError[]
+  erros: ISingularError[] | IDeleteError
 }
 
 export interface IPluralResponse<T> {
@@ -30,15 +34,17 @@ export interface ISingularResponse<T> {
   retorno: ISingularEntity<T> | IPluralError
 }
 
-export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
+export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
   api: AxiosInstance
+  #apiKey: string
   qs: typeof qs
   xml2js: typeof xml2js
   singularName: string
   pluralName: string
 
-  constructor (api: AxiosInstance) {
+  constructor (api: AxiosInstance, apiKey: string) {
     this.api = api
+    this.#apiKey = apiKey
 
     this.qs = qs
     this.xml2js = xml2js
@@ -47,44 +53,115 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
     this.pluralName = ''
   }
 
-  async all (options?: {
-    params?: IFilters
-    raw?: boolean
-  }): Promise<IEntity[] | IPluralResponse<IEntity>> {
+  public async all (
+    options: {
+      params?: IFilters
+      raw?: boolean
+    } = {}
+  ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     return await this._getAll(this.pluralName, options && options.params)
   }
 
-  async find (
+  public async find(
+    id: number | string,
+    options?: { params?: IInfos; raw?: false }
+  ): Promise<IEntityResponse>
+
+  public async find(
+    id: number | string,
+    options?: { params?: IInfos; raw: true }
+  ): Promise<IPluralResponse<IEntityResponse>>
+
+  public async find (
     id: number | string,
     options?: {
       params?: IInfos
       raw?: boolean
     }
-  ): Promise<IEntity | IPluralResponse<IEntity>> {
-    return await this._getOne(
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    return await this._find(
       this.singularName,
-      String(id),
+      id,
       options && options.params,
       options && options.raw
     )
   }
 
-  async findBy (options?: {
-    params?: IFilters & IInfos
-  }): Promise<IEntity[] | IPluralResponse<IEntity> | IError> {
-    return await this._getAll(this.pluralName, options && options.params)
+  public async findBy(
+    options: IFilters & IInfos,
+    raw?: false
+  ): Promise<IEntityResponse[]>
+
+  public async findBy(
+    options: IFilters & IInfos,
+    raw: true
+  ): Promise<IPluralResponse<IEntityResponse>>
+
+  public async findBy (
+    options: IFilters & IInfos,
+    raw?: boolean
+  ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
+    if (!options) {
+      throw createError(
+        'No options passed to `.findBy()` method',
+        500,
+        options,
+        'ERR_INCORRECT_OPTIONS_ARG'
+      )
+    }
+
+    return await this._getAll(this.pluralName, options, raw)
   }
 
-  async create (data: IEntity): Promise<IEntity | IError> {
-    return await this._create(this.singularName, data)
+  public async create(data: IEntity, raw?: false): Promise<IEntityResponse>
+
+  public async create(
+    data: IEntity,
+    raw: true
+  ): Promise<IPluralResponse<IEntityResponse>>
+
+  public async create (
+    data: IEntity,
+    raw?: boolean
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    return await this._create(this.singularName, data, raw)
   }
 
-  async update (id: number, data: IEntity): Promise<IEntity | IError> {
-    return await this._update(this.singularName, id, data)
+  public async update(
+    id: number | string,
+    data: IEntity,
+    raw?: false
+  ): Promise<IEntityResponse>
+
+  public async update(
+    id: number | string,
+    data: IEntity,
+    raw: true
+  ): Promise<IPluralResponse<IEntityResponse>>
+
+  public async update (
+    id: number | string,
+    data: IEntity,
+    raw?: boolean
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    return await this._update(this.singularName, id, data, raw)
   }
 
-  async delete (id: number): Promise<IEntity | IError> {
-    return await this._delete(this.singularName, id)
+  public async delete(
+    id: number | string,
+    raw?: false
+  ): Promise<IEntityResponse>
+
+  public async delete(
+    id: number | string,
+    raw: true
+  ): Promise<IPluralResponse<IEntityResponse>>
+
+  public async delete (
+    id: number | string,
+    raw?: boolean
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    return await this._delete(this.singularName, id, raw)
   }
 
   /**
@@ -100,11 +177,13 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
   protected async _getAll (
     endpoint: string,
     params?: IFilters,
-    raw: boolean = true
-  ): Promise<IEntity[] | IPluralResponse<IEntity>> {
-    const entities: IEntity[] = []
+    raw = false
+  ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
+    // @TODO: refactor filter logic to actually work
+    const entities: IEntityResponse[] = []
 
     let hasMore = true
+    let reqCount = 0
     let page = 1
 
     while (hasMore) {
@@ -112,22 +191,38 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
         params
       })
 
-      const rawData = response.data as IPluralResponse<IEntity>
+      const rawData = response.data as IPluralResponse<IEntityResponse>
       const data = rawData.retorno
 
       if (data.erros) {
         hasMore = false
       } else {
-        const rawNewEntities = data as IPluralEntity<IEntity>
-        const newEntities = rawNewEntities[this.pluralName].map(
+        const rawNewEntities = data as IPluralEntity<IEntityResponse>
+
+        const newEntities = rawNewEntities[
+          this.pluralName
+        ] as ISingularEntity<IEntityResponse>[]
+
+        const singularEntities = newEntities.map(
           (item) => item[this.singularName]
         )
-        for (const entity of newEntities) {
+        for (const entity of singularEntities) {
           entities.push(entity)
         }
       }
 
       page++
+
+      reqCount++
+      if (reqCount === 3) {
+        const sleep = new Promise((resolve) => {
+          setTimeout(resolve, 1000)
+        })
+
+        await sleep
+
+        reqCount = 0
+      }
     }
 
     if (raw) {
@@ -154,23 +249,53 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
    * @param raw Boolean value to return either raw data from Bling or beautified processed data.
    * @returns The found entity.
    */
-  protected async _getOne (
+  protected async _find (
     endpoint: string,
-    id: string,
+    id: number | string,
     params: IFilters | IInfos | (IFilters & IInfos) | undefined = undefined,
-    raw: boolean | undefined = true
-  ): Promise<IEntity | IPluralResponse<IEntity>> {
+    raw = false
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    if (!id) {
+      throw createError(
+        'The "id" argument must be a number or string.',
+        500,
+        id,
+        'ERR_INCORRECT_ID_ARG'
+      )
+    }
+
     const response = await this.api.get(`/${endpoint}/${id}/json`, {
       params
     })
 
-    const data = response.data as IPluralResponse<IEntity>
-    if (raw) {
-      return data
+    const data = response.data as IPluralResponse<IEntityResponse>
+    if (data.retorno.erros) {
+      const errReturn = data.retorno as IPluralError
+      let errData
+      if (raw) {
+        errData = { retorno: errReturn }
+      } else {
+        // maybe enhance it to include JSON API standards?
+        const rawErrData = errReturn.erros as ISingularError[]
+        errData = rawErrData.map((err: ISingularError) => err.erro)
+      }
+
+      throw createError(
+        'Error on find method after request call',
+        response.status,
+        errData,
+        'ERR_FIND_METHOD'
+      )
     } else {
-      const rawResponse = data.retorno as IPluralEntity<IEntity>
-      const rawEntity = rawResponse[this.pluralName][0]
-      return rawEntity[this.singularName]
+      if (raw) {
+        return data
+      } else {
+        const rawResponse = data.retorno as IPluralEntity<IEntityResponse>
+        const rawEntity = rawResponse[
+          this.pluralName
+        ] as ISingularEntity<IEntityResponse>[]
+        return rawEntity[0][this.singularName]
+      }
     }
   }
 
@@ -181,22 +306,24 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
    * @async
    * @param endpoint The entity request endpoint.
    * @param data The data for the entity to be created.
+   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
    * @returns The created entity.
    */
   protected async _create (
     endpoint: string,
-    data: IEntity
-  ): Promise<IEntity | IError> {
-    if (typeof data !== 'object') {
+    data: IEntity,
+    raw = false
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    if (typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError(
-        'The "data" argument must be an object.',
+        'The "data" argument must be a not empty object',
         500,
-        this,
+        data,
         'ERR_INCORRECT_DATA_ARG'
       )
     }
 
-    const xmlBuilder = new this.xml2js.Builder()
+    const xmlBuilder = new this.xml2js.Builder({ rootName: this.singularName })
     const xml = xmlBuilder.buildObject({
       ...data
     })
@@ -205,23 +332,56 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
       xml
     }
 
-    const response = await this.api.post(
-      `/${endpoint}/json`,
-      this.qs.stringify(params)
-    )
+    const response = await this.api
+      .post(`/${endpoint}/json`, this.qs.stringify(params))
+      .catch((err: AxiosError) => {
+        const errResponse = err.response
 
-    const rawData = response.data as any
-    const { retorno: responseData } = rawData
+        throw createError(
+          `Error on create method during request call: ${err.message}`,
+          err.response?.status || 400,
+          errResponse,
+          err.code || 'ERR_POST_REQUEST_FAILURE'
+        )
+      })
 
-    if (responseData.erros) {
+    const responseData = response.data as IPluralResponse<IEntityResponse>
+    if (responseData.retorno.erros) {
+      const errReturn = responseData.retorno as IPluralError
+      let errData
+      if (raw) {
+        errData = { retorno: errReturn }
+      } else {
+        // maybe enhance it to include JSON API standards?
+        const rawErrData = errReturn.erros as ISingularError[]
+        errData = rawErrData.map((err: ISingularError) => err.erro)
+      }
+
       throw createError(
-        responseData.erros[0].erro.msg,
-        500,
-        this,
+        'Error on create method after request call',
+        400,
+        errData,
         'ERR_ENTITY_CREATION_FAILURE'
       )
     } else {
-      return responseData
+      if (raw) {
+        return responseData
+      } else {
+        const rawResponse =
+          responseData.retorno as IPluralEntity<IEntityResponse>
+
+        if (Array.isArray(rawResponse[this.pluralName])) {
+          const rawEntity = rawResponse[
+            this.pluralName
+          ] as ISingularEntity<IEntityResponse>[]
+          return rawEntity[0][this.singularName]
+        } else {
+          const rawEntity = rawResponse[
+            this.pluralName
+          ] as ISingularEntity<IEntityResponse>
+          return rawEntity[this.singularName]
+        }
+      }
     }
   }
 
@@ -233,27 +393,29 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
    * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
    * @param data The data for the entity to be updated.
+   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
    * @return The updated entity.
    */
   protected async _update (
     endpoint: string,
-    id: number,
-    data: IEntity
-  ): Promise<IEntity | IError> {
-    if (typeof data !== 'object') {
+    id: number | string,
+    data: IEntity,
+    raw = false
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    if (typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError(
-        'The "data" argument must be an object.',
+        'The "data" argument must be a not empty object',
         500,
-        this,
+        data,
         'ERR_INCORRECT_DATA_ARG'
       )
     }
 
     if (!id || typeof id === 'object' || Array.isArray(id)) {
       throw createError(
-        'The "id" argument must be a number or string.',
+        'The "id" argument must be a number or string',
         500,
-        this,
+        id,
         'ERR_INCORRECT_DATA_ID'
       )
     }
@@ -264,26 +426,60 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
     })
 
     const params = {
+      apikey: this.#apiKey,
       xml
     }
 
-    const response = await this.api.put(
-      `/${endpoint}/${id}/json`,
-      this.qs.stringify(params)
-    )
+    const response = await this.api
+      .put(`/${endpoint}/${id}/json`, this.qs.stringify(params))
+      .catch((err: AxiosError) => {
+        const errResponse = err.response
 
-    const rawData = response.data as any
-    const { retorno: responseData } = rawData
+        throw createError(
+          `Error on update method during request call: ${err.message}`,
+          err.response?.status || 400,
+          errResponse,
+          err.code || 'ERR_UPDATE_REQUEST_FAILURE'
+        )
+      })
 
-    if (responseData.erros) {
+    const responseData = response.data as IPluralResponse<IEntityResponse>
+    if (responseData.retorno.erros) {
+      const errReturn = responseData.retorno as IPluralError
+      let errData
+      if (raw) {
+        errData = { retorno: errReturn }
+      } else {
+        // maybe enhance it to include JSON API standards?
+        const rawErrData = errReturn.erros as ISingularError[]
+        errData = rawErrData.map((err: ISingularError) => err.erro)
+      }
+
       throw createError(
-        responseData.erros[0].erro.msg,
-        500,
-        this,
+        'Error on update method after request call',
+        400,
+        errData,
         'ERR_ENTITY_UPDATING_FAILURE'
       )
     } else {
-      return responseData
+      if (raw) {
+        return responseData
+      } else {
+        const rawResponse =
+          responseData.retorno as IPluralEntity<IEntityResponse>
+
+        if (Array.isArray(rawResponse[this.pluralName])) {
+          const rawEntity = rawResponse[
+            this.pluralName
+          ] as ISingularEntity<IEntityResponse>[]
+          return rawEntity[0][this.singularName]
+        } else {
+          const rawEntity = rawResponse[
+            this.pluralName
+          ] as ISingularEntity<IEntityResponse>
+          return rawEntity[this.singularName]
+        }
+      }
     }
   }
 
@@ -294,26 +490,59 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IError> {
    * @async
    * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
+   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
    * @returns The deleted entity.
    */
   protected async _delete (
     endpoint: string,
-    id: number
-  ): Promise<IEntity | IError> {
-    const response = await this.api.delete(`/${endpoint}/${id}/json`)
+    id: number | string,
+    raw = false
+  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    const response = await this.api
+      .delete(`/${endpoint}/${id}/json`)
+      .catch((err: AxiosError) => {
+        const errResponse = err.response
 
-    const rawData = response.data as any
-    const { retorno: responseData } = rawData
+        throw createError(
+          `Error on delete method during request call: ${err.message}`,
+          err.response?.status || 400,
+          errResponse,
+          err.code || 'ERR_DELETE_REQUEST_FAILURE'
+        )
+      })
 
-    if (responseData.erros) {
+    const data = response.data as IPluralResponse<IEntityResponse>
+    if (data.retorno.erros) {
+      const errReturn = data.retorno as IPluralError
+      let errData
+      if (raw) {
+        errData = { retorno: errReturn }
+      } else {
+        // maybe enhance it to include JSON API standards?
+        const rawErrData = errReturn.erros as IDeleteError
+
+        errData = Object.keys(rawErrData).map((code) => ({
+          cod: code,
+          msg: rawErrData[code]
+        }))
+      }
+
       throw createError(
-        responseData.erros[0].erro.msg,
-        500,
-        this,
+        'Error on delete method after request call',
+        response.status,
+        errData,
         'ERR_ENTITY_DELETION_FAILURE'
       )
     } else {
-      return responseData
+      if (raw) {
+        return data
+      } else {
+        const rawResponse = data.retorno as IPluralEntity<IEntityResponse>
+        const rawEntity = rawResponse[
+          this.pluralName
+        ] as ISingularEntity<IEntityResponse>[]
+        return rawEntity[0][this.singularName]
+      }
     }
   }
 }

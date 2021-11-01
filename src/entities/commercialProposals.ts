@@ -75,18 +75,16 @@ export interface ICommercialProposalFilters {
   idContato?: number
 }
 
-export interface ICommercialProposalInfos {}
-
-export interface ICommercialProposalError {}
+export type ICommercialProposalResponse = ICommercialProposal
 
 export default class CommercialProposals extends BlingEntity<
   ICommercialProposal,
   ICommercialProposalFilters,
-  ICommercialProposalInfos,
-  ICommercialProposalError
+  Record<string, never>,
+  ICommercialProposalResponse
 > {
-  constructor (api: IAxiosInstance) {
-    super(api)
+  constructor (api: IAxiosInstance, apiKey: string) {
+    super(api, apiKey)
 
     this.singularName = 'propostacomercial'
     this.pluralName = 'propostascomerciais'

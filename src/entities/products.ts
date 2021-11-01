@@ -29,7 +29,7 @@ export interface IProduct {
   descricaoFornecedor?: string
   idFabricante?: number
   codigoFabricante?: string
-  deposito: {
+  deposito?: {
     id?: number
     estoque?: number
   }
@@ -103,31 +103,18 @@ export interface IProductFilters {
   situacao?: 'A' | 'I'
 }
 
-export interface IProductError {
-  code:
-    | '40'
-    | '41'
-    | '42'
-    | '43'
-    | '44'
-    | '45'
-    | '46'
-    | '47'
-    | '48'
-    | '49'
-    | '50'
-    | '51'
-    | '54'
+export interface IProductResponse extends IProduct {
+  id: number
 }
 
 export default class Products extends BlingEntity<
   IProduct,
   IProductFilters,
   IProductInfos,
-  IProductError
+  IProductResponse
 > {
-  constructor (api: IAxiosInstance) {
-    super(api)
+  constructor (api: IAxiosInstance, apiKey: string) {
+    super(api, apiKey)
 
     this.singularName = 'produto'
     this.pluralName = 'produtos'
@@ -138,6 +125,6 @@ export default class Products extends BlingEntity<
     supplierId: number,
     params: IProductInfos
   ) {
-    return await this._getOne(String(supplierId), `produto/${code}`, params)
+    return await this._find(String(supplierId), `produto/${code}`, params)
   }
 }
