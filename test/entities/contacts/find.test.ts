@@ -2,6 +2,11 @@ import { bling, IBlingError } from '../../config/bling'
 
 jest.setTimeout(60000)
 
+beforeEach(() => {
+  const wait = new Promise((resolve) => setTimeout(resolve, 1000))
+  return wait
+}, 2000)
+
 const testError = (err: IBlingError) => {
   expect(err.message).toEqual('Error on find method after request call')
   expect(err.code).toEqual('ERR_FIND_METHOD')
