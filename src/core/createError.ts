@@ -1,13 +1,11 @@
 export interface IBlingError extends Error {
   status: number
-  config: any
   data: any
   code: string
   toJSON: () => {
     message: string
     name: string
     stack?: string
-    config: any
     data: any
     code: string
   }
@@ -18,7 +16,6 @@ export interface IBlingError extends Error {
  *
  * @param message The error message.
  * @param status The error status.
- * @param config The config.
  * @param data The error data.
  * @param [code] The error code (for example, 'E_CONN_ABORTED').
  * @returns The created error.
@@ -26,7 +23,6 @@ export interface IBlingError extends Error {
 export default function createError (
   message: string,
   status: number,
-  config: any,
   data: any,
   code: string
 ) {
@@ -36,7 +32,6 @@ export default function createError (
     ...rawError,
     message,
     status,
-    config,
     data,
     code,
     toJSON: () => {
@@ -45,7 +40,6 @@ export default function createError (
         name: rawError.name,
         stack: rawError.stack,
         data,
-        config,
         code
       }
     }
