@@ -59,18 +59,16 @@ export interface IPurchaseOrderFilters {
   situacao?: '0' | '1' | '2' | '3'
 }
 
-export interface IPurchaseOrderInfos {}
-
-export interface IPurchaseOrderError {}
+export type IPurchaseOrderResponse = IPurchaseOrder
 
 export default class PurchaseOrders extends BlingEntity<
   IPurchaseOrder,
   IPurchaseOrderFilters,
-  IPurchaseOrderInfos,
-  IPurchaseOrderError
+  Record<string, never>,
+  IPurchaseOrder
 > {
-  constructor (api: IAxiosInstance) {
-    super(api)
+  constructor (api: IAxiosInstance, apiKey: string) {
+    super(api, apiKey)
 
     this.singularName = 'pedidocompra'
     this.pluralName = 'pedidoscompra'
