@@ -43,6 +43,7 @@ export interface IContactInfos {
 }
 
 export interface IContactResponse extends IContact {
+  id: string
   tipo: string
   cpf: string
   cnpj: string

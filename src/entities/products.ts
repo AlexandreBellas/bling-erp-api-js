@@ -2,7 +2,7 @@ import BlingEntity from '../core/entity'
 import { AxiosInstance as IAxiosInstance } from 'axios'
 
 export interface IProduct {
-  codigo?: string
+  codigo: string
   codigoItem?: '06' | '21' | '22'
   descricao: string
   tipo?: 'S' | 'P' | 'N'
