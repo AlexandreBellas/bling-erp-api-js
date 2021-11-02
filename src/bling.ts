@@ -5,13 +5,13 @@ import Contacts from './entities/contacts'
 import Deposits from './entities/deposits'
 import Products from './entities/products'
 import Orders from './entities/orders'
+import PurchaseOrders from './entities/purchaseOrders'
 
 import createError, {
   IBlingError as IStandardBlingError
 } from './core/createError'
 
 import axios, { AxiosInstance } from 'axios'
-import PurchaseOrders from './entities/purchaseOrders'
 
 export type IBlingError = IStandardBlingError
 
