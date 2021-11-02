@@ -1,19 +1,32 @@
 {
-    "env": {
-        "es2021": true,
-        "node": true
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "standard",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["*.spec.js", "*.test.ts", "*.test.js"],
+      "rules": {
+        "no-undef": "off"
+      }
     },
-    "extends": [
-        "standard"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
+    {
+      "files": ["src/entities/*"],
+      "rules": {
+        "camelcase": "off"
+      }
     }
+  ]
 }
