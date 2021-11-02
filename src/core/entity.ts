@@ -53,6 +53,16 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
     this.pluralName = ''
   }
 
+  public async all(options?: {
+    params?: IFilters
+    raw?: false
+  }): Promise<IEntityResponse[]>
+
+  public async all(options?: {
+    params?: IFilters
+    raw: true
+  }): Promise<IPluralResponse<IEntityResponse>>
+
   public async all (
     options: {
       params?: IFilters
@@ -176,11 +186,24 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
    */
   protected async _getAll (
     endpoint: string,
-    params?: IFilters,
+    rawParams?: IFilters,
     raw = false
   ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     // @TODO: refactor filter logic to actually work
     const entities: IEntityResponse[] = []
+
+    const params: { filters?: string } = {}
+    if (rawParams) {
+      const typedParams = rawParams as unknown as { [key: string]: string }
+      const filters = Object.keys(rawParams)
+        .map((key: string) =>
+          typedParams[key] ? `${key}[${typedParams[key]}]` : null
+        )
+        .filter((item) => !!item)
+        .join(';')
+
+      params.filters = filters
+    }
 
     let hasMore = true
     let reqCount = 0
