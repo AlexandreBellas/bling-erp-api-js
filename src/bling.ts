@@ -13,17 +13,24 @@ import createError, {
 
 import axios, { AxiosInstance } from 'axios'
 
+export type ICommercialProposals = CommercialProposals
+export type IContacts = Contacts
+export type IDeposits = Deposits
+export type IProducts = Products
+export type IOrders = Orders
+export type IPurchaseOrders = PurchaseOrders
+
 export type IBlingError = IStandardBlingError
 
 export class Bling {
   #api: AxiosInstance
   #apiKey: string
-  #commercialProposals: CommercialProposals | undefined
-  #contacts: Contacts | undefined
-  #deposits: Deposits | undefined
-  #orders: Orders | undefined
-  #products: Products | undefined
-  #purchaseOrders: PurchaseOrders | undefined
+  #commercialProposals: ICommercialProposals | undefined
+  #contacts: IContacts | undefined
+  #deposits: IDeposits | undefined
+  #orders: IOrders | undefined
+  #products: IProducts | undefined
+  #purchaseOrders: IPurchaseOrders | undefined
 
   constructor (apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -61,11 +68,19 @@ export class Bling {
     return this.#commercialProposals
   }
 
+  public propostasComerciais () {
+    return this.commercialProposals()
+  }
+
   public contacts () {
     if (!this.#contacts) {
       this.#contacts = new Contacts(this.#api, this.#apiKey)
     }
     return this.#contacts
+  }
+
+  public contatos () {
+    return this.contacts()
   }
 
   public deposits () {
@@ -75,11 +90,19 @@ export class Bling {
     return this.#deposits
   }
 
+  public depositos () {
+    return this.deposits()
+  }
+
   public orders () {
     if (!this.#orders) {
       this.#orders = new Orders(this.#api, this.#apiKey)
     }
     return this.#orders
+  }
+
+  public pedidos () {
+    return this.orders()
   }
 
   public products () {
@@ -89,10 +112,18 @@ export class Bling {
     return this.#products
   }
 
+  public produtos () {
+    return this.products()
+  }
+
   public purchaseOrders () {
     if (!this.#purchaseOrders) {
       this.#purchaseOrders = new PurchaseOrders(this.#api, this.#apiKey)
     }
     return this.#purchaseOrders
+  }
+
+  public pedidosDeCompra () {
+    return this.purchaseOrders()
   }
 }
