@@ -103,8 +103,76 @@ export interface IProductFilters {
   situacao?: 'A' | 'I'
 }
 
-export interface IProductResponse extends IProduct {
-  id: number
+export interface IProductResponse {
+  id: string
+  codigo: string
+  descricao: string
+  tipo: 'S' | 'P' | 'N'
+  situacao: 'Ativo' | 'Inativo'
+  unidade?: 'PC' | 'UN' | 'CX'
+  preco: string
+  precoCusto: string
+  descricaoCurta: string
+  descricaoComplementar: string
+  dataInclusao: string
+  dataAlteracao: string
+  imageThumbnail?: string
+  urlVideo?: string
+  nomeFornecedor: string
+  codigoFabricante: string
+  marca?: string
+  class_fiscal?: string
+  cest?: string
+  origem?: string
+  idGrupoProduto?: string
+  linkExterno?: string
+  observacoes?: string
+  grupoProduto?: string
+  garantia: string
+  descricaoFornecedor: string
+  idFabricante: string
+  categoria: {
+    id: string
+    descricao: string
+  }
+  pesoLiq: string
+  pesoBruto: string
+  estoqueMinimo: string
+  estoqueMaximo: string
+  gtin?: string
+  gtinEmbalagem?: string
+  larguraProduto: string
+  alturaProduto: string
+  profundidadeProduto: string
+  unidadeMedida: 'Metros' | 'Centímetros' | 'Milímetros'
+  itensPorCaixa: number
+  volumes: number
+  localizacao?: string
+  crossdocking: string
+  condicao: 'Não especificado' | 'Novo' | 'Usado'
+  freteGratis: 'N' | 'S'
+  producao: 'T' | 'P'
+  dataValidade: string
+  spedTipoItem?: string
+  produtoLoja: {
+    idProdutoLoja: string
+    preco: {
+      preco: number
+      precoPromocional: string
+    }
+    dataInclusao: string
+    dataAlteracao: string
+  }
+  estoqueAtual: number
+  depositos: {
+    deposito: {
+      id: string
+      nome: string
+      saldo: number
+      desconsiderar: 'S' | 'N'
+      saldoVirtual: number
+    }
+  }[]
 }
 
 export default class Products extends BlingEntity<
@@ -121,10 +189,16 @@ export default class Products extends BlingEntity<
   }
 
   async findBySupplierCode (
-    code: string,
-    supplierId: number,
-    params: IProductInfos
+    code: number | string,
+    supplierId: number | string,
+    params?: IProductInfos,
+    raw?: boolean
   ) {
-    return await this._find(String(supplierId), `produto/${code}`, params)
+    return await this._find(
+      this.singularName,
+      `${code}/${supplierId}`,
+      params,
+      raw
+    )
   }
 }

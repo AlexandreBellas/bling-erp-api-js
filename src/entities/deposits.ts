@@ -12,7 +12,13 @@ export interface IDepositFilters {
   situacao?: 'A' | 'I'
 }
 
-export type IDepositResponse = IDeposit
+export interface IDepositResponse {
+  id: string
+  descricao: string
+  situacao: string
+  depositaoPadrao: string
+  desconsiderarSaldo: 'true' | 'false'
+}
 
 export default class Deposits extends BlingEntity<
   IDeposit,
