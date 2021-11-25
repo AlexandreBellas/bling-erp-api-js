@@ -74,8 +74,8 @@ export interface IProduct {
     }[]
   }
   imagens?: {
-    url?: string
-  }[]
+    url?: string[]
+  }
   idCategoria?: number
   estrutura?: {
     tipoEstoque?: 'F' | 'V'
