@@ -2,7 +2,7 @@ import { bling } from '../../config/bling'
 
 jest.setTimeout(60000)
 
-const supplierId = 15343066051
+const supplierId = 15508428250
 const productId = 'FFF-123'
 
 test('should find products by supplier code when calling `.findBySupplierCode()` method without raw option', async () => {
