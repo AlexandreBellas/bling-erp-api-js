@@ -358,12 +358,10 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
     const response = await this.api
       .post(`/${endpoint}/json`, this.qs.stringify(params))
       .catch((err: AxiosError) => {
-        const errResponse = err.response
-
         throw createError(
           `Error on create method during request call: ${err.message}`,
           err.response?.status || 400,
-          errResponse,
+          err.response?.data || null,
           err.code || 'ERR_POST_REQUEST_FAILURE'
         )
       })
