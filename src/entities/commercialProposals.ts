@@ -18,7 +18,7 @@ export interface ICommercialProposal {
   assinaturaSaudacao?: string
   assinaturaResponsavel?: string
   cliente: {
-    id?: string
+    id?: number | string
     nome: string
     tipoPessoa?: 'F' | 'J' | 'E'
     cpfCnpj?: string
@@ -35,30 +35,30 @@ export interface ICommercialProposal {
     fone?: string
     celular?: string
     email?: string
-    itens: {
-      item: {
-        codigo?: string
-        descricao: string
-        un?: string
-        qtde: number
-        valorUnidade: number
-      }[]
-    }
-    transporte?: {
-      transportadora?: string
-      tipoFrete?: 'R' | 'D' | 'T' | '3' | '4' | '5'
-      frete?: number
-    }
-    parcelas?: {
-      parcela: {
-        nrDias: number
-        valor: number
-        obs?: string
-        formaPagamento: {
-          id: number
-        }
-      }[]
-    }
+  }
+  itens: {
+    item: {
+      codigo?: string
+      descricao?: string
+      un?: string
+      qtde: number
+      valorUnidade: number | string
+    }[]
+  }
+  transporte?: {
+    transportadora?: string
+    tipoFrete?: 'R' | 'D' | 'T' | '3' | '4' | '5'
+    frete?: number
+  }
+  parcelas?: {
+    parcela: {
+      nrDias: number
+      valor: number
+      obs?: string
+      formaPagamento: {
+        id: number
+      }
+    }[]
   }
 }
 
