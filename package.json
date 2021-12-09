@@ -1,6 +1,6 @@
 {
   "name": "bling-erp-api",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Pacote de interação com a REST API do serviço Bling ERP",
   "main": "lib/bling.js",
   "directories": {
