@@ -75,7 +75,7 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
   public async find(
     id: number | string,
     options?: { params?: IInfos; raw?: false }
-  ): Promise<IEntityResponse>
+  ): Promise<IEntityResponse | IEntityResponse[]>
 
   public async find(
     id: number | string,
@@ -88,7 +88,9 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
       params?: IInfos
       raw?: boolean
     }
-  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+  ): Promise<
+    IEntityResponse | IEntityResponse[] | IPluralResponse<IEntityResponse>
+  > {
     return await this._find(
       this.singularName,
       id,
@@ -277,7 +279,9 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
     id: number | string,
     params: IFilters | IInfos | (IFilters & IInfos) | undefined = undefined,
     raw = false
-  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+  ): Promise<
+    IEntityResponse | IEntityResponse[] | IPluralResponse<IEntityResponse>
+  > {
     if (!id) {
       throw createError(
         'The "id" argument must be a number or string.',
@@ -317,7 +321,12 @@ export default class BaseEntity<IEntity, IFilters, IInfos, IEntityResponse> {
         const rawEntity = rawResponse[
           this.pluralName
         ] as ISingularEntity<IEntityResponse>[]
-        return rawEntity[0][this.singularName]
+
+        if (rawEntity.length === 1) {
+          return rawEntity[0][this.singularName]
+        } else {
+          return rawEntity.map((entity) => entity[this.singularName])
+        }
       }
     }
   }
