@@ -9,7 +9,7 @@ const testError = (err, message, status, code) => {
   expect(err.code).toBe(code)
 }
 
-const exampleClientId = '15508411603'
+const exampleClientId = '15508518826'
 
 test.concurrent(
   "shouldn't update a contact when calling `.update()` method with data as string",

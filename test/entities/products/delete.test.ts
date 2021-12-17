@@ -1,11 +1,12 @@
 import { bling } from '../../config/bling'
+import { v4 as uuidv4 } from 'uuid'
 
 jest.setTimeout(100000)
 
 test('should delete a product when calling `.delete()` method with an existent id', async () => {
   const product = await bling.products().create({
     descricao: 'Produto Teste',
-    codigo: 'codigo-teste'
+    codigo: uuidv4()
   })
 
   if (product.codigo) {

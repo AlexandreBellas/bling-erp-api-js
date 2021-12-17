@@ -12,7 +12,7 @@ const testError = (err: IBlingError) => {
   expect(err.code).toEqual('ERR_FIND_METHOD')
 }
 
-const exampleContactId = '15508411603'
+const exampleContactId = '15508518826'
 
 test.concurrent(
   "shouldn't find a contact when calling `.find()` method without defining params",
