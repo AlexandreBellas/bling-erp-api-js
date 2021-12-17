@@ -1,5 +1,10 @@
-import BlingEntity from '../core/entity'
-import { AxiosInstance as IAxiosInstance } from 'axios'
+import { IApiInstance } from '../core/interfaces/method'
+
+import All from '../core/functions/all'
+import Find from '../core/functions/find'
+import FindBy from '../core/functions/findBy'
+import Create from '../core/functions/create'
+import Update from '../core/functions/update'
 
 export interface IOrder {
   data?: Date
@@ -31,7 +36,7 @@ export interface IOrder {
   }
   transporte?: {
     transportadora?: string
-    tipo_frete?: string
+    tipo_frete?: 'R' | 'D' | 'T' | '3' | '4' | 'S'
     servico_correios?: string
     codigo_cotacao?: string
     peso_bruto?: number
@@ -50,18 +55,18 @@ export interface IOrder {
       volume: {
         servico: string
         codigoRastreamento?: string
-        itens?: {
-          item?: {
-            codigo?: string
-            descricao: string
-            un?: 'pc' | 'un' | 'cx'
-            qtde: number
-            vlr_unit: number
-            vlr_desconto?: number
-          }[]
-        }
       }[]
     }
+  }
+  itens?: {
+    item?: {
+      codigo?: string
+      descricao: string
+      un?: 'pc' | 'un' | 'cx'
+      qtde: number
+      vlr_unit: number
+      vlr_desconto?: number
+    }[]
   }
   idFormaPagamento?: number
   parcelas?: {
@@ -120,8 +125,8 @@ export interface IOrderResponse {
     id: string
     nome: string
     cnpj: string
-    ie: string | null
-    rg: string
+    ie?: string
+    rg?: string
     endereco: string
     numero: string
     complemento: string
@@ -130,7 +135,7 @@ export interface IOrderResponse {
     cep: string
     uf: string
     email: string
-    celular: string
+    celular?: string
     fone: string
   }
   nota: {
@@ -142,10 +147,10 @@ export interface IOrderResponse {
     chaveAcesso: string
   }
   transporte: {
-    transportadora: string
-    cnpj: string
-    tipo_frete: string
-    qtde_volumes: string
+    transportadora?: string
+    cnpj?: string
+    tipo_frete?: string
+    qtde_volumes?: string
     enderecoEntrega: {
       nome: string
       endereco: string
@@ -156,7 +161,7 @@ export interface IOrderResponse {
       cep: string
       uf: string
     }
-    volumes: {
+    volumes?: {
       volume: {
         id: string
         idServico: string
@@ -181,7 +186,7 @@ export interface IOrderResponse {
         urlRastreamento: string
       }
     }[]
-    servico_correios: string
+    servico_correios?: string
   }
   itens: {
     item: {
@@ -215,23 +220,23 @@ export interface IOrderResponse {
       }
     }
   }[]
-  codigosRastreamento: {
-    codigoRastreamento: string
+  codigosRastreamento?: {
+    codigoRastreamento?: string
   }
 }
 
-export default class Orders extends BlingEntity<
-  IOrder,
-  IOrderFilters,
-  IOrderInfos,
-  IOrderResponse
-> {
-  constructor (api: IAxiosInstance, apiKey: string) {
-    super(api, apiKey)
-
-    this.singularName = 'pedido'
-    this.pluralName = 'pedidos'
+export default function Orders (api: IApiInstance) {
+  const config = {
+    api,
+    singularName: 'pedido',
+    pluralName: 'pedidos'
   }
-}
 
-module.exports = Orders
+  return Object.assign(config, {
+    all: new All<IOrderResponse, IOrderFilters>().all,
+    find: new Find<IOrderResponse, IOrderInfos>().find,
+    findBy: new FindBy<IOrderResponse, IOrderFilters>().findBy,
+    create: new Create<IOrder, IOrderResponse>().create,
+    update: new Update<IOrder, IOrderResponse>().update
+  })
+}

@@ -9,22 +9,24 @@ import PurchaseOrders from './entities/purchaseOrders'
 
 import createError, {
   IBlingError as IStandardBlingError
-} from './core/createError'
+} from './core/helpers/createError'
 
-import axios, { AxiosInstance } from 'axios'
+import { IApiInstance } from './core/interfaces/method'
 
-export type ICommercialProposals = CommercialProposals
-export type IContacts = Contacts
-export type IDeposits = Deposits
-export type IProducts = Products
-export type IOrders = Orders
-export type IPurchaseOrders = PurchaseOrders
+import * as qs from 'querystring'
+import axios from 'axios'
+
+export type ICommercialProposals = ReturnType<typeof CommercialProposals>
+export type IContacts = ReturnType<typeof Contacts>
+export type IDeposits = ReturnType<typeof Deposits>
+export type IProducts = ReturnType<typeof Products>
+export type IOrders = ReturnType<typeof Orders>
+export type IPurchaseOrders = ReturnType<typeof PurchaseOrders>
 
 export type IBlingError = IStandardBlingError
 
 export class Bling {
-  #api: AxiosInstance
-  #apiKey: string
+  #api: IApiInstance
   #commercialProposals: ICommercialProposals | undefined
   #contacts: IContacts | undefined
   #deposits: IDeposits | undefined
@@ -47,23 +49,30 @@ export class Bling {
     })
 
     api.interceptors.request.use((config) => {
+      if (
+        config.method &&
+        ['POST', 'PUT', 'post', 'put'].includes(config.method)
+      ) {
+        config.data = qs.stringify({
+          apikey: apiKey,
+          ...config.data
+        })
+      }
+
       config.params = {
         apikey: apiKey,
         ...config.params
       }
+
       return config
     })
 
-    this.#apiKey = apiKey
     this.#api = api
   }
 
   public commercialProposals () {
     if (!this.#commercialProposals) {
-      this.#commercialProposals = new CommercialProposals(
-        this.#api,
-        this.#apiKey
-      )
+      this.#commercialProposals = CommercialProposals(this.#api)
     }
     return this.#commercialProposals
   }
@@ -74,7 +83,7 @@ export class Bling {
 
   public contacts () {
     if (!this.#contacts) {
-      this.#contacts = new Contacts(this.#api, this.#apiKey)
+      this.#contacts = Contacts(this.#api)
     }
     return this.#contacts
   }
@@ -85,7 +94,7 @@ export class Bling {
 
   public deposits () {
     if (!this.#deposits) {
-      this.#deposits = new Deposits(this.#api, this.#apiKey)
+      this.#deposits = Deposits(this.#api)
     }
     return this.#deposits
   }
@@ -96,7 +105,7 @@ export class Bling {
 
   public orders () {
     if (!this.#orders) {
-      this.#orders = new Orders(this.#api, this.#apiKey)
+      this.#orders = Orders(this.#api)
     }
     return this.#orders
   }
@@ -107,7 +116,7 @@ export class Bling {
 
   public products () {
     if (!this.#products) {
-      this.#products = new Products(this.#api, this.#apiKey)
+      this.#products = Products(this.#api)
     }
     return this.#products
   }
@@ -118,7 +127,7 @@ export class Bling {
 
   public purchaseOrders () {
     if (!this.#purchaseOrders) {
-      this.#purchaseOrders = new PurchaseOrders(this.#api, this.#apiKey)
+      this.#purchaseOrders = PurchaseOrders(this.#api)
     }
     return this.#purchaseOrders
   }

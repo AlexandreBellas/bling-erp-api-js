@@ -1,12 +1,12 @@
 export interface IBlingError extends Error {
   status: number
-  data: any
+  data: unknown
   code: string
   toJSON: () => {
     message: string
     name: string
     stack?: string
-    data: any
+    data: unknown
     code: string
   }
 }
@@ -23,7 +23,7 @@ export interface IBlingError extends Error {
 export default function createError (
   message: string,
   status: number,
-  data: any,
+  data: unknown,
   code: string
 ) {
   const rawError = new Error(message)

@@ -1,5 +1,10 @@
-import BlingEntity from '../core/entity'
-import { AxiosInstance as IAxiosInstance } from 'axios'
+import { IApiInstance } from '../core/interfaces/method'
+
+import All from '../core/functions/all'
+import Find from '../core/functions/find'
+import FindBy from '../core/functions/findBy'
+import Create from '../core/functions/create'
+import Delete from '../core/functions/delete'
 
 export interface IProduct {
   codigo: string
@@ -29,6 +34,7 @@ export interface IProduct {
   descricaoFornecedor?: string
   idFabricante?: number
   codigoFabricante?: string
+  estoque?: number
   deposito?: {
     id?: number
     estoque?: number
@@ -84,8 +90,9 @@ export interface IProduct {
       nome: string
       codigo: string
       quantidade: number
-    }
+    }[]
   }
+  camposCustomizados?: unknown
 }
 
 export interface IProductInfos {
@@ -103,23 +110,24 @@ export interface IProductFilters {
   situacao?: 'A' | 'I'
 }
 
+// @TODO: conditional response content based on info passed
 export interface IProductResponse {
   id: string
-  codigo: string
+  codigo?: string
   descricao: string
   tipo: 'S' | 'P' | 'N'
   situacao: 'Ativo' | 'Inativo'
   unidade?: 'PC' | 'UN' | 'CX'
   preco: string
   precoCusto: string
-  descricaoCurta: string
-  descricaoComplementar: string
+  descricaoCurta?: string
+  descricaoComplementar?: string
   dataInclusao: string
   dataAlteracao: string
   imageThumbnail?: string
   urlVideo?: string
-  nomeFornecedor: string
-  codigoFabricante: string
+  nomeFornecedor?: string
+  codigoFabricante?: string
   marca?: string
   class_fiscal?: string
   cest?: string
@@ -129,7 +137,7 @@ export interface IProductResponse {
   observacoes?: string
   grupoProduto?: string
   garantia: string
-  descricaoFornecedor: string
+  descricaoFornecedor?: string
   idFabricante: string
   categoria: {
     id: string
@@ -154,7 +162,14 @@ export interface IProductResponse {
   producao: 'T' | 'P'
   dataValidade: string
   spedTipoItem?: string
-  produtoLoja: {
+  imagem?: {
+    // imagem = S
+    link: string
+    validade: string
+    tipoArmazenamento: 'interno' | 'externo'
+  }[]
+  produtoLoja?: {
+    // loja !== undefined
     idProdutoLoja: string
     preco: {
       preco: number
@@ -163,8 +178,10 @@ export interface IProductResponse {
     dataInclusao: string
     dataAlteracao: string
   }
-  estoqueAtual: number
-  depositos: {
+  codigopai?: string
+  estoqueAtual: number // estoque = 'S'
+  depositos?: {
+    // estoque = 'S'
     deposito: {
       id: string
       nome: string
@@ -175,30 +192,60 @@ export interface IProductResponse {
   }[]
 }
 
-export default class Products extends BlingEntity<
-  IProduct,
-  IProductFilters,
-  IProductInfos,
-  IProductResponse
-> {
-  constructor (api: IAxiosInstance, apiKey: string) {
-    super(api, apiKey)
+export interface IProductDeleteResponse {
+  codigo: string
+  mensagem: string
+}
 
-    this.singularName = 'produto'
-    this.pluralName = 'produtos'
+export default function Products (api: IApiInstance) {
+  const config = {
+    api,
+    singularName: 'produto',
+    pluralName: 'produtos'
   }
 
-  async findBySupplierCode (
+  const update = async (id: number | string, data: IProduct, raw?: boolean) => {
+    const createMethod = new Create<IProduct, IProductResponse>({
+      ...config,
+      singularName: `${config.singularName}/${id}`
+    })
+
+    if (raw) {
+      return await createMethod.create(data, true)
+    } else {
+      return await createMethod.create(data, false)
+    }
+  }
+
+  const findBySupplierCode = async (
     code: number | string,
     supplierId: number | string,
     params?: IProductInfos,
     raw?: boolean
-  ) {
-    return await this._find(
-      this.singularName,
-      `${code}/${supplierId}`,
-      params,
-      raw
-    )
+  ) => {
+    const findMethod = new Find<IProductResponse, IProductInfos>(config)
+
+    // @TODO: see how to reuse the code below
+    if (raw) {
+      return await findMethod.find(`${code}/${supplierId}`, {
+        params,
+        raw: true
+      })
+    } else {
+      return await findMethod.find(`${code}/${supplierId}`, {
+        params,
+        raw: false
+      })
+    }
   }
+
+  return Object.assign(config, {
+    all: new All<IProductResponse, IProductFilters>().all,
+    find: new Find<IProductResponse, IProductInfos>().find,
+    findBy: new FindBy<IProductResponse, IProductFilters>().findBy,
+    create: new Create<IProduct, IProductResponse>().create,
+    update,
+    delete: new Delete<IProductDeleteResponse>().delete,
+    findBySupplierCode
+  })
 }

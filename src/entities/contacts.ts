@@ -1,5 +1,10 @@
-import BlingEntity from '../core/entity'
-import { AxiosInstance as IAxiosInstance } from 'axios'
+import { IApiInstance } from '../core/interfaces/method'
+
+import All from '../core/functions/all'
+import Find from '../core/functions/find'
+import FindBy from '../core/functions/findBy'
+import Create from '../core/functions/create'
+import Update from '../core/functions/update'
 
 export interface IContact {
   nome: string
@@ -73,16 +78,30 @@ export interface IContactResponse {
   informacoesContato?: string
 }
 
-export default class Contacts extends BlingEntity<
-  IContact,
-  IContactFilters,
-  IContactInfos,
-  IContactResponse
-> {
-  constructor (api: IAxiosInstance, apiKey: string) {
-    super(api, apiKey)
+export interface IContactCreateResponse {
+  id: number
+  nome: string
+  cpf_cnpj: string
+}
 
-    this.singularName = 'contato'
-    this.pluralName = 'contatos'
+export interface IContactUpdateResponse {
+  id: string
+  nome: string
+  cpf_cnpj: string
+}
+
+export default function Contacts (api: IApiInstance) {
+  const config = {
+    api,
+    singularName: 'contato',
+    pluralName: 'contatos'
   }
+
+  return Object.assign(config, {
+    all: new All<IContactResponse, IContactFilters>().all,
+    find: new Find<IContactResponse, IContactInfos>().find,
+    findBy: new FindBy<IContactResponse, IContactFilters>().findBy,
+    create: new Create<IContact, IContactCreateResponse>().create,
+    update: new Update<IContact, IContactUpdateResponse>().update
+  })
 }

@@ -1,5 +1,10 @@
-import BlingEntity from '../core/entity'
-import { AxiosInstance as IAxiosInstance } from 'axios'
+import { IApiInstance } from '../core/interfaces/method'
+
+import All from '../core/functions/all'
+import Find from '../core/functions/find'
+import FindBy from '../core/functions/findBy'
+import Create from '../core/functions/create'
+import Update from '../core/functions/update'
 
 export interface ICommercialProposal {
   data?: string
@@ -62,6 +67,17 @@ export interface ICommercialProposal {
   }
 }
 
+export interface ICommercialProposalUpdateContent {
+  situacao:
+    | 'Descrição'
+    | 'Pendente'
+    | 'Aguardando'
+    | 'Não aprovado'
+    | 'Aprovado'
+    | 'Concluído'
+    | 'Rascunho'
+}
+
 export interface ICommercialProposalFilters {
   data?: string
   situacao?:
@@ -75,6 +91,16 @@ export interface ICommercialProposalFilters {
   idContato?: number
 }
 
+export interface ICommercialProposalCreateResponse {
+  id: number
+  numero: number
+}
+
+export interface ICommercialProposalUpdateResponse {
+  numero: number
+  mensagem: number
+}
+
 export interface ICommercialProposalResponse {
   desconto: string
   obsInterna?: string
@@ -85,7 +111,14 @@ export interface ICommercialProposalResponse {
   valorFrete: string
   subtotal: string
   totalOrcamento: string
-  situacao: string
+  situacao:
+    | 'Descrição'
+    | 'Pendente'
+    | 'Aguardando'
+    | 'Não aprovado'
+    | 'Aprovado'
+    | 'Concluído'
+    | 'Rascunho'
   loja: string
   aosCuidadosDe?: string
   garantia: string
@@ -97,18 +130,18 @@ export interface ICommercialProposalResponse {
   cliente: {
     idContato: string
     nome: string
-    cpfCnpj: string
+    cpfCnpj?: string
     ie: string | 'ISENTO'
     rg?: string
-    endereco: string
+    endereco?: string
     numero?: string
     complemento?: string
-    cidade: string
-    cep: string
-    uf: string
-    email: string
-    celular: string
-    fone: string
+    cidade?: string
+    cep?: string
+    uf?: string
+    email?: string
+    celular?: string
+    fone?: string
   }
   itens: {
     item: {
@@ -129,16 +162,23 @@ export interface ICommercialProposalResponse {
   }
 }
 
-export default class CommercialProposals extends BlingEntity<
-  ICommercialProposal,
-  ICommercialProposalFilters,
-  Record<string, never>,
-  ICommercialProposalResponse
-> {
-  constructor (api: IAxiosInstance, apiKey: string) {
-    super(api, apiKey)
-
-    this.singularName = 'propostacomercial'
-    this.pluralName = 'propostascomerciais'
+export default function CommercialProposals (api: IApiInstance) {
+  const config = {
+    api,
+    singularName: 'propostacomercial',
+    pluralName: 'propostascomerciais'
   }
+
+  return Object.assign(config, {
+    all: new All<ICommercialProposalResponse, ICommercialProposalFilters>().all,
+    find: new Find<ICommercialProposalResponse, Record<string, never>>().find,
+    findBy: new FindBy<
+      ICommercialProposalResponse,
+      ICommercialProposalFilters
+    >().findBy,
+    create: new Create<ICommercialProposal, ICommercialProposalCreateResponse>()
+      .create,
+    update: new Update<ICommercialProposal, ICommercialProposalUpdateResponse>()
+      .update
+  })
 }

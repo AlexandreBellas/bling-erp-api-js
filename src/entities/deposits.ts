@@ -1,5 +1,10 @@
-import BlingEntity from '../core/entity'
-import { AxiosInstance as IAxiosInstance } from 'axios'
+import { IApiInstance } from '../core/interfaces/method'
+
+import All from '../core/functions/all'
+import Find from '../core/functions/find'
+import FindBy from '../core/functions/findBy'
+import Create from '../core/functions/create'
+import Update from '../core/functions/update'
 
 export interface IDeposit {
   descricao?: string
@@ -20,16 +25,18 @@ export interface IDepositResponse {
   desconsiderarSaldo: 'true' | 'false'
 }
 
-export default class Deposits extends BlingEntity<
-  IDeposit,
-  IDepositFilters,
-  Record<string, never>,
-  IDepositResponse
-> {
-  constructor (api: IAxiosInstance, apiKey: string) {
-    super(api, apiKey)
-
-    this.singularName = 'deposito'
-    this.pluralName = 'depositos'
+export default function Deposits (api: IApiInstance) {
+  const config = {
+    api,
+    singularName: 'deposito',
+    pluralName: 'depositos'
   }
+
+  return Object.assign(config, {
+    all: new All<IDepositResponse, IDepositFilters>().all,
+    find: new Find<IDepositResponse, Record<never, string>>().find,
+    findBy: new FindBy<IDepositResponse, IDepositFilters>().findBy,
+    create: new Create<IDeposit, IDepositResponse>().create,
+    update: new Update<IDeposit, IDepositResponse>().update
+  })
 }
