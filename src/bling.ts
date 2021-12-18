@@ -1,11 +1,14 @@
 'use strict'
 
+import CustomizedField from './entities/customizedFields'
+import Categories from './entities/categories'
 import CommercialProposals from './entities/commercialProposals'
 import Contacts from './entities/contacts'
 import Deposits from './entities/deposits'
 import Products from './entities/products'
 import Orders from './entities/orders'
 import PurchaseOrders from './entities/purchaseOrders'
+import Invoices from './entities/invoices'
 
 import createError, {
   IBlingError as IStandardBlingError
@@ -16,23 +19,29 @@ import { IApiInstance } from './core/interfaces/method'
 import * as qs from 'querystring'
 import axios from 'axios'
 
+export type ICustomizedFields = ReturnType<typeof CustomizedField>
+export type ICategories = ReturnType<typeof Categories>
 export type ICommercialProposals = ReturnType<typeof CommercialProposals>
 export type IContacts = ReturnType<typeof Contacts>
 export type IDeposits = ReturnType<typeof Deposits>
 export type IProducts = ReturnType<typeof Products>
 export type IOrders = ReturnType<typeof Orders>
 export type IPurchaseOrders = ReturnType<typeof PurchaseOrders>
+export type IInvoices = ReturnType<typeof Invoices>
 
 export type IBlingError = IStandardBlingError
 
 export class Bling {
   #api: IApiInstance
+  #customizedFields: ICustomizedFields | undefined
+  #categories: ICategories | undefined
   #commercialProposals: ICommercialProposals | undefined
   #contacts: IContacts | undefined
   #deposits: IDeposits | undefined
   #orders: IOrders | undefined
   #products: IProducts | undefined
   #purchaseOrders: IPurchaseOrders | undefined
+  #invoices: IInvoices | undefined
 
   constructor (apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -70,6 +79,28 @@ export class Bling {
     this.#api = api
   }
 
+  public customizedFields () {
+    if (!this.#customizedFields) {
+      this.#customizedFields = CustomizedField(this.#api)
+    }
+    return this.#customizedFields
+  }
+
+  public camposCustomizados () {
+    return this.customizedFields()
+  }
+
+  public categories () {
+    if (!this.#categories) {
+      this.#categories = Categories(this.#api)
+    }
+    return this.#categories
+  }
+
+  public categorias () {
+    return this.categories()
+  }
+
   public commercialProposals () {
     if (!this.#commercialProposals) {
       this.#commercialProposals = CommercialProposals(this.#api)
@@ -101,6 +132,17 @@ export class Bling {
 
   public depositos () {
     return this.deposits()
+  }
+
+  public invoices () {
+    if (!this.#invoices) {
+      this.#invoices = Invoices(this.#api)
+    }
+    return this.#invoices
+  }
+
+  public notasFiscais () {
+    return this.invoices()
   }
 
   public orders () {

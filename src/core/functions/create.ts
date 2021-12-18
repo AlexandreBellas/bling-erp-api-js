@@ -23,16 +23,22 @@ export default class Create<IEntity, IEntityResponse> extends Method {
    * @param raw Boolean value to return either raw data from Bling or beautified processed data.
    * @returns The created entity.
    */
-  public async create(data: IEntity, raw?: false): Promise<IEntityResponse>
+  public async create(
+    data: IEntity,
+    raw?: false,
+    ...restData: unknown[]
+  ): Promise<IEntityResponse>
 
   public async create(
     data: IEntity,
-    raw: true
+    raw: true,
+    ...restData: unknown[]
   ): Promise<IPluralResponse<IEntityResponse>>
 
   public async create (
     data: IEntity,
-    raw?: boolean
+    raw?: boolean,
+    ...restData: unknown[]
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     if (typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError(
@@ -49,7 +55,8 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     })
 
     const params = {
-      xml
+      xml,
+      ...restData
     }
 
     const response = await this.api
