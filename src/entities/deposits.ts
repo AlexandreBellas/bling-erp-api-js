@@ -17,6 +17,8 @@ export interface IDepositFilters {
   situacao?: 'A' | 'I'
 }
 
+export type IDepositInfos = Record<string, never>
+
 export interface IDepositResponse {
   id: string
   descricao: string
@@ -34,7 +36,7 @@ export default function Deposits (api: IApiInstance) {
 
   return Object.assign(config, {
     all: new All<IDepositResponse, IDepositFilters>().all,
-    find: new Find<IDepositResponse, Record<never, string>>().find,
+    find: new Find<IDepositResponse, IDepositInfos>().find,
     findBy: new FindBy<IDepositResponse, IDepositFilters>().findBy,
     create: new Create<IDeposit, IDepositResponse>().create,
     update: new Update<IDeposit, IDepositResponse>().update
