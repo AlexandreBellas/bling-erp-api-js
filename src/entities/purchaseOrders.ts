@@ -68,6 +68,8 @@ export interface IPurchaseOrderFilters {
   situacao?: '0' | '1' | '2' | '3'
 }
 
+export type IPurchaseOrderInfos = Record<string, never>
+
 export interface IPurchaseOrderResponse {
   numeropedido: string
   datacompra: string
@@ -140,7 +142,7 @@ export default function PurchaseOrders (api: IApiInstance) {
   return Object.assign(config, {
     // @TODO: enhance this meme response from all() method
     all: new All<IPurchaseOrderResponse[], IPurchaseOrderFilters>().all,
-    find: new Find<IPurchaseOrderResponse, Record<never, string>>().find,
+    find: new Find<IPurchaseOrderResponse, IPurchaseOrderInfos>().find,
     findBy: new FindBy<IPurchaseOrderResponse, IPurchaseOrderFilters>().findBy,
     create: new Create<IPurchaseOrder, IPurchaseOrderCreateResponse>().create,
     update: new Update<

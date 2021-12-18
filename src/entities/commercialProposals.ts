@@ -91,6 +91,8 @@ export interface ICommercialProposalFilters {
   idContato?: number
 }
 
+export type ICommercialProposalInfos = Record<string, never>
+
 export interface ICommercialProposalCreateResponse {
   id: number
   numero: number
@@ -171,7 +173,8 @@ export default function CommercialProposals (api: IApiInstance) {
 
   return Object.assign(config, {
     all: new All<ICommercialProposalResponse, ICommercialProposalFilters>().all,
-    find: new Find<ICommercialProposalResponse, Record<string, never>>().find,
+    find: new Find<ICommercialProposalResponse, ICommercialProposalInfos>()
+      .find,
     findBy: new FindBy<
       ICommercialProposalResponse,
       ICommercialProposalFilters
