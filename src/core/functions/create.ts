@@ -59,8 +59,10 @@ export default class Create<IEntity, IEntityResponse> extends Method {
       ...restData
     }
 
+    const endpoint = this.endpoint || this.singularName
+
     const response = await this.api
-      .post(`/${this.singularName}/json`, params)
+      .post(`/${endpoint}/json`, params)
       .catch((err: IApiError) => {
         throw createError(
           `Error on create method during request call: ${err.message}`,

@@ -49,7 +49,9 @@ export default class Find<IEntityResponse, IInfos> extends Method {
       )
     }
 
-    const response = await this.api.get(`/${this.singularName}/${id}/json`, {
+    const endpoint = this.endpoint || this.singularName
+
+    const response = await this.api.get(`/${endpoint}/${id}/json`, {
       params: options && options.params
     })
 

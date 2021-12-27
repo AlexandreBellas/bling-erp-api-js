@@ -10,7 +10,6 @@ import {
 import Method from '../template/method'
 import createError from '../helpers/createError'
 
-import * as qs from 'querystring'
 import * as xml2js from 'xml2js'
 
 export default class Update<IEntity, IEntityResponse> extends Method {
@@ -69,8 +68,10 @@ export default class Update<IEntity, IEntityResponse> extends Method {
       xml
     }
 
+    const endpoint = this.endpoint || this.singularName
+
     const response = await this.api
-      .put(`/${this.singularName}/${id}/json`, params)
+      .put(`/${endpoint}/${id}/json`, params)
       .catch((err: IApiError) => {
         const errResponse = err.response
 

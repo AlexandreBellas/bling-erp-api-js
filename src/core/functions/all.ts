@@ -51,13 +51,12 @@ export default class All<IEntityResponse, IFilters> extends Method {
     let reqCount = 0
     let page = 1
 
+    const endpoint = this.endpoint || this.pluralName
+
     while (hasMore) {
-      const response = await this.api.get(
-        `/${this.pluralName}/page=${page}/json`,
-        {
-          params
-        }
-      )
+      const response = await this.api.get(`/${endpoint}/page=${page}/json`, {
+        params
+      })
 
       const rawData = response.data as IPluralResponse<IEntityResponse>
       const data = rawData.retorno

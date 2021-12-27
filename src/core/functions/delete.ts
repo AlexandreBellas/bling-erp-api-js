@@ -35,8 +35,10 @@ export default class Find<IEntityResponse> extends Method {
     id: number | string,
     raw?: boolean
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    const endpoint = this.endpoint || this.singularName
+
     const response = await this.api
-      .delete(`/${this.singularName}/${id}/json`)
+      .delete(`/${endpoint}/${id}/json`)
       .catch((err: IApiError) => {
         const errResponse = err.response
 

@@ -281,7 +281,7 @@ export default function Invoices (api: IApiInstance) {
   ) => {
     const createMethod = new Create<Record<never, string>, IInvoiceResponse>({
       ...config,
-      singularName: `${config.singularName}/${numero}/${serie}`
+      endpoint: `${config.singularName}/${numero}/${serie}`
     })
 
     // @TODO: see how to reuse the code below

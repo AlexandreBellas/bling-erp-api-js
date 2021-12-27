@@ -27,6 +27,7 @@ export default class FindBy<IEntityResponse, IQuery> extends Method {
 
     const config = {
       api: this.api,
+      endpoint: this.endpoint,
       singularName: this.singularName,
       pluralName: this.pluralName
     }

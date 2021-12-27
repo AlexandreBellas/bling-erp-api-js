@@ -204,13 +204,17 @@ export default function Products (api: IApiInstance) {
     pluralName: 'produtos'
   }
 
-  const update = async (id: number | string, data: IProduct, raw?: boolean) => {
+  const update = async (
+    id: number | string,
+    data: IProduct,
+    options?: { raw?: boolean }
+  ) => {
     const createMethod = new Create<IProduct, IProductResponse>({
       ...config,
-      singularName: `${config.singularName}/${id}`
+      endpoint: `${config.singularName}/${id}`
     })
 
-    if (raw) {
+    if (options && options.raw) {
       return await createMethod.create(data, true)
     } else {
       return await createMethod.create(data, false)
@@ -220,22 +224,28 @@ export default function Products (api: IApiInstance) {
   const findBySupplierCode = async (
     code: number | string,
     supplierId: number | string,
-    params?: IProductInfos,
-    raw?: boolean
+    options?: {
+      params?: IProductInfos
+      raw?: boolean
+    }
   ) => {
     const findMethod = new Find<IProductResponse, IProductInfos>(config)
 
     // @TODO: see how to reuse the code below
-    if (raw) {
-      return await findMethod.find(`${code}/${supplierId}`, {
-        params,
-        raw: true
-      })
+    if (options) {
+      if (options.raw) {
+        return await findMethod.find(`${code}/${supplierId}`, {
+          params: options.params,
+          raw: true
+        })
+      } else {
+        return await findMethod.find(`${code}/${supplierId}`, {
+          params: options.params,
+          raw: false
+        })
+      }
     } else {
-      return await findMethod.find(`${code}/${supplierId}`, {
-        params,
-        raw: false
-      })
+      return await findMethod.find(`${code}/${supplierId}`)
     }
   }
 
