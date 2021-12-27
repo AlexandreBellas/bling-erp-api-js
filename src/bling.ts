@@ -1,5 +1,6 @@
 'use strict'
 
+import Borderos from './entities/borderos'
 import CustomizedField from './entities/customizedFields'
 import Categories from './entities/categories'
 import CommercialProposals from './entities/commercialProposals'
@@ -9,6 +10,9 @@ import Products from './entities/products'
 import Orders from './entities/orders'
 import PurchaseOrders from './entities/purchaseOrders'
 import Invoices from './entities/invoices'
+import ShopCategories from './entities/shopCategories'
+import BillsToPay from './entities/billsToPay'
+import BillsToReceive from './entities/billsToReceive'
 
 import createError, {
   IBlingError as IStandardBlingError
@@ -19,6 +23,7 @@ import { IApiInstance } from './core/interfaces/method'
 import * as qs from 'querystring'
 import axios from 'axios'
 
+export type IBordero = ReturnType<typeof Borderos>
 export type ICustomizedFields = ReturnType<typeof CustomizedField>
 export type ICategories = ReturnType<typeof Categories>
 export type ICommercialProposals = ReturnType<typeof CommercialProposals>
@@ -28,11 +33,15 @@ export type IProducts = ReturnType<typeof Products>
 export type IOrders = ReturnType<typeof Orders>
 export type IPurchaseOrders = ReturnType<typeof PurchaseOrders>
 export type IInvoices = ReturnType<typeof Invoices>
+export type IShopCategories = ReturnType<typeof ShopCategories>
+export type IBillsToPay = ReturnType<typeof BillsToPay>
+export type IBillsToReceive = ReturnType<typeof BillsToReceive>
 
 export type IBlingError = IStandardBlingError
 
 export class Bling {
   #api: IApiInstance
+  #borderos: IBordero | undefined
   #customizedFields: ICustomizedFields | undefined
   #categories: ICategories | undefined
   #commercialProposals: ICommercialProposals | undefined
@@ -42,6 +51,9 @@ export class Bling {
   #products: IProducts | undefined
   #purchaseOrders: IPurchaseOrders | undefined
   #invoices: IInvoices | undefined
+  #shopCategories: IShopCategories | undefined
+  #billsToPay: IBillsToPay | undefined
+  #billsToReceive: IBillsToReceive | undefined
 
   constructor (apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -77,6 +89,13 @@ export class Bling {
     })
 
     this.#api = api
+  }
+
+  public borderos () {
+    if (!this.#borderos) {
+      this.#borderos = Borderos(this.#api)
+    }
+    return this.#borderos
   }
 
   public customizedFields () {
@@ -121,6 +140,28 @@ export class Bling {
 
   public contatos () {
     return this.contacts()
+  }
+
+  public billsToPay () {
+    if (!this.#billsToPay) {
+      this.#billsToPay = BillsToPay(this.#api)
+    }
+    return this.#billsToPay
+  }
+
+  public contasAPagar () {
+    return this.billsToPay()
+  }
+
+  public billsToReceive () {
+    if (!this.#billsToReceive) {
+      this.#billsToReceive = BillsToReceive(this.#api)
+    }
+    return this.#billsToReceive
+  }
+
+  public contasAReceber () {
+    return this.billsToReceive()
   }
 
   public deposits () {
@@ -176,5 +217,16 @@ export class Bling {
 
   public pedidosDeCompra () {
     return this.purchaseOrders()
+  }
+
+  public shopCategories () {
+    if (!this.#shopCategories) {
+      this.#shopCategories = ShopCategories(this.#api)
+    }
+    return this.#shopCategories
+  }
+
+  public categoriasLoja () {
+    return this.shopCategories()
   }
 }
