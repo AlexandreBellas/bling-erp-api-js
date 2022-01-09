@@ -27,7 +27,7 @@ import { IApiInstance } from './core/interfaces/method'
 import * as qs from 'querystring'
 import axios from 'axios'
 
-export type IBordero = ReturnType<typeof Borderos>
+export type IBorderos = ReturnType<typeof Borderos>
 export type ICustomizedFields = ReturnType<typeof CustomizedField>
 export type ICategories = ReturnType<typeof Categories>
 export type ICommercialProposals = ReturnType<typeof CommercialProposals>
@@ -49,7 +49,7 @@ export type IBlingError = IStandardBlingError
 
 export class Bling {
   #api: IApiInstance
-  #borderos: IBordero | undefined
+  #borderos: IBorderos | undefined
   #customizedFields: ICustomizedFields | undefined
   #categories: ICategories | undefined
   #commercialProposals: ICommercialProposals | undefined

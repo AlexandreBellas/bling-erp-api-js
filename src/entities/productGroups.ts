@@ -4,14 +4,14 @@ import All from '../core/functions/all'
 import Find from '../core/functions/find'
 import FindBy from '../core/functions/findBy'
 
-export interface IGroupProductsFilters {
+export interface IGroupProductFilters {
   nome?: string
   nomePai?: string
 }
 
-export type IGroupProductsInfos = Record<string, never>
+export type IGroupProductInfos = Record<string, never>
 
-export interface IGroupProductsResponse {
+export interface IGroupProductResponse {
   id: string
   nome: string
   idPai?: string
@@ -26,8 +26,8 @@ export default function GroupProducts (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IGroupProductsResponse, IGroupProductsFilters>().all,
-    find: new Find<IGroupProductsResponse, IGroupProductsInfos>().find,
-    findBy: new FindBy<IGroupProductsResponse, IGroupProductsFilters>().findBy
+    all: new All<IGroupProductResponse, IGroupProductFilters>().all,
+    find: new Find<IGroupProductResponse, IGroupProductInfos>().find,
+    findBy: new FindBy<IGroupProductResponse, IGroupProductFilters>().findBy
   })
 }
