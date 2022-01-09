@@ -13,6 +13,10 @@ import Invoices from './entities/invoices'
 import ShopCategories from './entities/shopCategories'
 import BillsToPay from './entities/billsToPay'
 import BillsToReceive from './entities/billsToReceive'
+import Contracts from './entities/contracts'
+import Ctes from './entities/ctes'
+import PaymentMethods from './entities/paymentMethods'
+import GroupProducts from './entities/productGroups'
 
 import createError, {
   IBlingError as IStandardBlingError
@@ -36,6 +40,10 @@ export type IInvoices = ReturnType<typeof Invoices>
 export type IShopCategories = ReturnType<typeof ShopCategories>
 export type IBillsToPay = ReturnType<typeof BillsToPay>
 export type IBillsToReceive = ReturnType<typeof BillsToReceive>
+export type IContracts = ReturnType<typeof Contracts>
+export type ICtes = ReturnType<typeof Ctes>
+export type IPaymentMethods = ReturnType<typeof PaymentMethods>
+export type IGroupProducts = ReturnType<typeof GroupProducts>
 
 export type IBlingError = IStandardBlingError
 
@@ -54,6 +62,10 @@ export class Bling {
   #shopCategories: IShopCategories | undefined
   #billsToPay: IBillsToPay | undefined
   #billsToReceive: IBillsToReceive | undefined
+  #contracts: IContracts | undefined
+  #ctes: ICtes | undefined
+  #paymentMethods: IPaymentMethods | undefined
+  #groupProducts: IGroupProducts | undefined
 
   constructor (apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -120,15 +132,15 @@ export class Bling {
     return this.categories()
   }
 
-  public commercialProposals () {
-    if (!this.#commercialProposals) {
-      this.#commercialProposals = CommercialProposals(this.#api)
+  public shopCategories () {
+    if (!this.#shopCategories) {
+      this.#shopCategories = ShopCategories(this.#api)
     }
-    return this.#commercialProposals
+    return this.#shopCategories
   }
 
-  public propostasComerciais () {
-    return this.commercialProposals()
+  public categoriasLoja () {
+    return this.shopCategories()
   }
 
   public contacts () {
@@ -164,6 +176,24 @@ export class Bling {
     return this.billsToReceive()
   }
 
+  public contracts () {
+    if (!this.#contracts) {
+      this.#contracts = Contracts(this.#api)
+    }
+    return this.#contracts
+  }
+
+  public contratos () {
+    return this.contracts()
+  }
+
+  public ctes () {
+    if (!this.#ctes) {
+      this.#ctes = Ctes(this.#api)
+    }
+    return this.#ctes
+  }
+
   public deposits () {
     if (!this.#deposits) {
       this.#deposits = Deposits(this.#api)
@@ -173,6 +203,28 @@ export class Bling {
 
   public depositos () {
     return this.deposits()
+  }
+
+  public paymentMethods () {
+    if (!this.#paymentMethods) {
+      this.#paymentMethods = PaymentMethods(this.#api)
+    }
+    return this.#paymentMethods
+  }
+
+  public formasDePagamento () {
+    return this.paymentMethods()
+  }
+
+  public groupProducts () {
+    if (!this.#groupProducts) {
+      this.#groupProducts = GroupProducts(this.#api)
+    }
+    return this.#groupProducts
+  }
+
+  public grupoDeProdutos () {
+    return this.groupProducts()
   }
 
   public invoices () {
@@ -197,17 +249,6 @@ export class Bling {
     return this.orders()
   }
 
-  public products () {
-    if (!this.#products) {
-      this.#products = Products(this.#api)
-    }
-    return this.#products
-  }
-
-  public produtos () {
-    return this.products()
-  }
-
   public purchaseOrders () {
     if (!this.#purchaseOrders) {
       this.#purchaseOrders = PurchaseOrders(this.#api)
@@ -219,14 +260,25 @@ export class Bling {
     return this.purchaseOrders()
   }
 
-  public shopCategories () {
-    if (!this.#shopCategories) {
-      this.#shopCategories = ShopCategories(this.#api)
+  public products () {
+    if (!this.#products) {
+      this.#products = Products(this.#api)
     }
-    return this.#shopCategories
+    return this.#products
   }
 
-  public categoriasLoja () {
-    return this.shopCategories()
+  public produtos () {
+    return this.products()
+  }
+
+  public commercialProposals () {
+    if (!this.#commercialProposals) {
+      this.#commercialProposals = CommercialProposals(this.#api)
+    }
+    return this.#commercialProposals
+  }
+
+  public propostasComerciais () {
+    return this.commercialProposals()
   }
 }
