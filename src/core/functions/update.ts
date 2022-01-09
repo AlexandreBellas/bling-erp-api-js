@@ -27,19 +27,25 @@ export default class Update<IEntity, IEntityResponse> extends Method {
   public async update(
     id: number | string,
     data: IEntity,
-    raw?: false
+    options?: {
+      raw?: false
+    }
   ): Promise<IEntityResponse>
 
   public async update(
     id: number | string,
     data: IEntity,
-    raw: true
+    options?: {
+      raw: true
+    }
   ): Promise<IPluralResponse<IEntityResponse>>
 
   public async update (
     id: number | string,
     data: IEntity,
-    raw?: boolean
+    options?: {
+      raw?: boolean
+    }
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     if (typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError(
@@ -87,7 +93,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
     if (responseData.retorno.erros) {
       const errReturn = responseData.retorno as IPluralError
       let errData
-      if (raw) {
+      if (options && options.raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
@@ -102,7 +108,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
         'ERR_ENTITY_UPDATING_FAILURE'
       )
     } else {
-      if (raw) {
+      if (options && options.raw) {
         return responseData
       } else {
         const rawResponse =

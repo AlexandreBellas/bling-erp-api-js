@@ -215,9 +215,9 @@ export default function Products (api: IApiInstance) {
     })
 
     if (options && options.raw) {
-      return await createMethod.create(data, true)
+      return await createMethod.create(data, { raw: true })
     } else {
-      return await createMethod.create(data, false)
+      return await createMethod.create(data, { raw: false })
     }
   }
 

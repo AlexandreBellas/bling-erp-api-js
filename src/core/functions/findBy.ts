@@ -5,16 +5,23 @@ import Method from '../template/method'
 import createError from '../helpers/createError'
 
 export default class FindBy<IEntityResponse, IQuery> extends Method {
-  public async findBy(params: IQuery, raw?: false): Promise<IEntityResponse[]>
+  public async findBy(
+    params: IQuery,
+    options?: { raw?: false }
+  ): Promise<IEntityResponse[]>
 
   public async findBy(
     params: IQuery,
-    raw: true
+    options?: {
+      raw: true
+    }
   ): Promise<IPluralResponse<IEntityResponse>>
 
   public async findBy (
     params: IQuery,
-    raw?: boolean
+    options?: {
+      raw?: boolean
+    }
   ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     if (!params) {
       throw createError(
@@ -35,7 +42,7 @@ export default class FindBy<IEntityResponse, IQuery> extends Method {
     const allEntity = new All<IEntityResponse, IQuery>(config)
 
     // @TODO: deal with interfaces problems to reuse code properly
-    if (raw) {
+    if (options && options.raw) {
       return await allEntity.all({
         params,
         raw: true

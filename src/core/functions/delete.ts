@@ -23,17 +23,23 @@ export default class Find<IEntityResponse> extends Method {
    */
   public async delete(
     id: number | string,
-    raw?: false
+    options?: {
+      raw?: false
+    }
   ): Promise<IEntityResponse>
 
   public async delete(
     id: number | string,
-    raw: true
+    options?: {
+      raw: true
+    }
   ): Promise<IPluralResponse<IEntityResponse>>
 
   public async delete (
     id: number | string,
-    raw?: boolean
+    options?: {
+      raw?: boolean
+    }
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     const endpoint = this.endpoint || this.singularName
 
@@ -54,7 +60,7 @@ export default class Find<IEntityResponse> extends Method {
     if (data.retorno.erros) {
       const errReturn = data.retorno as IPluralError
       let errData
-      if (raw) {
+      if (options && options.raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
@@ -73,7 +79,7 @@ export default class Find<IEntityResponse> extends Method {
         'ERR_ENTITY_DELETION_FAILURE'
       )
     } else {
-      if (raw) {
+      if (options && options.raw) {
         return data
       } else {
         const rawResponse = data.retorno as IPluralEntity<IEntityResponse>

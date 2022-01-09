@@ -25,19 +25,25 @@ export default class Create<IEntity, IEntityResponse> extends Method {
    */
   public async create(
     data: IEntity,
-    raw?: false,
+    options?: {
+      raw?: false
+    },
     ...restData: unknown[]
   ): Promise<IEntityResponse>
 
   public async create(
     data: IEntity,
-    raw: true,
+    options?: {
+      raw: true
+    },
     ...restData: unknown[]
   ): Promise<IPluralResponse<IEntityResponse>>
 
   public async create (
     data: IEntity,
-    raw?: boolean,
+    options?: {
+      raw?: boolean
+    },
     ...restData: unknown[]
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     if (typeof data !== 'object' || Object.keys(data).length === 0) {
@@ -76,7 +82,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     if (responseData.retorno.erros) {
       const errReturn = responseData.retorno as IPluralError
       let errData
-      if (raw) {
+      if (options && options.raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
@@ -91,7 +97,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
         'ERR_ENTITY_CREATION_FAILURE'
       )
     } else {
-      if (raw) {
+      if (options && options.raw) {
         return responseData
       } else {
         const rawResponse =
