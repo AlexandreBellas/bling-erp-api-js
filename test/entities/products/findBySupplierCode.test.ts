@@ -18,7 +18,9 @@ test('should find products by supplier code when calling `.findBySupplierCode()`
   await expect(
     bling
       .products()
-      .findBySupplierCode(exampleSupplierProductId, exampleSupplierId, {}, true)
+      .findBySupplierCode(exampleSupplierProductId, exampleSupplierId, {
+        raw: true
+      })
   ).resolves.toBeDefined()
 })
 
@@ -26,12 +28,9 @@ test('should find products by supplier code when calling `.findBySupplierCode()`
   await expect(
     bling
       .products()
-      .findBySupplierCode(
-        exampleSupplierProductId,
-        exampleSupplierId,
-        {},
-        false
-      )
+      .findBySupplierCode(exampleSupplierProductId, exampleSupplierId, {
+        raw: false
+      })
   ).resolves.toBeDefined()
 })
 
@@ -40,8 +39,10 @@ test('should find products by supplier code when calling `.findBySupplierCode()`
     bling
       .products()
       .findBySupplierCode(exampleSupplierProductId, exampleSupplierId, {
-        estoque: 'S',
-        imagem: 'S'
+        params: {
+          estoque: 'S',
+          imagem: 'S'
+        }
       })
   ).resolves.toBeDefined()
 })
@@ -50,12 +51,10 @@ test('should find products by supplier code when calling `.findBySupplierCode()`
   await expect(
     bling
       .products()
-      .findBySupplierCode(
-        exampleSupplierProductId,
-        exampleSupplierId,
-        { estoque: 'S', imagem: 'S' },
-        true
-      )
+      .findBySupplierCode(exampleSupplierProductId, exampleSupplierId, {
+        params: { estoque: 'S', imagem: 'S' },
+        raw: true
+      })
   ).resolves.toBeDefined()
 })
 
@@ -63,11 +62,9 @@ test('should find products by supplier code when calling `.findBySupplierCode()`
   await expect(
     bling
       .products()
-      .findBySupplierCode(
-        exampleSupplierProductId,
-        exampleSupplierId,
-        { estoque: 'S', imagem: 'S' },
-        false
-      )
+      .findBySupplierCode(exampleSupplierProductId, exampleSupplierId, {
+        params: { estoque: 'S', imagem: 'S' },
+        raw: false
+      })
   ).resolves.toBeDefined()
 })
