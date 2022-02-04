@@ -46,15 +46,25 @@ const blingConnection = new Bling(apiKey)
 
 As entidades atualmente permitidas para interação são:
 
+- Borderos (`.boreros()`)
+- Campos customizados (`.customizedFields()` ou `.camposCustomizados()`)
+- Categorias (`.categories()` ou `.categorias()`)
+- Categorias loja (`.shopCategories()` ou `.categoriasLoja()`)
 - Contatos (`.contacts()` ou `.contatos()`)
+- Contas a pagar (`.billsToPay()` ou `.contasAPagar()`)
+- Contas a receber (`.billsToReceive()` ou `.contasAReceber()`)
+- Contratos (`.contracts()` ou `.contratos()`)
+- CTes (`.ctes()`)
 - Depósitos (`.deposits()` ou `.depositos()`)
+- Formas de pagamento (`.paymentMethods()` ou `.formasDePagamento()`)
+- Grupo de produtos (`.groupProducts()` ou `.grupoDeProdutos()`)
+- Notas fiscais (`.invoices()` ou `.notasFiscais()`)
 - Pedidos (`.orders()` ou `.pedidos()`)
 - Pedidos de compra (`.purchaseOrders()` ou `.pedidosDeCompra()`)
 - Produtos (`.products()` ou `.produtos()`)
 - Propostas comerciais (`.commercialProposals()` ou `.propostasComerciais()`)
 
-Adicionaremos as restantes de acordo com as _releases_. Por ora, estamos focando
-no funcionamento do pacote e no teste correto das entidades.
+Adicionaremos as restantes aos poucos de acordo com as _releases_.
 
 ## Métodos permitidos
 
@@ -68,6 +78,10 @@ no funcionamento do pacote e no teste correto das entidades.
   `codigo`
 - `delete()`: remove um registro da entidade a partir de seu `id` ou
   `codigo`
+
+Nem todas as entidades possuem interação com todos os métodos. Ao utilizar o
+pacote, se o desenvolvedor utilizar intelliSense ao programar, os métodos
+permitidos aparecerão automaticamente após usar o atalho `Ctrl` + `Backspace`.
 
 ## Exemplo de uso
 
