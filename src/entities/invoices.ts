@@ -286,11 +286,15 @@ export default function Invoices (api: IApiInstance) {
 
     // @TODO: see how to reuse the code below
     if (options && options.raw) {
-      return await createMethod.create({}, true, {
-        sendEmail: options.sendEmail
-      })
+      return await createMethod.create(
+        {},
+        { raw: true },
+        {
+          sendEmail: options.sendEmail
+        }
+      )
     } else {
-      return await createMethod.create({}, false)
+      return await createMethod.create({}, { raw: false })
     }
   }
 

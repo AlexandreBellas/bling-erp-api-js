@@ -71,9 +71,9 @@ export default function ShopCategories (api: IApiInstance) {
     })
 
     if (options && options.raw) {
-      return await createMethod.create(data, true)
+      return await createMethod.create(data, { raw: true })
     } else {
-      return await createMethod.create(data, false)
+      return await createMethod.create(data, { raw: false })
     }
   }
 
@@ -91,9 +91,9 @@ export default function ShopCategories (api: IApiInstance) {
     })
 
     if (options && options.raw) {
-      return await updateMethod.update(idCategoria, data, true)
+      return await updateMethod.update(idCategoria, data, { raw: true })
     } else {
-      return await updateMethod.update(idCategoria, data, false)
+      return await updateMethod.update(idCategoria, data, { raw: false })
     }
   }
 
