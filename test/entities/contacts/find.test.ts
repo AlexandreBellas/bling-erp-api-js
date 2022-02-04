@@ -1,4 +1,4 @@
-import { bling, IBlingError } from '../../config/bling'
+import { bling, IBlingError, exampleContactId } from '../../config/bling'
 
 jest.setTimeout(60000)
 
@@ -11,8 +11,6 @@ const testError = (err: IBlingError) => {
   expect(err.message).toEqual('Error on find method after request call')
   expect(err.code).toEqual('ERR_FIND_METHOD')
 }
-
-const exampleContactId = '15508518826'
 
 test.concurrent(
   "shouldn't find a contact when calling `.find()` method without defining params",

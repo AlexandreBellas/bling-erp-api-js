@@ -1,4 +1,4 @@
-import { bling } from '../../config/bling'
+import { bling, exampleContactId } from '../../config/bling'
 import gerarCpf from 'gerar-cpf'
 
 jest.setTimeout(60000)
@@ -9,13 +9,11 @@ const testError = (err, message, status, code) => {
   expect(err.code).toBe(code)
 }
 
-const exampleClientId = '15508518826'
-
 test.concurrent(
   "shouldn't update a contact when calling `.update()` method with data as string",
   async () => {
     try {
-      await bling.contacts().update(exampleClientId, '')
+      await bling.contacts().update(exampleContactId, '')
       expect(false).toBe(true)
     } catch (err) {
       testError(
@@ -32,7 +30,7 @@ test.concurrent(
   "shouldn't update a contact when calling `.update()` method with data as number",
   async () => {
     try {
-      await bling.contacts().update(exampleClientId, 123)
+      await bling.contacts().update(exampleContactId, 123)
       expect(false).toBe(true)
     } catch (err) {
       testError(
@@ -49,7 +47,7 @@ test.concurrent(
   "shouldn't update a contact when calling `.update()` method with data as array",
   async () => {
     try {
-      await bling.contacts().update(exampleClientId, [])
+      await bling.contacts().update(exampleContactId, [])
       expect(false).toBe(true)
     } catch (err) {
       testError(
@@ -66,7 +64,7 @@ test.concurrent(
   "shouldn't update a contact when calling `.update()` method with data as an empty object",
   async () => {
     try {
-      await bling.contacts().update(exampleClientId, {})
+      await bling.contacts().update(exampleContactId, {})
       expect(false).toBe(true)
     } catch (err) {
       testError(
@@ -199,10 +197,10 @@ test.concurrent(
 test('should update a contact when calling `.update()` method with proper parameters', async () => {
   const contact = await bling
     .contacts()
-    .find(exampleClientId, { params: { identificador: 2 } })
+    .find(exampleContactId, { params: { identificador: 2 } })
 
   await expect(
-    bling.contacts().update(exampleClientId, {
+    bling.contacts().update(exampleContactId, {
       nome: 'Usuário atualizado',
       cpf_cnpj: contact.cnpj,
       contribuinte: contact.contribuinte,
