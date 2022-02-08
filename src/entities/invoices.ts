@@ -298,11 +298,31 @@ export default function Invoices (api: IApiInstance) {
     }
   }
 
+  const create = async (
+    data: IInvoice,
+    options?: {
+      raw?: boolean
+    }
+  ) => {
+    const createMethod = new Create<Record<never, string>, IInvoiceResponse>({
+      ...config,
+      endpoint: 'notafiscal',
+      singularName: 'notaFiscal'
+    })
+
+    // @TODO: see how to reuse the code below
+    if (options && options.raw) {
+      return await createMethod.create(data, { raw: true })
+    } else {
+      return await createMethod.create(data, { raw: false })
+    }
+  }
+
   return Object.assign(config, {
     all: new All<IInvoiceResponse, IInvoiceFilters>().all,
     find,
     send,
     findBy: new FindBy<IInvoiceResponse, IInvoiceFilters>().findBy,
-    create: new Create<IInvoice, IInvoiceResponse>().create
+    create
   })
 }
