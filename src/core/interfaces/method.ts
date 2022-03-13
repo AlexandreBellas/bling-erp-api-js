@@ -16,7 +16,7 @@ export interface IPluralEntity<T> {
 
 export interface ISingularError {
   erro: {
-    cod: string
+    cod: number
     msg: string
   }
 }
