@@ -81,7 +81,7 @@ Adicionaremos as restantes aos poucos de acordo com as _releases_.
 
 Nem todas as entidades possuem interação com todos os métodos. Ao utilizar o
 pacote, se o desenvolvedor utilizar intelliSense ao programar, os métodos
-permitidos aparecerão automaticamente após usar o atalho `Ctrl` + `Backspace`.
+permitidos aparecerão automaticamente após usar o atalho `Ctrl` + `Barra de espaço`.
 
 ## Exemplo de uso
 
