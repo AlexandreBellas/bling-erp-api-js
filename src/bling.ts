@@ -16,7 +16,7 @@ import BillsToReceive from './entities/billsToReceive'
 import Contracts from './entities/contracts'
 import Ctes from './entities/ctes'
 import PaymentMethods from './entities/paymentMethods'
-import GroupProducts from './entities/productGroups'
+import ProductGroups from './entities/productGroups'
 
 import createError, {
   IBlingError as IStandardBlingError
@@ -43,7 +43,7 @@ export type IBillsToReceive = ReturnType<typeof BillsToReceive>
 export type IContracts = ReturnType<typeof Contracts>
 export type ICtes = ReturnType<typeof Ctes>
 export type IPaymentMethods = ReturnType<typeof PaymentMethods>
-export type IGroupProducts = ReturnType<typeof GroupProducts>
+export type IProductGroups = ReturnType<typeof ProductGroups>
 
 export type IBlingError = IStandardBlingError
 
@@ -65,7 +65,7 @@ export class Bling {
   #contracts: IContracts | undefined
   #ctes: ICtes | undefined
   #paymentMethods: IPaymentMethods | undefined
-  #groupProducts: IGroupProducts | undefined
+  #productGroups: IProductGroups | undefined
 
   constructor (apiKey: string) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -216,15 +216,15 @@ export class Bling {
     return this.paymentMethods()
   }
 
-  public groupProducts () {
-    if (!this.#groupProducts) {
-      this.#groupProducts = GroupProducts(this.#api)
+  public productGroups () {
+    if (!this.#productGroups) {
+      this.#productGroups = ProductGroups(this.#api)
     }
-    return this.#groupProducts
+    return this.#productGroups
   }
 
   public grupoDeProdutos () {
-    return this.groupProducts()
+    return this.productGroups()
   }
 
   public invoices () {
