@@ -57,7 +57,7 @@ As entidades atualmente permitidas para interação são:
 - CTes (`.ctes()`)
 - Depósitos (`.deposits()` ou `.depositos()`)
 - Formas de pagamento (`.paymentMethods()` ou `.formasDePagamento()`)
-- Grupo de produtos (`.groupProducts()` ou `.grupoDeProdutos()`)
+- Grupo de produtos (`.productGroups()` ou `.grupoDeProdutos()`)
 - Notas fiscais (`.invoices()` ou `.notasFiscais()`)
 - Pedidos (`.orders()` ou `.pedidos()`)
 - Pedidos de compra (`.purchaseOrders()` ou `.pedidosDeCompra()`)
