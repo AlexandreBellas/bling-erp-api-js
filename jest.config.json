@@ -16,7 +16,8 @@
     "\\.pnp\\.[^\\\/]+$"
   ],
   "testPathIgnorePatterns": [
-    "<rootDir>/test/config/"
+    "<rootDir>/test/config/",
+    "<rootDir>/test/generators/"
   ],
   "maxWorkers": 1,
   "maxConcurrency": 2
