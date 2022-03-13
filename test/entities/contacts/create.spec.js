@@ -165,14 +165,3 @@ test("shouldn't create a contact when calling `.create()` method with missing co
     )
   }
 })
-
-test('should create a contact when calling `.create()` method with proper data', async () => {
-  await expect(
-    bling.contacts().create({
-      nome: 'Usuário Teste',
-      cpf_cnpj: gerarCpf(),
-      tipoPessoa: 'F',
-      contribuinte: '9'
-    })
-  ).resolves.toBeDefined()
-})
