@@ -4,7 +4,7 @@ import { IBlingError } from '../../src/bling'
 import { config } from 'dotenv'
 
 // Generators
-import contact from '../generators/contacts'
+import contacts from '../generators/contacts'
 
 // Setup
 config()
@@ -18,7 +18,7 @@ const exampleSupplierProductId = process.env
   .EXAMPLE_SUPPLIER_PRODUCT_ID as string
 
 const generators = {
-  contact
+  contacts
 }
 
 export {
