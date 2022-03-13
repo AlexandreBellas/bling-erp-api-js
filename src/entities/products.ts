@@ -250,9 +250,10 @@ export default function Products (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IProductResponse, IProductFilters>().all,
+    all: new All<IProductResponse, IProductFilters, IProductInfos>().all,
     find: new Find<IProductResponse, IProductInfos>().find,
-    findBy: new FindBy<IProductResponse, IProductFilters>().findBy,
+    findBy: new FindBy<IProductResponse, IProductFilters, IProductInfos>()
+      .findBy,
     create: new Create<IProduct, IProductResponse>().create,
     update,
     delete: new Delete<IProductDeleteResponse>().delete,

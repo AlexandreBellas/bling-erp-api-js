@@ -4,21 +4,30 @@ import All from './all'
 import Method from '../template/method'
 import createError from '../helpers/createError'
 
-export default class FindBy<IEntityResponse, IQuery> extends Method {
+export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
   public async findBy(
-    params: IQuery,
+    params: {
+      filters: IFilters
+      infos?: IInfo
+    },
     options?: { raw?: false }
   ): Promise<IEntityResponse[]>
 
   public async findBy(
-    params: IQuery,
+    params: {
+      filters: IFilters
+      infos?: IInfo
+    },
     options?: {
       raw: true
     }
   ): Promise<IPluralResponse<IEntityResponse>>
 
   public async findBy (
-    params: IQuery,
+    params: {
+      filters: IFilters
+      infos?: IInfo
+    },
     options?: {
       raw?: boolean
     }
@@ -32,6 +41,15 @@ export default class FindBy<IEntityResponse, IQuery> extends Method {
       )
     }
 
+    if (!params.filters) {
+      throw createError(
+        'No filters passed to `.findBy()` method',
+        500,
+        params,
+        'ERR_INCORRECT_OPTIONS_FILTERS_ARG'
+      )
+    }
+
     const config = {
       api: this.api,
       endpoint: this.endpoint,
@@ -39,7 +57,7 @@ export default class FindBy<IEntityResponse, IQuery> extends Method {
       pluralName: this.pluralName
     }
 
-    const allEntity = new All<IEntityResponse, IQuery>(config)
+    const allEntity = new All<IEntityResponse, IFilters, IInfo>(config)
 
     // @TODO: deal with interfaces problems to reuse code properly
     if (options && options.raw) {

@@ -28,14 +28,31 @@ export default function ShopCategories (api: IApiInstance) {
     pluralName: 'categoriasLoja'
   }
 
-  const all = async (idLoja: number | string, options?: { raw?: boolean }) => {
-    const allMethod = new All<IShopCategoryResponse, IShopCategoryFilters>({
+  const all = async (
+    idLoja: number | string,
+    options?: { raw?: boolean; page?: number }
+  ) => {
+    const allMethod = new All<
+      IShopCategoryResponse,
+      IShopCategoryFilters,
+      IShopCategoryInfos
+    >({
       ...config,
       endpoint: `categoriasLoja/${idLoja}`
     })
 
-    if (options && options.raw) {
-      return await allMethod.all({ raw: true })
+    if (options) {
+      if (options.raw && options.page) {
+        return await allMethod.all({ raw: true, page: options.page })
+      }
+
+      if (options.raw) {
+        return await allMethod.all({ raw: true })
+      }
+
+      if (options.page) {
+        return await allMethod.all({ page: options.page })
+      }
     } else {
       return await allMethod.all({ raw: false })
     }

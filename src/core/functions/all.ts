@@ -1,12 +1,15 @@
 import {
   IPluralResponse,
   IPluralEntity,
-  ISingularEntity
+  ISingularEntity,
+  ISingularError,
+  IApiError
 } from '../interfaces/method'
 
 import Method from '../template/method'
+import createError from '../helpers/createError'
 
-export default class All<IEntityResponse, IFilters> extends Method {
+export default class All<IEntityResponse, IFilters, IInfo> extends Method {
   /**
    * Retrieve all entities from the given endpoint.
    * @private
@@ -17,52 +20,109 @@ export default class All<IEntityResponse, IFilters> extends Method {
    * @param raw Boolean value to return either raw data from Bling or beautified processed data.
    * @returns An array of entities.
    */
+
   public async all(options?: {
-    params?: IFilters
+    params?: {
+      filters?: IFilters
+      infos?: IInfo
+    }
+    page?: number
     raw?: false
   }): Promise<IEntityResponse[]>
 
   public async all(options?: {
-    params?: IFilters
+    params?: {
+      filters?: IFilters
+      infos?: IInfo
+    }
+    page?: number
     raw: true
   }): Promise<IPluralResponse<IEntityResponse>>
 
   public async all (options?: {
-    params?: IFilters
+    params?: {
+      filters?: IFilters
+      infos?: IInfo
+    }
+    page?: number
     raw?: boolean
   }): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
-    // @TODO: refactor filter logic to actually work
     const entities: IEntityResponse[] = []
 
-    const params: { filters?: string } = {}
+    const params: { filters?: string; [key: string]: unknown } = {}
     if (options && options.params) {
-      const typedParams = options.params as unknown as { [key: string]: string }
-      const filters = Object.keys(options.params)
-        .map((key: string) =>
-          typedParams[key] ? `${key}[${typedParams[key]}]` : null
-        )
-        .filter((item) => !!item)
-        .join(';')
+      if (options.params.filters) {
+        const typedParams = options.params.filters as unknown as {
+          [key: string]: string
+        }
+        const filters = Object.keys(options.params.filters)
+          .map((key: string) =>
+            typedParams[key] ? `${key}[${typedParams[key]}]` : null
+          )
+          .filter((item) => !!item)
+          .join(';')
 
-      params.filters = filters
+        params.filters = filters
+      }
+
+      if (options.params.infos) {
+        for (const infoKey in options.params.infos) {
+          params[infoKey] = options.params.infos[infoKey]
+        }
+      }
     }
+
+    const endpoint = this.endpoint || this.pluralName
 
     let hasMore = true
     let reqCount = 0
     let page = 1
 
-    const endpoint = this.endpoint || this.pluralName
+    let isSinglePage = false
+
+    if (options && options.page) {
+      isSinglePage = true
+      page = options.page
+    }
 
     while (hasMore) {
-      const response = await this.api.get(`/${endpoint}/page=${page}/json`, {
-        params
-      })
+      const response = await this.api
+        .get(`/${endpoint}/page=${page}/json`, {
+          params
+        })
+        .catch((err: IApiError) => {
+          throw createError(
+            `Error on all method during request call: ${err.message}`,
+            err.response?.status || 400,
+            err.response?.data || null,
+            err.code || 'ERR_GET_REQUEST_FAILURE'
+          )
+        })
 
       const rawData = response.data as IPluralResponse<IEntityResponse>
       const data = rawData.retorno
 
       if (data.erros) {
         hasMore = false
+        const rawErrData = data.erros as ISingularError[]
+
+        // If there is an error different than 'not found'
+        if (rawErrData.some((err) => err.erro.cod !== 14)) {
+          let errData
+          if (options && options.raw) {
+            errData = { retorno: data }
+          } else {
+            // @TODO: maybe enhance it to include JSON API standards?
+            errData = rawErrData.map((err: ISingularError) => err.erro)
+          }
+
+          throw createError(
+            'Error on all method after request call',
+            400,
+            errData,
+            'ERR_ENTITY_QUERY_FAILURE'
+          )
+        }
       } else {
         const rawNewEntities = data as IPluralEntity<IEntityResponse>
 
@@ -76,6 +136,10 @@ export default class All<IEntityResponse, IFilters> extends Method {
         for (const entity of singularEntities) {
           entities.push(entity)
         }
+      }
+
+      if (isSinglePage) {
+        break
       }
 
       page++

@@ -127,9 +127,17 @@ export default function BillsToReceive (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IBillToReceiveResponse, IBillToReceiveFilters>().all,
+    all: new All<
+      IBillToReceiveResponse,
+      IBillToReceiveFilters,
+      IBillToReceiveInfos
+    >().all,
     find: new Find<IBillToReceiveResponse, IBillToReceiveInfos>().find,
-    findBy: new FindBy<IBillToReceiveResponse, IBillToReceiveFilters>().findBy,
+    findBy: new FindBy<
+      IBillToReceiveResponse,
+      IBillToReceiveFilters,
+      IBillToReceiveInfos
+    >().findBy,
     create: new Create<IBillToReceive, IBillToReceiveCreateResponse>().create,
     update: new Update<IBillToReceiveUpdateContent, IBillToReceiveResponse>()
       .update

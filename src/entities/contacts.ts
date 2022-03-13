@@ -98,9 +98,10 @@ export default function Contacts (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IContactResponse, IContactFilters>().all,
+    all: new All<IContactResponse, IContactFilters, IContactInfos>().all,
     find: new Find<IContactResponse, IContactInfos>().find,
-    findBy: new FindBy<IContactResponse, IContactFilters>().findBy,
+    findBy: new FindBy<IContactResponse, IContactFilters, IContactInfos>()
+      .findBy,
     create: new Create<IContact, IContactCreateResponse>().create,
     update: new Update<IContact, IContactUpdateResponse>().update
   })

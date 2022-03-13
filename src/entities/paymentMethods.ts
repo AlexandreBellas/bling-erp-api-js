@@ -107,9 +107,17 @@ export default function PaymentMethods (api: IApiInstance) {
   // @TODO: deal with "IPaymentMethodCreateResponse" content properly
 
   return Object.assign(config, {
-    all: new All<IPaymentMethodResponse, IPaymentMethodFilters>().all,
+    all: new All<
+      IPaymentMethodResponse,
+      IPaymentMethodFilters,
+      IPaymentMethodInfos
+    >().all,
     find: new Find<IPaymentMethodResponse, IPaymentMethodInfos>().find,
-    findBy: new FindBy<IPaymentMethodResponse, IPaymentMethodFilters>().findBy,
+    findBy: new FindBy<
+      IPaymentMethodResponse,
+      IPaymentMethodFilters,
+      IPaymentMethodInfos
+    >().findBy,
     create: new Create<IPaymentMethod, IPaymentMethodCreateResponse>().create,
     update: new Update<IPaymentMethod, IPaymentMethodCreateResponse>().update,
     delete: new Delete<IPaymentMethodDeleteResponse>().delete

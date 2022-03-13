@@ -164,9 +164,10 @@ export default function Contracts (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IContractResponse, IContractFilters>().all,
+    all: new All<IContractResponse, IContractFilters, IContractInfos>().all,
     find: new Find<IContractResponse, IContractInfos>().find,
-    findBy: new FindBy<IContractResponse, IContractFilters>().findBy,
+    findBy: new FindBy<IContractResponse, IContractFilters, IContractInfos>()
+      .findBy,
     create: new Create<IContract, IContractCreateResponse>().create,
     update: new Update<IContract, IContractResponse>().update,
     delete: new Delete<IContractDeleteResponse>().delete

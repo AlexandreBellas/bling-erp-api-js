@@ -29,9 +29,10 @@ export default function Categories (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<ICategoryResponse, ICategoryFilters>().all,
+    all: new All<ICategoryResponse, ICategoryFilters, ICategoryInfos>().all,
     find: new Find<ICategoryResponse, ICategoryInfos>().find,
-    findBy: new FindBy<ICategoryResponse, ICategoryFilters>().findBy,
+    findBy: new FindBy<ICategoryResponse, ICategoryFilters, ICategoryInfos>()
+      .findBy,
     create: new Create<ICategory, ICategoryResponse>().create,
     update: new Update<ICategory, ICategoryResponse>().update
   })

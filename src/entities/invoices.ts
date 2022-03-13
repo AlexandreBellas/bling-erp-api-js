@@ -259,12 +259,14 @@ export default function Invoices (api: IApiInstance) {
   const find = async (
     numero: number | string,
     serie: number | string,
-    raw?: boolean
+    options?: {
+      raw?: boolean
+    }
   ) => {
     const findMethod = new Find<IInvoiceResponse, IInvoiceInfos>(config)
 
     // @TODO: see how to reuse the code below
-    if (raw) {
+    if (options && options.raw) {
       return await findMethod.find(`${numero}/${serie}`, { raw: true })
     } else {
       return await findMethod.find(`${numero}/${serie}`, { raw: false })
@@ -319,10 +321,11 @@ export default function Invoices (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IInvoiceResponse, IInvoiceFilters>().all,
+    all: new All<IInvoiceResponse, IInvoiceFilters, IInvoiceInfos>().all,
     find,
     send,
-    findBy: new FindBy<IInvoiceResponse, IInvoiceFilters>().findBy,
+    findBy: new FindBy<IInvoiceResponse, IInvoiceFilters, IInvoiceInfos>()
+      .findBy,
     create
   })
 }

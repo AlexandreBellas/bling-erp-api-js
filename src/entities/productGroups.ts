@@ -26,8 +26,16 @@ export default function GroupProducts (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IGroupProductResponse, IGroupProductFilters>().all,
+    all: new All<
+      IGroupProductResponse,
+      IGroupProductFilters,
+      IGroupProductInfos
+    >().all,
     find: new Find<IGroupProductResponse, IGroupProductInfos>().find,
-    findBy: new FindBy<IGroupProductResponse, IGroupProductFilters>().findBy
+    findBy: new FindBy<
+      IGroupProductResponse,
+      IGroupProductFilters,
+      IGroupProductInfos
+    >().findBy
   })
 }

@@ -196,9 +196,9 @@ export default function Ctes (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<ICteResponse, ICteFilters>().all,
+    all: new All<ICteResponse, ICteFilters, ICteInfos>().all,
     find,
-    findBy: new FindBy<ICteResponse, ICteFilters>().findBy,
+    findBy: new FindBy<ICteResponse, ICteFilters, ICteInfos>().findBy,
     create,
     post,
     update: new Update<ICte, ICteResponse>().update,

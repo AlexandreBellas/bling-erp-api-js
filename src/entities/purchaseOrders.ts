@@ -141,9 +141,17 @@ export default function PurchaseOrders (api: IApiInstance) {
 
   return Object.assign(config, {
     // @TODO: enhance this meme response from all() method
-    all: new All<IPurchaseOrderResponse[], IPurchaseOrderFilters>().all,
+    all: new All<
+      IPurchaseOrderResponse[],
+      IPurchaseOrderFilters,
+      IPurchaseOrderInfos
+    >().all,
     find: new Find<IPurchaseOrderResponse, IPurchaseOrderInfos>().find,
-    findBy: new FindBy<IPurchaseOrderResponse, IPurchaseOrderFilters>().findBy,
+    findBy: new FindBy<
+      IPurchaseOrderResponse,
+      IPurchaseOrderFilters,
+      IPurchaseOrderInfos
+    >().findBy,
     create: new Create<IPurchaseOrder, IPurchaseOrderCreateResponse>().create,
     update: new Update<
       IPurchaseOrderUpdateContent,

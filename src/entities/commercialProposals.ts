@@ -172,12 +172,17 @@ export default function CommercialProposals (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<ICommercialProposalResponse, ICommercialProposalFilters>().all,
+    all: new All<
+      ICommercialProposalResponse,
+      ICommercialProposalFilters,
+      ICommercialProposalInfos
+    >().all,
     find: new Find<ICommercialProposalResponse, ICommercialProposalInfos>()
       .find,
     findBy: new FindBy<
       ICommercialProposalResponse,
-      ICommercialProposalFilters
+      ICommercialProposalFilters,
+      ICommercialProposalInfos
     >().findBy,
     create: new Create<ICommercialProposal, ICommercialProposalCreateResponse>()
       .create,

@@ -133,9 +133,10 @@ export default function BillsToPay (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IBillToPayResponse, IBillToPayFilters>().all,
+    all: new All<IBillToPayResponse, IBillToPayFilters, IBillToPayInfos>().all,
     find: new Find<IBillToPayResponse, IBillToPayInfos>().find,
-    findBy: new FindBy<IBillToPayResponse, IBillToPayFilters>().findBy,
+    findBy: new FindBy<IBillToPayResponse, IBillToPayFilters, IBillToPayInfos>()
+      .findBy,
     create: new Create<IBillToPay, IBillToPayCreateResponse>().create,
     update: new Update<IBillToPayUpdateContent, IBillToPayResponse>().update
   })

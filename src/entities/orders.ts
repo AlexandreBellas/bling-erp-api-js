@@ -233,9 +233,9 @@ export default function Orders (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IOrderResponse, IOrderFilters>().all,
+    all: new All<IOrderResponse, IOrderFilters, IOrderInfos>().all,
     find: new Find<IOrderResponse, IOrderInfos>().find,
-    findBy: new FindBy<IOrderResponse, IOrderFilters>().findBy,
+    findBy: new FindBy<IOrderResponse, IOrderFilters, IOrderInfos>().findBy,
     create: new Create<IOrder, IOrderResponse>().create,
     update: new Update<IOrder, IOrderResponse>().update
   })

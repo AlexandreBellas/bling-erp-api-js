@@ -35,9 +35,10 @@ export default function Deposits (api: IApiInstance) {
   }
 
   return Object.assign(config, {
-    all: new All<IDepositResponse, IDepositFilters>().all,
+    all: new All<IDepositResponse, IDepositFilters, IDepositInfos>().all,
     find: new Find<IDepositResponse, IDepositInfos>().find,
-    findBy: new FindBy<IDepositResponse, IDepositFilters>().findBy,
+    findBy: new FindBy<IDepositResponse, IDepositFilters, IDepositInfos>()
+      .findBy,
     create: new Create<IDeposit, IDepositResponse>().create,
     update: new Update<IDeposit, IDepositResponse>().update
   })
