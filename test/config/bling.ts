@@ -1,10 +1,12 @@
 // Overall configuration
-import { Bling } from '../../lib/bling'
-import { IBlingError } from '../../src/bling'
+import { Bling, IBlingError } from '../../src/bling'
 import { config } from 'dotenv'
 
 // Generators
 import contacts from '../generators/contacts'
+import billsToPay from '../generators/billsToPay'
+import paymentMethod from '../generators/paymentMethod'
+import purchaseOrders from '../generators/purchaseOrders'
 
 // Setup
 config()
@@ -18,7 +20,10 @@ const exampleSupplierProductId = process.env
   .EXAMPLE_SUPPLIER_PRODUCT_ID as string
 
 const generators = {
-  contacts
+  contacts,
+  billsToPay,
+  paymentMethod,
+  purchaseOrders
 }
 
 export {
