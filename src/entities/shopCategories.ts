@@ -21,9 +21,10 @@ export interface IShopCategoryResponse {
   descricaoVinculo: string
 }
 
-export default function ShopCategories (api: IApiInstance) {
+export default function ShopCategories (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'categoriaLoja',
     pluralName: 'categoriasLoja'
   }
@@ -41,12 +42,14 @@ export default function ShopCategories (api: IApiInstance) {
       endpoint: `categoriasLoja/${idLoja}`
     })
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     if (options) {
-      if (options.raw && options.page) {
+      if (raw && options.page) {
         return await allMethod.all({ raw: true, page: options.page })
       }
 
-      if (options.raw) {
+      if (raw) {
         return await allMethod.all({ raw: true })
       }
 
@@ -68,7 +71,9 @@ export default function ShopCategories (api: IApiInstance) {
       endpoint: `categoriasLoja/${idLoja}`
     })
 
-    if (options && options.raw) {
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
+    if (raw) {
       return await findMethod.find(idCategoria, { raw: true })
     } else {
       return await findMethod.find(idCategoria, { raw: false })
@@ -87,7 +92,9 @@ export default function ShopCategories (api: IApiInstance) {
       endpoint: `categoriasLoja/${idLoja}`
     })
 
-    if (options && options.raw) {
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
+    if (raw) {
       return await createMethod.create(data, { raw: true })
     } else {
       return await createMethod.create(data, { raw: false })
@@ -107,7 +114,9 @@ export default function ShopCategories (api: IApiInstance) {
       endpoint: `categoriasLoja/${idLoja}`
     })
 
-    if (options && options.raw) {
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
+    if (raw) {
       return await updateMethod.update(idCategoria, data, { raw: true })
     } else {
       return await updateMethod.update(idCategoria, data, { raw: false })

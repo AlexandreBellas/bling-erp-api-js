@@ -156,9 +156,10 @@ export interface IContractResponse {
   }[]
 }
 
-export default function Contracts (api: IApiInstance) {
+export default function Contracts (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'contrato',
     pluralName: 'contratos'
   }

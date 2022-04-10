@@ -119,9 +119,10 @@ export interface IBillToReceiveResponse {
   }
 }
 
-export default function BillsToReceive (api: IApiInstance) {
+export default function BillsToReceive (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'contareceber',
     pluralName: 'contasreceber'
   }

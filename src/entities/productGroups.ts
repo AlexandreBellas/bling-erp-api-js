@@ -18,9 +18,10 @@ export interface IGroupProductResponse {
   nomePai?: string
 }
 
-export default function GroupProducts (api: IApiInstance) {
+export default function GroupProducts (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'grupoprodutos',
     pluralName: 'gruposprodutos'
   }

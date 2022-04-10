@@ -3,7 +3,7 @@ import {
   IPluralEntity,
   IPluralError,
   ISingularEntity,
-  IDeleteError,
+  IShortenedError,
   IApiError
 } from '../interfaces/method'
 
@@ -16,9 +16,9 @@ export default class Find<IEntityResponse> extends Method {
    * @protected
    * @access protected
    * @async
-   * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
-   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
+   * @param options The options object.
+   * @param raw Return either raw data from Bling or beautified processed data.
    * @returns The deleted entity.
    */
   public async delete(
@@ -42,6 +42,7 @@ export default class Find<IEntityResponse> extends Method {
     }
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     const endpoint = this.endpoint || this.singularName
+    const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     const response = await this.api
       .delete(`/${endpoint}/${id}/json`)
@@ -60,11 +61,11 @@ export default class Find<IEntityResponse> extends Method {
     if (data.retorno.erros) {
       const errReturn = data.retorno as IPluralError
       let errData
-      if (options && options.raw) {
+      if (raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
-        const rawErrData = errReturn.erros as IDeleteError
+        const rawErrData = errReturn.erros as IShortenedError
 
         errData = Object.keys(rawErrData).map((code) => ({
           cod: code,
@@ -79,7 +80,7 @@ export default class Find<IEntityResponse> extends Method {
         'ERR_ENTITY_DELETION_FAILURE'
       )
     } else {
-      if (options && options.raw) {
+      if (raw) {
         return data
       } else {
         const rawResponse = data.retorno as IPluralEntity<IEntityResponse>

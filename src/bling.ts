@@ -49,6 +49,8 @@ export type IBlingError = IStandardBlingError
 
 export class Bling {
   #api: IApiInstance
+  #raw: boolean
+
   #borderos: IBorderos | undefined
   #customizedFields: ICustomizedFields | undefined
   #categories: ICategories | undefined
@@ -67,7 +69,7 @@ export class Bling {
   #paymentMethods: IPaymentMethods | undefined
   #productGroups: IProductGroups | undefined
 
-  constructor (apiKey: string) {
+  constructor (apiKey: string, options: { raw: boolean } = { raw: false }) {
     if (!apiKey || typeof apiKey !== 'string') {
       throw createError(
         "The API key wasn't correctly provided for Bling connection.",
@@ -76,6 +78,17 @@ export class Bling {
         'ERR_NO_API_KEY'
       )
     }
+
+    if (typeof options.raw !== 'boolean') {
+      throw createError(
+        'The raw attribute must be a boolean to configure the Bling connection.',
+        500,
+        options.raw,
+        'ERR_WRONG_BLING_RAW_ATTR'
+      )
+    }
+
+    this.#raw = options.raw
 
     const api = axios.create({
       baseURL: 'https://bling.com.br/Api/v2'
@@ -105,14 +118,14 @@ export class Bling {
 
   public borderos () {
     if (!this.#borderos) {
-      this.#borderos = Borderos(this.#api)
+      this.#borderos = Borderos(this.#api, this.#raw)
     }
     return this.#borderos
   }
 
   public customizedFields () {
     if (!this.#customizedFields) {
-      this.#customizedFields = CustomizedField(this.#api)
+      this.#customizedFields = CustomizedField(this.#api, this.#raw)
     }
     return this.#customizedFields
   }
@@ -123,7 +136,7 @@ export class Bling {
 
   public categories () {
     if (!this.#categories) {
-      this.#categories = Categories(this.#api)
+      this.#categories = Categories(this.#api, this.#raw)
     }
     return this.#categories
   }
@@ -134,7 +147,7 @@ export class Bling {
 
   public shopCategories () {
     if (!this.#shopCategories) {
-      this.#shopCategories = ShopCategories(this.#api)
+      this.#shopCategories = ShopCategories(this.#api, this.#raw)
     }
     return this.#shopCategories
   }
@@ -145,7 +158,7 @@ export class Bling {
 
   public contacts () {
     if (!this.#contacts) {
-      this.#contacts = Contacts(this.#api)
+      this.#contacts = Contacts(this.#api, this.#raw)
     }
     return this.#contacts
   }
@@ -156,7 +169,7 @@ export class Bling {
 
   public billsToPay () {
     if (!this.#billsToPay) {
-      this.#billsToPay = BillsToPay(this.#api)
+      this.#billsToPay = BillsToPay(this.#api, this.#raw)
     }
     return this.#billsToPay
   }
@@ -167,7 +180,7 @@ export class Bling {
 
   public billsToReceive () {
     if (!this.#billsToReceive) {
-      this.#billsToReceive = BillsToReceive(this.#api)
+      this.#billsToReceive = BillsToReceive(this.#api, this.#raw)
     }
     return this.#billsToReceive
   }
@@ -178,7 +191,7 @@ export class Bling {
 
   public contracts () {
     if (!this.#contracts) {
-      this.#contracts = Contracts(this.#api)
+      this.#contracts = Contracts(this.#api, this.#raw)
     }
     return this.#contracts
   }
@@ -189,14 +202,14 @@ export class Bling {
 
   public ctes () {
     if (!this.#ctes) {
-      this.#ctes = Ctes(this.#api)
+      this.#ctes = Ctes(this.#api, this.#raw)
     }
     return this.#ctes
   }
 
   public deposits () {
     if (!this.#deposits) {
-      this.#deposits = Deposits(this.#api)
+      this.#deposits = Deposits(this.#api, this.#raw)
     }
     return this.#deposits
   }
@@ -207,7 +220,7 @@ export class Bling {
 
   public paymentMethods () {
     if (!this.#paymentMethods) {
-      this.#paymentMethods = PaymentMethods(this.#api)
+      this.#paymentMethods = PaymentMethods(this.#api, this.#raw)
     }
     return this.#paymentMethods
   }
@@ -218,7 +231,7 @@ export class Bling {
 
   public productGroups () {
     if (!this.#productGroups) {
-      this.#productGroups = ProductGroups(this.#api)
+      this.#productGroups = ProductGroups(this.#api, this.#raw)
     }
     return this.#productGroups
   }
@@ -229,7 +242,7 @@ export class Bling {
 
   public invoices () {
     if (!this.#invoices) {
-      this.#invoices = Invoices(this.#api)
+      this.#invoices = Invoices(this.#api, this.#raw)
     }
     return this.#invoices
   }
@@ -240,7 +253,7 @@ export class Bling {
 
   public orders () {
     if (!this.#orders) {
-      this.#orders = Orders(this.#api)
+      this.#orders = Orders(this.#api, this.#raw)
     }
     return this.#orders
   }
@@ -251,7 +264,7 @@ export class Bling {
 
   public purchaseOrders () {
     if (!this.#purchaseOrders) {
-      this.#purchaseOrders = PurchaseOrders(this.#api)
+      this.#purchaseOrders = PurchaseOrders(this.#api, this.#raw)
     }
     return this.#purchaseOrders
   }
@@ -262,7 +275,7 @@ export class Bling {
 
   public products () {
     if (!this.#products) {
-      this.#products = Products(this.#api)
+      this.#products = Products(this.#api, this.#raw)
     }
     return this.#products
   }
@@ -273,7 +286,7 @@ export class Bling {
 
   public commercialProposals () {
     if (!this.#commercialProposals) {
-      this.#commercialProposals = CommercialProposals(this.#api)
+      this.#commercialProposals = CommercialProposals(this.#api, this.#raw)
     }
     return this.#commercialProposals
   }

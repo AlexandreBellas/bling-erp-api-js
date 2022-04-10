@@ -11,7 +11,7 @@ export interface ISingularEntity<T> {
 }
 
 export interface IPluralEntity<T> {
-  [plural: string]: ISingularEntity<T>[] | ISingularEntity<T>
+  [plural: string]: ISingularEntity<T>[] | ISingularEntity<T> | T
 }
 
 export interface ISingularError {
@@ -21,12 +21,12 @@ export interface ISingularError {
   }
 }
 
-export interface IDeleteError {
+export interface IShortenedError {
   [code: string]: string
 }
 
 export interface IPluralError {
-  erros: ISingularError[] | IDeleteError
+  erros: ISingularError[] | IShortenedError
 }
 
 export interface IPluralResponse<T> {

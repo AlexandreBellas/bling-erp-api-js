@@ -97,9 +97,10 @@ export interface IPaymentMethodResponse {
   fixa: string
 }
 
-export default function PaymentMethods (api: IApiInstance) {
+export default function PaymentMethods (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'formapagamento',
     pluralName: 'formaspagamento'
   }

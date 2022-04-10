@@ -4,7 +4,8 @@ import {
   IPluralError,
   ISingularEntity,
   ISingularError,
-  IApiError
+  IApiError,
+  IShortenedError
 } from '../interfaces/method'
 
 import Method from '../template/method'
@@ -18,9 +19,9 @@ export default class Create<IEntity, IEntityResponse> extends Method {
    * @protected
    * @access protected
    * @async
-   * @param endpoint The entity request endpoint.
    * @param data The data for the entity to be created.
-   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
+   * @param options The options object to define the response structure.
+   * @param raw Return either raw data from Bling or beautified processed data.
    * @returns The created entity.
    */
   public async create(
@@ -56,9 +57,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     }
 
     const xmlBuilder = new xml2js.Builder({ rootName: this.singularName })
-    const xml = xmlBuilder.buildObject({
-      ...data
-    })
+    const xml = xmlBuilder.buildObject(data)
 
     const params = {
       xml,
@@ -66,6 +65,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     }
 
     const endpoint = this.endpoint || this.singularName
+    const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     const response = await this.api
       .post(`/${endpoint}/json`, params)
@@ -79,15 +79,59 @@ export default class Create<IEntity, IEntityResponse> extends Method {
       })
 
     const responseData = response.data as IPluralResponse<IEntityResponse>
+
     if (responseData.retorno.erros) {
+      /**
+       * It can return as (most of the cases)
+       *  {
+       *    retorno: {
+       *      erros: {
+       *        cod: string,
+       *        msg: string
+       *      }[]
+       *    }
+       *  }
+       *
+       * or (paymentMethod case)
+       *  {
+       *    retorno: {
+       *      [cod: string]: string
+       *    }[]
+       *  }
+       *
+       * or (also paymentMethod case)
+       * {
+       *   retorno: string[]
+       * }
+       *  */
       const errReturn = responseData.retorno as IPluralError
       let errData
-      if (options && options.raw) {
+      if (raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
-        const rawErrData = errReturn.erros as ISingularError[]
-        errData = rawErrData.map((err: ISingularError) => err.erro)
+        const rawErrData = errReturn.erros as
+          | ISingularError[]
+          | IShortenedError
+          | string[]
+
+        if (Array.isArray(rawErrData)) {
+          if (typeof rawErrData[0] === 'string') {
+            const definedRawErrData = rawErrData as string[]
+            errData = definedRawErrData.map((err: string) => ({
+              cod: '_',
+              msg: err
+            }))
+          } else {
+            const definedRawErrData = rawErrData as ISingularError[]
+            errData = definedRawErrData.map((err: ISingularError) => err.erro)
+          }
+        } else {
+          errData = Object.keys(rawErrData).map((key) => ({
+            cod: key,
+            msg: rawErrData[key]
+          }))
+        }
       }
 
       throw createError(
@@ -97,17 +141,41 @@ export default class Create<IEntity, IEntityResponse> extends Method {
         'ERR_ENTITY_CREATION_FAILURE'
       )
     } else {
-      if (options && options.raw) {
+      if (raw) {
         return responseData
       } else {
         const rawResponse =
           responseData.retorno as IPluralEntity<IEntityResponse>
 
         if (Array.isArray(rawResponse[this.pluralName])) {
-          const rawEntity = rawResponse[
-            this.pluralName
-          ] as ISingularEntity<IEntityResponse>[]
-          return rawEntity[0][this.singularName]
+          /**
+           * It can return as (most of the cases)
+           *  {
+           *    retorno: {
+           *      [pluralName]: {
+           *        [singularName]: IEntityResponse
+           *      }[]
+           *    }
+           *  }
+           *
+           * or (paymentMethod case)
+           *  {
+           *    retorno: {
+           *      [pluralName]: IEntityResponse[]
+           *    }
+           *  }
+           *  */
+          const rawEntity = rawResponse[this.pluralName] as
+            | ISingularEntity<IEntityResponse>[]
+            | IEntityResponse[]
+
+          if (Object.keys(rawEntity[0]).length === 1) {
+            const rawReturn = rawEntity[0] as ISingularEntity<IEntityResponse>
+            return rawReturn[this.singularName] as IEntityResponse
+          } else {
+            const rawReturn = rawEntity[0] as IEntityResponse
+            return rawReturn
+          }
         } else {
           const rawEntity = rawResponse[
             this.pluralName

@@ -225,9 +225,10 @@ export interface IOrderResponse {
   }
 }
 
-export default function Orders (api: IApiInstance) {
+export default function Orders (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'pedido',
     pluralName: 'pedidos'
   }

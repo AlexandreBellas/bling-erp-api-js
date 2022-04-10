@@ -10,7 +10,7 @@ import {
 import Method from '../template/method'
 import createError from '../helpers/createError'
 
-import * as xml2js from 'xml2js'
+import xml2js from 'xml2js'
 
 export default class Update<IEntity, IEntityResponse> extends Method {
   /**
@@ -18,10 +18,10 @@ export default class Update<IEntity, IEntityResponse> extends Method {
    * @protected
    * @access protected
    * @async
-   * @param endpoint The entity request endpoint.
    * @param id The entity code or id.
    * @param data The data for the entity to be updated.
-   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
+   * @param options The options object.
+   * @param raw Return either raw data from Bling or beautified processed data.
    * @return The updated entity.
    */
   public async update(
@@ -66,15 +66,14 @@ export default class Update<IEntity, IEntityResponse> extends Method {
     }
 
     const xmlBuilder = new xml2js.Builder()
-    const xml = xmlBuilder.buildObject({
-      ...data
-    })
+    const xml = xmlBuilder.buildObject(data)
 
     const params = {
       xml
     }
 
     const endpoint = this.endpoint || this.singularName
+    const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     const response = await this.api
       .put(`/${endpoint}/${id}/json`, params)
@@ -93,7 +92,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
     if (responseData.retorno.erros) {
       const errReturn = responseData.retorno as IPluralError
       let errData
-      if (options && options.raw) {
+      if (raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
@@ -108,7 +107,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
         'ERR_ENTITY_UPDATING_FAILURE'
       )
     } else {
-      if (options && options.raw) {
+      if (raw) {
         return responseData
       } else {
         const rawResponse =

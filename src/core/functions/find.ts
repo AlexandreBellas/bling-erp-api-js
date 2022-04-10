@@ -15,10 +15,11 @@ export default class Find<IEntityResponse, IInfos> extends Method {
    * @protected
    * @access protected
    * @async
-   * @param endpoint The entity request endpoint.
    * @param id The entity id.
-   * @param params The query params for the request sent by the user.
-   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
+   * @param options The options object.
+   * @param infos Parameters to enhance the response data.
+   * @param params The params to filter or enhance the response.
+   * @param raw Return either raw data from Bling or beautified processed data.
    * @returns The found entity.
    */
   public async find(
@@ -50,6 +51,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
     }
 
     const endpoint = this.endpoint || this.singularName
+    const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     const response = await this.api.get(`/${endpoint}/${id}/json`, {
       params: options && options.params
@@ -59,7 +61,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
     if (data.retorno.erros) {
       const errReturn = data.retorno as IPluralError
       let errData
-      if (options && options.raw) {
+      if (raw) {
         errData = { retorno: errReturn }
       } else {
         // maybe enhance it to include JSON API standards?
@@ -74,7 +76,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
         'ERR_FIND_METHOD'
       )
     } else {
-      if (options && options.raw) {
+      if (raw) {
         return data
       } else {
         const rawResponse = data.retorno as IPluralEntity<IEntityResponse>

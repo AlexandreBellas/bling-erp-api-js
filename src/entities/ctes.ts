@@ -101,9 +101,10 @@ export interface ICteResponse {
   }
 }
 
-export default function Ctes (api: IApiInstance) {
+export default function Ctes (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'cte',
     pluralName: 'ctes'
   }
@@ -118,9 +119,11 @@ export default function Ctes (api: IApiInstance) {
   ) => {
     const findMethod = new Find<ICteResponse, ICteInfos>(config)
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
     if (options) {
-      if (options.raw) {
+      if (raw) {
         return await findMethod.find(`${numero}/${serie}`, {
           params: options.params,
           raw: true
@@ -145,9 +148,11 @@ export default function Ctes (api: IApiInstance) {
   ) => {
     const createMethod = new Create<ICte, ICteResponse>(config)
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
     if (options) {
-      if (options.raw) {
+      if (raw) {
         return await createMethod.create(data, { raw: true }, options.loja)
       } else {
         return await createMethod.create(data, { raw: false }, options.loja)
@@ -168,8 +173,10 @@ export default function Ctes (api: IApiInstance) {
       endpoint: `/cte/lancamento/contas/${id}`
     })
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
-    if (options && options.raw) {
+    if (raw) {
       return await createMethod.create(undefined, { raw: true })
     } else {
       return await createMethod.create(undefined, { raw: false })
@@ -187,8 +194,10 @@ export default function Ctes (api: IApiInstance) {
       endpoint: '/cte/estorno/contas'
     })
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
-    if (options && options.raw) {
+    if (raw) {
       return await deleteMethod.delete(id, { raw: true })
     } else {
       return await deleteMethod.delete(id, { raw: false })

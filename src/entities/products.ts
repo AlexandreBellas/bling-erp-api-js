@@ -197,9 +197,10 @@ export interface IProductDeleteResponse {
   mensagem: string
 }
 
-export default function Products (api: IApiInstance) {
+export default function Products (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'produto',
     pluralName: 'produtos'
   }
@@ -214,7 +215,9 @@ export default function Products (api: IApiInstance) {
       endpoint: `${config.singularName}/${id}`
     })
 
-    if (options && options.raw) {
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
+    if (raw) {
       return await createMethod.create(data, { raw: true })
     } else {
       return await createMethod.create(data, { raw: false })
@@ -231,9 +234,11 @@ export default function Products (api: IApiInstance) {
   ) => {
     const findMethod = new Find<IProductResponse, IProductInfos>(config)
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
     if (options) {
-      if (options.raw) {
+      if (raw) {
         return await findMethod.find(`${code}/${supplierId}`, {
           params: options.params,
           raw: true

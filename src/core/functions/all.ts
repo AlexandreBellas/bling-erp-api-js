@@ -15,10 +15,12 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
    * @private
    * @access private
    * @async
-   * @param endpoint The entity request endpoint.
-   * @param params The query params for the request sent by the user.
-   * @param raw Boolean value to return either raw data from Bling or beautified processed data.
-   * @returns An array of entities.
+   * @param params The params to filter or enhance the response.
+   * @param infos Parameters to enhance the response data.
+   * @param filters The filters used for the query.
+   * @param options The options object.
+   * @param raw Return either raw data from Bling or beautified processed data.
+   * @param page The response page with pagination is desired.
    */
 
   public async all(options?: {
@@ -26,8 +28,8 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
       filters?: IFilters
       infos?: IInfo
     }
-    page?: number
     raw?: false
+    page?: number
   }): Promise<IEntityResponse[]>
 
   public async all(options?: {
@@ -35,8 +37,8 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
       filters?: IFilters
       infos?: IInfo
     }
-    page?: number
     raw: true
+    page?: number
   }): Promise<IPluralResponse<IEntityResponse>>
 
   public async all (options?: {
@@ -44,8 +46,8 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
       filters?: IFilters
       infos?: IInfo
     }
-    page?: number
     raw?: boolean
+    page?: number
   }): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     const entities: IEntityResponse[] = []
 
@@ -73,6 +75,7 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
     }
 
     const endpoint = this.endpoint || this.pluralName
+    const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     let hasMore = true
     let reqCount = 0
@@ -109,7 +112,7 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
         // If there is an error different than 'not found'
         if (rawErrData.some((err) => err.erro.cod !== 14)) {
           let errData
-          if (options && options.raw) {
+          if (raw) {
             errData = { retorno: data }
           } else {
             // @TODO: maybe enhance it to include JSON API standards?
@@ -156,7 +159,7 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
       }
     }
 
-    if (options && options.raw) {
+    if (raw) {
       return {
         retorno: {
           [this.pluralName]: entities.map((entity) => ({

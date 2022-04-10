@@ -125,9 +125,10 @@ export interface IBillToPayResponse {
   }
 }
 
-export default function BillsToPay (api: IApiInstance) {
+export default function BillsToPay (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'contapagar',
     pluralName: 'contaspagar'
   }

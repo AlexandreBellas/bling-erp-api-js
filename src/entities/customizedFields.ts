@@ -20,9 +20,10 @@ export interface ICustomizedFieldResponse {
   }[]
 }
 
-export default async function CustomizedField (api: IApiInstance) {
+export default async function CustomizedField (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'campocustomizado',
     pluralName: 'camposcustomizados'
   }
@@ -38,7 +39,9 @@ export default async function CustomizedField (api: IApiInstance) {
       Record<string, never>
     >(config)
 
-    if (options && options.raw) {
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
+    if (raw) {
       return await findMethod.find(id, { raw: true })
     } else {
       return await findMethod.find(id, { raw: false })

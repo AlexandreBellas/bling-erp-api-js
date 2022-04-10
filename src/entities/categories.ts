@@ -21,9 +21,10 @@ export interface ICategoryResponse {
   idCategoriaPai: number
 }
 
-export default function Categories (api: IApiInstance) {
+export default function Categories (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'categoria',
     pluralName: 'categorias'
   }

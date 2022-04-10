@@ -132,9 +132,10 @@ export interface IPurchaseOrderUpdateResponse {
   mensagem: string
 }
 
-export default function PurchaseOrders (api: IApiInstance) {
+export default function PurchaseOrders (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'pedidocompra',
     pluralName: 'pedidoscompra'
   }

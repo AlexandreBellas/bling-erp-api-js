@@ -90,9 +90,10 @@ export interface IContactUpdateResponse {
   cpf_cnpj: string
 }
 
-export default function Contacts (api: IApiInstance) {
+export default function Contacts (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'contato',
     pluralName: 'contatos'
   }

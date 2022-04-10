@@ -5,12 +5,27 @@ import Method from '../template/method'
 import createError from '../helpers/createError'
 
 export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
+  /**
+   * Retrieve entities that match a certain filter.
+   * @private
+   * @access private
+   * @async
+   * @param params The params to filter or enhance the response.
+   * @param filters The filters used for the query.
+   * @param infos Parameters to enhance the response data.
+   * @param options The options object.
+   * @param raw Return either raw data from Bling or beautified processed data.
+   * @param page The response page with pagination is desired.
+   */
   public async findBy(
     params: {
       filters: IFilters
       infos?: IInfo
     },
-    options?: { raw?: false }
+    options?: {
+      raw?: false
+      page?: number
+    }
   ): Promise<IEntityResponse[]>
 
   public async findBy(
@@ -20,6 +35,7 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
     },
     options?: {
       raw: true
+      page?: number
     }
   ): Promise<IPluralResponse<IEntityResponse>>
 
@@ -30,6 +46,7 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
     },
     options?: {
       raw?: boolean
+      page?: number
     }
   ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     if (!params) {
@@ -50,8 +67,11 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
       )
     }
 
+    const raw = options && options.raw !== undefined ? options.raw : this.raw
+
     const config = {
       api: this.api,
+      raw,
       endpoint: this.endpoint,
       singularName: this.singularName,
       pluralName: this.pluralName
@@ -60,15 +80,16 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
     const allEntity = new All<IEntityResponse, IFilters, IInfo>(config)
 
     // @TODO: deal with interfaces problems to reuse code properly
-    if (options && options.raw) {
+    if (raw) {
       return await allEntity.all({
         params,
-        raw: true
+        raw: true,
+        page: options && options.page
       })
     } else {
       return await allEntity.all({
         params,
-        raw: false
+        page: options && options.page
       })
     }
   }

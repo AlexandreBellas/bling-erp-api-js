@@ -27,9 +27,10 @@ export interface IDepositResponse {
   desconsiderarSaldo: 'true' | 'false'
 }
 
-export default function Deposits (api: IApiInstance) {
+export default function Deposits (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'deposito',
     pluralName: 'depositos'
   }

@@ -164,9 +164,10 @@ export interface ICommercialProposalResponse {
   }
 }
 
-export default function CommercialProposals (api: IApiInstance) {
+export default function CommercialProposals (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'propostacomercial',
     pluralName: 'propostascomerciais'
   }

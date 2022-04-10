@@ -7,9 +7,10 @@ export interface IBorderoResponse {
   mensagem: string
 }
 
-export default function Borderos (api: IApiInstance) {
+export default function Borderos (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'bordero',
     pluralName: 'borderos'
   }

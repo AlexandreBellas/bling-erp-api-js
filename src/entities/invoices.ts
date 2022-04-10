@@ -249,9 +249,10 @@ export interface IInvoiceResponse {
   }
 }
 
-export default function Invoices (api: IApiInstance) {
+export default function Invoices (api: IApiInstance, raw: boolean) {
   const config = {
     api,
+    raw,
     singularName: 'notafiscal',
     pluralName: 'notasfiscais'
   }
@@ -265,8 +266,10 @@ export default function Invoices (api: IApiInstance) {
   ) => {
     const findMethod = new Find<IInvoiceResponse, IInvoiceInfos>(config)
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
-    if (options && options.raw) {
+    if (raw) {
       return await findMethod.find(`${numero}/${serie}`, { raw: true })
     } else {
       return await findMethod.find(`${numero}/${serie}`, { raw: false })
@@ -286,17 +289,29 @@ export default function Invoices (api: IApiInstance) {
       endpoint: `${config.singularName}/${numero}/${serie}`
     })
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
-    if (options && options.raw) {
-      return await createMethod.create(
-        {},
-        { raw: true },
-        {
-          sendEmail: options.sendEmail
-        }
-      )
+    if (options) {
+      if (raw) {
+        return await createMethod.create(
+          {},
+          { raw: true },
+          {
+            sendEmail: options.sendEmail
+          }
+        )
+      } else {
+        return await createMethod.create(
+          {},
+          { raw: false },
+          {
+            sendEmail: options.sendEmail
+          }
+        )
+      }
     } else {
-      return await createMethod.create({}, { raw: false })
+      return await createMethod.create({})
     }
   }
 
@@ -312,8 +327,10 @@ export default function Invoices (api: IApiInstance) {
       singularName: 'notaFiscal'
     })
 
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
     // @TODO: see how to reuse the code below
-    if (options && options.raw) {
+    if (raw) {
       return await createMethod.create(data, { raw: true })
     } else {
       return await createMethod.create(data, { raw: false })
