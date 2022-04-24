@@ -26,7 +26,7 @@ export interface IShortenedError {
 }
 
 export interface IPluralError {
-  erros: ISingularError[] | IShortenedError
+  erros: ISingularError[] | ISingularError | IShortenedError | string[]
 }
 
 export interface IPluralResponse<T> {

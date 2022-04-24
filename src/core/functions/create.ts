@@ -1,17 +1,16 @@
 import {
   IPluralResponse,
   IPluralEntity,
-  IPluralError,
   ISingularEntity,
-  ISingularError,
-  IApiError,
-  IShortenedError
+  IApiError
 } from '../interfaces/method'
 
 import Method from '../template/method'
 import createError from '../helpers/createError'
 
-import * as xml2js from 'xml2js'
+import xml2js from 'xml2js'
+import handleApiError from '../helpers/handleApiError'
+import handlePostApiError from '../helpers/handlePostApiError'
 
 export default class Create<IEntity, IEntityResponse> extends Method {
   /**
@@ -48,12 +47,13 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     ...restData: unknown[]
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     if (typeof data !== 'object' || Object.keys(data).length === 0) {
-      throw createError(
-        'The "data" argument must be a not empty object',
-        500,
+      throw createError({
+        name: 'BlingCreateError',
+        message: 'The "data" argument must be a not empty object',
+        status: '500',
         data,
-        'ERR_INCORRECT_DATA_ARG'
-      )
+        code: 'ERR_INCORRECT_CREATE_DATA'
+      })
     }
 
     const xmlBuilder = new xml2js.Builder({ rootName: this.singularName })
@@ -70,17 +70,24 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     const response = await this.api
       .post(`/${endpoint}/json`, params)
       .catch((err: IApiError) => {
-        throw createError(
-          `Error on create method during request call: ${err.message}`,
-          err.response?.status || 400,
-          err.response?.data || null,
-          err.code || 'ERR_POST_REQUEST_FAILURE'
-        )
+        const errorData = {
+          name: 'BlingRequestError',
+          message: `Error on create method during request call: ${err.message}`,
+          status: String(err.response?.status) || '400',
+          code: err.code || 'ERR_POST_REQUEST_FAILURE'
+        }
+
+        return handleApiError({
+          err,
+          errorData,
+          raw
+        })
       })
 
-    const responseData = response.data as IPluralResponse<IEntityResponse>
+    const rawData = response.data as IPluralResponse<IEntityResponse>
+    const responseData = rawData.retorno
 
-    if (responseData.retorno.erros) {
+    if (responseData.erros) {
       /**
        * It can return as (most of the cases)
        *  {
@@ -104,48 +111,23 @@ export default class Create<IEntity, IEntityResponse> extends Method {
        *   retorno: string[]
        * }
        *  */
-      const errReturn = responseData.retorno as IPluralError
-      let errData
-      if (raw) {
-        errData = { retorno: errReturn }
-      } else {
-        // maybe enhance it to include JSON API standards?
-        const rawErrData = errReturn.erros as
-          | ISingularError[]
-          | IShortenedError
-          | string[]
-
-        if (Array.isArray(rawErrData)) {
-          if (typeof rawErrData[0] === 'string') {
-            const definedRawErrData = rawErrData as string[]
-            errData = definedRawErrData.map((err: string) => ({
-              cod: '_',
-              msg: err
-            }))
-          } else {
-            const definedRawErrData = rawErrData as ISingularError[]
-            errData = definedRawErrData.map((err: ISingularError) => err.erro)
-          }
-        } else {
-          errData = Object.keys(rawErrData).map((key) => ({
-            cod: key,
-            msg: rawErrData[key]
-          }))
-        }
+      const errorData = {
+        name: 'BlingRequestError',
+        message: 'Error on create method after request call',
+        status: '400',
+        code: 'ERR_CREATE_METHOD_FAILURE'
       }
 
-      throw createError(
-        'Error on create method after request call',
-        400,
-        errData,
-        'ERR_ENTITY_CREATION_FAILURE'
-      )
+      return handlePostApiError({
+        rawData,
+        errorData,
+        raw
+      })
     } else {
       if (raw) {
-        return responseData
+        return rawData
       } else {
-        const rawResponse =
-          responseData.retorno as IPluralEntity<IEntityResponse>
+        const rawResponse = responseData as IPluralEntity<IEntityResponse>
 
         if (Array.isArray(rawResponse[this.pluralName])) {
           /**

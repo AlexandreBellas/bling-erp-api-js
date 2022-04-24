@@ -1,13 +1,14 @@
 import {
   IPluralResponse,
   IPluralEntity,
-  IPluralError,
   ISingularEntity,
-  ISingularError
+  IApiError
 } from '../interfaces/method'
 
 import Method from '../template/method'
 import createError from '../helpers/createError'
+import handleApiError from '../helpers/handleApiError'
+import handlePostApiError from '../helpers/handlePostApiError'
 
 export default class Find<IEntityResponse, IInfos> extends Method {
   /**
@@ -42,44 +43,58 @@ export default class Find<IEntityResponse, IInfos> extends Method {
     IEntityResponse | IEntityResponse[] | IPluralResponse<IEntityResponse>
   > {
     if (!id) {
-      throw createError(
-        'The "id" argument must be a number or string.',
-        500,
-        id,
-        'ERR_INCORRECT_ID_ARG'
-      )
+      throw createError({
+        name: 'BlingFindError',
+        message: 'The "id" argument must be a number or string.',
+        status: '500',
+        data: { id },
+        code: 'ERR_INCORRECT_FIND_ID'
+      })
     }
 
     const endpoint = this.endpoint || this.singularName
     const raw = options && options.raw !== undefined ? options.raw : this.raw
 
-    const response = await this.api.get(`/${endpoint}/${id}/json`, {
-      params: options && options.params
-    })
+    const response = await this.api
+      .get(`/${endpoint}/${id}/json`, {
+        params: options && options.params
+      })
+      .catch((err: IApiError) => {
+        const errorData = {
+          name: 'BlingRequestError',
+          message: `Error on find method during request call: ${err.message}`,
+          status: String(err.response?.status) || '400',
+          code: 'ERR_GET_REQUEST_FAILURE'
+        }
 
-    const data = response.data as IPluralResponse<IEntityResponse>
-    if (data.retorno.erros) {
-      const errReturn = data.retorno as IPluralError
-      let errData
-      if (raw) {
-        errData = { retorno: errReturn }
-      } else {
-        // maybe enhance it to include JSON API standards?
-        const rawErrData = errReturn.erros as ISingularError[]
-        errData = rawErrData.map((err: ISingularError) => err.erro)
+        return handleApiError({
+          err,
+          errorData,
+          raw
+        })
+      })
+
+    const rawData = response.data as IPluralResponse<IEntityResponse>
+    const responseData = rawData.retorno
+
+    if (responseData.erros) {
+      const errorData = {
+        name: 'BlingRequestError',
+        message: 'Error on find method after request call',
+        status: String(response.status),
+        code: 'ERR_FIND_METHOD_FAILURE'
       }
 
-      throw createError(
-        'Error on find method after request call',
-        response.status,
-        errData,
-        'ERR_FIND_METHOD'
-      )
+      return handlePostApiError({
+        rawData,
+        errorData,
+        raw
+      })
     } else {
       if (raw) {
-        return data
+        return rawData
       } else {
-        const rawResponse = data.retorno as IPluralEntity<IEntityResponse>
+        const rawResponse = responseData as IPluralEntity<IEntityResponse>
         const rawEntity = rawResponse[
           this.pluralName
         ] as ISingularEntity<IEntityResponse>[]

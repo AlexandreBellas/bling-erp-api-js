@@ -2,12 +2,14 @@ import {
   IPluralResponse,
   IPluralEntity,
   ISingularEntity,
-  ISingularError,
-  IApiError
+  IApiError,
+  IPluralError
 } from '../interfaces/method'
 
 import Method from '../template/method'
 import createError from '../helpers/createError'
+import packErrorsToJsonApi from '../helpers/packErrorsToJsonApi'
+import handleApiError from '../helpers/handleApiError'
 
 export default class All<IEntityResponse, IFilters, IInfo> extends Method {
   /**
@@ -52,27 +54,6 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
     const entities: IEntityResponse[] = []
 
     const params: { filters?: string; [key: string]: unknown } = {}
-    if (options && options.params) {
-      if (options.params.filters) {
-        const typedParams = options.params.filters as unknown as {
-          [key: string]: string
-        }
-        const filters = Object.keys(options.params.filters)
-          .map((key: string) =>
-            typedParams[key] ? `${key}[${typedParams[key]}]` : null
-          )
-          .filter((item) => !!item)
-          .join(';')
-
-        params.filters = filters
-      }
-
-      if (options.params.infos) {
-        for (const infoKey in options.params.infos) {
-          params[infoKey] = options.params.infos[infoKey]
-        }
-      }
-    }
 
     const endpoint = this.endpoint || this.pluralName
     const raw = options && options.raw !== undefined ? options.raw : this.raw
@@ -83,9 +64,33 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
 
     let isSinglePage = false
 
-    if (options && options.page) {
-      isSinglePage = true
-      page = options.page
+    if (options) {
+      if (options.params) {
+        if (options.params.filters) {
+          const typedParams = options.params.filters as unknown as {
+            [key: string]: string
+          }
+          const filters = Object.keys(options.params.filters)
+            .map((key: string) =>
+              typedParams[key] ? `${key}[${typedParams[key]}]` : null
+            )
+            .filter((item) => !!item)
+            .join(';')
+
+          params.filters = filters
+        }
+
+        if (options.params.infos) {
+          for (const infoKey in options.params.infos) {
+            params[infoKey] = options.params.infos[infoKey]
+          }
+        }
+      }
+
+      if (options.page) {
+        isSinglePage = true
+        page = options.page
+      }
     }
 
     while (hasMore) {
@@ -94,40 +99,52 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
           params
         })
         .catch((err: IApiError) => {
-          throw createError(
-            `Error on all method during request call: ${err.message}`,
-            err.response?.status || 400,
-            err.response?.data || null,
-            err.code || 'ERR_GET_REQUEST_FAILURE'
-          )
+          const errorData = {
+            name: 'BlingRequestError',
+            message: `Error on all method during request call: ${err.message}`,
+            status: String(err.response?.status) || '400',
+            code: 'ERR_GET_REQUEST_FAILURE'
+          }
+
+          return handleApiError({
+            err,
+            errorData,
+            raw
+          })
         })
 
       const rawData = response.data as IPluralResponse<IEntityResponse>
-      const data = rawData.retorno
+      const responseData = rawData.retorno
 
-      if (data.erros) {
+      if (responseData.erros) {
         hasMore = false
-        const rawErrData = data.erros as ISingularError[]
+
+        const pluralError = responseData as IPluralError
+        const jsonApiErrorObj = packErrorsToJsonApi(pluralError)
 
         // If there is an error different than 'not found'
-        if (rawErrData.some((err) => err.erro.cod !== 14)) {
-          let errData
-          if (raw) {
-            errData = { retorno: data }
-          } else {
-            // @TODO: maybe enhance it to include JSON API standards?
-            errData = rawErrData.map((err: ISingularError) => err.erro)
+        if (jsonApiErrorObj.errors.some((err) => err.code !== '14')) {
+          const errorData = {
+            name: 'BlingRequestError',
+            message: 'Error on all method after request call',
+            status: '400',
+            code: 'ERR_ALL_METHOD_FAILURE'
           }
 
-          throw createError(
-            'Error on all method after request call',
-            400,
-            errData,
-            'ERR_ENTITY_QUERY_FAILURE'
-          )
+          if (raw) {
+            throw createError({
+              ...errorData,
+              data: rawData
+            })
+          } else {
+            throw createError({
+              ...errorData,
+              data: jsonApiErrorObj
+            })
+          }
         }
       } else {
-        const rawNewEntities = data as IPluralEntity<IEntityResponse>
+        const rawNewEntities = responseData as IPluralEntity<IEntityResponse>
 
         const newEntities = rawNewEntities[
           this.pluralName

@@ -1,46 +1,45 @@
-export interface IBlingError extends Error {
-  status: number
-  data: unknown
+export interface IBlingErrorArgs {
+  name: string
+  message: string
+  status: string
+  data?: unknown
   code: string
+}
+
+export interface IBlingError extends Error {
+  name: string
+  status: string
+  code: string
+  data?: unknown
   toJSON: () => {
-    message: string
     name: string
-    stack?: string
-    data: unknown
+    message: string
     code: string
+    data?: unknown
+    stack?: string
   }
 }
 
 /**
  * Create an Error with the specified message, config, error code and status.
  *
- * @param message The error message.
- * @param status The error status.
- * @param data The error data.
- * @param [code] The error code (for example, 'E_CONN_ABORTED').
- * @returns The created error.
+ * @param {string} name The error name, default to 'BlingError'.
+ * @param {string} message The error message.
+ * @param {string} status The error status (for example, '500').
+ * @param {unknown} data The error data (for example, the API call response).
+ * @param {string} code The error code (for example, 'E_CONN_ABORTED').
+ * @returns {IBlingError} The created error.
  */
-export default function createError (
-  message: string,
-  status: number,
-  data: unknown,
-  code: string
-) {
-  const rawError = new Error(message)
+export default function createError (args: IBlingErrorArgs) {
+  const rawError = new Error(args.message)
 
   const error: IBlingError = {
     ...rawError,
-    message,
-    status,
-    data,
-    code,
+    ...args,
     toJSON: () => {
       return {
-        message,
-        name: rawError.name,
-        stack: rawError.stack,
-        data,
-        code
+        ...args,
+        stack: rawError.stack
       }
     }
   }

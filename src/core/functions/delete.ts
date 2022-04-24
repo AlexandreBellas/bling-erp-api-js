@@ -1,14 +1,14 @@
 import {
   IPluralResponse,
   IPluralEntity,
-  IPluralError,
   ISingularEntity,
-  IShortenedError,
   IApiError
 } from '../interfaces/method'
 
 import Method from '../template/method'
 import createError from '../helpers/createError'
+import handleApiError from '../helpers/handleApiError'
+import handlePostApiError from '../helpers/handlePostApiError'
 
 export default class Find<IEntityResponse> extends Method {
   /**
@@ -41,49 +41,57 @@ export default class Find<IEntityResponse> extends Method {
       raw?: boolean
     }
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+    if (!id || typeof id === 'object' || Array.isArray(id)) {
+      throw createError({
+        name: 'BlingDeleteError',
+        message: 'The "id" argument must be a number or string',
+        status: '500',
+        data: { id },
+        code: 'ERR_INCORRECT_DELETE_ID'
+      })
+    }
+
     const endpoint = this.endpoint || this.singularName
     const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     const response = await this.api
       .delete(`/${endpoint}/${id}/json`)
       .catch((err: IApiError) => {
-        const errResponse = err.response
+        const errorData = {
+          name: 'BlingRequestError',
+          message: `Error on delete method during request call: ${err.message}`,
+          status: String(err.response?.status) || '400',
+          code: err.code || 'ERR_DELETE_REQUEST_FAILURE'
+        }
 
-        throw createError(
-          `Error on delete method during request call: ${err.message}`,
-          err.response?.status || 400,
-          errResponse,
-          err.code || 'ERR_DELETE_REQUEST_FAILURE'
-        )
+        return handleApiError({
+          err,
+          errorData,
+          raw
+        })
       })
 
-    const data = response.data as IPluralResponse<IEntityResponse>
-    if (data.retorno.erros) {
-      const errReturn = data.retorno as IPluralError
-      let errData
-      if (raw) {
-        errData = { retorno: errReturn }
-      } else {
-        // maybe enhance it to include JSON API standards?
-        const rawErrData = errReturn.erros as IShortenedError
+    const rawData = response.data as IPluralResponse<IEntityResponse>
+    const responseData = rawData.retorno
 
-        errData = Object.keys(rawErrData).map((code) => ({
-          cod: code,
-          msg: rawErrData[code]
-        }))
+    if (responseData.erros) {
+      const errorData = {
+        name: 'BlingRequestError',
+        message: 'Error on delete method after request call',
+        status: '400',
+        code: 'ERR_DELETE_METHOD_FAILURE'
       }
 
-      throw createError(
-        'Error on delete method after request call',
-        response.status,
-        errData,
-        'ERR_ENTITY_DELETION_FAILURE'
-      )
+      return handlePostApiError({
+        rawData,
+        errorData,
+        raw
+      })
     } else {
       if (raw) {
-        return data
+        return rawData
       } else {
-        const rawResponse = data.retorno as IPluralEntity<IEntityResponse>
+        const rawResponse = responseData as IPluralEntity<IEntityResponse>
         const rawEntity = rawResponse[
           this.pluralName
         ] as ISingularEntity<IEntityResponse>[]

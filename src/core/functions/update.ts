@@ -1,9 +1,7 @@
 import {
   IPluralResponse,
   IPluralEntity,
-  IPluralError,
   ISingularEntity,
-  ISingularError,
   IApiError
 } from '../interfaces/method'
 
@@ -11,6 +9,8 @@ import Method from '../template/method'
 import createError from '../helpers/createError'
 
 import xml2js from 'xml2js'
+import handleApiError from '../helpers/handleApiError'
+import handlePostApiError from '../helpers/handlePostApiError'
 
 export default class Update<IEntity, IEntityResponse> extends Method {
   /**
@@ -48,21 +48,23 @@ export default class Update<IEntity, IEntityResponse> extends Method {
     }
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
     if (typeof data !== 'object' || Object.keys(data).length === 0) {
-      throw createError(
-        'The "data" argument must be a not empty object',
-        500,
+      throw createError({
+        name: 'BlingUpdateError',
+        message: 'The "data" argument must be a not empty object',
+        status: '500',
         data,
-        'ERR_INCORRECT_DATA_ARG'
-      )
+        code: 'ERR_INCORRECT_UPDATE_DATA'
+      })
     }
 
     if (!id || typeof id === 'object' || Array.isArray(id)) {
-      throw createError(
-        'The "id" argument must be a number or string',
-        500,
-        id,
-        'ERR_INCORRECT_DATA_ID'
-      )
+      throw createError({
+        name: 'BlingUpdateError',
+        message: 'The "id" argument must be a number or string',
+        status: '500',
+        data: { id },
+        code: 'ERR_INCORRECT_UPDATE_ID'
+      })
     }
 
     const xmlBuilder = new xml2js.Builder()
@@ -78,40 +80,41 @@ export default class Update<IEntity, IEntityResponse> extends Method {
     const response = await this.api
       .put(`/${endpoint}/${id}/json`, params)
       .catch((err: IApiError) => {
-        const errResponse = err.response
+        const errorData = {
+          name: 'BlingRequestError',
+          message: `Error on update method during request call: ${err.message}`,
+          status: String(err.response?.status) || '400',
+          code: err.code || 'ERR_PUT_REQUEST_FAILURE'
+        }
 
-        throw createError(
-          `Error on update method during request call: ${err.message}`,
-          err.response?.status || 400,
-          errResponse,
-          err.code || 'ERR_UPDATE_REQUEST_FAILURE'
-        )
+        return handleApiError({
+          err,
+          errorData,
+          raw
+        })
       })
 
-    const responseData = response.data as IPluralResponse<IEntityResponse>
-    if (responseData.retorno.erros) {
-      const errReturn = responseData.retorno as IPluralError
-      let errData
-      if (raw) {
-        errData = { retorno: errReturn }
-      } else {
-        // maybe enhance it to include JSON API standards?
-        const rawErrData = errReturn.erros as ISingularError[]
-        errData = rawErrData.map((err: ISingularError) => err.erro)
+    const rawData = response.data as IPluralResponse<IEntityResponse>
+    const responseData = rawData.retorno
+
+    if (responseData.erros) {
+      const errorData = {
+        name: 'BlingRequestError',
+        message: 'Error on update method after request call',
+        status: '400',
+        code: 'ERR_UPDATE_METHOD_FAILURE'
       }
 
-      throw createError(
-        'Error on update method after request call',
-        400,
-        errData,
-        'ERR_ENTITY_UPDATING_FAILURE'
-      )
+      return handlePostApiError({
+        rawData,
+        errorData,
+        raw
+      })
     } else {
       if (raw) {
-        return responseData
+        return rawData
       } else {
-        const rawResponse =
-          responseData.retorno as IPluralEntity<IEntityResponse>
+        const rawResponse = responseData as IPluralEntity<IEntityResponse>
 
         if (Array.isArray(rawResponse[this.pluralName])) {
           const rawEntity = rawResponse[

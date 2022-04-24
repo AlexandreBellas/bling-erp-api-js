@@ -71,21 +71,28 @@ export class Bling {
 
   constructor (apiKey: string, options: { raw: boolean } = { raw: false }) {
     if (!apiKey || typeof apiKey !== 'string') {
-      throw createError(
-        "The API key wasn't correctly provided for Bling connection.",
-        500,
-        apiKey,
-        'ERR_NO_API_KEY'
-      )
+      throw createError({
+        name: 'BlingModuleError',
+        message: "The API key wasn't correctly provided for Bling connection.",
+        status: '500',
+        data: {
+          apiKey: apiKey
+        },
+        code: 'ERR_NO_API_KEY'
+      })
     }
 
     if (typeof options.raw !== 'boolean') {
-      throw createError(
-        'The raw attribute must be a boolean to configure the Bling connection.',
-        500,
-        options.raw,
-        'ERR_WRONG_BLING_RAW_ATTR'
-      )
+      throw createError({
+        name: 'BlingModuleError',
+        message:
+          'The raw attribute must be a boolean to configure the Bling connection.',
+        status: '500',
+        data: {
+          raw: options.raw
+        },
+        code: 'ERR_WRONG_BLING_RAW_ATTR'
+      })
     }
 
     this.#raw = options.raw

@@ -50,21 +50,23 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
     }
   ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     if (!params) {
-      throw createError(
-        'No options passed to `.findBy()` method',
-        500,
-        params,
-        'ERR_INCORRECT_OPTIONS_ARG'
-      )
+      throw createError({
+        name: 'BlingFindByError',
+        message: 'No options passed to `.findBy()` method',
+        status: '500',
+        data: { params },
+        code: 'ERR_INCORRECT_FINDBY_OPTIONS'
+      })
     }
 
     if (!params.filters) {
-      throw createError(
-        'No filters passed to `.findBy()` method',
-        500,
-        params,
-        'ERR_INCORRECT_OPTIONS_FILTERS_ARG'
-      )
+      throw createError({
+        name: 'BlingFindByError',
+        message: 'No filters passed to `.findBy()` method',
+        status: '500',
+        data: { params },
+        code: 'ERR_INCORRECT_FINDBY_OPTION_FILTERS'
+      })
     }
 
     const raw = options && options.raw !== undefined ? options.raw : this.raw
