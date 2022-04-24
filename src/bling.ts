@@ -123,6 +123,10 @@ export class Bling {
     this.#api = api
   }
 
+  static create (apiKey: string, options: { raw: boolean } = { raw: false }) {
+    return new this(apiKey, options)
+  }
+
   public borderos () {
     if (!this.#borderos) {
       this.#borderos = Borderos(this.#api, this.#raw)
