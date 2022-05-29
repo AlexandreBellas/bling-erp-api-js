@@ -58,7 +58,7 @@ export interface INfce {
   pais?: string
   fone?: string
   email: string
-  transporte: {
+  transporte?: {
     transportadora?: string
     cpf_cnpj?: string
     ie_rg?: string
@@ -102,7 +102,7 @@ export interface INfce {
       origem: IOrigem
     }
   }[]
-  parcelas: {
+  parcelas?: {
     parcela: {
       dias?: number
       data?: Date
@@ -111,7 +111,7 @@ export interface INfce {
       forma?: string
     }
   }[]
-  nf_produtor_rural_referenciada: {
+  nf_produtor_rural_referenciada?: {
     numero?: string
     serie?: string
     ano_mes_emissao?: string
