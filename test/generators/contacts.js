@@ -14,14 +14,18 @@ const seed = chance()
 // Generator
 const contact = () => {
   const tipoPessoaValue = tipoPessoa()
+  const contribuinteVal = contribuinte()
 
   return {
     nome: seed.sentence({ words: 3 }),
     fantasia: nullable(seed.sentence({ words: 3 }), 30),
     tipoPessoa: tipoPessoaValue,
-    contribuinte: contribuinte(),
+    contribuinte: contribuinteVal,
     cpf_cnpj: cpfCnpj(tipoPessoaValue),
-    ie_rg: nullable(seed.integer({ min: 100000000000, max: 199999999999 }), 30),
+    ie_rg:
+      contribuinteVal === '2'
+        ? 'ISENTO'
+        : nullable(seed.integer({ min: 100000000000, max: 199999999999 }), 30),
     endereco: seed.street(),
     numero: nullable(seed.integer({ min: 1, max: 500 }), 30),
     complemento: seed.sentence(),
