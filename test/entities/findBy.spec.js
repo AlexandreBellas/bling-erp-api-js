@@ -1,6 +1,10 @@
-import { bling } from '../config/bling'
+import { bling, defaultBeforeEach } from '../config/bling'
 
 jest.setTimeout(60000)
+
+beforeEach(() => {
+  return defaultBeforeEach()
+})
 
 const table = [
   'commercialProposals',
@@ -13,8 +17,8 @@ const table = [
 
 const testError = (err) => {
   expect(err.message).toEqual('No options passed to `.findBy()` method')
-  expect(err.status).toEqual(500)
-  expect(err.code).toEqual('ERR_INCORRECT_OPTIONS_ARG')
+  expect(err.status).toEqual('500')
+  expect(err.code).toEqual('ERR_INCORRECT_FINDBY_OPTIONS')
 }
 
 test.concurrent.each(table)(

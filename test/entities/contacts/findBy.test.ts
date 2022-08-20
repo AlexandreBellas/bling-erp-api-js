@@ -1,6 +1,10 @@
-import { bling } from '../../config/bling'
+import { bling, defaultBeforeEach } from '../../config/bling'
 
 jest.setTimeout(60000)
+
+beforeEach(() => {
+  return defaultBeforeEach()
+})
 
 test('should find contacts when calling `.findBy()` method with options', async () => {
   await expect(

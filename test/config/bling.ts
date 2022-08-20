@@ -6,7 +6,7 @@ import { config } from 'dotenv'
 import contacts from '../generators/contacts'
 import billsToPay from '../generators/billsToPay'
 import billsToReceive from '../generators/billsToReceive'
-import paymentMethod from '../generators/paymentMethod'
+import paymentMethods from '../generators/paymentMethods'
 import purchaseOrders from '../generators/purchaseOrders'
 
 // Setup
@@ -24,9 +24,12 @@ const generators = {
   contacts,
   billsToPay,
   billsToReceive,
-  paymentMethod,
+  paymentMethods,
   purchaseOrders
 }
+
+const defaultBeforeEach = (time = 400) =>
+  new Promise((resolve) => setTimeout(resolve, time))
 
 export {
   Bling,
@@ -35,5 +38,6 @@ export {
   exampleContactId,
   exampleSupplierId,
   exampleSupplierProductId,
-  generators
+  generators,
+  defaultBeforeEach
 }

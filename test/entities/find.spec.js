@@ -1,6 +1,10 @@
-import { bling } from '../config/bling'
+import { bling, defaultBeforeEach } from '../config/bling'
 
 jest.setTimeout(60000)
+
+beforeEach(() => {
+  return defaultBeforeEach()
+})
 
 const table = [
   'commercialProposals',
@@ -13,8 +17,8 @@ const table = [
 
 const testIdError = (err) => {
   expect(err.message).toEqual('The "id" argument must be a number or string.')
-  expect(err.status).toEqual(500)
-  expect(err.code).toEqual('ERR_INCORRECT_ID_ARG')
+  expect(err.status).toEqual('500')
+  expect(err.code).toEqual('ERR_INCORRECT_FIND_ID')
 }
 
 test.concurrent.each(table)(

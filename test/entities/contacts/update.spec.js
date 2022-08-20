@@ -1,7 +1,11 @@
-import { bling, exampleContactId } from '../../config/bling'
-import gerarCpf from 'gerar-cpf'
+import { bling, exampleContactId, defaultBeforeEach } from '../../config/bling'
+import { CPF } from 'cpf_cnpj'
 
 jest.setTimeout(60000)
+
+beforeEach(() => {
+  return defaultBeforeEach()
+})
 
 const testError = (err, message, status, code) => {
   expect(err.message).toBe(message)
@@ -19,8 +23,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_UPDATE_DATA'
       )
     }
   }
@@ -36,8 +40,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_UPDATE_DATA'
       )
     }
   }
@@ -53,8 +57,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_UPDATE_DATA'
       )
     }
   }
@@ -70,8 +74,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_UPDATE_DATA'
       )
     }
   }
@@ -82,15 +86,15 @@ test.concurrent(
   async () => {
     try {
       await bling.contacts().update('', {
-        cpf_cnpj: gerarCpf()
+        cpf_cnpj: CPF.generate()
       })
       expect(false).toBe(true)
     } catch (err) {
       testError(
         err,
         'The "id" argument must be a number or string',
-        500,
-        'ERR_INCORRECT_DATA_ID'
+        '500',
+        'ERR_INCORRECT_UPDATE_ID'
       )
     }
   }
@@ -101,15 +105,15 @@ test.concurrent(
   async () => {
     try {
       await bling.contacts().update(0, {
-        cpf_cnpj: gerarCpf()
+        cpf_cnpj: CPF.generate()
       })
       expect(false).toBe(true)
     } catch (err) {
       testError(
         err,
         'The "id" argument must be a number or string',
-        500,
-        'ERR_INCORRECT_DATA_ID'
+        '500',
+        'ERR_INCORRECT_UPDATE_ID'
       )
     }
   }
@@ -120,15 +124,15 @@ test.concurrent(
   async () => {
     try {
       await bling.contacts().update(null, {
-        cpf_cnpj: gerarCpf()
+        cpf_cnpj: CPF.generate()
       })
       expect(false).toBe(true)
     } catch (err) {
       testError(
         err,
         'The "id" argument must be a number or string',
-        500,
-        'ERR_INCORRECT_DATA_ID'
+        '500',
+        'ERR_INCORRECT_UPDATE_ID'
       )
     }
   }
@@ -139,15 +143,15 @@ test.concurrent(
   async () => {
     try {
       await bling.contacts().update(null, {
-        cpf_cnpj: gerarCpf()
+        cpf_cnpj: CPF.generate()
       })
       expect(false).toBe(true)
     } catch (err) {
       testError(
         err,
         'The "id" argument must be a number or string',
-        500,
-        'ERR_INCORRECT_DATA_ID'
+        '500',
+        'ERR_INCORRECT_UPDATE_ID'
       )
     }
   }
@@ -160,7 +164,7 @@ test.concurrent(
       await bling.contacts().update(
         {},
         {
-          cpf_cnpj: gerarCpf()
+          cpf_cnpj: CPF.generate()
         }
       )
       expect(false).toBe(true)
@@ -168,8 +172,8 @@ test.concurrent(
       testError(
         err,
         'The "id" argument must be a number or string',
-        500,
-        'ERR_INCORRECT_DATA_ID'
+        '500',
+        'ERR_INCORRECT_UPDATE_ID'
       )
     }
   }
@@ -180,15 +184,15 @@ test.concurrent(
   async () => {
     try {
       await bling.contacts().update([], {
-        cpf_cnpj: gerarCpf()
+        cpf_cnpj: CPF.generate()
       })
       expect(false).toBe(true)
     } catch (err) {
       testError(
         err,
         'The "id" argument must be a number or string',
-        500,
-        'ERR_INCORRECT_DATA_ID'
+        '500',
+        'ERR_INCORRECT_UPDATE_ID'
       )
     }
   }

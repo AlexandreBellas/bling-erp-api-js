@@ -1,15 +1,19 @@
-import { bling, IBlingError, exampleContactId } from '../../config/bling'
+import {
+  bling,
+  IBlingError,
+  exampleContactId,
+  defaultBeforeEach
+} from '../../config/bling'
 
 jest.setTimeout(60000)
 
 beforeEach(() => {
-  const wait = new Promise((resolve) => setTimeout(resolve, 1000))
-  return wait
-}, 2000)
+  return defaultBeforeEach()
+})
 
 const testError = (err: IBlingError) => {
   expect(err.message).toEqual('Error on find method after request call')
-  expect(err.code).toEqual('ERR_FIND_METHOD')
+  expect(err.code).toEqual('ERR_FIND_METHOD_FAILURE')
 }
 
 test.concurrent(

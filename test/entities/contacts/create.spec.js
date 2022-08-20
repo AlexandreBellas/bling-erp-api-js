@@ -1,7 +1,11 @@
-import { bling } from '../../config/bling'
-import gerarCpf from 'gerar-cpf'
+import { bling, defaultBeforeEach } from '../../config/bling'
+import { CPF } from 'cpf_cnpj'
 
 jest.setTimeout(60000)
+
+beforeEach(() => {
+  return defaultBeforeEach()
+})
 
 const testError = (err, message, status, code) => {
   expect(err.message).toBe(message)
@@ -19,8 +23,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_CREATE_DATA'
       )
     }
   }
@@ -36,8 +40,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_CREATE_DATA'
       )
     }
   }
@@ -53,8 +57,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_CREATE_DATA'
       )
     }
   }
@@ -70,8 +74,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_CREATE_DATA'
       )
     }
   }
@@ -87,8 +91,8 @@ test.concurrent(
       testError(
         err,
         'The "data" argument must be a not empty object',
-        500,
-        'ERR_INCORRECT_DATA_ARG'
+        '500',
+        'ERR_INCORRECT_CREATE_DATA'
       )
     }
   }
@@ -97,7 +101,7 @@ test.concurrent(
 test("shouldn't create a contact when calling `.create()` method with missing name", async () => {
   try {
     await bling.contacts().create({
-      cpf_cnpj: gerarCpf(),
+      cpf_cnpj: CPF.generate(),
       tipoPessoa: 'F',
       contribuinte: '9'
     })
@@ -106,8 +110,8 @@ test("shouldn't create a contact when calling `.create()` method with missing na
     testError(
       err,
       'Error on create method after request call',
-      400,
-      'ERR_ENTITY_CREATION_FAILURE'
+      '400',
+      'ERR_CREATE_METHOD_FAILURE'
     )
   }
 })
@@ -124,8 +128,8 @@ test("shouldn't create a contact when calling `.create()` method with missing cp
     testError(
       err,
       'Error on create method after request call',
-      400,
-      'ERR_ENTITY_CREATION_FAILURE'
+      '400',
+      'ERR_CREATE_METHOD_FAILURE'
     )
   }
 })
@@ -134,7 +138,7 @@ test("shouldn't create a contact when calling `.create()` method with missing ti
   try {
     await bling.contacts().create({
       nome: 'Usuário Teste',
-      cpf_cnpj: gerarCpf(),
+      cpf_cnpj: CPF.generate(),
       contribuinte: '9'
     })
     expect(false).toBe(true)
@@ -142,8 +146,8 @@ test("shouldn't create a contact when calling `.create()` method with missing ti
     testError(
       err,
       'Error on create method after request call',
-      400,
-      'ERR_ENTITY_CREATION_FAILURE'
+      '400',
+      'ERR_CREATE_METHOD_FAILURE'
     )
   }
 })
@@ -152,7 +156,7 @@ test("shouldn't create a contact when calling `.create()` method with missing co
   try {
     await bling.contacts().create({
       nome: 'Usuário Teste',
-      cpf_cnpj: gerarCpf(),
+      cpf_cnpj: CPF.generate(),
       tipoPessoa: 'F'
     })
     expect(false).toBe(true)
@@ -160,8 +164,8 @@ test("shouldn't create a contact when calling `.create()` method with missing co
     testError(
       err,
       'Error on create method after request call',
-      400,
-      'ERR_ENTITY_CREATION_FAILURE'
+      '400',
+      'ERR_CREATE_METHOD_FAILURE'
     )
   }
 })
