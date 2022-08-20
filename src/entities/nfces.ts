@@ -208,7 +208,7 @@ export default function Nfces (api: IApiInstance, raw: boolean) {
       raw?: boolean
     }
   ) => {
-    const createMethod = new Create<Record<never, string>, INfceResponse>({
+    const createMethod = new Create<Record<never, string>, INfceSendResponse>({
       ...config,
       endpoint: `${config.singularName}/${numero}/${serie}`
     })
