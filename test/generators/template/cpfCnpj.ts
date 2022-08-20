@@ -1,6 +1,6 @@
-import { CPF, CNPJ } from 'cpf_cnpj'
+const { CNPJ, CPF } = require('cpf_cnpj')
 
-export default (tipoPessoa) => {
+export default (tipoPessoa: 'J' | 'F' | unknown) => {
   switch (tipoPessoa) {
     case 'J':
       return CNPJ.generate()
