@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 // Generators
 import contacts from '../generators/contacts'
 import billsToPay from '../generators/billsToPay'
+import billsToReceive from '../generators/billsToReceive'
 import paymentMethod from '../generators/paymentMethod'
 import purchaseOrders from '../generators/purchaseOrders'
 
@@ -22,6 +23,7 @@ const exampleSupplierProductId = process.env
 const generators = {
   contacts,
   billsToPay,
+  billsToReceive,
   paymentMethod,
   purchaseOrders
 }
