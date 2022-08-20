@@ -18,6 +18,7 @@ import Ctes from './entities/ctes'
 import PaymentMethods from './entities/paymentMethods'
 import ProductGroups from './entities/productGroups'
 import Nfces from './entities/nfces'
+import ServiceInvoices from './entities/serviceInvoices'
 
 import createError, {
   IBlingError as IStandardBlingError
@@ -46,6 +47,7 @@ export type ICtes = ReturnType<typeof Ctes>
 export type IPaymentMethods = ReturnType<typeof PaymentMethods>
 export type IProductGroups = ReturnType<typeof ProductGroups>
 export type INfces = ReturnType<typeof Nfces>
+export type IServiceInvoices = ReturnType<typeof ServiceInvoices>
 
 export type IBlingError = IStandardBlingError
 
@@ -71,6 +73,7 @@ export class Bling {
   #paymentMethods: IPaymentMethods | undefined
   #productGroups: IProductGroups | undefined
   #nfces: INfces | undefined
+  #serviceInvoices: IServiceInvoices | undefined
 
   constructor (apiKey: string, options: { raw: boolean } = { raw: false }) {
     if (!apiKey || typeof apiKey !== 'string') {
@@ -270,6 +273,17 @@ export class Bling {
 
   public notasFiscais () {
     return this.invoices()
+  }
+
+  public serviceInvoices () {
+    if (!this.#serviceInvoices) {
+      this.#serviceInvoices = ServiceInvoices(this.#api, this.#raw)
+    }
+    return this.#serviceInvoices
+  }
+
+  public notasServicos () {
+    return this.serviceInvoices()
   }
 
   public orders () {
