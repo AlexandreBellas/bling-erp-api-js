@@ -127,6 +127,35 @@ export default function BillsToReceive (api: IApiInstance, raw: boolean) {
     pluralName: 'contasreceber'
   }
 
+  const create = async (
+    data: IBillToReceive,
+    options?: {
+      raw?: boolean
+    }
+  ) => {
+    const createMethod = new Create<
+      IBillToReceive,
+      IBillToReceiveCreateResponse
+    >({
+      ...config,
+      endpoint: 'contareceber',
+      singularName: 'contaReceber'
+    })
+
+    const raw = options && options.raw !== undefined ? options.raw : config.raw
+
+    // @TODO: see how to reuse the code below
+    if (options) {
+      if (raw) {
+        return await createMethod.create(data, { raw: true })
+      } else {
+        return await createMethod.create(data, { raw: false })
+      }
+    } else {
+      return await createMethod.create(data, { raw: false })
+    }
+  }
+
   return Object.assign(config, {
     all: new All<
       IBillToReceiveResponse,
@@ -139,7 +168,7 @@ export default function BillsToReceive (api: IApiInstance, raw: boolean) {
       IBillToReceiveFilters,
       IBillToReceiveInfos
     >().findBy,
-    create: new Create<IBillToReceive, IBillToReceiveCreateResponse>().create,
+    create,
     update: new Update<IBillToReceiveUpdateContent, IBillToReceiveResponse>()
       .update
   })
