@@ -42,7 +42,7 @@ const generator = () => {
   obj.vencimentoOriginal = vencimentoOriginal
   obj.competencia = competencia
   obj.nroDocumento = nullable(
-    seed.string({ length: 25, alpha: false, symbols: false }),
+    seed.string({ length: 25, alpha: false, symbols: false, numeric: true }),
     90
   )
   obj.valor = seed.floating({ fixed: 2, min: 0, max: 1000 })
@@ -67,38 +67,38 @@ const generator = () => {
         : nullable(diaSemanaVencimento)
   }
 
-  if (seed.bool()) {
-    const tipoPessoa = seed.pickone(['F', 'J'])
-    let cpfCnpj
+  const tipoPessoa = seed.pickone(['F', 'J'])
+  let cpfCnpj
 
-    if (tipoPessoa === 'F') {
-      cpfCnpj = CPF.generate()
-    } else {
-      cpfCnpj = CNPJ.generate()
-    }
+  if (tipoPessoa === 'F') {
+    cpfCnpj = CPF.generate()
+  } else {
+    cpfCnpj = CNPJ.generate()
+  }
 
-    obj.cliente = {
-      nome: seed.sentence(),
-      // id = ''
-      cpf_cnpj: cpfCnpj,
-      tipoPessoa,
-      ie_rg: nullable(
-        seed.string({ alpha: false, symbols: false, length: 18 })
-      ),
-      endereco: nullable(seed.address()),
-      numero: nullable(seed.string({ symbols: false })),
-      complemento: nullable(seed.sentence()),
-      cidade: nullable(seed.city()),
-      bairro: nullable(seed.province()),
-      cep: nullable(seed.zip()),
-      uf: nullable(uf()),
-      email: nullable(seed.email()),
-      fone: nullable(seed.string({ length: 8, alpha: false, symbols: false })),
-      celular: nullable(
-        seed.string({ length: 9, alpha: false, symbols: false }),
-        10
-      )
-    }
+  obj.cliente = {
+    nome: seed.sentence(),
+    // id = ''
+    cpf_cnpj: cpfCnpj,
+    tipoPessoa,
+    ie_rg: nullable(
+      seed.string({ alpha: false, symbols: false, numeric: true, length: 18 })
+    ),
+    endereco: nullable(seed.address()),
+    numero: nullable(
+      seed.string({ alpha: true, symbols: false, numeric: true })
+    ),
+    complemento: nullable(seed.sentence()),
+    cidade: nullable(seed.city()),
+    bairro: nullable(seed.province()),
+    cep: nullable(seed.zip()),
+    uf: nullable(uf()),
+    email: nullable(seed.email()),
+    fone: nullable(seed.string({ length: 8, alpha: false, symbols: false })),
+    celular: nullable(
+      seed.string({ length: 9, alpha: false, symbols: false }),
+      10
+    )
   }
 
   return obj

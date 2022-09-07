@@ -14,7 +14,10 @@ const seed = chance()
 // Generator
 const contact = () => {
   const tipoPessoaValue = tipoPessoa()
-  const contribuinteVal = contribuinte()
+
+  // Avoid create cases with ie_rg !== null
+  const rawContribuinteVal = contribuinte()
+  const contribuinteVal = rawContribuinteVal === '1' ? '2' : rawContribuinteVal
 
   return {
     nome: seed.sentence({ words: 3 }),
@@ -22,10 +25,7 @@ const contact = () => {
     tipoPessoa: tipoPessoaValue,
     contribuinte: contribuinteVal,
     cpf_cnpj: cpfCnpj(tipoPessoaValue),
-    ie_rg:
-      contribuinteVal === '2'
-        ? 'ISENTO'
-        : nullable(seed.integer({ min: 100000000000, max: 199999999999 }), 30),
+    ie_rg: contribuinteVal === '2' && tipoPessoaValue !== 'E' ? 'ISENTO' : null,
     endereco: seed.street(),
     numero: nullable(seed.integer({ min: 1, max: 500 }), 30),
     complemento: seed.sentence(),
