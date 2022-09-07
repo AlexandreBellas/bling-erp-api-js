@@ -8,7 +8,6 @@ import {
 import Method from '../template/method'
 import createError from '../helpers/createError'
 import handleApiError from '../helpers/handleApiError'
-import handlePostApiError from '../helpers/handlePostApiError'
 
 export default class Find<IEntityResponse, IInfos> extends Method {
   /**
@@ -67,8 +66,10 @@ export default class Find<IEntityResponse, IInfos> extends Method {
           code: 'ERR_GET_REQUEST_FAILURE'
         }
 
+        const rawData = err.response?.data as IPluralResponse<IEntityResponse>
+
         return handleApiError({
-          err,
+          rawData,
           errorData,
           raw
         })
@@ -85,7 +86,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
         code: 'ERR_FIND_METHOD_FAILURE'
       }
 
-      return handlePostApiError({
+      return handleApiError({
         rawData,
         errorData,
         raw

@@ -1,29 +1,26 @@
-import { IPluralError, IPluralResponse, IApiError } from '../interfaces/method'
+import { IPluralResponse, IPluralError } from '../interfaces/method'
 
 import packErrorsToJsonApi from './packErrorsToJsonApi'
 import createError, { IBlingErrorArgs } from './createError'
 
 export default <IEntityResponse>(args: {
-  err: IApiError
+  rawData: IPluralResponse<IEntityResponse>
   errorData: IBlingErrorArgs
   raw?: boolean
 }) => {
-  const rawData = args.err.response?.data as IPluralResponse<IEntityResponse>
+  const pluralError = args.rawData.retorno as IPluralError
 
   if (args.raw) {
     throw createError({
       ...args.errorData,
-      data: rawData || null
+      data: args.rawData || null
     })
   } else {
-    const rawErrorsArray = rawData.retorno as IPluralError
-    const data = {
-      errors: packErrorsToJsonApi(rawErrorsArray)
-    }
+    const jsonApiErrorArr = packErrorsToJsonApi(pluralError)
 
     throw createError({
       ...args.errorData,
-      data
+      data: jsonApiErrorArr
     })
   }
 }

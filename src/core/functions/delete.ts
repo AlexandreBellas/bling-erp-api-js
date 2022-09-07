@@ -8,7 +8,6 @@ import {
 import Method from '../template/method'
 import createError from '../helpers/createError'
 import handleApiError from '../helpers/handleApiError'
-import handlePostApiError from '../helpers/handlePostApiError'
 
 export default class Find<IEntityResponse> extends Method {
   /**
@@ -64,8 +63,10 @@ export default class Find<IEntityResponse> extends Method {
           code: err.code || 'ERR_DELETE_REQUEST_FAILURE'
         }
 
+        const rawData = err.response?.data as IPluralResponse<IEntityResponse>
+
         return handleApiError({
-          err,
+          rawData,
           errorData,
           raw
         })
@@ -82,7 +83,7 @@ export default class Find<IEntityResponse> extends Method {
         code: 'ERR_DELETE_METHOD_FAILURE'
       }
 
-      return handlePostApiError({
+      return handleApiError({
         rawData,
         errorData,
         raw

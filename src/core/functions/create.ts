@@ -1,3 +1,5 @@
+import xml2js from 'xml2js'
+
 import {
   IPluralResponse,
   IPluralEntity,
@@ -6,11 +8,10 @@ import {
 } from '../interfaces/method'
 
 import Method from '../template/method'
-import createError from '../helpers/createError'
 
-import xml2js from 'xml2js'
+import createError from '../helpers/createError'
 import handleApiError from '../helpers/handleApiError'
-import handlePostApiError from '../helpers/handlePostApiError'
+import convertArraysToObj from '../helpers/convertArraysToObj'
 
 export default class Create<IEntity, IEntityResponse> extends Method {
   /**
@@ -29,7 +30,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
       raw?: false
     },
     ...restData: unknown[]
-  ): Promise<IEntityResponse>
+  ): Promise<IEntityResponse[]>
 
   public async create(
     data: IEntity,
@@ -45,7 +46,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
       raw?: boolean
     },
     ...restData: unknown[]
-  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+  ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
     if (typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError({
         name: 'BlingCreateError',
@@ -57,7 +58,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     }
 
     const xmlBuilder = new xml2js.Builder({ rootName: this.singularName })
-    const xml = xmlBuilder.buildObject(data)
+    const xml = xmlBuilder.buildObject(convertArraysToObj(data))
 
     const params = {
       xml,
@@ -77,11 +78,30 @@ export default class Create<IEntity, IEntityResponse> extends Method {
           code: err.code || 'ERR_POST_REQUEST_FAILURE'
         }
 
-        return handleApiError({
-          err,
-          errorData,
-          raw
-        })
+        const rawData = err.response?.data as
+          | IPluralResponse<IEntityResponse>
+          | ''
+
+        if (rawData === '') {
+          console.log(err.response?.data)
+          throw createError({
+            ...errorData,
+            data: {
+              errors: [
+                {
+                  title: 'Empty return',
+                  detail: 'The request has gotten an empty return.'
+                }
+              ]
+            }
+          })
+        } else {
+          return handleApiError({
+            rawData,
+            errorData,
+            raw
+          })
+        }
       })
 
     const rawData = response.data as IPluralResponse<IEntityResponse>
@@ -118,7 +138,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
         code: 'ERR_CREATE_METHOD_FAILURE'
       }
 
-      return handlePostApiError({
+      return handleApiError({
         rawData,
         errorData,
         raw
@@ -152,17 +172,18 @@ export default class Create<IEntity, IEntityResponse> extends Method {
             | IEntityResponse[]
 
           if (Object.keys(rawEntity[0]).length === 1) {
-            const rawReturn = rawEntity[0] as ISingularEntity<IEntityResponse>
-            return rawReturn[this.singularName] as IEntityResponse
+            const arrRawReturn = rawEntity as ISingularEntity<IEntityResponse>[]
+            return arrRawReturn.map(
+              (entity) => entity[this.singularName]
+            ) as IEntityResponse[]
           } else {
-            const rawReturn = rawEntity[0] as IEntityResponse
-            return rawReturn
+            return rawEntity as IEntityResponse[]
           }
         } else {
           const rawEntity = rawResponse[
             this.pluralName
           ] as ISingularEntity<IEntityResponse>
-          return rawEntity[this.singularName]
+          return [rawEntity[this.singularName]]
         }
       }
     }

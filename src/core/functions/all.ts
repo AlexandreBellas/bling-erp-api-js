@@ -106,8 +106,10 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
             code: 'ERR_GET_REQUEST_FAILURE'
           }
 
+          const rawData = err.response?.data as IPluralResponse<IEntityResponse>
+
           return handleApiError({
-            err,
+            rawData,
             errorData,
             raw
           })

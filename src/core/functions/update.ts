@@ -1,3 +1,5 @@
+import xml2js from 'xml2js'
+
 import {
   IPluralResponse,
   IPluralEntity,
@@ -6,11 +8,10 @@ import {
 } from '../interfaces/method'
 
 import Method from '../template/method'
-import createError from '../helpers/createError'
 
-import xml2js from 'xml2js'
+import createError from '../helpers/createError'
 import handleApiError from '../helpers/handleApiError'
-import handlePostApiError from '../helpers/handlePostApiError'
+import convertArraysToObj from '../helpers/convertArraysToObj'
 
 export default class Update<IEntity, IEntityResponse> extends Method {
   /**
@@ -68,7 +69,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
     }
 
     const xmlBuilder = new xml2js.Builder()
-    const xml = xmlBuilder.buildObject(data)
+    const xml = xmlBuilder.buildObject(convertArraysToObj(data))
 
     const params = {
       xml
@@ -87,8 +88,10 @@ export default class Update<IEntity, IEntityResponse> extends Method {
           code: err.code || 'ERR_PUT_REQUEST_FAILURE'
         }
 
+        const rawData = err.response?.data as IPluralResponse<IEntityResponse>
+
         return handleApiError({
-          err,
+          rawData,
           errorData,
           raw
         })
@@ -105,7 +108,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
         code: 'ERR_UPDATE_METHOD_FAILURE'
       }
 
-      return handlePostApiError({
+      return handleApiError({
         rawData,
         errorData,
         raw
