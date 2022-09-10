@@ -114,6 +114,17 @@ const cities = [
   }
 ]
 
+/**
+ * Generates a Brazilian city name given a Brazilian UF.
+ *
+ * @author Alexandre Batistella
+ * @version 1.0.0
+ * @since 4.0.0
+ *
+ * @param {string} uf The UF to choose a city in.
+ *
+ * @returns {string} The city name.
+ */
 export default (uf: ReturnType<typeof ufs>) => {
   const filteredCities = cities
     .filter((city) => city.sigla === uf)
