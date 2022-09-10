@@ -3,6 +3,7 @@ import { Bling, IBlingError } from '../../src/bling'
 import { config } from 'dotenv'
 
 // Generators
+import categories from '../generators/categories'
 import contacts from '../generators/contacts'
 import billsToPay from '../generators/billsToPay'
 import billsToReceive from '../generators/billsToReceive'
@@ -21,6 +22,7 @@ const exampleSupplierProductId = process.env
   .EXAMPLE_SUPPLIER_PRODUCT_ID as string
 
 const generators = {
+  categories,
   contacts,
   billsToPay,
   billsToReceive,
