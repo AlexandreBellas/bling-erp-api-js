@@ -3,10 +3,11 @@ import { Bling, IBlingError } from '../../src/bling'
 import { config } from 'dotenv'
 
 // Generators
-import categories from '../generators/categories'
-import contacts from '../generators/contacts'
 import billsToPay from '../generators/billsToPay'
 import billsToReceive from '../generators/billsToReceive'
+import categories from '../generators/categories'
+import contacts from '../generators/contacts'
+import deposits from '../generators/deposits'
 import paymentMethods from '../generators/paymentMethods'
 import purchaseOrders from '../generators/purchaseOrders'
 
@@ -26,6 +27,7 @@ const generators = {
   contacts,
   billsToPay,
   billsToReceive,
+  deposits,
   paymentMethods,
   purchaseOrders
 }
