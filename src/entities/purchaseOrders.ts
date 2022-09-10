@@ -141,9 +141,8 @@ export default function PurchaseOrders (api: IApiInstance, raw: boolean) {
   }
 
   return Object.assign(config, {
-    // @TODO: enhance this meme response from all() method
     all: new All<
-      IPurchaseOrderResponse[],
+      IPurchaseOrderResponse,
       IPurchaseOrderFilters,
       IPurchaseOrderInfos
     >().all,
