@@ -12,7 +12,7 @@ import contribuinte from './template/contribuinte'
 const seed = chance()
 
 // Generator
-const contact = () => {
+const generator = () => {
   const tipoPessoaValue = tipoPessoa()
 
   // Avoid create cases with ie_rg !== null
@@ -42,4 +42,4 @@ const contact = () => {
   }
 }
 
-export default contact
+export default generator
