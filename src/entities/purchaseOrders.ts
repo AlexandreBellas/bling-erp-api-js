@@ -47,16 +47,16 @@ export interface IPurchaseOrder {
       un?: 'pc' | 'un' | 'cx'
       qtde: number
       valor: number
-    }[]
-  }
+    }
+  }[]
   parcelas?: {
     parcela?: {
       nrodias: number
       valor: number
       obs?: string
       idformapagamento: number
-    }[]
-  }
+    }
+  }[]
 }
 
 export interface IPurchaseOrderUpdateContent {

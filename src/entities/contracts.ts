@@ -81,8 +81,8 @@ export interface IContract {
     anexo: {
       filename: string
       data: string
-    }[]
-  }
+    }
+  }[]
   diaVencimento?: string
 }
 

@@ -48,8 +48,8 @@ export interface ICommercialProposal {
       un?: string
       qtde: number
       valorUnidade: number | string
-    }[]
-  }
+    }
+  }[]
   transporte?: {
     transportadora?: string
     tipoFrete?: 'R' | 'D' | 'T' | '3' | '4' | '5'
@@ -63,8 +63,8 @@ export interface ICommercialProposal {
       formaPagamento: {
         id: number
       }
-    }[]
-  }
+    }
+  }[]
 }
 
 export interface ICommercialProposalUpdateContent {

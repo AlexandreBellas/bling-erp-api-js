@@ -55,8 +55,8 @@ export interface IOrder {
       volume: {
         servico: string
         codigoRastreamento?: string
-      }[]
-    }
+      }
+    }[]
   }
   itens?: {
     item?: {
@@ -66,8 +66,8 @@ export interface IOrder {
       qtde: number
       vlr_unit: number
       vlr_desconto?: number
-    }[]
-  }
+    }
+  }[]
   idFormaPagamento?: number
   parcelas?: {
     parcela?: {
@@ -78,8 +78,8 @@ export interface IOrder {
       forma_pagamento?: {
         id?: number
       }
-    }[]
-  }
+    }
+  }[]
   vlr_frete?: number
   vlr_desconto?: string
   obs?: string
