@@ -47,7 +47,7 @@ export default class Create<IEntity, IEntityResponse> extends Method {
     },
     ...restData: unknown[]
   ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
-    if (typeof data !== 'object' || Object.keys(data).length === 0) {
+    if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError({
         name: 'BlingCreateError',
         message: 'The "data" argument must be a not empty object',

@@ -48,7 +48,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
       raw?: boolean
     }
   ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
-    if (typeof data !== 'object' || Object.keys(data).length === 0) {
+    if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError({
         name: 'BlingUpdateError',
         message: 'The "data" argument must be a not empty object',
@@ -68,7 +68,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
       })
     }
 
-    const xmlBuilder = new xml2js.Builder()
+    const xmlBuilder = new xml2js.Builder({ rootName: this.singularName })
     const xml = xmlBuilder.buildObject(convertArraysToObj(data))
 
     const params = {
