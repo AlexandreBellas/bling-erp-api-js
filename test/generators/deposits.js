@@ -6,11 +6,21 @@ import nullable from './helpers/nullable'
 const seed = chance()
 
 // Generator
-const generator = () => ({
-  descricao: nullable(seed.sentence({ words: 5 })),
-  desconsiderarSaldo: nullable(seed.bool({ likelihood: 20 })),
-  depositoPadrao: nullable(seed.bool({ likelihood: 5 })),
-  situacao: nullable(seed.pickone(['A', 'I']))
-})
+const generator = () => {
+  const obj = {}
+
+  obj.descricao = seed.sentence({ words: 5 })
+  obj.desconsiderarSaldo = nullable(seed.bool({ likelihood: 20 }))
+  obj.depositoPadrao = nullable(seed.bool({ likelihood: 5 }))
+  obj.situacao = seed.pickone(['A', 'I'])
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === null) {
+      delete obj[key]
+    }
+  })
+
+  return obj
+}
 
 export default generator
