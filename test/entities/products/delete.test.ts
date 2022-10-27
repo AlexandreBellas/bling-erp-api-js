@@ -9,8 +9,10 @@ test('should delete a product when calling `.delete()` method with an existent i
     codigo: uuidv4()
   })
 
-  if (product.codigo) {
-    await expect(bling.products().delete(product.codigo)).resolves.toBeDefined()
+  if (product[0].codigo) {
+    await expect(
+      bling.products().delete(product[0].codigo)
+    ).resolves.toBeDefined()
   } else {
     expect(false).toBe(true)
   }

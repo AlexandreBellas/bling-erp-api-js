@@ -21,7 +21,12 @@ for (let i = 0; i < runs; i++) {
         expect(promise).toBeDefined()
         expect(promise).toBeTruthy()
       } catch (err) {
-        fail(`name: ${name}, ${JSON.stringify(entity)}, ${err.data.errors}`)
+        console.log(
+          `name: ${name}, ${JSON.stringify(entity)}, ${JSON.stringify(
+            err.data.errors
+          )}`
+        )
+        expect(false).toBe(true)
       }
     }
   )

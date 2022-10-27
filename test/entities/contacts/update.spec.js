@@ -1,4 +1,4 @@
-import { bling, exampleContactId, defaultBeforeEach } from '../../config/bling'
+import { bling, defaultBeforeEach, generators } from '../../config/bling'
 import { CPF } from 'cpf_cnpj'
 
 jest.setTimeout(60000)
@@ -13,73 +13,65 @@ const testError = (err, message, status, code) => {
   expect(err.code).toBe(code)
 }
 
-test.concurrent(
-  "shouldn't update a contact when calling `.update()` method with data as string",
-  async () => {
-    try {
-      await bling.contacts().update(exampleContactId, '')
-      expect(false).toBe(true)
-    } catch (err) {
-      testError(
-        err,
-        'The "data" argument must be a not empty object',
-        '500',
-        'ERR_INCORRECT_UPDATE_DATA'
-      )
-    }
+test("shouldn't update a contact when calling `.update()` method with data as string", async () => {
+  try {
+    const contact = await bling.contacts().create(generators.contacts())
+    await bling.contacts().update(contact[0].id, '')
+    expect(false).toBe(true)
+  } catch (err) {
+    testError(
+      err,
+      'The "data" argument must be a not empty object',
+      '500',
+      'ERR_INCORRECT_UPDATE_DATA'
+    )
   }
-)
+})
 
-test.concurrent(
-  "shouldn't update a contact when calling `.update()` method with data as number",
-  async () => {
-    try {
-      await bling.contacts().update(exampleContactId, 123)
-      expect(false).toBe(true)
-    } catch (err) {
-      testError(
-        err,
-        'The "data" argument must be a not empty object',
-        '500',
-        'ERR_INCORRECT_UPDATE_DATA'
-      )
-    }
+test("shouldn't update a contact when calling `.update()` method with data as number", async () => {
+  try {
+    const contact = await bling.contacts().create(generators.contacts())
+    await bling.contacts().update(contact[0].id, 123)
+    expect(false).toBe(true)
+  } catch (err) {
+    testError(
+      err,
+      'The "data" argument must be a not empty object',
+      '500',
+      'ERR_INCORRECT_UPDATE_DATA'
+    )
   }
-)
+})
 
-test.concurrent(
-  "shouldn't update a contact when calling `.update()` method with data as array",
-  async () => {
-    try {
-      await bling.contacts().update(exampleContactId, [])
-      expect(false).toBe(true)
-    } catch (err) {
-      testError(
-        err,
-        'The "data" argument must be a not empty object',
-        '500',
-        'ERR_INCORRECT_UPDATE_DATA'
-      )
-    }
+test("shouldn't update a contact when calling `.update()` method with data as array", async () => {
+  try {
+    const contact = await bling.contacts().create(generators.contacts())
+    await bling.contacts().update(contact[0].id, [])
+    expect(false).toBe(true)
+  } catch (err) {
+    testError(
+      err,
+      'The "data" argument must be a not empty object',
+      '500',
+      'ERR_INCORRECT_UPDATE_DATA'
+    )
   }
-)
+})
 
-test.concurrent(
-  "shouldn't update a contact when calling `.update()` method with data as an empty object",
-  async () => {
-    try {
-      await bling.contacts().update(exampleContactId, {})
-      expect(false).toBe(true)
-    } catch (err) {
-      testError(
-        err,
-        'The "data" argument must be a not empty object',
-        '500',
-        'ERR_INCORRECT_UPDATE_DATA'
-      )
-    }
+test("shouldn't update a contact when calling `.update()` method with data as an empty object", async () => {
+  try {
+    const contact = await bling.contacts().create(generators.contacts())
+    await bling.contacts().update(contact[0].id, {})
+    expect(false).toBe(true)
+  } catch (err) {
+    testError(
+      err,
+      'The "data" argument must be a not empty object',
+      '500',
+      'ERR_INCORRECT_UPDATE_DATA'
+    )
   }
-)
+})
 
 test.concurrent(
   "shouldn't update a contact when calling `.update()` method with id as an empty string",
@@ -199,16 +191,16 @@ test.concurrent(
 )
 
 test('should update a contact when calling `.update()` method with proper parameters', async () => {
-  const contact = await bling
-    .contacts()
-    .find(exampleContactId, { params: { identificador: 2 } })
+  const rawContact = generators.contacts()
+  const contact = await bling.contacts().create(rawContact)
 
   await expect(
-    bling.contacts().update(exampleContactId, {
+    bling.contacts().update(contact[0].id, {
       nome: 'Usuário atualizado',
-      cpf_cnpj: contact.cnpj,
-      contribuinte: contact.contribuinte,
-      tipoPessoa: contact.tipo
+      cpf_cnpj: rawContact.cpf_cnpj,
+      contribuinte: rawContact.contribuinte,
+      tipoPessoa: rawContact.tipoPessoa,
+      ie_rg: rawContact.ie_rg
     })
   ).resolves.toBeDefined()
 })
