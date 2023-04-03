@@ -163,13 +163,17 @@ export interface IProductResponse {
   dataValidade: string
   spedTipoItem?: string
   imagem?: {
-    // imagem = S
+    /**
+     * imagem = 'S'
+     */
     link: string
     validade: string
     tipoArmazenamento: 'interno' | 'externo'
   }[]
   produtoLoja?: {
-    // loja !== undefined
+    /**
+     * loja !== undefined
+     */
     idProdutoLoja: string
     preco: {
       preco: number
@@ -178,10 +182,15 @@ export interface IProductResponse {
     dataInclusao: string
     dataAlteracao: string
   }
-  codigopai?: string
-  estoqueAtual: number // estoque = 'S'
+  codigoPai?: string
+  /**
+   * estoque = 'S'
+   */
+  estoqueAtual: number
   depositos?: {
-    // estoque = 'S'
+    /**
+     * estoque = 'S'
+     */
     deposito: {
       id: string
       nome: string
@@ -190,6 +199,13 @@ export interface IProductResponse {
       saldoVirtual: number
     }
   }[]
+  variacoes?: {
+    variacao: {
+      nome: string,
+      codigo: string
+    }
+  }[]
+  camposCustomizados?: { [key: string]: unknown }
 }
 
 export interface IProductDeleteResponse {

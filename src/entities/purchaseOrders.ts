@@ -19,7 +19,10 @@ export interface IPurchaseOrder {
     id?: number
     nome?: string
     tipopessoa?: 'F' | 'J' | 'E'
-    cpfcnpj?: string // used if !!id
+    /**
+     * used if !!id
+     */
+    cpfcnpj?: string
     ie?: string
     rg?: string
     contribuinte?: '1' | '2' | '9'
