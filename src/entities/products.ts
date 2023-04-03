@@ -199,6 +199,12 @@ export interface IProductResponse {
       saldoVirtual: number
     }
   }[]
+  variacoes?: {
+    variacao: {
+      nome: string,
+      codigo: string
+    }
+  }[]
 }
 
 export interface IProductDeleteResponse {
