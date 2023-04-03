@@ -205,6 +205,7 @@ export interface IProductResponse {
       codigo: string
     }
   }[]
+  camposCustomizados?: { [key: string]: unknown }
 }
 
 export interface IProductDeleteResponse {
