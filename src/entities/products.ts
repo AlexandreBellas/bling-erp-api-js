@@ -199,10 +199,22 @@ export interface IProductResponse {
       saldoVirtual: number
     }
   }[]
-  variacoes?: {
+  variacoes: {
     variacao: {
       nome: string,
       codigo: string
+    } | {
+      nome: string
+      estoqueAtual: number,
+      depositos?: {
+        deposito: {
+          id: string;
+          nome: string;
+          saldo: number;
+          desconsiderar: 'S' | 'N';
+          saldoVirtual: number;
+        };
+      }[];
     }
   }[]
   camposCustomizados?: { [key: string]: unknown }
