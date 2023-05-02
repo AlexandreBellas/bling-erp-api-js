@@ -199,13 +199,44 @@ export interface IProductResponse {
       saldoVirtual: number
     }
   }[]
-  variacoes?: {
+  variacoes: {
     variacao: {
       nome: string,
       codigo: string
+    } | {
+      nome: string
+      estoqueAtual: number,
+      depositos?: {
+        deposito: {
+          id: string;
+          nome: string;
+          saldo: number;
+          desconsiderar: 'S' | 'N';
+          saldoVirtual: number;
+        };
+      }[];
     }
   }[]
   camposCustomizados?: { [key: string]: unknown }
+}
+
+export interface IProductFindResponse
+  extends Pick<IProductResponse, Exclude<keyof IProductResponse, 'variacoes'>> {
+  variacoes: {
+    variacao: {
+      nome: string;
+      estoqueAtual: number;
+      depositos?: {
+        deposito: {
+          id: string;
+          nome: string;
+          saldo: number;
+          desconsiderar: 'S' | 'N';
+          saldoVirtual: number;
+        };
+      }[];
+    };
+  }[];
 }
 
 export interface IProductDeleteResponse {
@@ -272,7 +303,7 @@ export default function Products (api: IApiInstance, raw: boolean) {
 
   return Object.assign(config, {
     all: new All<IProductResponse, IProductFilters, IProductInfos>().all,
-    find: new Find<IProductResponse, IProductInfos>().find,
+    find: new Find<IProductFindResponse, IProductInfos>().find,
     findBy: new FindBy<IProductResponse, IProductFilters, IProductInfos>()
       .findBy,
     create: new Create<IProduct, IProductResponse>().create,
