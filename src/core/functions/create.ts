@@ -13,7 +13,10 @@ import createError from '../helpers/createError'
 import handleApiError from '../helpers/handleApiError'
 import convertArraysToObj from '../helpers/convertArraysToObj'
 
-export default class Create<IEntity, IEntityResponse> extends Method {
+export default class Create<
+  IEntity,
+  IEntityResponse extends object
+> extends Method {
   /**
    * Create an entity on the given endpoint.
    * @protected
