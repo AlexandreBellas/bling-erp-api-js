@@ -178,7 +178,9 @@ export default class Create<
             this.pluralName
           ] as IResponse<Raw, IEntityResponse>
           return [
-            (rawEntity as { [key: string]: unknown })[this.singularName]
+            (rawEntity as unknown as { [key: string]: unknown })[
+              this.singularName
+            ]
           ] as IResponse<Raw, IEntityResponse>
         }
       }

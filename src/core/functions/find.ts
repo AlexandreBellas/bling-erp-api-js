@@ -3,7 +3,7 @@ import {
   IPluralEntity,
   ISingularEntity,
   IApiError,
-  IResponse
+  IFindResponse
 } from '../interfaces/method'
 
 import Method from '../template/method'
@@ -30,7 +30,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
       params?: IInfos
       raw?: Raw
     }
-  ): Promise<IResponse<Raw, IEntityResponse>> {
+  ): Promise<IFindResponse<Raw, IEntityResponse>> {
     if (!id) {
       throw createError({
         name: 'BlingFindError',
@@ -83,7 +83,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
       })
     } else {
       if (raw) {
-        return rawData as IResponse<Raw, IEntityResponse>
+        return rawData as IFindResponse<Raw, IEntityResponse>
       } else {
         const rawResponse = responseData as IPluralEntity<IEntityResponse>
         const rawEntity = rawResponse[
@@ -91,14 +91,14 @@ export default class Find<IEntityResponse, IInfos> extends Method {
         ] as ISingularEntity<IEntityResponse>[]
 
         if (rawEntity.length === 1) {
-          return rawEntity[0][this.singularName] as IResponse<
+          return rawEntity[0][this.singularName] as IFindResponse<
             Raw,
             IEntityResponse
           >
         } else {
           return rawEntity.map(
             (entity) => entity[this.singularName]
-          ) as IResponse<Raw, IEntityResponse>
+          ) as IFindResponse<Raw, IEntityResponse>
         }
       }
     }

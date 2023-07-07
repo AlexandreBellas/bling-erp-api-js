@@ -38,5 +38,9 @@ export interface ISingularResponse<T> {
 }
 
 export type IResponse<Raw extends boolean, Entity> = Raw extends false
+  ? Array<Entity>
+  : IPluralResponse<Entity>
+
+export type IFindResponse<Raw extends boolean, Entity> = Raw extends false
   ? Entity | Array<Entity>
   : IPluralResponse<Entity>
