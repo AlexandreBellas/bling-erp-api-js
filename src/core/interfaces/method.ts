@@ -36,3 +36,7 @@ export interface IPluralResponse<T> {
 export interface ISingularResponse<T> {
   retorno: ISingularEntity<T> | IPluralError
 }
+
+export type IResponse<Raw extends boolean, Entity> = Raw extends false
+  ? Entity | Array<Entity>
+  : IPluralResponse<Entity>

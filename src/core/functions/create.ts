@@ -2,9 +2,9 @@ import xml2js from 'xml2js'
 
 import {
   IPluralResponse,
-  IPluralEntity,
   ISingularEntity,
-  IApiError
+  IApiError,
+  IResponse
 } from '../interfaces/method'
 
 import Method from '../template/method'
@@ -24,29 +24,14 @@ export default class Create<IEntity, IEntityResponse> extends Method {
    * @param raw Return either raw data from Bling or beautified processed data.
    * @returns The created entity.
    */
-  public async create(
-    data: IEntity,
-    options?: {
-      raw?: false
-    },
-    ...restData: unknown[]
-  ): Promise<IEntityResponse[]>
 
-  public async create(
+  public async create<Raw extends boolean> (
     data: IEntity,
     options?: {
-      raw: true
+      raw?: Raw
     },
     ...restData: unknown[]
-  ): Promise<IPluralResponse<IEntityResponse>>
-
-  public async create (
-    data: IEntity,
-    options?: {
-      raw?: boolean
-    },
-    ...restData: unknown[]
-  ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
+  ): Promise<IResponse<Raw, IEntityResponse>> {
     if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError({
         name: 'BlingCreateError',
@@ -145,11 +130,15 @@ export default class Create<IEntity, IEntityResponse> extends Method {
       })
     } else {
       if (raw) {
-        return rawData
+        return rawData as IResponse<Raw, IEntityResponse>
       } else {
-        const rawResponse = responseData as IPluralEntity<IEntityResponse>
+        const rawResponse = responseData
 
-        if (Array.isArray(rawResponse[this.pluralName])) {
+        if (
+          Array.isArray(
+            (rawResponse as { [key: string]: unknown })[this.pluralName]
+          )
+        ) {
           /**
            * It can return as (most of the cases)
            *  {
@@ -167,23 +156,27 @@ export default class Create<IEntity, IEntityResponse> extends Method {
            *    }
            *  }
            *  */
-          const rawEntity = rawResponse[this.pluralName] as
-            | ISingularEntity<IEntityResponse>[]
-            | IEntityResponse[]
+          const rawEntity = (rawResponse as { [key: string]: unknown })[
+            this.pluralName
+          ] as ISingularEntity<IEntityResponse>[] | IEntityResponse[]
 
-          if (Object.keys(rawEntity[0]).length === 1) {
+          if (
+            Object.keys(rawEntity[0] as { [key: string]: unknown }).length === 1
+          ) {
             const arrRawReturn = rawEntity as ISingularEntity<IEntityResponse>[]
             return arrRawReturn.map(
               (entity) => entity[this.singularName]
-            ) as IEntityResponse[]
+            ) as IResponse<Raw, IEntityResponse>
           } else {
-            return rawEntity as IEntityResponse[]
+            return rawEntity as IResponse<Raw, IEntityResponse>
           }
         } else {
-          const rawEntity = rawResponse[
+          const rawEntity = (rawResponse as { [key: string]: unknown })[
             this.pluralName
-          ] as ISingularEntity<IEntityResponse>
-          return [rawEntity[this.singularName]]
+          ] as IResponse<Raw, IEntityResponse>
+          return [
+            (rawEntity as { [key: string]: unknown })[this.singularName]
+          ] as IResponse<Raw, IEntityResponse>
         }
       }
     }

@@ -2,7 +2,8 @@ import {
   IPluralResponse,
   IPluralEntity,
   ISingularEntity,
-  IApiError
+  IApiError,
+  IResponse
 } from '../interfaces/method'
 
 import Method from '../template/method'
@@ -22,25 +23,14 @@ export default class Find<IEntityResponse, IInfos> extends Method {
    * @param raw Return either raw data from Bling or beautified processed data.
    * @returns The found entity.
    */
-  public async find(
-    id: number | string,
-    options?: { params?: IInfos; raw?: false }
-  ): Promise<IEntityResponse | IEntityResponse[]>
 
-  public async find(
-    id: number | string,
-    options?: { params?: IInfos; raw: true }
-  ): Promise<IPluralResponse<IEntityResponse>>
-
-  public async find (
+  public async find<Raw extends boolean> (
     id: number | string,
     options?: {
       params?: IInfos
-      raw?: boolean
+      raw?: Raw
     }
-  ): Promise<
-    IEntityResponse | IEntityResponse[] | IPluralResponse<IEntityResponse>
-  > {
+  ): Promise<IResponse<Raw, IEntityResponse>> {
     if (!id) {
       throw createError({
         name: 'BlingFindError',
@@ -93,7 +83,7 @@ export default class Find<IEntityResponse, IInfos> extends Method {
       })
     } else {
       if (raw) {
-        return rawData
+        return rawData as IResponse<Raw, IEntityResponse>
       } else {
         const rawResponse = responseData as IPluralEntity<IEntityResponse>
         const rawEntity = rawResponse[
@@ -101,9 +91,14 @@ export default class Find<IEntityResponse, IInfos> extends Method {
         ] as ISingularEntity<IEntityResponse>[]
 
         if (rawEntity.length === 1) {
-          return rawEntity[0][this.singularName]
+          return rawEntity[0][this.singularName] as IResponse<
+            Raw,
+            IEntityResponse
+          >
         } else {
-          return rawEntity.map((entity) => entity[this.singularName])
+          return rawEntity.map(
+            (entity) => entity[this.singularName]
+          ) as IResponse<Raw, IEntityResponse>
         }
       }
     }

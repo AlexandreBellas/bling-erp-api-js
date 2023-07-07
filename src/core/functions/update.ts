@@ -4,7 +4,8 @@ import {
   IPluralResponse,
   IPluralEntity,
   ISingularEntity,
-  IApiError
+  IApiError,
+  IResponse
 } from '../interfaces/method'
 
 import Method from '../template/method'
@@ -25,29 +26,14 @@ export default class Update<IEntity, IEntityResponse> extends Method {
    * @param raw Return either raw data from Bling or beautified processed data.
    * @return The updated entity.
    */
-  public async update(
-    id: number | string,
-    data: IEntity,
-    options?: {
-      raw?: false
-    }
-  ): Promise<IEntityResponse>
 
-  public async update(
+  public async update<Raw extends boolean> (
     id: number | string,
     data: IEntity,
     options?: {
-      raw: true
+      raw?: Raw
     }
-  ): Promise<IPluralResponse<IEntityResponse>>
-
-  public async update (
-    id: number | string,
-    data: IEntity,
-    options?: {
-      raw?: boolean
-    }
-  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+  ): Promise<IResponse<Raw, IEntityResponse>> {
     if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
       throw createError({
         name: 'BlingUpdateError',
@@ -115,7 +101,7 @@ export default class Update<IEntity, IEntityResponse> extends Method {
       })
     } else {
       if (raw) {
-        return rawData
+        return rawData as IResponse<Raw, IEntityResponse>
       } else {
         const rawResponse = responseData as IPluralEntity<IEntityResponse>
 
@@ -123,12 +109,18 @@ export default class Update<IEntity, IEntityResponse> extends Method {
           const rawEntity = rawResponse[
             this.pluralName
           ] as ISingularEntity<IEntityResponse>[]
-          return rawEntity[0][this.singularName]
+          return (
+            rawEntity as Array<{
+              [key: string]: IResponse<Raw, IEntityResponse>
+            }>
+          )[0][this.singularName]
         } else {
           const rawEntity = rawResponse[
             this.pluralName
           ] as ISingularEntity<IEntityResponse>
-          return rawEntity[this.singularName]
+          return (
+            rawEntity as { [key: string]: IResponse<Raw, IEntityResponse> }
+          )[this.singularName]
         }
       }
     }

@@ -1,9 +1,4 @@
-import {
-  IPluralResponse,
-  IPluralEntity,
-  ISingularEntity,
-  IApiError
-} from '../interfaces/method'
+import { IPluralResponse, IApiError, IResponse } from '../interfaces/method'
 
 import Method from '../template/method'
 import createError from '../helpers/createError'
@@ -20,26 +15,13 @@ export default class Find<IEntityResponse> extends Method {
    * @param raw Return either raw data from Bling or beautified processed data.
    * @returns The deleted entity.
    */
-  public async delete(
-    id: number | string,
-    options?: {
-      raw?: false
-    }
-  ): Promise<IEntityResponse>
 
-  public async delete(
+  public async delete<Raw extends boolean> (
     id: number | string,
     options?: {
-      raw: true
+      raw?: Raw
     }
-  ): Promise<IPluralResponse<IEntityResponse>>
-
-  public async delete (
-    id: number | string,
-    options?: {
-      raw?: boolean
-    }
-  ): Promise<IEntityResponse | IPluralResponse<IEntityResponse>> {
+  ): Promise<IResponse<Raw, IEntityResponse>> {
     if (!id || typeof id === 'object' || Array.isArray(id)) {
       throw createError({
         name: 'BlingDeleteError',
@@ -54,7 +36,7 @@ export default class Find<IEntityResponse> extends Method {
     const raw = options && options.raw !== undefined ? options.raw : this.raw
 
     const response = await this.api
-      .delete(`/${endpoint}/${id}/json`)
+      .delete<IPluralResponse<IEntityResponse>>(`/${endpoint}/${id}/json`)
       .catch((err: IApiError) => {
         const errorData = {
           name: 'BlingRequestError',
@@ -72,7 +54,7 @@ export default class Find<IEntityResponse> extends Method {
         })
       })
 
-    const rawData = response.data as IPluralResponse<IEntityResponse>
+    const rawData = response.data
     const responseData = rawData.retorno
 
     if (responseData.erros) {
@@ -90,13 +72,17 @@ export default class Find<IEntityResponse> extends Method {
       })
     } else {
       if (raw) {
-        return rawData
+        return rawData as IResponse<Raw, IEntityResponse>
       } else {
-        const rawResponse = responseData as IPluralEntity<IEntityResponse>
-        const rawEntity = rawResponse[
+        const rawResponse = responseData
+        const rawEntity = (rawResponse as { [key: string]: unknown })[
           this.pluralName
-        ] as ISingularEntity<IEntityResponse>[]
-        return rawEntity[0][this.singularName]
+        ]
+        return (
+          rawEntity as unknown as Array<{
+            [key: string]: IResponse<Raw, IEntityResponse>
+          }>
+        )[0][this.singularName]
       }
     }
   }

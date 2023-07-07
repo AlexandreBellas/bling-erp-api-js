@@ -3,7 +3,8 @@ import {
   IPluralEntity,
   ISingularEntity,
   IApiError,
-  IPluralError
+  IPluralError,
+  IResponse
 } from '../interfaces/method'
 
 import Method from '../template/method'
@@ -25,32 +26,14 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
    * @param page The response page with pagination is desired.
    */
 
-  public async all(options?: {
+  public async all<Raw extends boolean> (options?: {
     params?: {
       filters?: IFilters
       infos?: IInfo
     }
-    raw?: false
+    raw?: Raw
     page?: number
-  }): Promise<IEntityResponse[]>
-
-  public async all(options?: {
-    params?: {
-      filters?: IFilters
-      infos?: IInfo
-    }
-    raw: true
-    page?: number
-  }): Promise<IPluralResponse<IEntityResponse>>
-
-  public async all (options?: {
-    params?: {
-      filters?: IFilters
-      infos?: IInfo
-    }
-    raw?: boolean
-    page?: number
-  }): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
+  }): Promise<IResponse<Raw, IEntityResponse>> {
     const entities: IEntityResponse[] = []
 
     const params: { filters?: string; [key: string]: unknown } = {}
@@ -185,9 +168,9 @@ export default class All<IEntityResponse, IFilters, IInfo> extends Method {
             [this.singularName]: entity
           }))
         }
-      }
+      } as IResponse<Raw, IEntityResponse>
     } else {
-      return entities
+      return entities as IResponse<Raw, IEntityResponse>
     }
   }
 }

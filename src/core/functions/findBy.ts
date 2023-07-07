@@ -1,4 +1,4 @@
-import { IPluralResponse } from '../interfaces/method'
+import { IResponse } from '../interfaces/method'
 
 import All from './all'
 import Method from '../template/method'
@@ -17,38 +17,17 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
    * @param raw Return either raw data from Bling or beautified processed data.
    * @param page The response page with pagination is desired.
    */
-  public async findBy(
-    params: {
-      filters: IFilters
-      infos?: IInfo
-    },
-    options?: {
-      raw?: false
-      page?: number
-    }
-  ): Promise<IEntityResponse[]>
 
-  public async findBy(
+  public async findBy<Raw extends boolean> (
     params: {
       filters: IFilters
       infos?: IInfo
     },
     options?: {
-      raw: true
+      raw?: Raw
       page?: number
     }
-  ): Promise<IPluralResponse<IEntityResponse>>
-
-  public async findBy (
-    params: {
-      filters: IFilters
-      infos?: IInfo
-    },
-    options?: {
-      raw?: boolean
-      page?: number
-    }
-  ): Promise<IEntityResponse[] | IPluralResponse<IEntityResponse>> {
+  ): Promise<IResponse<Raw, IEntityResponse>> {
     if (!params) {
       throw createError({
         name: 'BlingFindByError',
@@ -83,11 +62,11 @@ export default class FindBy<IEntityResponse, IFilters, IInfo> extends Method {
 
     // @TODO: deal with interfaces problems to reuse code properly
     if (raw) {
-      return await allEntity.all({
+      return (await allEntity.all({
         params,
         raw: true,
         page: options && options.page
-      })
+      })) as IResponse<Raw, IEntityResponse>
     } else {
       return await allEntity.all({
         params,
