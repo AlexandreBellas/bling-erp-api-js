@@ -29,6 +29,12 @@
       "rules": {
         "camelcase": "off"
       }
+    },
+    {
+      "files": ["*"],
+      "rules": {
+        "space-before-function-paren": "off"
+      }
     }
   ]
 }

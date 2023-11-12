@@ -1,24 +1,24 @@
 'use strict'
 
+import BillsToPay from './entities/billsToPay'
+import BillsToReceive from './entities/billsToReceive'
 import Borderos from './entities/borderos'
-import CustomizedField from './entities/customizedFields'
 import Categories from './entities/categories'
 import CommercialProposals from './entities/commercialProposals'
 import Contacts from './entities/contacts'
-import Deposits from './entities/deposits'
-import Products from './entities/products'
-import Orders from './entities/orders'
-import PurchaseOrders from './entities/purchaseOrders'
-import Invoices from './entities/invoices'
-import ShopCategories from './entities/shopCategories'
-import BillsToPay from './entities/billsToPay'
-import BillsToReceive from './entities/billsToReceive'
 import Contracts from './entities/contracts'
 import Ctes from './entities/ctes'
+import CustomizedField from './entities/customizedFields'
+import Deposits from './entities/deposits'
+import Invoices from './entities/invoices'
+import Nfces from './entities/nfces'
+import Orders from './entities/orders'
 import PaymentMethods from './entities/paymentMethods'
 import ProductGroups from './entities/productGroups'
-import Nfces from './entities/nfces'
+import Products from './entities/products'
+import PurchaseOrders from './entities/purchaseOrders'
 import ServiceInvoices from './entities/serviceInvoices'
+import ShopCategories from './entities/shopCategories'
 
 import createError, {
   IBlingError as IStandardBlingError
@@ -26,8 +26,8 @@ import createError, {
 
 import { IApiInstance } from './core/interfaces/method'
 
-import * as qs from 'querystring'
 import axios from 'axios'
+import * as qs from 'querystring'
 
 export type IBorderos = ReturnType<typeof Borderos>
 export type ICustomizedFields = ReturnType<typeof CustomizedField>
