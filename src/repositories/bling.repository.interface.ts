@@ -1,12 +1,19 @@
 /**
  * Tipo padrão de _query parameters_.
  */
-export type IDefaultParams = Record<string, number | string | Date>
+export type IDefaultParams = Record<string, number | string | Date | undefined>
 
 /**
  * Tipo padrão de _headers_.
  */
 export type IDefaultHeaders = Record<string, string>
+
+/**
+ * Tipo padrão de resposta de requisição.
+ */
+export interface IDefaultSuccessResponse<T> {
+  data: T
+}
 
 /**
  * Opções padrões para uma chamada API.
