@@ -9,6 +9,7 @@ import {
   IDefaultSuccessResponse,
   IDestroyOptions,
   IIndexOptions,
+  IReplaceOptions,
   IShowOptions,
   IStoreOptions,
   IUpdateOptions
@@ -142,10 +143,39 @@ export class BlingRepository implements IBlingRepository {
   ): Promise<IUpdateResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .put<IDefaultSuccessResponse<IUpdateResponse>>(endpoint, options.body, {
+      .patch<IDefaultSuccessResponse<IUpdateResponse>>(endpoint, options.body, {
         params: options.params,
         headers: options.headers
       })
+      .then((response) => response.data.data)
+      .catch((error: AxiosError<IDefaultErrorResponse>) =>
+        this.defaultCatchBehavior(error, endpoint)
+      )
+  }
+
+  /**
+   * @inheritDoc
+   *
+   * @throws {BlingApiException|BlingInternalException}
+   */
+  public async replace<
+    IReplaceBody,
+    IReplaceResponse,
+    IParams extends IDefaultParams = IDefaultParams,
+    IHeaders extends IDefaultHeaders = IDefaultHeaders
+  >(
+    options: IReplaceOptions<IReplaceBody, IParams, IHeaders>
+  ): Promise<IReplaceResponse> {
+    const endpoint = `${options.endpoint}/${options.id}`
+    return await this.api
+      .patch<IDefaultSuccessResponse<IReplaceResponse>>(
+        endpoint,
+        options.body,
+        {
+          params: options.params,
+          headers: options.headers
+        }
+      )
       .then((response) => response.data.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)

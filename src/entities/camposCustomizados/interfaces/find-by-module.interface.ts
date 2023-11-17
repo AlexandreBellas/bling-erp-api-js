@@ -1,5 +1,7 @@
+import ISituacao from '../../@shared/types/situacao.type'
+
 export interface IFindByModuleParams {
-  id: number
+  idModulo: number
   pagina?: number
   limite?: number
 }
@@ -7,9 +9,5 @@ export interface IFindByModuleParams {
 export interface IFindByModuleSingleResponse {
   id: number
   nome: string
-  /**
-   * `0`: inativo
-   * `1`: ativo
-   */
-  situacao: 0 | 1
+  situacao: ISituacao
 }

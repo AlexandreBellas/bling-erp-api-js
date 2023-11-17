@@ -58,6 +58,15 @@ export interface IUpdateOptions<IBody, IParams, IHeaders>
 }
 
 /**
+ * Opções para uma chamada do tipo _replace_.
+ */
+export interface IReplaceOptions<IBody, IParams, IHeaders>
+  extends IDefaultOptions<IParams, IHeaders> {
+  id: string
+  body: IBody
+}
+
+/**
  * Opções para uma chamada do tipo _destroy_.
  */
 export interface IDestroyOptions<IParams, IHeaders>
@@ -110,7 +119,7 @@ export interface IBlingRepository {
   ) => Promise<IStoreResponse>
 
   /**
-   * Realiza uma chamada PUT para a atualização de um recurso.
+   * Realiza uma chamada PATCH para a atualização de um recurso.
    *
    * @param options Opções da chamada de API.
    */
@@ -122,6 +131,20 @@ export interface IBlingRepository {
   >(
     options: IUpdateOptions<IUpdateBody, IParams, IHeaders>
   ) => Promise<IUpdateResponse>
+
+  /**
+   * Realiza uma chamada PUT para a atualização de um recurso.
+   *
+   * @param options Opções da chamada de API.
+   */
+  replace: <
+    IReplaceBody,
+    IReplaceResponse,
+    IParams extends IDefaultParams = IDefaultParams,
+    IHeaders extends IDefaultHeaders = IDefaultHeaders
+  >(
+    options: IReplaceOptions<IReplaceBody, IParams, IHeaders>
+  ) => Promise<IReplaceResponse>
 
   /**
    * Realiza uma chamada DELETE para deleção de um recurso.

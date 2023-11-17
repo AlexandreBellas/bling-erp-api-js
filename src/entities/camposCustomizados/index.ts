@@ -1,11 +1,22 @@
 import { BaseEntity } from '../@shared/base.entity'
+import {
+  IChangeSituationBody,
+  IChangeSituationParams
+} from './interfaces/change-situation.interface'
+import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import {
   IFindByModuleParams,
   IFindByModuleSingleResponse
 } from './interfaces/find-by-module.interface'
+import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetModuleSingleResponse } from './interfaces/get-modules.interface'
 import { IGetTypeSingleResponse } from './interfaces/get-types.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com campos customizados.
@@ -16,20 +27,20 @@ export class CamposCustomizados extends BaseEntity {
    *
    * @param params Parâmetros da deleção.
    *
-   * @returns {null} Não há retorno.
+   * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    */
   async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
       endpoint: 'campos-customizados',
-      id: String(params.id)
+      id: String(params.idCampoCustomizado)
     })
   }
 
   /**
    * Obtém módulos que possuem campos customizados.
    *
-   * @returns {IGetModuleSingleResponse[]}
+   * @returns {Promise<IGetModuleSingleResponse[]>}
    * @throws {BlingApiException|BlingInternalException}
    */
   async getModules(): Promise<IGetModuleSingleResponse[]> {
@@ -41,7 +52,7 @@ export class CamposCustomizados extends BaseEntity {
   /**
    * Obtém tipos de campos customizados.
    *
-   * @returns {IGetTypeSingleResponse[]}
+   * @returns {Promise<IGetTypeSingleResponse[]>}
    * @throws {BlingApiException|BlingInternalException}
    */
   async getTypes(): Promise<IGetTypeSingleResponse[]> {
@@ -53,7 +64,9 @@ export class CamposCustomizados extends BaseEntity {
   /**
    * Obtém campos customizados por módulo.
    *
-   * @returns {IFindByModuleSingleResponse[]}
+   * @param {IFindByModuleParams} params Parâmetros da busca
+   *
+   * @returns {Promise<IFindByModuleSingleResponse[]>}
    * @throws {BlingApiException|BlingInternalException}
    */
   async findByModule(
@@ -61,7 +74,7 @@ export class CamposCustomizados extends BaseEntity {
   ): Promise<IFindByModuleSingleResponse[]> {
     return await this.repository.show({
       endpoint: 'campos-customizados/modulos',
-      id: String(params.id),
+      id: String(params.idModulo),
       params: {
         pagina: params.pagina,
         limite: params.limite
@@ -69,25 +82,67 @@ export class CamposCustomizados extends BaseEntity {
     })
   }
 
-  // continuar daqui
-
   /**
    * Obtém um campo customizado.
+   *
+   * @returns {Promise<IFindParams>}
+   * @throws {BlingApiException|BlingInternalException}
    */
-  async find() {}
+  async find(params: IFindParams): Promise<IFindResponse> {
+    return await this.repository.show({
+      endpoint: 'campos-customizados',
+      id: String(params.idCampoCustomizado)
+    })
+  }
 
   /**
    * Altera a situação de um campo customizado.
+   *
+   * @param {IChangeSituationParams & IChangeSituationBody} params Parâmetros da atualização.
+   *
+   * @returns {Promise<null>} Não há retorno.
+   * @throws {BlingApiException|BlingInternalException}
    */
-  async updateSituation() {}
+  async changeSituation(
+    params: IChangeSituationParams & IChangeSituationBody
+  ): Promise<null> {
+    return await this.repository.update({
+      endpoint: 'campos-customizados',
+      id: `${params.idCampoCustomizado}/situacoes`,
+      body: { situacao: params.situacao }
+    })
+  }
 
   /**
    * Cria um campo customizado.
+   *
+   * @param {ICreateBody} body O corpo da requisição.
+   *
+   * @returns {Promise<ICreateResponse>}
+   * @throws {BlingApiException|BlingInternalException}
    */
-  async create() {}
+  async create(body: ICreateBody): Promise<ICreateResponse> {
+    return await this.repository.store({
+      endpoint: 'campos-customizados',
+      body
+    })
+  }
 
   /**
    * Altera um campo customizado.
+   *
+   * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização
+   *
+   * @returns {Promise<IUpdateResponse>}
+   * @throws {BlingApiException|BlingInternalException}
    */
-  async update() {}
+  async update(params: IUpdateParams & IUpdateBody): Promise<IUpdateResponse> {
+    const { idCampoCustomizado, ...body } = params
+
+    return await this.repository.update({
+      endpoint: 'campos-customizados',
+      id: String(idCampoCustomizado),
+      body
+    })
+  }
 }

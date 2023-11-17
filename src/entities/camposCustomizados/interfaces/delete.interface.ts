@@ -1,3 +1,3 @@
 export interface IDeleteParams {
-  id: number
+  idCampoCustomizado: number
 }

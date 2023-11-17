@@ -11,7 +11,7 @@ export class Borderos extends BaseEntity {
    *
    * @param params Parâmetros para a deleção (somente o ID).
    *
-   * @returns Vazio quando bem sucedido.
+   * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    */
   async delete(params: IDeleteParams): Promise<null> {
@@ -26,7 +26,7 @@ export class Borderos extends BaseEntity {
    *
    * @param params Parâmetros para a busca (somente o ID).
    *
-   * @returns Os dados do borderô pesquisado.
+   * @returns {Promise<IFindSuccessResponse>} Os dados do borderô pesquisado.
    * @throws {BlingApiException|BlingInternalException}
    */
   async find(params: IFindParams): Promise<IFindSuccessResponse> {
