@@ -1,11 +1,11 @@
-import { BaseEntity } from '../@shared/base.entity'
+import { Entity } from '../@shared/entity'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindSuccessResponse } from './interfaces/find.interface'
 
 /**
  * Entidade para interação com borderôs.
  */
-export class Borderos extends BaseEntity {
+export class Borderos extends Entity {
   /**
    * Remove um borderô.
    *

@@ -1,6 +1,10 @@
 'use strict'
 
+import { Entity } from './entities/@shared/entity'
 import { Borderos } from './entities/borderos'
+import { CamposCustomizados } from './entities/camposCustomizados'
+import { CategoriasLojas } from './entities/categoriasLojas'
+import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
 
@@ -15,8 +19,7 @@ import { IBlingRepository } from './repositories/bling.repository.interface'
  */
 export default class Bling {
   #repository: IBlingRepository
-
-  #borderos: Borderos | undefined
+  #modules: Record<string, Entity | undefined>
 
   /**
    * Constrói o objeto.
@@ -25,16 +28,48 @@ export default class Bling {
    */
   constructor(accessToken: string) {
     this.#repository = getRepository(accessToken)
+    this.#modules = {}
   }
 
   /**
-   * Obtém a instância de interação com Borderôs.
+   * Obtém um módulo através de sua assinatura (seguindo o _pattern_ `Instance`).
+   *
+   * @param {Newable<T>} EntityClass A entidade desejada.
+   *
+   * @returns {T} A instância da entidade.
    */
-  public get borderos() {
-    if (!this.#borderos) {
-      this.#borderos = new Borderos(this.#repository)
+  private getModule<T extends Entity>(EntityClass: Newable<T>): T {
+    if (!this.#modules[EntityClass.name]) {
+      this.#modules[EntityClass.name] = new EntityClass(this.#repository)
     }
 
-    return this.#borderos
+    return this.#modules[EntityClass.name] as T
+  }
+
+  /**
+   * Obtém a instância de interação com borderôs.
+   *
+   * @returns {Borderos}
+   */
+  public get borderos(): Borderos {
+    return this.getModule(Borderos)
+  }
+
+  /**
+   * Obtém a instância de interação com campos customizados.
+   *
+   * @returns {CamposCustomizados}
+   */
+  public get camposCustomizados(): CamposCustomizados {
+    return this.getModule(CamposCustomizados)
+  }
+
+  /**
+   * Obtém a instância de interação com categorias - lojas.
+   *
+   * @return {CategoriasLojas}
+   */
+  public get categoriasLojas(): CategoriasLojas {
+    return this.getModule(CategoriasLojas)
   }
 }

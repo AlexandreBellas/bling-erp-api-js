@@ -1,4 +1,4 @@
-import { BaseEntity } from '../@shared/base.entity'
+import { Entity } from '../@shared/entity'
 import {
   IChangeSituationBody,
   IChangeSituationParams
@@ -21,7 +21,7 @@ import {
 /**
  * Entidade para interação com campos customizados.
  */
-export class CamposCustomizados extends BaseEntity {
+export class CamposCustomizados extends Entity {
   /**
    * Remove um campo customizado.
    *
