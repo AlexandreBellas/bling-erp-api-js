@@ -2,7 +2,7 @@
  * Parâmetros para encontrar um borderô.
  */
 export interface IFindParams {
-  id: number
+  idBordero: number
 }
 
 /**

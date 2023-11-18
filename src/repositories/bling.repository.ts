@@ -50,10 +50,8 @@ export class BlingRepository implements IBlingRepository {
     })
 
     this.api.interceptors.request.use((config) => {
-      config.headers = {
-        Authorization: `Bearer ${this.props.accessToken}`,
-        ...config.headers
-      }
+      config.headers.Authorization = `Bearer ${this.props.accessToken}`
+      return config
     })
   }
 

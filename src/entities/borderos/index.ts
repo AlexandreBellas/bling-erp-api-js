@@ -17,7 +17,7 @@ export class Borderos extends Entity {
   async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
       endpoint: 'borderos',
-      id: String(params.id)
+      id: String(params.idBordero)
     })
   }
 
@@ -32,7 +32,7 @@ export class Borderos extends Entity {
   async find(params: IFindParams): Promise<IFindSuccessResponse> {
     return await this.repository.show({
       endpoint: 'borderos',
-      id: String(params.id)
+      id: String(params.idBordero)
     })
   }
 }
