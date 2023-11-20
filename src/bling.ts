@@ -6,6 +6,7 @@ import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
 import { CategoriasProdutos } from './entities/categoriasProdutos'
 import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
+import { ContasContabeis } from './entities/contasContabeis'
 import { ContasPagar } from './entities/contasPagar'
 import { ContasReceber } from './entities/contasReceber'
 import { Newable } from './helpers/types/newable.type'
@@ -111,5 +112,14 @@ export default class Bling {
    */
   public get contasReceber(): ContasReceber {
     return this.getModule(ContasReceber)
+  }
+
+  /**
+   * Obtém a instância de interação com contas contábeis.
+   *
+   * @return {ContasContabeis}
+   */
+  public get contasContabeis(): ContasContabeis {
+    return this.getModule(ContasContabeis)
   }
 }

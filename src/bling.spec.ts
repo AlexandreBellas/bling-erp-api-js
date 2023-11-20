@@ -7,6 +7,7 @@ import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
 import { CategoriasProdutos } from './entities/categoriasProdutos'
 import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
+import { ContasContabeis } from './entities/contasContabeis'
 import { ContasPagar } from './entities/contasPagar'
 import { ContasReceber } from './entities/contasReceber'
 
@@ -56,6 +57,12 @@ describe('Bling main module', () => {
   it('should retrieve contas a receber entity', () => {
     expect(createBling(chance.word()).contasReceber).toBeInstanceOf(
       ContasReceber
+    )
+  })
+
+  it('should retrieve contas contábeis entity', () => {
+    expect(createBling(chance.word()).contasContabeis).toBeInstanceOf(
+      ContasContabeis
     )
   })
 })
