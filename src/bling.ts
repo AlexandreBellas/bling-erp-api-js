@@ -4,6 +4,7 @@ import { Entity } from './entities/@shared/entity'
 import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
+import { CategoriasProdutos } from './entities/categoriasProdutos'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -71,5 +72,14 @@ export default class Bling {
    */
   public get categoriasLojas(): CategoriasLojas {
     return this.getModule(CategoriasLojas)
+  }
+
+  /**
+   * Obtém a instância de interação com categorias - produtos.
+   *
+   * @return {CategoriasProdutos}
+   */
+  public get categoriasProdutos(): CategoriasProdutos {
+    return this.getModule(CategoriasProdutos)
   }
 }

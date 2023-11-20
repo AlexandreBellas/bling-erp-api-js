@@ -1,5 +1,5 @@
 import { Chance } from 'chance'
-import { CategoriasLojas } from '../'
+import { CategoriasProdutos } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
 import createResponse, { createRequestBody } from './create-response'
 import deleteResponse from './delete-response'
@@ -8,13 +8,13 @@ import updateResponse, { updateRequestBody } from './update-response'
 
 const chance = Chance()
 
-describe('Categorias - Lojas entity', () => {
+describe('Categorias - Produtos entity', () => {
   let repository: InMemoryBlingRepository
-  let entity: CategoriasLojas
+  let entity: CategoriasProdutos
 
   beforeEach(() => {
     repository = new InMemoryBlingRepository()
-    entity = new CategoriasLojas(repository)
+    entity = new CategoriasProdutos(repository)
   })
 
   afterEach(() => {
@@ -22,43 +22,43 @@ describe('Categorias - Lojas entity', () => {
   })
 
   it('should delete successfully', async () => {
-    const idCategoriaLoja = chance.natural()
+    const idCategoriaProduto = chance.natural()
     const spy = jest.spyOn(repository, 'destroy')
     repository.setResponse(deleteResponse)
 
-    const response = await entity.delete({ idCategoriaLoja })
+    const response = await entity.delete({ idCategoriaProduto })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'categorias/lojas',
-      id: String(idCategoriaLoja)
+      endpoint: 'categorias/produtos',
+      id: String(idCategoriaProduto)
     })
     expect(response).toBe(deleteResponse)
   })
 
   it('should find successfully', async () => {
     const spy = jest.spyOn(repository, 'show')
-    const idCategoriaLoja = chance.natural()
+    const idCategoriaProduto = chance.natural()
     repository.setResponse(findResponse)
 
-    const response = await entity.find({ idCategoriaLoja })
+    const response = await entity.find({ idCategoriaProduto })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'categorias/lojas',
-      id: String(idCategoriaLoja)
+      endpoint: 'categorias/produtos',
+      id: String(idCategoriaProduto)
     })
     expect(response).toBe(findResponse)
   })
 
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'show')
-    const idCategoriaLoja = chance.natural()
+    const idCategoriaProduto = chance.natural()
     repository.setResponse(findResponse)
 
-    const response = await entity.find({ idCategoriaLoja })
+    const response = await entity.find({ idCategoriaProduto })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'categorias/lojas',
-      id: String(idCategoriaLoja)
+      endpoint: 'categorias/produtos',
+      id: String(idCategoriaProduto)
     })
     expect(response).toBe(findResponse)
   })
@@ -70,7 +70,7 @@ describe('Categorias - Lojas entity', () => {
     const response = await entity.create(createRequestBody)
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'categorias/lojas',
+      endpoint: 'categorias/produtos',
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
@@ -78,17 +78,17 @@ describe('Categorias - Lojas entity', () => {
 
   it('should update successfully', async () => {
     const spy = jest.spyOn(repository, 'replace')
-    const idCategoriaLoja = chance.natural()
+    const idCategoriaProduto = chance.natural()
     repository.setResponse(updateResponse)
 
     const response = await entity.update({
-      idCategoriaLoja,
+      idCategoriaProduto,
       ...updateRequestBody
     })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'categorias/lojas',
-      id: String(idCategoriaLoja),
+      endpoint: 'categorias/produtos',
+      id: String(idCategoriaProduto),
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)

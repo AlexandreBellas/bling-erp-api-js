@@ -5,6 +5,7 @@ import Bling from './bling'
 import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
+import { CategoriasProdutos } from './entities/categoriasProdutos'
 
 const chance = Chance()
 
@@ -30,6 +31,12 @@ describe('Bling main module', () => {
   it('should retrieve categorias - lojas entity', () => {
     expect(createBling(chance.word()).categoriasLojas).toBeInstanceOf(
       CategoriasLojas
+    )
+  })
+
+  it('should retrieve categorias - produtos entity', () => {
+    expect(createBling(chance.word()).categoriasProdutos).toBeInstanceOf(
+      CategoriasProdutos
     )
   })
 })
