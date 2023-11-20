@@ -1,11 +1,13 @@
-export interface IGetModuleSingleResponse {
-  id: number
-  nome: string
-  modulo: string
-  agrupador: string
-  permissoes: {
+export interface IGetModuleResponse {
+  data: {
+    id: number
     nome: string
     modulo: string
-    autorizado: boolean
+    agrupador: string
+    permissoes: {
+      nome: string
+      modulo: string
+      autorizado: boolean
+    }[]
   }[]
 }

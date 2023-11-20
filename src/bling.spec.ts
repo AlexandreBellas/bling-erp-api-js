@@ -6,6 +6,8 @@ import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
 import { CategoriasProdutos } from './entities/categoriasProdutos'
+import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
+import { ContasPagar } from './entities/contasPagar'
 
 const chance = Chance()
 
@@ -38,5 +40,15 @@ describe('Bling main module', () => {
     expect(createBling(chance.word()).categoriasProdutos).toBeInstanceOf(
       CategoriasProdutos
     )
+  })
+
+  it('should retrieve categorias - receitas e despesas entity', () => {
+    expect(
+      createBling(chance.word()).categoriasReceitasDespesas
+    ).toBeInstanceOf(CategoriasReceitasDespesas)
+  })
+
+  it('should retrieve contas a pagar entity', () => {
+    expect(createBling(chance.word()).contasPagar).toBeInstanceOf(ContasPagar)
   })
 })

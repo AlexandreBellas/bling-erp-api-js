@@ -6,10 +6,12 @@ export interface IGetParams {
   idCategoriaProdutoPai?: number
 }
 
-export interface IGetSingleResponse {
-  id: number
-  loja: { id: number }
-  descricao: string
-  codigo: string
-  categoriaProduto: { id: number }
+export interface IGetResponse {
+  data: {
+    id: number
+    loja: { id: number }
+    descricao: string
+    codigo: string
+    categoriaProduto: { id: number }
+  }[]
 }

@@ -2,7 +2,7 @@ import { Entity } from '../@shared/entity'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
-import { IGetParams, IGetSingleResponse } from './interfaces/get.interface'
+import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
@@ -29,18 +29,18 @@ export class CategoriasLojas extends Entity {
    *
    * @param {IGetParams} params Parâmetros da busca.
    *
-   * @returns {Promise<IGetSingleResponse[]>}
+   * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
    */
-  public async get(params: IGetParams): Promise<IGetSingleResponse[]> {
+  public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
       endpoint: 'categorias/lojas',
       params: {
-        pagina: params.pagina,
-        limite: params.limite,
-        idLoja: params.idLoja,
-        idCategoriaProduto: params.idCategoriaProduto,
-        idCategoriaProdutoPai: params.idCategoriaProdutoPai
+        pagina: params?.pagina,
+        limite: params?.limite,
+        idLoja: params?.idLoja,
+        idCategoriaProduto: params?.idCategoriaProduto,
+        idCategoriaProdutoPai: params?.idCategoriaProdutoPai
       }
     })
   }

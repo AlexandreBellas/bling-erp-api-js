@@ -23,7 +23,9 @@ export interface IUpdateBody {
 }
 
 export interface IUpdateResponse {
-  id: number
-  idsVinculosAgrupadores: number[]
-  idsOpcoes: number[]
+  data: {
+    id: number
+    idsVinculosAgrupadores: number[]
+    idsOpcoes: number[]
+  }
 }

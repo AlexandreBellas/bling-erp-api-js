@@ -5,6 +5,8 @@ import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
 import { CategoriasProdutos } from './entities/categoriasProdutos'
+import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
+import { ContasPagar } from './entities/contasPagar'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -81,5 +83,23 @@ export default class Bling {
    */
   public get categoriasProdutos(): CategoriasProdutos {
     return this.getModule(CategoriasProdutos)
+  }
+
+  /**
+   * Obtém a instância de interação com categorias - receitas e despesas.
+   *
+   * @return {CategoriasReceitasDespesas}
+   */
+  public get categoriasReceitasDespesas(): CategoriasReceitasDespesas {
+    return this.getModule(CategoriasReceitasDespesas)
+  }
+
+  /**
+   * Obtém a instância de interação com contas a pagar.
+   *
+   * @return {ContasPagar}
+   */
+  public get contasPagar(): ContasPagar {
+    return this.getModule(ContasPagar)
   }
 }

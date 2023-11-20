@@ -1,24 +1,26 @@
 export default {
-  id: 12345678,
-  data: '2023-01-12',
-  historico: 'Referente ao pedido nº 12345678',
-  portador: {
-    id: 12345678
-  },
-  categoria: {
-    id: 12345678
-  },
-  pagamentos: [
-    {
-      contato: {
-        id: 12345678
-      },
-      numeroDocumento: '',
-      valorPago: 1500.75,
-      juros: 10,
-      desconto: 10,
-      acrescimo: 10,
-      tarifa: 10
-    }
-  ]
+  data: {
+    id: 12345678,
+    data: '2023-01-12',
+    historico: 'Referente ao pedido nº 12345678',
+    portador: {
+      id: 12345678
+    },
+    categoria: {
+      id: 12345678
+    },
+    pagamentos: [
+      {
+        contato: {
+          id: 12345678
+        },
+        numeroDocumento: '',
+        valorPago: 1500.75,
+        juros: 10,
+        desconto: 10,
+        acrescimo: 10,
+        tarifa: 10
+      }
+    ]
+  }
 }

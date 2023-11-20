@@ -1,5 +1,7 @@
 export default {
-  id: 12345678
+  data: {
+    id: 12345678
+  }
 }
 
 export const createRequestBody = {

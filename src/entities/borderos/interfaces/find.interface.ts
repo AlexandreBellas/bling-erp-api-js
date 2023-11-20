@@ -9,24 +9,26 @@ export interface IFindParams {
  * Interface de resposta bem sucedida ao encontrar um borderô.
  */
 export interface IFindSuccessResponse {
-  id: number
-  data: string
-  historico: string
-  portador: {
+  data: {
     id: number
-  }
-  categoria: {
-    id: number
-  }
-  pagamentos: {
-    contato: {
+    data: string
+    historico: string
+    portador: {
       id: number
     }
-    numeroDocumento: string
-    valorPago: number
-    juros: number
-    desconto: number
-    acrescimo: number
-    tarifa: number
-  }[]
+    categoria: {
+      id: number
+    }
+    pagamentos: {
+      contato: {
+        id: number
+      }
+      numeroDocumento: string
+      valorPago: number
+      juros: number
+      desconto: number
+      acrescimo: number
+      tarifa: number
+    }[]
+  }
 }

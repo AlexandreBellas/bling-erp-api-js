@@ -7,11 +7,11 @@ import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import {
   IFindByModuleParams,
-  IFindByModuleSingleResponse
+  IFindByModuleResponse
 } from './interfaces/find-by-module.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
-import { IGetModuleSingleResponse } from './interfaces/get-modules.interface'
-import { IGetTypeSingleResponse } from './interfaces/get-types.interface'
+import { IGetModuleResponse } from './interfaces/get-modules.interface'
+import { IGetTypeResponse } from './interfaces/get-types.interface'
 import {
   IUpdateBody,
   IUpdateParams,
@@ -40,10 +40,10 @@ export class CamposCustomizados extends Entity {
   /**
    * Obtém módulos que possuem campos customizados.
    *
-   * @returns {Promise<IGetModuleSingleResponse[]>}
+   * @returns {Promise<IGetModuleResponse>}
    * @throws {BlingApiException|BlingInternalException}
    */
-  async getModules(): Promise<IGetModuleSingleResponse[]> {
+  async getModules(): Promise<IGetModuleResponse> {
     return await this.repository.index({
       endpoint: 'campos-customizados/modulos'
     })
@@ -52,10 +52,10 @@ export class CamposCustomizados extends Entity {
   /**
    * Obtém tipos de campos customizados.
    *
-   * @returns {Promise<IGetTypeSingleResponse[]>}
+   * @returns {Promise<IGetTypeResponse>}
    * @throws {BlingApiException|BlingInternalException}
    */
-  async getTypes(): Promise<IGetTypeSingleResponse[]> {
+  async getTypes(): Promise<IGetTypeResponse> {
     return await this.repository.index({
       endpoint: 'campos-customizados/tipos'
     })
@@ -66,12 +66,12 @@ export class CamposCustomizados extends Entity {
    *
    * @param {IFindByModuleParams} params Parâmetros da busca
    *
-   * @returns {Promise<IFindByModuleSingleResponse[]>}
+   * @returns {Promise<IFindByModuleResponse>}
    * @throws {BlingApiException|BlingInternalException}
    */
   async findByModule(
     params: IFindByModuleParams
-  ): Promise<IFindByModuleSingleResponse[]> {
+  ): Promise<IFindByModuleResponse> {
     return await this.repository.show({
       endpoint: 'campos-customizados/modulos',
       id: String(params.idModulo),

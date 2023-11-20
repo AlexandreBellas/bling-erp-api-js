@@ -1,9 +1,11 @@
 import ISituacao from '../../@shared/types/situacao.type'
 
 export default {
-  id: 12345678,
-  idsVinculosAgrupadores: [12345678],
-  idsOpcoes: [12345678]
+  data: {
+    id: 12345678,
+    idsVinculosAgrupadores: [12345678],
+    idsOpcoes: [12345678]
+  }
 }
 
 export const updateRequestBody = {

@@ -50,15 +50,20 @@ describe('Categorias - Lojas entity', () => {
   })
 
   it('should get successfully', async () => {
-    const spy = jest.spyOn(repository, 'show')
-    const idCategoriaLoja = chance.natural()
+    const spy = jest.spyOn(repository, 'index')
     repository.setResponse(findResponse)
 
-    const response = await entity.find({ idCategoriaLoja })
+    const response = await entity.get()
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'categorias/lojas',
-      id: String(idCategoriaLoja)
+      params: {
+        idCategoriaProduto: undefined,
+        idCategoriaProdutoPai: undefined,
+        idLoja: undefined,
+        limite: undefined,
+        pagina: undefined
+      }
     })
     expect(response).toBe(findResponse)
   })

@@ -3,9 +3,11 @@ export interface IFindParams {
 }
 
 export interface IFindResponse {
-  id: number
-  loja: { id: number }
-  descricao: string
-  codigo: string
-  categoriaProduto: { id: number }
+  data: {
+    id: number
+    loja: { id: number }
+    descricao: string
+    codigo: string
+    categoriaProduto: { id: number }
+  }
 }

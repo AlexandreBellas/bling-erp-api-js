@@ -6,8 +6,10 @@ export interface IFindByModuleParams {
   limite?: number
 }
 
-export interface IFindByModuleSingleResponse {
-  id: number
-  nome: string
-  situacao: ISituacao
+export interface IFindByModuleResponse {
+  data: {
+    id: number
+    nome: string
+    situacao: ISituacao
+  }[]
 }

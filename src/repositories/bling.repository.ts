@@ -6,7 +6,6 @@ import {
   IBlingRepository,
   IDefaultHeaders,
   IDefaultParams,
-  IDefaultSuccessResponse,
   IDestroyOptions,
   IIndexOptions,
   IReplaceOptions,
@@ -66,11 +65,11 @@ export class BlingRepository implements IBlingRepository {
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(options: IIndexOptions<IParams, IHeaders>): Promise<IIndexResponse> {
     return await this.api
-      .get<IDefaultSuccessResponse<IIndexResponse>>(`${options.endpoint}`, {
+      .get<IIndexResponse>(`${options.endpoint}`, {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data.data)
+      .then((response) => response.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, options.endpoint)
       )
@@ -88,11 +87,11 @@ export class BlingRepository implements IBlingRepository {
   >(options: IShowOptions<IParams, IHeaders>): Promise<IShowResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .get<IDefaultSuccessResponse<IShowResponse>>(endpoint, {
+      .get<IShowResponse>(endpoint, {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data.data)
+      .then((response) => response.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -112,15 +111,11 @@ export class BlingRepository implements IBlingRepository {
     options: IStoreOptions<IStoreBody, IParams, IHeaders>
   ): Promise<IStoreResponse> {
     return await this.api
-      .post<IDefaultSuccessResponse<IStoreResponse>>(
-        `${options.endpoint}`,
-        options.body,
-        {
-          params: options.params,
-          headers: options.headers
-        }
-      )
-      .then((response) => response.data.data)
+      .post<IStoreResponse>(`${options.endpoint}`, options.body, {
+        params: options.params,
+        headers: options.headers
+      })
+      .then((response) => response.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, options.endpoint)
       )
@@ -141,11 +136,11 @@ export class BlingRepository implements IBlingRepository {
   ): Promise<IUpdateResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .patch<IDefaultSuccessResponse<IUpdateResponse>>(endpoint, options.body, {
+      .patch<IUpdateResponse>(endpoint, options.body, {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data.data)
+      .then((response) => response.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -166,15 +161,11 @@ export class BlingRepository implements IBlingRepository {
   ): Promise<IReplaceResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .patch<IDefaultSuccessResponse<IReplaceResponse>>(
-        endpoint,
-        options.body,
-        {
-          params: options.params,
-          headers: options.headers
-        }
-      )
-      .then((response) => response.data.data)
+      .patch<IReplaceResponse>(endpoint, options.body, {
+        params: options.params,
+        headers: options.headers
+      })
+      .then((response) => response.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -192,11 +183,11 @@ export class BlingRepository implements IBlingRepository {
   >(options: IDestroyOptions<IParams, IHeaders>): Promise<IDestroyResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .delete<IDefaultSuccessResponse<IDestroyResponse>>(endpoint, {
+      .delete<IDestroyResponse>(endpoint, {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data.data)
+      .then((response) => response.data)
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )

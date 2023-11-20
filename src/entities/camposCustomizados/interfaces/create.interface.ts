@@ -25,7 +25,9 @@ export interface ICreateBody {
 }
 
 export interface ICreateResponse {
-  id: number
-  idsVinculosAgrupadores: number[]
-  idsOpcoes: number[]
+  data: {
+    id: number
+    idsVinculosAgrupadores: number[]
+    idsOpcoes: number[]
+  }
 }

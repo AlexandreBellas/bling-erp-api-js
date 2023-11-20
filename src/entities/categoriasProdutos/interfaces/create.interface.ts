@@ -6,5 +6,7 @@ export interface ICreateBody {
 }
 
 export interface ICreateResponse {
-  id: number
+  data: {
+    id: number
+  }
 }

@@ -1,5 +1,7 @@
-export interface IGetTypeSingleResponse {
-  id: number
-  nome: string
-  mascara: string
+export interface IGetTypeResponse {
+  data: {
+    id: number
+    nome: string
+    mascara: string
+  }[]
 }

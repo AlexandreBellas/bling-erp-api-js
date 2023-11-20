@@ -4,6 +4,7 @@ import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.r
 import createResponse, { createRequestBody } from './create-response'
 import deleteResponse from './delete-response'
 import findResponse from './find-response'
+import getResponse from './get-response'
 import updateResponse, { updateRequestBody } from './update-response'
 
 const chance = Chance()
@@ -50,17 +51,19 @@ describe('Categorias - Produtos entity', () => {
   })
 
   it('should get successfully', async () => {
-    const spy = jest.spyOn(repository, 'show')
-    const idCategoriaProduto = chance.natural()
-    repository.setResponse(findResponse)
+    const spy = jest.spyOn(repository, 'index')
+    repository.setResponse(getResponse)
 
-    const response = await entity.find({ idCategoriaProduto })
+    const response = await entity.get()
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'categorias/produtos',
-      id: String(idCategoriaProduto)
+      params: {
+        limite: undefined,
+        pagina: undefined
+      }
     })
-    expect(response).toBe(findResponse)
+    expect(response).toBe(getResponse)
   })
 
   it('should create successfully', async () => {

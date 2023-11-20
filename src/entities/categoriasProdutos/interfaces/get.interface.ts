@@ -3,10 +3,12 @@ export interface IGetParams {
   limite?: number
 }
 
-export interface IGetSingleResponse {
-  id: number
-  descricao: string
-  categoriaPai: {
+export interface IGetResponse {
+  data: {
     id: number
-  }
+    descricao: string
+    categoriaPai: {
+      id: number
+    }
+  }[]
 }

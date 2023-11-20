@@ -9,13 +9,6 @@ export type IDefaultParams = Record<string, number | string | Date | undefined>
 export type IDefaultHeaders = Record<string, string>
 
 /**
- * Tipo padrão de resposta de requisição.
- */
-export interface IDefaultSuccessResponse<T> {
-  data: T
-}
-
-/**
  * Opções padrões para uma chamada API.
  */
 export interface IDefaultOptions<IParams, IHeaders> {

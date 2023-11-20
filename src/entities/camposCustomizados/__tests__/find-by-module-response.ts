@@ -1,7 +1,9 @@
-export default [
-  {
-    id: 12345678,
-    nome: 'Marca',
-    situacao: 1
-  }
-]
+export default {
+  data: [
+    {
+      id: 12345678,
+      nome: 'Marca',
+      situacao: 1
+    }
+  ]
+}
