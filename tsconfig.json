@@ -3,16 +3,11 @@
     "target": "es6",
     "module": "commonjs",
     "declaration": true,
+    "removeComments": true,
     "outDir": "./lib",
     "strict": true,
-    "esModuleInterop": true,
-    "allowJs": true,
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "test/*"
-  ]
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./"
+  }
 }

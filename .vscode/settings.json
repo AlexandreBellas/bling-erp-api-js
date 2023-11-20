@@ -1,6 +1,7 @@
 {
   "material-icon-theme.folders.associations": {
-    "@shared": "Shared"
+    "@shared": "Shared",
+    "exceptions": "Error"
   },
   "cSpell.words": [
     "borderô",
