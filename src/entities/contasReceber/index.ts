@@ -1,5 +1,6 @@
 import convertDateToString from '@helpers/functions/convert-date-to-string'
 import { Entity } from '../@shared/entity'
+import { ICancelBankSlipsBody } from './interfaces/cancel-bank-slips.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import {
@@ -8,6 +9,10 @@ import {
   IDownloadResponse
 } from './interfaces/download.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
+import {
+  IGetBankSlipsParams,
+  IGetBankSlipsResponse
+} from './interfaces/get-bank-slips.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import {
   IUpdateBody,
@@ -16,11 +21,11 @@ import {
 } from './interfaces/update.interface'
 
 /**
- * Entidade para interação com Contas a Pagar.
+ * Entidade para interação com Contas a Receber.
  */
-export class ContasPagar extends Entity {
+export class ContasReceber extends Entity {
   /**
-   * Remove uma conta a pagar.
+   * Remove uma conta a receber.
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
@@ -29,13 +34,13 @@ export class ContasPagar extends Entity {
    */
   public async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
-      endpoint: 'contas/pagar',
-      id: String(params.idContaPagar)
+      endpoint: 'contas/receber',
+      id: String(params.idContaReceber)
     })
   }
 
   /**
-   * Obtém contas a pagar.
+   * Obtém contas a receber.
    *
    * @param {IGetParams} params Parâmetros da busca.
    *
@@ -44,36 +49,28 @@ export class ContasPagar extends Entity {
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
-      endpoint: 'contas/pagar',
+      endpoint: 'contas/receber',
       params: {
         pagina: params?.pagina,
         limite: params?.limite,
-        dataEmissaoInicial: params?.dataEmissaoInicial
-          ? convertDateToString(params?.dataEmissaoInicial)
+        situacoes: params?.situacoes,
+        tipoFiltroData: params?.tipoFiltroData,
+        dataInicial: params?.dataInicial
+          ? convertDateToString(params.dataInicial)
           : undefined,
-        dataEmissaoFinal: params?.dataEmissaoFinal
-          ? convertDateToString(params?.dataEmissaoFinal)
+        dataFinal: params?.dataFinal
+          ? convertDateToString(params.dataFinal)
           : undefined,
-        dataVencimentoInicial: params?.dataVencimentoInicial
-          ? convertDateToString(params?.dataVencimentoInicial)
-          : undefined,
-        dataVencimentoFinal: params?.dataVencimentoFinal
-          ? convertDateToString(params?.dataVencimentoFinal)
-          : undefined,
-        dataPagamentoInicial: params?.dataPagamentoInicial
-          ? convertDateToString(params?.dataPagamentoInicial)
-          : undefined,
-        dataPagamentoFinal: params?.dataPagamentoFinal
-          ? convertDateToString(params?.dataPagamentoFinal)
-          : undefined,
-        situacao: params?.situacao,
-        idContato: params?.idContato
+        idsCategorias: params?.idsCategorias,
+        idPortador: params?.idPortador,
+        idVendedor: params?.idVendedor,
+        idFormaPagamento: params?.idFormaPagamento
       }
     })
   }
 
   /**
-   * Obtém uma conta a pagar.
+   * Obtém uma conta a receber.
    *
    * @param {IFindParams} params Parâmetros da busca.
    *
@@ -82,13 +79,33 @@ export class ContasPagar extends Entity {
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
-      endpoint: 'contas/pagar',
-      id: String(params.idContaPagar)
+      endpoint: 'contas/receber',
+      id: String(params.idContaReceber)
     })
   }
 
   /**
-   * Cria uma conta a pagar.
+   * Obtém os boletos - Bling conta.
+   *
+   * @param {IGetBankSlipsParams} params Parâmetros da busca.
+   *
+   * @returns {Promise<IGetBankSlipsResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   */
+  public async getBankSlips(
+    params: IGetBankSlipsParams
+  ): Promise<IGetBankSlipsResponse> {
+    return await this.repository.index({
+      endpoint: 'contas/receber/view/bankslips',
+      params: {
+        idOrigem: params.idOrigem,
+        situations: params.situations
+      }
+    })
+  }
+
+  /**
+   * Cria uma conta a receber.
    *
    * @param {ICreateBody} body O conteúdo para a criação.
    *
@@ -97,13 +114,13 @@ export class ContasPagar extends Entity {
    */
   public async create(body: ICreateBody): Promise<ICreateResponse> {
     return await this.repository.store({
-      endpoint: 'contas/pagar',
+      endpoint: 'contas/receber',
       body
     })
   }
 
   /**
-   * Cria o recebimento de uma conta a pagar.
+   * Cria o recebimento de uma conta a receber.
    *
    * @param {IDownloadParams & IDownloadBody} params O conteúdo para a criação.
    *
@@ -113,15 +130,30 @@ export class ContasPagar extends Entity {
   public async download(
     params: IDownloadParams & IDownloadBody
   ): Promise<IDownloadResponse> {
-    const { idContaPagar, ...body } = params
+    const { idContaReceber, ...body } = params
     return await this.repository.store({
-      endpoint: `contas/pagar/${idContaPagar}/baixar`,
+      endpoint: `contas/receber/${idContaReceber}/baixar`,
       body
     })
   }
 
   /**
-   * Atualiza uma conta a pagar.
+   * Cancelar Boletos - Bling Conta.
+   *
+   * @param {ICancelBankSlipsBody} body Parâmetros do cancelamento.
+   *
+   * @returns {Promise<null>}
+   * @throws {BlingApiException|BlingInternalException}
+   */
+  public async cancelBankSlips(body: ICancelBankSlipsBody): Promise<null> {
+    return await this.repository.store({
+      endpoint: 'contas/receber/cancel/bankslips',
+      body
+    })
+  }
+
+  /**
+   * Altera uma conta a receber.
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
@@ -131,11 +163,11 @@ export class ContasPagar extends Entity {
   public async update(
     params: IUpdateParams & IUpdateBody
   ): Promise<IUpdateResponse> {
-    const { idContaPagar, ...body } = params
+    const { idContaReceber, ...body } = params
 
     return await this.repository.replace({
-      endpoint: 'contas/pagar',
-      id: String(idContaPagar),
+      endpoint: 'contas/receber',
+      id: String(idContaReceber),
       body
     })
   }

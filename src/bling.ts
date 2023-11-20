@@ -7,6 +7,7 @@ import { CategoriasLojas } from './entities/categoriasLojas'
 import { CategoriasProdutos } from './entities/categoriasProdutos'
 import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
 import { ContasPagar } from './entities/contasPagar'
+import { ContasReceber } from './entities/contasReceber'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -101,5 +102,14 @@ export default class Bling {
    */
   public get contasPagar(): ContasPagar {
     return this.getModule(ContasPagar)
+  }
+
+  /**
+   * Obtém a instância de interação com contas a receber.
+   *
+   * @return {ContasReceber}
+   */
+  public get contasReceber(): ContasReceber {
+    return this.getModule(ContasReceber)
   }
 }

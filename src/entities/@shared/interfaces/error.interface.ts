@@ -22,6 +22,6 @@ export interface IDefaultErrorResponse {
     type: string
     message: string
     description: string
-    fields: IDefaultErrorFieldsResponse[]
+    fields?: IDefaultErrorFieldsResponse[]
   }
 }

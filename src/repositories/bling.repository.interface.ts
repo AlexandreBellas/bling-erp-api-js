@@ -1,7 +1,10 @@
 /**
  * Tipo padrão de _query parameters_.
  */
-export type IDefaultParams = Record<string, number | string | Date | undefined>
+export type IDefaultParams = Record<
+  string,
+  number | number[] | string | string[] | Date | undefined
+>
 
 /**
  * Tipo padrão de _headers_.
