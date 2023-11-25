@@ -64,7 +64,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Contatos - Tipos (`.contatosTipos`)
 - [x] Contratos (`.contratos`)
 - [x] Depósitos (`.depositos`)
-- [ ] Empresas (`.empresas`)
+- [x] Empresas (`.empresas`)
 - [ ] Estoques (`.estoques`)
 - [ ] Formas de pagamento (`.formasDePagamento`)
 - [ ] Homologação (`.homologacao`)

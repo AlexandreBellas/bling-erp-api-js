@@ -14,6 +14,7 @@ import { Contatos } from './entities/contatos'
 import { ContatosTipos } from './entities/contatosTipos'
 import { Contratos } from './entities/contratos'
 import { Depositos } from './entities/depositos'
+import { Empresas } from './entities/empresas'
 
 const chance = Chance()
 
@@ -86,5 +87,9 @@ describe('Bling main module', () => {
 
   it('should retrieve depósitos entity', () => {
     expect(createBling(chance.word()).depositos).toBeInstanceOf(Depositos)
+  })
+
+  it('should retrieve empresas entity', () => {
+    expect(createBling(chance.word()).empresas).toBeInstanceOf(Empresas)
   })
 })
