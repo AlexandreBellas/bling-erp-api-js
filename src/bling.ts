@@ -15,6 +15,7 @@ import { Contratos } from './entities/contratos'
 import { Depositos } from './entities/depositos'
 import { Empresas } from './entities/empresas'
 import { Estoques } from './entities/estoques'
+import { FormasDePagamento } from './entities/formasDePagamento'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -181,5 +182,13 @@ export default class Bling {
    */
   public get estoques(): Estoques {
     return this.getModule(Estoques)
+  }
+  /**
+   * Obtém a instância de interação com formas de pagamento.
+   *
+   * @return {FormasDePagamento}
+   */
+  public get formasDePagamento(): FormasDePagamento {
+    return this.getModule(FormasDePagamento)
   }
 }
