@@ -14,6 +14,7 @@ import { ContatosTipos } from './entities/contatosTipos'
 import { Contratos } from './entities/contratos'
 import { Depositos } from './entities/depositos'
 import { Empresas } from './entities/empresas'
+import { Estoques } from './entities/estoques'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -171,5 +172,14 @@ export default class Bling {
    */
   public get empresas(): Empresas {
     return this.getModule(Empresas)
+  }
+
+  /**
+   * Obtém a instância de interação com estoques.
+   *
+   * @return {Estoques}
+   */
+  public get estoques(): Estoques {
+    return this.getModule(Estoques)
   }
 }
