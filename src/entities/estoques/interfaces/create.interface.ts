@@ -4,10 +4,10 @@ export interface ICreateBody {
   produto: { id: number }
   deposito: { id: number }
   operacao: IOperacao
-  preco: number
-  custo: number
+  preco?: number
+  custo?: number
   quantidade: number
-  observacoes: string
+  observacoes?: string
 }
 
 export interface ICreateResponse {

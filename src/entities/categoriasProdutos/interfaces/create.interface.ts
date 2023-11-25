@@ -1,6 +1,6 @@
 export interface ICreateBody {
   descricao: string
-  categoriaPai: {
+  categoriaPai?: {
     id: number
   }
 }

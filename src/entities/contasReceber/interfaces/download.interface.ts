@@ -8,10 +8,10 @@ export interface IDownloadBody {
   portador: { id: number }
   categoria: { id: number }
   historico: string
-  juros: number
-  desconto: number
-  acrescimo: number
-  valorRecebido: number
+  juros?: number
+  desconto?: number
+  acrescimo?: number
+  valorRecebido?: number
 }
 
 export interface IDownloadResponse {

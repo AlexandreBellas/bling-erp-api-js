@@ -10,9 +10,9 @@ interface ContasReceberOcorrenciaParceladaDTO {
    * `2`: Parcelada
    */
   tipo: 2
-  considerarDiasUteis: boolean
+  considerarDiasUteis?: boolean
   diaVencimento: number
-  numeroParcelas: number
+  numeroParcelas?: number
 }
 
 interface ContasReceberOcorrenciaDTO {
@@ -25,9 +25,9 @@ interface ContasReceberOcorrenciaDTO {
    * `8`: Quinzenal
    */
   tipo: 3 | 4 | 5 | 6 | 7 | 8
-  considerarDiasUteis: boolean
+  considerarDiasUteis?: boolean
   diaVencimento: number
-  dataLimite: string
+  dataLimite?: string
 }
 
 interface ContasReceberOcorrenciaSemanalDTO {
@@ -35,24 +35,24 @@ interface ContasReceberOcorrenciaSemanalDTO {
    * `9`: Semanal
    */
   tipo: 9
-  considerarDiasUteis: boolean
+  considerarDiasUteis?: boolean
   diaSemanaVencimento: number
-  dataLimite: string
+  dataLimite?: string
 }
 
 export interface ICreateBody {
   vencimento: string
   valor: number
   contato: { id: number }
-  formaPagamento: { id: number }
-  saldo: number
-  dataEmissao: string
-  numeroDocumento: string
-  competencia: string
-  historico: string
-  portador: { id: number }
-  categoria: { id: number }
-  ocorrencia:
+  formaPagamento?: { id: number }
+  saldo?: number
+  dataEmissao?: string
+  numeroDocumento?: string
+  competencia?: string
+  historico?: string
+  portador?: { id: number }
+  categoria?: { id: number }
+  ocorrencia?:
     | ContasReceberOcorrenciaUnicaDTO
     | ContasReceberOcorrenciaParceladaDTO
     | ContasReceberOcorrenciaDTO

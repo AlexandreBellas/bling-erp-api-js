@@ -9,9 +9,9 @@ export interface IUpdateParams {
 
 export interface IUpdateBody {
   operacao: IOperacao
-  preco: number
-  custo: number
+  preco?: number
+  custo?: number
   quantidade: number
-  observacoes: string
-  data: string
+  observacoes?: string
+  data?: string
 }

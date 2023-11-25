@@ -31,28 +31,28 @@ export interface ICreateBody {
   }
   contaContabil: { id: number }
   formaPagamento: { id: number }
-  notaFiscal: {
-    mes: INotaFiscalMes
-    gerar: INotaFiscalGerar
-    descontarImpostoRenda: INotaFiscalDescontarImpostoRenda
-    texto: string
-    cfop: string
-    iss: {
-      descontar: boolean
-      aliquota: number
+  notaFiscal?: {
+    mes?: INotaFiscalMes
+    gerar?: INotaFiscalGerar
+    descontarImpostoRenda?: INotaFiscalDescontarImpostoRenda
+    texto?: string
+    cfop?: string
+    iss?: {
+      descontar?: boolean
+      aliquota?: number
     }
-    item: {
-      codigoServico: string
-      produto: { id: number }
+    item?: {
+      codigoServico?: string
+      produto?: { id: number }
     }
   }
   cobranca: {
-    dataBase: string
-    contato: { id: number }
-    vencimento: {
-      tipo: ITipoVencimento
-      dia: number
-      periodicidade: IPeriodicidade
+    dataBase?: string
+    contato?: { id: number }
+    vencimento?: {
+      tipo?: ITipoVencimento
+      dia?: number
+      periodicidade?: IPeriodicidade
     }
   }
 }
