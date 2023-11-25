@@ -6,7 +6,7 @@ interface IDefaultErrorFieldsCollectionItemResponse {
   namespace: string
 }
 
-interface IDefaultErrorFieldsResponse {
+export interface IDefaultErrorFieldsResponse {
   code: number
   msg: string
   element: string
