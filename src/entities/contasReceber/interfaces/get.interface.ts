@@ -9,8 +9,8 @@ export interface IGetParams {
    * `V`: filtrar por data de vencimento
    */
   tipoFiltroData?: 'E' | 'V'
-  dataInicial?: Date
-  dataFinal?: Date
+  dataInicial?: Date | string
+  dataFinal?: Date | string
   idsCategorias?: number[]
   idPortador?: number
   idVendedor?: number

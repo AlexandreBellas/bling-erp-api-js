@@ -11,6 +11,7 @@ import { ContasPagar } from './entities/contasPagar'
 import { ContasReceber } from './entities/contasReceber'
 import { Contatos } from './entities/contatos'
 import { ContatosTipos } from './entities/contatosTipos'
+import { Contratos } from './entities/contratos'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -141,5 +142,14 @@ export default class Bling {
    */
   public get contatosTipos(): ContatosTipos {
     return this.getModule(ContatosTipos)
+  }
+
+  /**
+   * Obtém a instância de interação com contratos.
+   *
+   * @return {Contratos}
+   */
+  public get contratos(): Contratos {
+    return this.getModule(Contratos)
   }
 }

@@ -1,4 +1,3 @@
-import convertDateToString from '@helpers/functions/convert-date-to-string'
 import { Entity } from '../@shared/entity'
 import { ICancelBankSlipsBody } from './interfaces/cancel-bank-slips.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
@@ -59,12 +58,8 @@ export class ContasReceber extends Entity {
         limite: params?.limite,
         situacoes: params?.situacoes,
         tipoFiltroData: params?.tipoFiltroData,
-        dataInicial: params?.dataInicial
-          ? convertDateToString(params.dataInicial)
-          : undefined,
-        dataFinal: params?.dataFinal
-          ? convertDateToString(params.dataFinal)
-          : undefined,
+        dataInicial: this.prepareStringOrDateParam(params?.dataInicial),
+        dataFinal: this.prepareStringOrDateParam(params?.dataFinal),
         idsCategorias: params?.idsCategorias,
         idPortador: params?.idPortador,
         idVendedor: params?.idVendedor,

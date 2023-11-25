@@ -3,12 +3,12 @@ import { ISituacao } from '../types/situacao.type'
 export interface IGetParams {
   pagina?: number
   limite?: number
-  dataEmissaoInicial?: Date
-  dataEmissaoFinal?: Date
-  dataVencimentoInicial?: Date
-  dataVencimentoFinal?: Date
-  dataPagamentoInicial?: Date
-  dataPagamentoFinal?: Date
+  dataEmissaoInicial?: Date | string
+  dataEmissaoFinal?: Date | string
+  dataVencimentoInicial?: Date | string
+  dataVencimentoFinal?: Date | string
+  dataPagamentoInicial?: Date | string
+  dataPagamentoFinal?: Date | string
   situacao?: ISituacao
   idContato?: number
 }

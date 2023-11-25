@@ -1,3 +1,4 @@
+import convertDateToString from '@helpers/functions/convert-date-to-string'
 import { IBlingRepository } from '../../repositories/bling.repository.interface'
 
 /**
@@ -14,5 +15,24 @@ export abstract class Entity {
    */
   constructor(repository: IBlingRepository) {
     this.repository = repository
+  }
+
+  /**
+   * Prepara um parâmetro de data para chamada do repositório.
+   *
+   * @param param Parâmetro do tipo `string`, `Date` ou `undefined`
+   *
+   * @returns {string|undefined}
+   */
+  prepareStringOrDateParam(param?: string | Date): string | undefined {
+    if (param === undefined) {
+      return undefined
+    }
+
+    if (typeof param === 'string') {
+      return param
+    }
+
+    return convertDateToString(param)
   }
 }

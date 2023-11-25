@@ -1,4 +1,3 @@
-import convertDateToString from '@helpers/functions/convert-date-to-string'
 import { Entity } from '../@shared/entity'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
@@ -52,24 +51,24 @@ export class ContasPagar extends Entity {
       params: {
         pagina: params?.pagina,
         limite: params?.limite,
-        dataEmissaoInicial: params?.dataEmissaoInicial
-          ? convertDateToString(params?.dataEmissaoInicial)
-          : undefined,
-        dataEmissaoFinal: params?.dataEmissaoFinal
-          ? convertDateToString(params?.dataEmissaoFinal)
-          : undefined,
-        dataVencimentoInicial: params?.dataVencimentoInicial
-          ? convertDateToString(params?.dataVencimentoInicial)
-          : undefined,
-        dataVencimentoFinal: params?.dataVencimentoFinal
-          ? convertDateToString(params?.dataVencimentoFinal)
-          : undefined,
-        dataPagamentoInicial: params?.dataPagamentoInicial
-          ? convertDateToString(params?.dataPagamentoInicial)
-          : undefined,
-        dataPagamentoFinal: params?.dataPagamentoFinal
-          ? convertDateToString(params?.dataPagamentoFinal)
-          : undefined,
+        dataEmissaoInicial: this.prepareStringOrDateParam(
+          params?.dataEmissaoInicial
+        ),
+        dataEmissaoFinal: this.prepareStringOrDateParam(
+          params?.dataEmissaoFinal
+        ),
+        dataVencimentoInicial: this.prepareStringOrDateParam(
+          params?.dataVencimentoInicial
+        ),
+        dataVencimentoFinal: this.prepareStringOrDateParam(
+          params?.dataVencimentoFinal
+        ),
+        dataPagamentoInicial: this.prepareStringOrDateParam(
+          params?.dataPagamentoInicial
+        ),
+        dataPagamentoFinal: this.prepareStringOrDateParam(
+          params?.dataPagamentoFinal
+        ),
         situacao: params?.situacao,
         idContato: params?.idContato
       }
