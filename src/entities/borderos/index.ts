@@ -13,6 +13,8 @@ export class Borderos extends Entity {
    *
    * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Border%C3%B4s/delete_borderos__idBordero_
    */
   async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
@@ -28,6 +30,8 @@ export class Borderos extends Entity {
    *
    * @returns {Promise<IFindSuccessResponse>} Os dados do borderô pesquisado.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Border%C3%B4s/get_borderos__idBordero_
    */
   async find(params: IFindParams): Promise<IFindSuccessResponse> {
     return await this.repository.show({

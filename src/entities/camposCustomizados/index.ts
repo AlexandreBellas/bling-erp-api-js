@@ -29,6 +29,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/delete_campos_customizados__idCampoCustomizado_
    */
   async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
@@ -42,6 +44,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<IGetModuleResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/get_campos_customizados_modulos
    */
   async getModules(): Promise<IGetModuleResponse> {
     return await this.repository.index({
@@ -54,6 +58,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<IGetTypeResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/get_campos_customizados_tipos
    */
   async getTypes(): Promise<IGetTypeResponse> {
     return await this.repository.index({
@@ -68,6 +74,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<IFindByModuleResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/get_campos_customizados_modulos__idModulo_
    */
   async findByModule(
     params: IFindByModuleParams
@@ -87,6 +95,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<IFindParams>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/get_campos_customizados__idCampoCustomizado_
    */
   async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
@@ -102,6 +112,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/patch_campos_customizados__idCampoCustomizado__situacoes
    */
   async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
@@ -120,6 +132,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<ICreateResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/post_campos_customizados
    */
   async create(body: ICreateBody): Promise<ICreateResponse> {
     return await this.repository.store({
@@ -135,6 +149,8 @@ export class CamposCustomizados extends Entity {
    *
    * @returns {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/put_campos_customizados__idCampoCustomizado_
    */
   async update(params: IUpdateParams & IUpdateBody): Promise<IUpdateResponse> {
     const { idCampoCustomizado, ...body } = params

@@ -13,6 +13,8 @@ export class ContasContabeis extends Entity {
    *
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20Cont%C3%A1beis/get_contas_contabeis
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
@@ -31,6 +33,8 @@ export class ContasContabeis extends Entity {
    *
    * @returns {Promise<IFindResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20Cont%C3%A1beis/get_contas_contabeis__idContaContabil_
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({

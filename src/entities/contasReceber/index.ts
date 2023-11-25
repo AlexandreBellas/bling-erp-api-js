@@ -31,6 +31,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/delete_contas_receber__idContaReceber_
    */
   public async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
@@ -46,6 +48,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/get_contas_receber
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
@@ -76,6 +80,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<IFindResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/get_contas_receber__idContaReceber_
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
@@ -91,6 +97,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<IGetBankSlipsResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/get_contas_receber_view_bankslips
    */
   public async getBankSlips(
     params: IGetBankSlipsParams
@@ -111,6 +119,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<ICreateResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/post_contas_receber
    */
   public async create(body: ICreateBody): Promise<ICreateResponse> {
     return await this.repository.store({
@@ -126,6 +136,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<IDownloadResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/post_contas_receber__idContaReceber__baixar
    */
   public async download(
     params: IDownloadParams & IDownloadBody
@@ -144,6 +156,8 @@ export class ContasReceber extends Entity {
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/post_contas_receber_cancel_bankslips
    */
   public async cancelBankSlips(body: ICancelBankSlipsBody): Promise<null> {
     return await this.repository.store({
@@ -159,6 +173,8 @@ export class ContasReceber extends Entity {
    *
    * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/put_contas_receber__idContaReceber_
    */
   public async update(
     params: IUpdateParams & IUpdateBody

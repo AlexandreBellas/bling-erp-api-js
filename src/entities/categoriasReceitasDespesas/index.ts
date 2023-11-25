@@ -13,6 +13,8 @@ export class CategoriasReceitasDespesas extends Entity {
    *
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Receitas%20e%20Despesas/get_categorias_receitas_despesas
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
@@ -33,6 +35,8 @@ export class CategoriasReceitasDespesas extends Entity {
    *
    * @returns {Promise<IFindResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Receitas%20e%20Despesas/get_categorias_receitas_despesas__idCategoria_
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({

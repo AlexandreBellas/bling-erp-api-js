@@ -16,6 +16,8 @@ export class CategoriasProdutos extends Entity {
    *
    * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Produtos/delete_categorias_produtos__idCategoriaProduto_
    */
   public async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
@@ -31,6 +33,8 @@ export class CategoriasProdutos extends Entity {
    *
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Produtos/get_categorias_produtos
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
@@ -49,6 +53,8 @@ export class CategoriasProdutos extends Entity {
    *
    * @returns {Promise<IFindResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Produtos/get_categorias_produtos__idCategoriaProduto_
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
@@ -64,6 +70,8 @@ export class CategoriasProdutos extends Entity {
    *
    * @returns {Promise<ICreateResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Produtos/post_categorias_produtos
    */
   public async create(body: ICreateBody): Promise<ICreateResponse> {
     return await this.repository.store({
@@ -79,6 +87,8 @@ export class CategoriasProdutos extends Entity {
    *
    * @return {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Produtos/put_categorias_produtos__idCategoriaProduto_
    */
   public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
     const { idCategoriaProduto, ...body } = params

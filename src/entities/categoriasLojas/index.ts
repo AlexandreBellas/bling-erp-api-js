@@ -16,6 +16,8 @@ export class CategoriasLojas extends Entity {
    *
    * @returns {Promise<null>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Lojas/delete_categorias_lojas__idCategoriaLoja_
    */
   public async delete(params: IDeleteParams): Promise<null> {
     return await this.repository.destroy({
@@ -31,6 +33,8 @@ export class CategoriasLojas extends Entity {
    *
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Lojas/get_categorias_lojas
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
@@ -52,6 +56,8 @@ export class CategoriasLojas extends Entity {
    *
    * @returns {Promise<IFindResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Lojas/get_categorias_lojas__idCategoriaLoja_
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
@@ -67,6 +73,8 @@ export class CategoriasLojas extends Entity {
    *
    * @returns {Promise<ICreateResponse>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Lojas/post_categorias_lojas
    */
   public async create(body: ICreateBody): Promise<ICreateResponse> {
     return await this.repository.store({
@@ -82,6 +90,8 @@ export class CategoriasLojas extends Entity {
    *
    * @return {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Lojas/put_categorias_lojas__idCategoriaLoja_
    */
   public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
     const { idCategoriaLoja, ...body } = params
