@@ -10,6 +10,7 @@ import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesa
 import { ContasContabeis } from './entities/contasContabeis'
 import { ContasPagar } from './entities/contasPagar'
 import { ContasReceber } from './entities/contasReceber'
+import { Contatos } from './entities/contatos'
 
 const chance = Chance()
 
@@ -64,5 +65,9 @@ describe('Bling main module', () => {
     expect(createBling(chance.word()).contasContabeis).toBeInstanceOf(
       ContasContabeis
     )
+  })
+
+  it('should retrieve contatos entity', () => {
+    expect(createBling(chance.word()).contatos).toBeInstanceOf(Contatos)
   })
 })

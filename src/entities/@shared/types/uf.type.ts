@@ -1,7 +1,7 @@
 /**
  * Tipagem representativa de uma UF.
  */
-type IUFs =
+type IUF =
   | 'AC'
   | 'AL'
   | 'AP'
@@ -31,4 +31,4 @@ type IUFs =
   | 'TO'
   | 'UX'
 
-export default IUFs
+export default IUF
