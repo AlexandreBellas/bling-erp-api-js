@@ -102,10 +102,13 @@ export class InMemoryBlingRepository implements IBlingRepository {
    * @inheritdoc
    */
   async index<
+    IIndexBody,
     IIndexResponse,
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
-  >(options: IIndexOptions<IParams, IHeaders>): Promise<IIndexResponse> {
+  >(
+    options: IIndexOptions<IIndexBody, IParams, IHeaders>
+  ): Promise<IIndexResponse> {
     return this.indexResponse ?? this.response
   }
 
