@@ -17,6 +17,24 @@ export class InMemoryBlingRepository implements IBlingRepository {
   /** @property {any} response A resposta definida ao fazer uma requisição. */
   private response: any
 
+  /** @property {any} indexResponse A resposta definida para o método `index`. */
+  private indexResponse: any = null
+
+  /** @property {any} showResponse A resposta definida para o método `show`. */
+  private showResponse: any = null
+
+  /** @property {any} storeResponse A resposta definida para o método `store`. */
+  private storeResponse: any = null
+
+  /** @property {any} updateResponse A resposta definida para o método `update`. */
+  private updateResponse: any = null
+
+  /** @property {any} replaceResponse A resposta definida para o método `replace`. */
+  private replaceResponse: any = null
+
+  /** @property {any} destroyResponse A resposta definida para o método `destroy`. */
+  private destroyResponse: any = null
+
   /**
    * Define a resposta de _mock_ padrão.
    *
@@ -27,6 +45,60 @@ export class InMemoryBlingRepository implements IBlingRepository {
   }
 
   /**
+   * Define a resposta de _mock_ para o método `index`.
+   *
+   * @param response A resposta a ser retornada.
+   */
+  public setIndexResponse(response: any) {
+    this.indexResponse = response
+  }
+
+  /**
+   * Define a resposta de _mock_ para o método `show`.
+   *
+   * @param response A resposta a ser retornada.
+   */
+  public setShowResponse(response: any) {
+    this.showResponse = response
+  }
+
+  /**
+   * Define a resposta de _mock_ para o método `store`.
+   *
+   * @param response A resposta a ser retornada.
+   */
+  public setStoreResponse(response: any) {
+    this.storeResponse = response
+  }
+
+  /**
+   * Define a resposta de _mock_ para o método `update`.
+   *
+   * @param response A resposta a ser retornada.
+   */
+  public setUpdateResponse(response: any) {
+    this.updateResponse = response
+  }
+
+  /**
+   * Define a resposta de _mock_ para o método `replace`.
+   *
+   * @param response A resposta a ser retornada.
+   */
+  public setReplaceResponse(response: any) {
+    this.replaceResponse = response
+  }
+
+  /**
+   * Define a resposta de _mock_ para o método `destroy`.
+   *
+   * @param response A resposta a ser retornada.
+   */
+  public setDestroyResponse(response: any) {
+    this.destroyResponse = response
+  }
+
+  /**
    * @inheritdoc
    */
   async index<
@@ -34,7 +106,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(options: IIndexOptions<IParams, IHeaders>): Promise<IIndexResponse> {
-    return this.response
+    return this.indexResponse ?? this.response
   }
 
   /**
@@ -45,7 +117,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(options: IShowOptions<IParams, IHeaders>): Promise<IShowResponse> {
-    return this.response
+    return this.showResponse ?? this.response
   }
 
   /**
@@ -59,7 +131,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
   >(
     options: IStoreOptions<IStoreBody, IParams, IHeaders>
   ): Promise<IStoreResponse> {
-    return this.response
+    return this.storeResponse ?? this.response
   }
 
   /**
@@ -73,7 +145,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
   >(
     options: IUpdateOptions<IUpdateBody, IParams, IHeaders>
   ): Promise<IUpdateResponse> {
-    return this.response
+    return this.updateResponse ?? this.response
   }
 
   /**
@@ -87,7 +159,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
   >(
     options: IReplaceOptions<IReplaceBody, IParams, IHeaders>
   ): Promise<IReplaceResponse> {
-    return this.response
+    return this.replaceResponse ?? this.response
   }
 
   /**
@@ -98,6 +170,6 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(options: IDestroyOptions<IParams, IHeaders>): Promise<IDestroyResponse> {
-    return this.response
+    return this.destroyResponse ?? this.response
   }
 }

@@ -127,4 +127,66 @@ describe('Homologação entity', () => {
     })
     expect(response).toBe(updateResponse)
   })
+
+  it('should execute successfully', async () => {
+    const getSpy = jest.spyOn(repository, 'index')
+    const postSpy = jest.spyOn(repository, 'store')
+    const putSpy = jest.spyOn(repository, 'replace')
+    const patchSpy = jest.spyOn(repository, 'update')
+    const deleteSpy = jest.spyOn(repository, 'destroy')
+    repository.setIndexResponse(getResponse)
+    repository.setStoreResponse(createResponse)
+    repository.setUpdateResponse(changeSituationResponse)
+    repository.setReplaceResponse(updateResponse)
+    repository.setDestroyResponse(deleteResponse)
+    const { headers, data } = createResponse
+    const hash = headers['x-bling-homologacao']
+    const { id, ...body } = data
+
+    await entity.execute()
+
+    expect(getSpy).toHaveBeenCalledWith({
+      endpoint: 'homologacao/produtos',
+      shouldIncludeHeadersInResponse: true
+    })
+    expect(postSpy).toHaveBeenCalledWith({
+      endpoint: 'homologacao/produtos',
+      body,
+      headers: {
+        'x-bling-homologacao': hash
+      },
+      shouldIncludeHeadersInResponse: true
+    })
+    expect(putSpy).toHaveBeenCalledWith({
+      endpoint: 'homologacao/produtos',
+      body: {
+        ...body,
+        nome: 'Copo'
+      },
+      id: String(id),
+      headers: {
+        'x-bling-homologacao': hash
+      },
+      shouldIncludeHeadersInResponse: true
+    })
+    expect(patchSpy).toHaveBeenCalledWith({
+      endpoint: 'homologacao/produtos',
+      body: {
+        situacao: 'I'
+      },
+      id: String(id),
+      headers: {
+        'x-bling-homologacao': hash
+      },
+      shouldIncludeHeadersInResponse: true
+    })
+    expect(deleteSpy).toHaveBeenCalledWith({
+      endpoint: 'homologacao/produtos',
+      id: String(id),
+      headers: {
+        'x-bling-homologacao': hash
+      },
+      shouldIncludeHeadersInResponse: true
+    })
+  })
 })
