@@ -19,6 +19,7 @@ import { FormasDePagamento } from './entities/formasDePagamento'
 import { Homologacao } from './entities/homologacao'
 import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
+import { LogisticasObjetos } from './entities/logisticasObjetos'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -221,5 +222,14 @@ export default class Bling {
    */
   public get logisticasEtiquetas(): LogisticasEtiquetas {
     return this.getModule(LogisticasEtiquetas)
+  }
+
+  /**
+   * Obtém a instância de interação com logísticas - objetos.
+   *
+   * @return {LogisticasObjetos}
+   */
+  public get logisticasObjetos(): LogisticasObjetos {
+    return this.getModule(LogisticasObjetos)
   }
 }
