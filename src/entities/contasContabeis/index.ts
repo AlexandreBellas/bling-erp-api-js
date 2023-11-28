@@ -4,6 +4,8 @@ import { IGetParams, IGetResponse } from './interfaces/get.interface'
 
 /**
  * Entidade para interação com Contas Contábeis.
+ *
+ * @see https://developer.bling.com.br/referencia#/Contas%20Cont%C3%A1beis
  */
 export class ContasContabeis extends Entity {
   /**

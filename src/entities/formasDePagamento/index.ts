@@ -11,6 +11,8 @@ import {
 
 /**
  * Entidade para interação com formas de pagamento.
+ *
+ * @see https://developer.bling.com.br/referencia#/Formas%20de%20Pagamentos
  */
 export class FormasDePagamento extends Entity {
   /**

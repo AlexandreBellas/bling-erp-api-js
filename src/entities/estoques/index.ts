@@ -12,6 +12,8 @@ import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
  * Entidade para interação com estoques.
+ *
+ * @see https://developer.bling.com.br/referencia#/Estoques
  */
 export class Estoques extends Entity {
   /**

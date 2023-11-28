@@ -21,6 +21,8 @@ import {
 
 /**
  * Entidade para interação com Contas a Receber.
+ *
+ * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber
  */
 export class ContasReceber extends Entity {
   /**

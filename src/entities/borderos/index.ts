@@ -4,6 +4,8 @@ import { IFindParams, IFindSuccessResponse } from './interfaces/find.interface'
 
 /**
  * Entidade para interação com borderôs.
+ *
+ * @see https://developer.bling.com.br/referencia#/Border%C3%B4s
  */
 export class Borderos extends Entity {
   /**

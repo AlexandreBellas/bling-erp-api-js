@@ -16,6 +16,8 @@ import {
 
 /**
  * Entidade para interação com Contas a Pagar.
+ *
+ * @see https://developer.bling.com.br/referencia#/Contas%20a%20Pagar
  */
 export class ContasPagar extends Entity {
   /**

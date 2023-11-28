@@ -24,7 +24,9 @@ export abstract class Entity {
    *
    * @returns {string|undefined}
    */
-  prepareStringOrDateParam(param?: string | Date): string | undefined {
+  protected prepareStringOrDateParam(
+    param?: string | Date
+  ): string | undefined {
     if (param === undefined) {
       return undefined
     }

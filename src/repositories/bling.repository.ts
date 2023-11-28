@@ -69,7 +69,14 @@ export class BlingRepository implements IBlingRepository {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data)
+      .then((response) =>
+        options.shouldIncludeHeadersInResponse
+          ? {
+              headers: response.headers,
+              ...response.data
+            }
+          : response.data
+      )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, options.endpoint)
       )
@@ -91,7 +98,14 @@ export class BlingRepository implements IBlingRepository {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data)
+      .then((response) =>
+        options.shouldIncludeHeadersInResponse
+          ? {
+              headers: response.headers,
+              ...response.data
+            }
+          : response.data
+      )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -115,7 +129,14 @@ export class BlingRepository implements IBlingRepository {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data)
+      .then((response) =>
+        options.shouldIncludeHeadersInResponse
+          ? {
+              headers: response.headers,
+              ...response.data
+            }
+          : response.data
+      )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, options.endpoint)
       )
@@ -140,7 +161,14 @@ export class BlingRepository implements IBlingRepository {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data)
+      .then((response) =>
+        options.shouldIncludeHeadersInResponse
+          ? {
+              headers: response.headers,
+              ...response.data
+            }
+          : response.data
+      )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -165,7 +193,14 @@ export class BlingRepository implements IBlingRepository {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data)
+      .then((response) =>
+        options.shouldIncludeHeadersInResponse
+          ? {
+              headers: response.headers,
+              ...response.data
+            }
+          : response.data
+      )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -187,7 +222,14 @@ export class BlingRepository implements IBlingRepository {
         params: options.params,
         headers: options.headers
       })
-      .then((response) => response.data)
+      .then((response) =>
+        options.shouldIncludeHeadersInResponse
+          ? {
+              headers: response.headers,
+              ...response.data
+            }
+          : response.data
+      )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -210,7 +252,7 @@ export class BlingRepository implements IBlingRepository {
 
     if (!data) {
       throw new BlingInternalException(
-        `Não foi possível realizar a chamada HTTP: GET ${endpoint}`
+        `Não foi possível realizar a chamada HTTP: ${rawError.config?.method} ${endpoint}`
       )
     }
 

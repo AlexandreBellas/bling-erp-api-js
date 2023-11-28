@@ -67,7 +67,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Empresas (`.empresas`)
 - [x] Estoques (`.estoques`)
 - [x] Formas de pagamento (`.formasDePagamento`)
-- [ ] Homologação (`.homologacao`)
+- [x] Homologação (`.homologacao`)
 - [ ] Logísticas (`.logisticas`)
 - [ ] Logísticas - Etiquetas (`.logisticasEtiquetas`)
 - [ ] Logísticas - Objetos (`.logisticasObjetos`)

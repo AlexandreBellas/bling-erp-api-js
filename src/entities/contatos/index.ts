@@ -17,6 +17,8 @@ import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Contatos.
+ *
+ * @see https://developer.bling.com.br/referencia#/Contatos
  */
 export class Contatos extends Entity {
   /**

@@ -16,6 +16,7 @@ import { Depositos } from './entities/depositos'
 import { Empresas } from './entities/empresas'
 import { Estoques } from './entities/estoques'
 import { FormasDePagamento } from './entities/formasDePagamento'
+import { Homologacao } from './entities/homologacao'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -183,6 +184,7 @@ export default class Bling {
   public get estoques(): Estoques {
     return this.getModule(Estoques)
   }
+
   /**
    * Obtém a instância de interação com formas de pagamento.
    *
@@ -190,5 +192,14 @@ export default class Bling {
    */
   public get formasDePagamento(): FormasDePagamento {
     return this.getModule(FormasDePagamento)
+  }
+
+  /**
+   * Obtém a instância de interação com homologação.
+   *
+   * @return {Homologacao}
+   */
+  public get homologacao(): Homologacao {
+    return this.getModule(Homologacao)
   }
 }

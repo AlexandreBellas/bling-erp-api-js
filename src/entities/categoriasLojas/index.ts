@@ -7,6 +7,8 @@ import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Categorias - Lojas.
+ *
+ * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Lojas
  */
 export class CategoriasLojas extends Entity {
   /**

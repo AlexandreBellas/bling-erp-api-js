@@ -4,6 +4,8 @@ import { IGetParams, IGetResponse } from './interfaces/get.interface'
 
 /**
  * Entidade para interação com Categorias - Receitas e Despesas.
+ *
+ * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Receitas%20e%20Despesas
  */
 export class CategoriasReceitasDespesas extends Entity {
   /**

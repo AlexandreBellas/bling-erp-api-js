@@ -3,6 +3,8 @@ import { IMeResponse } from './interfaces/me.interface'
 
 /**
  * Entidade para interação com empresas.
+ *
+ * @see https://developer.bling.com.br/referencia#/Empresas
  */
 export class Empresas extends Entity {
   /**

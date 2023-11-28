@@ -3,6 +3,8 @@ import { IGetResponse } from './interfaces/get.interface'
 
 /**
  * Entidade para interação com Contatos - Tipos.
+ *
+ * @see https://developer.bling.com.br/referencia#/Contatos%20-%20Tipos
  */
 export class ContatosTipos extends Entity {
   /**

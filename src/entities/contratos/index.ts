@@ -11,6 +11,8 @@ import {
 
 /**
  * Entidade para interação com contratos.
+ *
+ * @see https://developer.bling.com.br/referencia#/Contratos
  */
 export class Contratos extends Entity {
   /**

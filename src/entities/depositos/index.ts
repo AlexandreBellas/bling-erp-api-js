@@ -10,6 +10,8 @@ import {
 
 /**
  * Entidade para interação com depósitos.
+ *
+ * @see https://developer.bling.com.br/referencia#/Dep%C3%B3sitos
  */
 export class Depositos extends Entity {
   /**

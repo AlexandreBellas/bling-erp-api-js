@@ -20,6 +20,8 @@ import {
 
 /**
  * Entidade para interação com campos customizados.
+ *
+ * @see https://developer.bling.com.br/referencia#/Campos%20Customizados
  */
 export class CamposCustomizados extends Entity {
   /**

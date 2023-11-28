@@ -18,6 +18,7 @@ export interface IDefaultOptions<IParams, IHeaders> {
   endpoint: string
   params?: IParams
   headers?: IHeaders
+  shouldIncludeHeadersInResponse?: true
 }
 
 /**
