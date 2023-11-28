@@ -18,6 +18,7 @@ import { Empresas } from './entities/empresas'
 import { Estoques } from './entities/estoques'
 import { FormasDePagamento } from './entities/formasDePagamento'
 import { Homologacao } from './entities/homologacao'
+import { Logisticas } from './entities/logisticas'
 
 const chance = Chance()
 
@@ -108,5 +109,9 @@ describe('Bling main module', () => {
 
   it('should retrieve homologação entity', () => {
     expect(createBling(chance.word()).homologacao).toBeInstanceOf(Homologacao)
+  })
+
+  it('should retrieve logísticas entity', () => {
+    expect(createBling(chance.word()).logisticas).toBeInstanceOf(Logisticas)
   })
 })
