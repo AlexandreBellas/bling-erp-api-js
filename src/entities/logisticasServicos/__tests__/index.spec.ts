@@ -1,6 +1,7 @@
 import { Chance } from 'chance'
 import { LogisticasServicos } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { changeSituationRequest } from './change-situation-response'
 import createResponse, { createRequestBody } from './create-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
@@ -56,7 +57,7 @@ describe('Logísticas - servicos entity', () => {
     const spy = jest.spyOn(repository, 'update')
     const idLogisticaServico = chance.natural()
     const ativo = chance.bool()
-    repository.setResponse(findResponse)
+    repository.setResponse(changeSituationRequest)
 
     const response = await entity.changeSituation({ idLogisticaServico, ativo })
 
@@ -65,7 +66,7 @@ describe('Logísticas - servicos entity', () => {
       id: `${String(idLogisticaServico)}/situacoes`,
       body: { ativo }
     })
-    expect(response).toBe(findResponse)
+    expect(response).toBe(changeSituationRequest)
   })
 
   it('should create successfully', async () => {
