@@ -21,6 +21,7 @@ import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
 import { LogisticasObjetos } from './entities/logisticasObjetos'
 import { LogisticasServicos } from './entities/logisticasServicos'
+import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -241,5 +242,14 @@ export default class Bling {
    */
   public get logisticasServicos(): LogisticasServicos {
     return this.getModule(LogisticasServicos)
+  }
+
+  /**
+   * Obtém a instância de interação com naturezas de operações.
+   *
+   * @return {NaturezasDeOperacoes}
+   */
+  public get naturezasDeOperacoes(): NaturezasDeOperacoes {
+    return this.getModule(NaturezasDeOperacoes)
   }
 }
