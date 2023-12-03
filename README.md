@@ -4,6 +4,8 @@
 [![install size](https://packagephobia.com/badge?p=bling-erp-api)](https://packagephobia.com/result?p=bling-erp-api)
 [![code coverage](https://coveralls.io/repos/github/AlexandreBellas/bling-erp-api/badge.svg?branch=main)](https://coveralls.io/github/AlexandreBellas/bling-erp-api?branch=main)
 
+> ### A biblioteca atualmente usa a API v2 do Bling. Uma nova versão para uso da API v3 está em desenvolvimento no momento, com previsão de ser disponibilizada entre Dezembro/2023 e Janeiro/2024.
+
 Pacote de integração com a [API do ERP Bling](https://ajuda.bling.com.br/hc/pt-br/categories/360002186394-API-para-Desenvolvedores). O mais completo existente (e se não é, será).
 Disponível também para **Typescript**.
 
