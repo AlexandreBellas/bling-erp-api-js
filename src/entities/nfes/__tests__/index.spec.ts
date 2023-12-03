@@ -1,7 +1,8 @@
 import { Chance } from 'chance'
-import { Nfces } from '..'
+import { Nfes } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
 import createResponse, { createRequestBody } from './create-response'
+import deleteResponse from './delete-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
 import postAccountsResponse from './post-accounts-response'
@@ -11,17 +12,35 @@ import updateResponse, { updateRequestBody } from './update-response'
 
 const chance = Chance()
 
-describe('NFC-es entity', () => {
+describe('NF-es entity', () => {
   let repository: InMemoryBlingRepository
-  let entity: Nfces
+  let entity: Nfes
 
   beforeEach(() => {
     repository = new InMemoryBlingRepository()
-    entity = new Nfces(repository)
+    entity = new Nfes(repository)
   })
 
   afterEach(() => {
     jest.restoreAllMocks()
+  })
+
+  it('should delete successfully', async () => {
+    const spy = jest.spyOn(repository, 'destroy')
+    repository.setResponse(deleteResponse)
+    const idsNotas: number[] = []
+    for (let i = 0; i < chance.natural({ min: 1, max: 5 }); i++) {
+      idsNotas.push(chance.natural())
+    }
+
+    const response = await entity.delete({ idsNotas })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: 'nfe',
+      id: '',
+      params: { idsNotas }
+    })
+    expect(response).toBe(deleteResponse)
   })
 
   it('should get successfully', async () => {
@@ -31,11 +50,13 @@ describe('NFC-es entity', () => {
     const response = await entity.get()
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'nfce',
+      endpoint: 'nfe',
       params: {
         limite: undefined,
         pagina: undefined,
+        numeroLoja: undefined,
         situacao: undefined,
+        tipo: undefined,
         dataEmissaoInicial: undefined,
         dataEmissaoFinal: undefined
       }
@@ -45,14 +66,14 @@ describe('NFC-es entity', () => {
 
   it('should find successfully', async () => {
     const spy = jest.spyOn(repository, 'show')
-    const idNotaFiscalConsumidor = chance.natural()
+    const idNotaFiscal = chance.natural()
     repository.setResponse(findResponse)
 
-    const response = await entity.find({ idNotaFiscalConsumidor })
+    const response = await entity.find({ idNotaFiscal })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'nfce',
-      id: String(idNotaFiscalConsumidor)
+      endpoint: 'nfe',
+      id: String(idNotaFiscal)
     })
     expect(response).toBe(findResponse)
   })
@@ -64,7 +85,7 @@ describe('NFC-es entity', () => {
     const response = await entity.create(createRequestBody)
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'nfce',
+      endpoint: 'nfe',
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
@@ -72,13 +93,13 @@ describe('NFC-es entity', () => {
 
   it('should send successfully', async () => {
     const spy = jest.spyOn(repository, 'store')
-    const idNotaFiscalConsumidor = chance.natural()
+    const idNotaFiscal = chance.natural()
     repository.setResponse(sendResponse)
 
-    const response = await entity.send({ idNotaFiscalConsumidor })
+    const response = await entity.send({ idNotaFiscal })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: `nfce/${idNotaFiscalConsumidor}/enviar`,
+      endpoint: `nfe/${idNotaFiscal}/enviar`,
       body: {}
     })
     expect(response).toBe(sendResponse)
@@ -86,13 +107,13 @@ describe('NFC-es entity', () => {
 
   it('should post accounts successfully', async () => {
     const spy = jest.spyOn(repository, 'store')
-    const idNotaFiscalConsumidor = chance.natural()
+    const idNotaFiscal = chance.natural()
     repository.setResponse(postAccountsResponse)
 
-    const response = await entity.postAccounts({ idNotaFiscalConsumidor })
+    const response = await entity.postAccounts({ idNotaFiscal })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: `nfce/${idNotaFiscalConsumidor}/lancar-contas`,
+      endpoint: `nfe/${idNotaFiscal}/lancar-contas`,
       body: {}
     })
     expect(response).toBe(postAccountsResponse)
@@ -100,13 +121,13 @@ describe('NFC-es entity', () => {
 
   it('should reverse accounts successfully', async () => {
     const spy = jest.spyOn(repository, 'store')
-    const idNotaFiscalConsumidor = chance.natural()
+    const idNotaFiscal = chance.natural()
     repository.setResponse(reverseAccountsResponse)
 
-    const response = await entity.reverseAccounts({ idNotaFiscalConsumidor })
+    const response = await entity.reverseAccounts({ idNotaFiscal })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: `nfce/${idNotaFiscalConsumidor}/estornar-contas`,
+      endpoint: `nfe/${idNotaFiscal}/estornar-contas`,
       body: {}
     })
     expect(response).toBe(reverseAccountsResponse)
@@ -114,17 +135,17 @@ describe('NFC-es entity', () => {
 
   it('should update successfully', async () => {
     const spy = jest.spyOn(repository, 'replace')
-    const idNotaFiscalConsumidor = chance.natural()
+    const idNotaFiscal = chance.natural()
     repository.setResponse(updateResponse)
 
     const response = await entity.update({
-      idNotaFiscalConsumidor,
+      idNotaFiscal,
       ...updateRequestBody
     })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'nfce',
-      id: String(idNotaFiscalConsumidor),
+      endpoint: 'nfe',
+      id: String(idNotaFiscal),
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)

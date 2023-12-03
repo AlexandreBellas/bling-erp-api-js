@@ -1,5 +1,6 @@
 import { Entity } from '../@shared/entity'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IPostAccountsParams } from './interfaces/post-accounts.interface'
@@ -12,28 +13,50 @@ import {
 } from './interfaces/update.interface'
 
 /**
- * Entidade para interação com notas fiscais de consumidor eletrônicas.
+ * Entidade para interação com notas fiscais eletrônicas.
  *
- * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas
+ * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas
  */
-export class Nfces extends Entity {
+export class Nfes extends Entity {
   /**
-   * Obtém notas fiscais de consumidor.
+   * Remove múltiplas notas fiscais.
+   *
+   * @param {IDeleteParams} params Parâmetros da remoção.
+   *
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/delete_nfe
+   */
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
+    return await this.repository.destroy({
+      endpoint: 'nfe',
+      id: '',
+      params: {
+        idsNotas: params.idsNotas
+      }
+    })
+  }
+
+  /**
+   * Obtém notas fiscais.
    *
    * @param {IGetParams} params Parâmetros da busca.
    *
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/get_nfce
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/get_nfe
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
-      endpoint: 'nfce',
+      endpoint: 'nfe',
       params: {
         pagina: params?.pagina,
         limite: params?.limite,
+        numeroLoja: params?.numeroLoja,
         situacao: params?.situacao,
+        tipo: params?.tipo,
         dataEmissaoInicial: this.prepareStringOrDateParam(
           params?.dataEmissaoInicial
         ),
@@ -45,52 +68,52 @@ export class Nfces extends Entity {
   }
 
   /**
-   * Obtém uma nota fiscal de consumidor.
+   * Obtém uma nota fiscal.
    *
    * @param {IFindParams} params Parâmetros da busca.
    *
    * @returns {Promise<IFindResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/get_nfce__idNotaFiscalConsumidor_
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/get_nfe__idNotaFiscal_
    */
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
-      endpoint: 'nfce',
-      id: String(params.idNotaFiscalConsumidor)
+      endpoint: 'nfe',
+      id: String(params.idNotaFiscal)
     })
   }
 
   /**
-   * Cria uma nota fiscal de consumidor.
+   * Cria uma nota fiscal.
    *
    * @param {ICreateBody} body O conteúdo para a criação.
    *
    * @returns {Promise<ICreateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/post_nfce
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe
    */
   public async create(body: ICreateBody): Promise<ICreateResponse> {
     return await this.repository.store({
-      endpoint: 'nfce',
+      endpoint: 'nfe',
       body
     })
   }
 
   /**
-   * Envia uma nota de consumidor.
+   * Envia uma nota fiscal.
    *
-   * @param {ISendParams} params O conteúdo para o envio.
+   * @param {ISendParams} params O conteúdo para a criação.
    *
    * @returns {Promise<ISendResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/post_nfce__idNotaFiscalConsumidor__enviar
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__enviar
    */
   public async send(params: ISendParams): Promise<ISendResponse> {
     return await this.repository.store({
-      endpoint: `nfce/${params.idNotaFiscalConsumidor}/enviar`,
+      endpoint: `nfe/${params.idNotaFiscal}/enviar`,
       body: {}
     })
   }
@@ -98,16 +121,16 @@ export class Nfces extends Entity {
   /**
    * Lança as contas de uma nota fiscal.
    *
-   * @param {IPostAccountsParams} params O conteúdo para o lançamento.
+   * @param {IPostAccountsParams} params O conteúdo para a criação.
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/post_nfce__idNotaFiscalConsumidor__lancar_contas
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__lancar_contas
    */
   public async postAccounts(params: IPostAccountsParams): Promise<null> {
     return await this.repository.store({
-      endpoint: `nfce/${params.idNotaFiscalConsumidor}/lancar-contas`,
+      endpoint: `nfe/${params.idNotaFiscal}/lancar-contas`,
       body: {}
     })
   }
@@ -115,38 +138,38 @@ export class Nfces extends Entity {
   /**
    * Estorna as contas de uma nota fiscal.
    *
-   * @param {IReverseAccountsParams} params O conteúdo para o estorno.
+   * @param {IReverseAccountsParams} params O conteúdo para a criação.
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/post_nfce__idNotaFiscalConsumidor__estornar_contas
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__estornar_contas
    */
   public async reverseAccounts(params: IReverseAccountsParams): Promise<null> {
     return await this.repository.store({
-      endpoint: `nfce/${params.idNotaFiscalConsumidor}/estornar-contas`,
+      endpoint: `nfe/${params.idNotaFiscal}/estornar-contas`,
       body: {}
     })
   }
 
   /**
-   * Altera uma nota fiscal de consumidor.
+   * Altera uma nota fiscal.
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
    * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Consumidor%20Eletr%C3%B4nicas/put_nfce__idNotaFiscalConsumidor_
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/put_nfe__idNotaFiscal_
    */
   public async update(
     params: IUpdateParams & IUpdateBody
   ): Promise<IUpdateResponse> {
-    const { idNotaFiscalConsumidor, ...body } = params
+    const { idNotaFiscal, ...body } = params
 
     return await this.repository.replace({
-      endpoint: 'nfce',
-      id: String(idNotaFiscalConsumidor),
+      endpoint: 'nfe',
+      id: String(idNotaFiscal),
       body
     })
   }

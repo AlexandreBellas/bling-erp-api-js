@@ -1,4 +1,4 @@
-export interface IPostAccountParams {
+export interface IReverseAccountsParams {
   /**
    * ID da nota fiscal de consumidor
    */

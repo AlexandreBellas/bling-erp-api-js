@@ -1,11 +1,11 @@
 import { IContribuinte } from 'src/entities/@shared/types/contribuinte.type'
 import { IFretePorConta } from 'src/entities/@shared/types/frete-por-conta.type'
+import { IModeloDocumentoReferenciado } from 'src/entities/@shared/types/modelo-documento-referenciado.type'
 import { IOrigem } from 'src/entities/@shared/types/origem.type'
+import { ITipoItem } from 'src/entities/@shared/types/tipo-item.type'
 import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
 import IUF from 'src/entities/@shared/types/uf.type'
 import { IFinalidadeNfce } from '../types/finalidade.type'
-import { IModeloDocumentoReferenciadoNfce } from '../types/modelo-documento-referenciado.type'
-import { ITipoItemNfce } from '../types/tipo-item.type'
 import { ITipoNfce } from '../types/tipo.type'
 
 export interface ICreateBody {
@@ -43,7 +43,7 @@ export interface ICreateBody {
   desconto?: number
   observacoes?: string
   documentoReferenciado?: {
-    modelo: IModeloDocumentoReferenciadoNfce
+    modelo: IModeloDocumentoReferenciado
     data?: string
     numero?: string
     serie?: string
@@ -56,7 +56,7 @@ export interface ICreateBody {
     unidade?: string
     quantidade?: number
     valor?: number
-    tipo?: ITipoItemNfce
+    tipo?: ITipoItem
     pesoBruto?: number
     pesoLiquido?: number
     numeroPedidoCompra?: string

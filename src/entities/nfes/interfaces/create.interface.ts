@@ -5,18 +5,11 @@ import { IOrigem } from 'src/entities/@shared/types/origem.type'
 import { ITipoItem } from 'src/entities/@shared/types/tipo-item.type'
 import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
 import IUF from 'src/entities/@shared/types/uf.type'
-import { IFinalidadeNfce } from '../types/finalidade.type'
-import { ITipoNfce } from '../types/tipo.type'
+import { IFinalidadeNfe } from '../types/finalidade.type'
+import { ITipoNfe } from '../types/tipo.type'
 
-export interface IUpdateParams {
-  /**
-   * ID da nota fiscal de consumidor
-   */
-  idNotaFiscalConsumidor: number
-}
-
-export interface IUpdateBody {
-  tipo: ITipoNfce
+export interface ICreateBody {
+  tipo: ITipoNfe
   numero?: string
   dataOperacao?: string
   contato: {
@@ -42,9 +35,9 @@ export interface IUpdateBody {
   naturezaOperacao?: { id: number }
   loja?: {
     id: number
-    numero: string
+    numero?: string
   }
-  finalidade?: IFinalidadeNfce
+  finalidade?: IFinalidadeNfe
   seguro?: number
   despesas?: number
   desconto?: number
@@ -74,7 +67,7 @@ export interface IUpdateBody {
     informacoesAdicionais?: string
   }[]
 
-  parcelas?: {
+  parcelas: {
     data: string
     valor: number
     observacoes?: string
@@ -133,7 +126,7 @@ export interface IUpdateBody {
   }
 }
 
-export interface IUpdateResponse {
+export interface ICreateResponse {
   data: {
     id: number
     numero: string
