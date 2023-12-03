@@ -22,6 +22,7 @@ import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
 import { LogisticasObjetos } from './entities/logisticasObjetos'
 import { LogisticasServicos } from './entities/logisticasServicos'
 import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
+import { Nfces } from './entities/nfces'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -251,5 +252,14 @@ export default class Bling {
    */
   public get naturezasDeOperacoes(): NaturezasDeOperacoes {
     return this.getModule(NaturezasDeOperacoes)
+  }
+
+  /**
+   * Obtém a instância de interação com notas fiscals de consumidor eletrônicas.
+   *
+   * @return {Nfces}
+   */
+  public get nfces(): Nfces {
+    return this.getModule(Nfces)
   }
 }

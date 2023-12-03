@@ -1,8 +1,8 @@
+import { IOrigem } from 'src/entities/@shared/types/origem.type'
 import IUF from 'src/entities/@shared/types/uf.type'
 import { ICRT } from '../types/crt.type'
 import { IModalidadeBaseCalculoICMSST } from '../types/modalidade-base-calculo-icms-st.type'
 import { IMotivoDesoneracaoICMS } from '../types/motivo-desoneracao-icms.type'
-import { IOrigem } from '../types/origem.type'
 import { ITipoNota } from '../types/tipo-nota.type'
 import { ITributacao } from '../types/tributacao.type'
 

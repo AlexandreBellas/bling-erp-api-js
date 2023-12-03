@@ -1,5 +1,7 @@
 /**
  * Tipagem representativa de uma UF.
+ *
+ * - `UX`: Exterior
  */
 type IUF =
   | 'AC'
