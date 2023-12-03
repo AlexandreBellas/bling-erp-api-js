@@ -20,7 +20,7 @@ const config: Config = {
   maxWorkers: 1,
   maxConcurrency: 2,
   collectCoverageFrom: ['**/*.(t|j)s'],
-  coveragePathIgnorePatterns: ['/coverage/', 'jest.config.ts'],
+  coveragePathIgnorePatterns: ['/coverage/', 'jest.config.ts', '/lib/'],
   coverageDirectory: './coverage'
 }
 

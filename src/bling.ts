@@ -23,6 +23,7 @@ import { LogisticasObjetos } from './entities/logisticasObjetos'
 import { LogisticasServicos } from './entities/logisticasServicos'
 import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
 import { Nfces } from './entities/nfces'
+import { Nfses } from './entities/nfses'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -261,5 +262,14 @@ export default class Bling {
    */
   public get nfces(): Nfces {
     return this.getModule(Nfces)
+  }
+
+  /**
+   * Obtém a instância de interação com notas fiscals de serviço eletrônicas.
+   *
+   * @return {Nfses}
+   */
+  public get nfses(): Nfses {
+    return this.getModule(Nfses)
   }
 }

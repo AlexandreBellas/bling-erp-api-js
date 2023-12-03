@@ -74,7 +74,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Logísticas - Serviços (`.logisticasServicos`)
 - [x] Naturezas de Operações (`.naturezasDeOperacoes`)
 - [x] Notas Fiscais de Consumidor Eletrônicas (`.nfces`)
-- [ ] Notas Fiscais de Serviço Eletrônicas (`.nfses`)
+- [x] Notas Fiscais de Serviço Eletrônicas (`.nfses`)
 - [ ] Notas Fiscais Eletrônicas (`.nfes`)
 - [ ] Notificações (`.notificacoes`)
 - [ ] Pedidos - Compras (`.pedidosCompras`)
