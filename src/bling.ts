@@ -25,6 +25,7 @@ import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
 import { Nfces } from './entities/nfces'
 import { Nfes } from './entities/nfes'
 import { Nfses } from './entities/nfses'
+import { Produtos } from './entities/produtos'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -281,5 +282,14 @@ export default class Bling {
    */
   public get nfes(): Nfes {
     return this.getModule(Nfes)
+  }
+
+  /**
+   * Obtém a instância de interação com produtos.
+   *
+   * @return {Produtos}
+   */
+  public get produtos(): Produtos {
+    return this.getModule(Produtos)
   }
 }
