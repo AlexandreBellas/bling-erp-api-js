@@ -11,4 +11,6 @@
  * - `7`: Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista da CAMEX
  * - `8`: Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%
  */
-export type IOrigem = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+type IOrigem = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+
+export default IOrigem

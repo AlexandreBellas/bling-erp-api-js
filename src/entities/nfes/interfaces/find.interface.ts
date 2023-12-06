@@ -1,4 +1,4 @@
-import { IFretePorConta } from 'src/entities/@shared/types/frete-por-conta.type'
+import IFretePorConta from 'src/entities/@shared/types/frete-por-conta.type'
 import IUF from 'src/entities/@shared/types/uf.type'
 import { ISituacaoNfe } from '../types/situacao.type'
 import { ITipoNfe } from '../types/tipo.type'

@@ -5,4 +5,6 @@
  * - `2`: Simples Nacional - excesso de sublimite de receita bruta
  * - `3`: Regime Normal
  */
-export type ICRT = 1 | 2 | 3
+type ICRT = 1 | 2 | 3
+
+export default ICRT

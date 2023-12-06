@@ -4,4 +4,6 @@
  * - `P`: Produto
  * - `S`: Serviço
  */
-export type ITipoItem = 'P' | 'S'
+type ITipoItem = 'P' | 'S'
+
+export default ITipoItem

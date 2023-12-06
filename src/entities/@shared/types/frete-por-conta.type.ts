@@ -8,4 +8,6 @@
  * - `4`: Transporte Próprio por conta do Destinatário
  * - `9`: Sem Ocorrência de Transporte
  */
-export type IFretePorConta = 0 | 1 | 2 | 3 | 4 | 9
+type IFretePorConta = 0 | 1 | 2 | 3 | 4 | 9
+
+export default IFretePorConta

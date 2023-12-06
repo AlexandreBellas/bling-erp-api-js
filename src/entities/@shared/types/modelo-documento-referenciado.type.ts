@@ -8,4 +8,6 @@
  * - `55`: NF-e
  * - `65`: NFC-e
  */
-export type IModeloDocumentoReferenciado = '1' | '2' | '2D' | '4' | '55' | '65'
+type IModeloDocumentoReferenciado = '1' | '2' | '2D' | '4' | '55' | '65'
+
+export default IModeloDocumentoReferenciado

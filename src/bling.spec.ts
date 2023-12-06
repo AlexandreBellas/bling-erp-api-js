@@ -26,6 +26,7 @@ import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
 import { Nfces } from './entities/nfces'
 import { Nfes } from './entities/nfes'
 import { Nfses } from './entities/nfses'
+import { Notificacoes } from './entities/notificacoes'
 
 const chance = Chance()
 
@@ -156,5 +157,9 @@ describe('Bling main module', () => {
 
   it('should retrieve notas fiscais eletrônicas entity', () => {
     expect(createBling(chance.word()).nfes).toBeInstanceOf(Nfes)
+  })
+
+  it('should retrieve notificações entity', () => {
+    expect(createBling(chance.word()).notificacoes).toBeInstanceOf(Notificacoes)
   })
 })
