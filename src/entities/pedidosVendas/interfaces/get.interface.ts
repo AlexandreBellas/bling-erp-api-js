@@ -1,5 +1,4 @@
 import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
-import { ISituacao } from '../types/situacao.type'
 
 export interface IGetParams {
   /**
@@ -17,7 +16,7 @@ export interface IGetParams {
   /**
    * Conjunto de situações
    */
-  idsSituacoes?: ISituacao[]
+  idsSituacoes?: number[]
   /**
    * Data inicial
    */
@@ -83,7 +82,7 @@ export interface IGetResponse {
       }
       situacao?: {
         id: number
-        valor: ISituacao
+        valor: number
       }
       loja?: {
         id: number

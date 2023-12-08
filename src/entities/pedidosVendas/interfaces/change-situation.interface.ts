@@ -1,5 +1,3 @@
-import { ISituacao } from '../types/situacao.type'
-
 export interface IChangeSituationParams {
   /**
    * ID do pedido de venda
@@ -8,5 +6,5 @@ export interface IChangeSituationParams {
   /**
    * ID da situação do pedido de venda
    */
-  idSituacao: ISituacao
+  idSituacao: number
 }

@@ -2,7 +2,6 @@ import IFretePorConta from 'src/entities/@shared/types/frete-por-conta.type'
 import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
 import IUF from 'src/entities/@shared/types/uf.type'
 import { IDescontoUnidade } from '../types/desconto-unidade.type'
-import { ISituacao } from '../types/situacao.type'
 
 export interface IFindParams {
   /**
@@ -29,7 +28,7 @@ export interface IFindResponse {
     }
     situacao?: {
       id: number
-      valor: ISituacao
+      valor: number
     }
     loja?: { id: number }
     numeroPedidoCompra?: string
