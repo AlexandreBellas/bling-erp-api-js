@@ -48,6 +48,10 @@ const apiKey = 'sua_api_key'
 const blingConnection = new Bling(apiKey)
 ```
 
+Vale destacar que o fluxo de criação e autorização do aplicativo **não é feito
+pela biblioteca**. Ou seja, a biblioteca somente recebe o `access_token` gerado
+a partir do _endpoint_ `/token`. [Veja a referência](https://developer.bling.com.br/aplicativos#tokens-de-acesso).
+
 ## Entidades disponíveis
 
 As entidades atualmente permitidas para interação são:
