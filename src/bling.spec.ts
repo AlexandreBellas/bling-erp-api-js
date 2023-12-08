@@ -28,6 +28,7 @@ import { Nfes } from './entities/nfes'
 import { Nfses } from './entities/nfses'
 import { Notificacoes } from './entities/notificacoes'
 import { PedidosCompras } from './entities/pedidosCompras'
+import { PedidosVendas } from './entities/pedidosVendas'
 
 const chance = Chance()
 
@@ -167,6 +168,12 @@ describe('Bling main module', () => {
   it('should retrieve pedidos - compras entity', () => {
     expect(createBling(chance.word()).pedidosCompras).toBeInstanceOf(
       PedidosCompras
+    )
+  })
+
+  it('should retrieve pedidos - vendas entity', () => {
+    expect(createBling(chance.word()).pedidosVendas).toBeInstanceOf(
+      PedidosVendas
     )
   })
 })
