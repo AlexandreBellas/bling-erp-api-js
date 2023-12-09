@@ -29,6 +29,7 @@ import { Nfses } from './entities/nfses'
 import { Notificacoes } from './entities/notificacoes'
 import { PedidosCompras } from './entities/pedidosCompras'
 import { PedidosVendas } from './entities/pedidosVendas'
+import { Produtos } from './entities/produtos'
 import { ProdutosEstruturas } from './entities/produtosEstruturas'
 import { ProdutosFornecedores } from './entities/produtosFornecedores'
 import { ProdutosLojas } from './entities/produtosLojas'
@@ -184,6 +185,10 @@ describe('Bling main module', () => {
     expect(createBling(chance.word()).pedidosVendas).toBeInstanceOf(
       PedidosVendas
     )
+  })
+
+  it('should retrieve produtos entity', () => {
+    expect(createBling(chance.word()).produtos).toBeInstanceOf(Produtos)
   })
 
   it('should retrieve produtos - estruturas entity', () => {

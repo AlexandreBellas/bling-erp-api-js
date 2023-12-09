@@ -83,7 +83,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Notificações (`.notificacoes`)
 - [x] Pedidos - Compras (`.pedidosCompras`)
 - [x] Pedidos - Vendas (`.pedidosVendas`)
-- [ ] Produtos (`.produtos`)
+- [x] Produtos (`.produtos`)
 - [x] Produtos - Estruturas (`.produtosEstruturas`)
 - [x] Produtos - Fornecedores (`.produtosFornecedores`)
 - [x] Produtos - Lojas (`.produtosLojas`)
@@ -93,8 +93,6 @@ As entidades atualmente permitidas para interação são:
 - [x] Situações - Transições (`.situacoesTransicoes`)
 - [x] Usuários (`.usuarios`)
 - [x] Vendedores (`.vendedores`)
-
-Adicionaremos as restantes de acordo com as _releases_.
 
 ## Exemplo de uso
 
