@@ -88,7 +88,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Produtos - Fornecedores (`.produtosFornecedores`)
 - [x] Produtos - Lojas (`.produtosLojas`)
 - [x] Produtos - Variações (`.produtosVariacoes`)
-- [ ] Situações (`.situacoes`)
+- [x] Situações (`.situacoes`)
 - [ ] Situações - Módulos (`.situacoesModulos`)
 - [ ] Situações - Transições (`.situacoesTransicoes`)
 - [ ] Usuários (`.usuarios`)
