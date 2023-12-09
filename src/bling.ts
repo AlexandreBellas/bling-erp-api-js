@@ -35,6 +35,7 @@ import { ProdutosVariacoes } from './entities/produtosVariacoes'
 import { Situacoes } from './entities/situacoes'
 import { SituacoesModulos } from './entities/situacoesModulos'
 import { SituacoesTransicoes } from './entities/situacoesTransicoes'
+import { Usuarios } from './entities/usuarios'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -387,5 +388,15 @@ export default class Bling {
    */
   public get situacoesTransicoes(): SituacoesTransicoes {
     return this.getModule(SituacoesTransicoes)
+  }
+
+  /**
+   *
+   * Obtém a instância de interação com usuários.
+   *
+   * @return {Usuarios}
+   */
+  public get usuarios(): Usuarios {
+    return this.getModule(Usuarios)
   }
 }
