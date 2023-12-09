@@ -28,6 +28,7 @@ import { Nfses } from './entities/nfses'
 import { Notificacoes } from './entities/notificacoes'
 import { PedidosCompras } from './entities/pedidosCompras'
 import { PedidosVendas } from './entities/pedidosVendas'
+import { ProdutosEstruturas } from './entities/produtosEstruturas'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -311,5 +312,14 @@ export default class Bling {
    */
   public get pedidosVendas(): PedidosVendas {
     return this.getModule(PedidosVendas)
+  }
+
+  /**
+   * Obtém a instância de interação com produtos - estruturas.
+   *
+   * @return {ProdutosEstruturas}
+   */
+  public get produtosEstruturas(): ProdutosEstruturas {
+    return this.getModule(ProdutosEstruturas)
   }
 }

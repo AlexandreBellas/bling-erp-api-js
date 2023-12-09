@@ -84,7 +84,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Pedidos - Compras (`.pedidosCompras`)
 - [x] Pedidos - Vendas (`.pedidosVendas`)
 - [ ] Produtos (`.produtos`)
-- [ ] Produtos - Estruturas (`.produtosEstruturas`)
+- [x] Produtos - Estruturas (`.produtosEstruturas`)
 - [ ] Produtos - Fornecedores (`.produtosFornecedores`)
 - [ ] Produtos - Lojas (`.produtosLojas`)
 - [ ] Produtos - Variações (`.produtosVariacoes`)

@@ -23,7 +23,7 @@ export class Nfes extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<IDeleteResponse>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Retorno da deleção.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/delete_nfe
