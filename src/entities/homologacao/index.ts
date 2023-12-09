@@ -37,7 +37,7 @@ export class Homologacao extends Entity {
    *
    * @param {IDeleteParams & IDeleteHeaders} params Parâmetros da remoção.
    *
-   * @returns {Promise<IDeleteResponse>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Retorno da deleção.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Homologa%C3%A7%C3%A3o/delete_homologacao_produtos__idProdutoHomologacao_
