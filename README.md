@@ -92,7 +92,7 @@ As entidades atualmente permitidas para interação são:
 - [x] Situações - Módulos (`.situacoesModulos`)
 - [x] Situações - Transições (`.situacoesTransicoes`)
 - [x] Usuários (`.usuarios`)
-- [ ] Vendedores (`.vendedores`)
+- [x] Vendedores (`.vendedores`)
 
 Adicionaremos as restantes de acordo com as _releases_.
 

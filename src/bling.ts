@@ -36,6 +36,7 @@ import { Situacoes } from './entities/situacoes'
 import { SituacoesModulos } from './entities/situacoesModulos'
 import { SituacoesTransicoes } from './entities/situacoesTransicoes'
 import { Usuarios } from './entities/usuarios'
+import { Vendedores } from './entities/vendedores'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -398,5 +399,15 @@ export default class Bling {
    */
   public get usuarios(): Usuarios {
     return this.getModule(Usuarios)
+  }
+
+  /**
+   *
+   * Obtém a instância de interação com vendedores.
+   *
+   * @return {Vendedores}
+   */
+  public get vendedores(): Vendedores {
+    return this.getModule(Vendedores)
   }
 }
