@@ -1,332 +1,315 @@
 'use strict'
 
-import Borderos from './entities/borderos'
-import CustomizedField from './entities/customizedFields'
-import Categories from './entities/categories'
-import CommercialProposals from './entities/commercialProposals'
-import Contacts from './entities/contacts'
-import Deposits from './entities/deposits'
-import Products from './entities/products'
-import Orders from './entities/orders'
-import PurchaseOrders from './entities/purchaseOrders'
-import Invoices from './entities/invoices'
-import ShopCategories from './entities/shopCategories'
-import BillsToPay from './entities/billsToPay'
-import BillsToReceive from './entities/billsToReceive'
-import Contracts from './entities/contracts'
-import Ctes from './entities/ctes'
-import PaymentMethods from './entities/paymentMethods'
-import ProductGroups from './entities/productGroups'
-import Nfces from './entities/nfces'
-import ServiceInvoices from './entities/serviceInvoices'
+import { Entity } from './entities/@shared/entity'
+import { Borderos } from './entities/borderos'
+import { CamposCustomizados } from './entities/camposCustomizados'
+import { CategoriasLojas } from './entities/categoriasLojas'
+import { CategoriasProdutos } from './entities/categoriasProdutos'
+import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
+import { ContasContabeis } from './entities/contasContabeis'
+import { ContasPagar } from './entities/contasPagar'
+import { ContasReceber } from './entities/contasReceber'
+import { Contatos } from './entities/contatos'
+import { ContatosTipos } from './entities/contatosTipos'
+import { Contratos } from './entities/contratos'
+import { Depositos } from './entities/depositos'
+import { Empresas } from './entities/empresas'
+import { Estoques } from './entities/estoques'
+import { FormasDePagamento } from './entities/formasDePagamento'
+import { Homologacao } from './entities/homologacao'
+import { Logisticas } from './entities/logisticas'
+import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
+import { LogisticasObjetos } from './entities/logisticasObjetos'
+import { LogisticasServicos } from './entities/logisticasServicos'
+import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
+import { Nfces } from './entities/nfces'
+import { Nfes } from './entities/nfes'
+import { Nfses } from './entities/nfses'
+import { Notificacoes } from './entities/notificacoes'
+import { PedidosCompras } from './entities/pedidosCompras'
+import { PedidosVendas } from './entities/pedidosVendas'
+import { Newable } from './helpers/types/newable.type'
+import { getRepository } from './providers/ioc'
+import { IBlingRepository } from './repositories/bling.repository.interface'
 
-import createError, {
-  IBlingError as IStandardBlingError
-} from './core/helpers/createError'
+/**
+ * Módulo conector à API do Bling.
+ *
+ * @class
+ * @example
+ * // Constrói um novo conector
+ * const accessToken = 'sua-api-key'
+ * const bling = new Bling(accessToken)
+ */
+export default class Bling {
+  #repository: IBlingRepository
+  #modules: Record<string, Entity | undefined>
 
-import { IApiInstance } from './core/interfaces/method'
+  /**
+   * Constrói o objeto.
+   *
+   * @param accessToken O token de acesso à API do Bling.
+   */
+  constructor(accessToken: string) {
+    this.#repository = getRepository(accessToken)
+    this.#modules = {}
+  }
 
-import * as qs from 'querystring'
-import axios from 'axios'
-
-export type IBorderos = ReturnType<typeof Borderos>
-export type ICustomizedFields = ReturnType<typeof CustomizedField>
-export type ICategories = ReturnType<typeof Categories>
-export type ICommercialProposals = ReturnType<typeof CommercialProposals>
-export type IContacts = ReturnType<typeof Contacts>
-export type IDeposits = ReturnType<typeof Deposits>
-export type IProducts = ReturnType<typeof Products>
-export type IOrders = ReturnType<typeof Orders>
-export type IPurchaseOrders = ReturnType<typeof PurchaseOrders>
-export type IInvoices = ReturnType<typeof Invoices>
-export type IShopCategories = ReturnType<typeof ShopCategories>
-export type IBillsToPay = ReturnType<typeof BillsToPay>
-export type IBillsToReceive = ReturnType<typeof BillsToReceive>
-export type IContracts = ReturnType<typeof Contracts>
-export type ICtes = ReturnType<typeof Ctes>
-export type IPaymentMethods = ReturnType<typeof PaymentMethods>
-export type IProductGroups = ReturnType<typeof ProductGroups>
-export type INfces = ReturnType<typeof Nfces>
-export type IServiceInvoices = ReturnType<typeof ServiceInvoices>
-
-export type IBlingError = IStandardBlingError
-
-export class Bling {
-  #api: IApiInstance
-  #raw: boolean
-
-  #borderos: IBorderos | undefined
-  #customizedFields: ICustomizedFields | undefined
-  #categories: ICategories | undefined
-  #commercialProposals: ICommercialProposals | undefined
-  #contacts: IContacts | undefined
-  #deposits: IDeposits | undefined
-  #orders: IOrders | undefined
-  #products: IProducts | undefined
-  #purchaseOrders: IPurchaseOrders | undefined
-  #invoices: IInvoices | undefined
-  #shopCategories: IShopCategories | undefined
-  #billsToPay: IBillsToPay | undefined
-  #billsToReceive: IBillsToReceive | undefined
-  #contracts: IContracts | undefined
-  #ctes: ICtes | undefined
-  #paymentMethods: IPaymentMethods | undefined
-  #productGroups: IProductGroups | undefined
-  #nfces: INfces | undefined
-  #serviceInvoices: IServiceInvoices | undefined
-
-  constructor (apiKey: string, options: { raw: boolean } = { raw: false }) {
-    if (!apiKey || typeof apiKey !== 'string') {
-      throw createError({
-        name: 'BlingModuleError',
-        message: "The API key wasn't correctly provided for Bling connection.",
-        status: '500',
-        data: {
-          apiKey: apiKey
-        },
-        code: 'ERR_NO_API_KEY'
-      })
+  /**
+   * Obtém um módulo através de sua assinatura (seguindo o _pattern_ `Instance`).
+   *
+   * @param {Newable<T>} EntityClass A entidade desejada.
+   *
+   * @returns {T} A instância da entidade.
+   */
+  private getModule<T extends Entity>(EntityClass: Newable<T>): T {
+    if (!this.#modules[EntityClass.name]) {
+      this.#modules[EntityClass.name] = new EntityClass(this.#repository)
     }
 
-    if (typeof options.raw !== 'boolean') {
-      throw createError({
-        name: 'BlingModuleError',
-        message:
-          'The raw attribute must be a boolean to configure the Bling connection.',
-        status: '500',
-        data: {
-          raw: options.raw
-        },
-        code: 'ERR_WRONG_BLING_RAW_ATTR'
-      })
-    }
-
-    this.#raw = options.raw
-
-    const api = axios.create({
-      baseURL: 'https://bling.com.br/Api/v2'
-    })
-
-    api.interceptors.request.use((config) => {
-      if (
-        config.method &&
-        ['POST', 'PUT', 'post', 'put'].includes(config.method)
-      ) {
-        config.data = qs.stringify({
-          apikey: apiKey,
-          ...config.data
-        })
-      }
-
-      config.params = {
-        apikey: apiKey,
-        ...config.params
-      }
-
-      return config
-    })
-
-    this.#api = api
+    return this.#modules[EntityClass.name] as T
   }
 
-  static create (apiKey: string, options: { raw: boolean } = { raw: false }) {
-    return new this(apiKey, options)
+  /**
+   * Obtém a instância de interação com borderôs.
+   *
+   * @returns {Borderos}
+   */
+  public get borderos(): Borderos {
+    return this.getModule(Borderos)
   }
 
-  public borderos () {
-    if (!this.#borderos) {
-      this.#borderos = Borderos(this.#api, this.#raw)
-    }
-    return this.#borderos
+  /**
+   * Obtém a instância de interação com campos customizados.
+   *
+   * @returns {CamposCustomizados}
+   */
+  public get camposCustomizados(): CamposCustomizados {
+    return this.getModule(CamposCustomizados)
   }
 
-  public customizedFields () {
-    if (!this.#customizedFields) {
-      this.#customizedFields = CustomizedField(this.#api, this.#raw)
-    }
-    return this.#customizedFields
+  /**
+   * Obtém a instância de interação com categorias - lojas.
+   *
+   * @return {CategoriasLojas}
+   */
+  public get categoriasLojas(): CategoriasLojas {
+    return this.getModule(CategoriasLojas)
   }
 
-  public camposCustomizados () {
-    return this.customizedFields()
+  /**
+   * Obtém a instância de interação com categorias - produtos.
+   *
+   * @return {CategoriasProdutos}
+   */
+  public get categoriasProdutos(): CategoriasProdutos {
+    return this.getModule(CategoriasProdutos)
   }
 
-  public categories () {
-    if (!this.#categories) {
-      this.#categories = Categories(this.#api, this.#raw)
-    }
-    return this.#categories
+  /**
+   * Obtém a instância de interação com categorias - receitas e despesas.
+   *
+   * @return {CategoriasReceitasDespesas}
+   */
+  public get categoriasReceitasDespesas(): CategoriasReceitasDespesas {
+    return this.getModule(CategoriasReceitasDespesas)
   }
 
-  public categorias () {
-    return this.categories()
+  /**
+   * Obtém a instância de interação com contas a pagar.
+   *
+   * @return {ContasPagar}
+   */
+  public get contasPagar(): ContasPagar {
+    return this.getModule(ContasPagar)
   }
 
-  public shopCategories () {
-    if (!this.#shopCategories) {
-      this.#shopCategories = ShopCategories(this.#api, this.#raw)
-    }
-    return this.#shopCategories
+  /**
+   * Obtém a instância de interação com contas a receber.
+   *
+   * @return {ContasReceber}
+   */
+  public get contasReceber(): ContasReceber {
+    return this.getModule(ContasReceber)
   }
 
-  public categoriasLoja () {
-    return this.shopCategories()
+  /**
+   * Obtém a instância de interação com contas contábeis.
+   *
+   * @return {ContasContabeis}
+   */
+  public get contasContabeis(): ContasContabeis {
+    return this.getModule(ContasContabeis)
   }
 
-  public contacts () {
-    if (!this.#contacts) {
-      this.#contacts = Contacts(this.#api, this.#raw)
-    }
-    return this.#contacts
+  /**
+   * Obtém a instância de interação com contatos.
+   *
+   * @return {Contatos}
+   */
+  public get contatos(): Contatos {
+    return this.getModule(Contatos)
   }
 
-  public contatos () {
-    return this.contacts()
+  /**
+   * Obtém a instância de interação com contatos - tipos.
+   *
+   * @return {ContatosTipos}
+   */
+  public get contatosTipos(): ContatosTipos {
+    return this.getModule(ContatosTipos)
   }
 
-  public billsToPay () {
-    if (!this.#billsToPay) {
-      this.#billsToPay = BillsToPay(this.#api, this.#raw)
-    }
-    return this.#billsToPay
+  /**
+   * Obtém a instância de interação com contratos.
+   *
+   * @return {Contratos}
+   */
+  public get contratos(): Contratos {
+    return this.getModule(Contratos)
   }
 
-  public contasAPagar () {
-    return this.billsToPay()
+  /**
+   * Obtém a instância de interação com depósitos.
+   *
+   * @return {Depositos}
+   */
+  public get depositos(): Depositos {
+    return this.getModule(Depositos)
   }
 
-  public billsToReceive () {
-    if (!this.#billsToReceive) {
-      this.#billsToReceive = BillsToReceive(this.#api, this.#raw)
-    }
-    return this.#billsToReceive
+  /**
+   * Obtém a instância de interação com empresas.
+   *
+   * @return {Empresas}
+   */
+  public get empresas(): Empresas {
+    return this.getModule(Empresas)
   }
 
-  public contasAReceber () {
-    return this.billsToReceive()
+  /**
+   * Obtém a instância de interação com estoques.
+   *
+   * @return {Estoques}
+   */
+  public get estoques(): Estoques {
+    return this.getModule(Estoques)
   }
 
-  public contracts () {
-    if (!this.#contracts) {
-      this.#contracts = Contracts(this.#api, this.#raw)
-    }
-    return this.#contracts
+  /**
+   * Obtém a instância de interação com formas de pagamento.
+   *
+   * @return {FormasDePagamento}
+   */
+  public get formasDePagamento(): FormasDePagamento {
+    return this.getModule(FormasDePagamento)
   }
 
-  public contratos () {
-    return this.contracts()
+  /**
+   * Obtém a instância de interação com homologação.
+   *
+   * @return {Homologacao}
+   */
+  public get homologacao(): Homologacao {
+    return this.getModule(Homologacao)
   }
 
-  public ctes () {
-    if (!this.#ctes) {
-      this.#ctes = Ctes(this.#api, this.#raw)
-    }
-    return this.#ctes
+  /**
+   * Obtém a instância de interação com logísticas.
+   *
+   * @return {Logisticas}
+   */
+  public get logisticas(): Logisticas {
+    return this.getModule(Logisticas)
   }
 
-  public deposits () {
-    if (!this.#deposits) {
-      this.#deposits = Deposits(this.#api, this.#raw)
-    }
-    return this.#deposits
+  /**
+   * Obtém a instância de interação com logísticas - etiquetas.
+   *
+   * @return {LogisticasEtiquetas}
+   */
+  public get logisticasEtiquetas(): LogisticasEtiquetas {
+    return this.getModule(LogisticasEtiquetas)
   }
 
-  public depositos () {
-    return this.deposits()
+  /**
+   * Obtém a instância de interação com logísticas - objetos.
+   *
+   * @return {LogisticasObjetos}
+   */
+  public get logisticasObjetos(): LogisticasObjetos {
+    return this.getModule(LogisticasObjetos)
   }
 
-  public paymentMethods () {
-    if (!this.#paymentMethods) {
-      this.#paymentMethods = PaymentMethods(this.#api, this.#raw)
-    }
-    return this.#paymentMethods
+  /**
+   * Obtém a instância de interação com logísticas - serviços.
+   *
+   * @return {LogisticasServicos}
+   */
+  public get logisticasServicos(): LogisticasServicos {
+    return this.getModule(LogisticasServicos)
   }
 
-  public formasDePagamento () {
-    return this.paymentMethods()
+  /**
+   * Obtém a instância de interação com naturezas de operações.
+   *
+   * @return {NaturezasDeOperacoes}
+   */
+  public get naturezasDeOperacoes(): NaturezasDeOperacoes {
+    return this.getModule(NaturezasDeOperacoes)
   }
 
-  public productGroups () {
-    if (!this.#productGroups) {
-      this.#productGroups = ProductGroups(this.#api, this.#raw)
-    }
-    return this.#productGroups
+  /**
+   * Obtém a instância de interação com notas fiscals de consumidor eletrônicas.
+   *
+   * @return {Nfces}
+   */
+  public get nfces(): Nfces {
+    return this.getModule(Nfces)
   }
 
-  public grupoDeProdutos () {
-    return this.productGroups()
+  /**
+   * Obtém a instância de interação com notas fiscals de serviço eletrônicas.
+   *
+   * @return {Nfses}
+   */
+  public get nfses(): Nfses {
+    return this.getModule(Nfses)
   }
 
-  public nfces () {
-    if (!this.#nfces) {
-      this.#nfces = Nfces(this.#api, this.#raw)
-    }
-    return this.#nfces
+  /**
+   * Obtém a instância de interação com notas fiscals de serviço eletrônicas.
+   *
+   * @return {Nfes}
+   */
+  public get nfes(): Nfes {
+    return this.getModule(Nfes)
   }
 
-  public invoices () {
-    if (!this.#invoices) {
-      this.#invoices = Invoices(this.#api, this.#raw)
-    }
-    return this.#invoices
+  /**
+   * Obtém a instância de interação com notificações.
+   *
+   * @return {Notificacoes}
+   */
+  public get notificacoes(): Notificacoes {
+    return this.getModule(Notificacoes)
   }
 
-  public notasFiscais () {
-    return this.invoices()
+  /**
+   * Obtém a instância de interação com pedidos - compras.
+   *
+   * @return {PedidosCompras}
+   */
+  public get pedidosCompras(): PedidosCompras {
+    return this.getModule(PedidosCompras)
   }
 
-  public serviceInvoices () {
-    if (!this.#serviceInvoices) {
-      this.#serviceInvoices = ServiceInvoices(this.#api, this.#raw)
-    }
-    return this.#serviceInvoices
-  }
-
-  public notasServicos () {
-    return this.serviceInvoices()
-  }
-
-  public orders () {
-    if (!this.#orders) {
-      this.#orders = Orders(this.#api, this.#raw)
-    }
-    return this.#orders
-  }
-
-  public pedidos () {
-    return this.orders()
-  }
-
-  public purchaseOrders () {
-    if (!this.#purchaseOrders) {
-      this.#purchaseOrders = PurchaseOrders(this.#api, this.#raw)
-    }
-    return this.#purchaseOrders
-  }
-
-  public pedidosDeCompra () {
-    return this.purchaseOrders()
-  }
-
-  public products () {
-    if (!this.#products) {
-      this.#products = Products(this.#api, this.#raw)
-    }
-    return this.#products
-  }
-
-  public produtos () {
-    return this.products()
-  }
-
-  public commercialProposals () {
-    if (!this.#commercialProposals) {
-      this.#commercialProposals = CommercialProposals(this.#api, this.#raw)
-    }
-    return this.#commercialProposals
-  }
-
-  public propostasComerciais () {
-    return this.commercialProposals()
+  /**
+   * Obtém a instância de interação com pedidos - vendas.
+   *
+   * @return {PedidosVendas}
+   */
+  public get pedidosVendas(): PedidosVendas {
+    return this.getModule(PedidosVendas)
   }
 }
