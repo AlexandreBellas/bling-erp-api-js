@@ -31,6 +31,7 @@ import { PedidosVendas } from './entities/pedidosVendas'
 import { ProdutosEstruturas } from './entities/produtosEstruturas'
 import { ProdutosFornecedores } from './entities/produtosFornecedores'
 import { ProdutosLojas } from './entities/produtosLojas'
+import { ProdutosVariacoes } from './entities/produtosVariacoes'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
@@ -343,5 +344,15 @@ export default class Bling {
    */
   public get produtosLojas(): ProdutosLojas {
     return this.getModule(ProdutosLojas)
+  }
+
+  /**
+   *
+   * Obtém a instância de interação com produtos - variações.
+   *
+   * @return {ProdutosVariacoes}
+   */
+  public get produtosVariacoes(): ProdutosVariacoes {
+    return this.getModule(ProdutosVariacoes)
   }
 }
