@@ -10,7 +10,7 @@ import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
- * Entidade para interação com produtos - estruturas.
+ * Entidade para interação com Produtos - Estruturas.
  *
  * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Estruturas
  */
