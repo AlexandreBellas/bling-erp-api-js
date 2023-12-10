@@ -1,7 +1,7 @@
 {
   "name": "bling-erp-api",
-  "version": "4.0.0",
-  "description": "Pacote de interação com a REST API do serviço Bling ERP",
+  "version": "5.0.0",
+  "description": "Pacote de integração com a API do Bling ERP",
   "main": "lib/bling.js",
   "directories": {
     "test": "test"
@@ -10,25 +10,30 @@
     "lib/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint --fix 'src/**/*.ts'",
-    "test": "npm run build && jest --config jest.config.json",
-    "test:coveralls": "jest --config jest.config.json --coverage && coveralls < coverage/lcov.info",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run format",
-    "version": "npm run lint && git add -A src",
-    "postversion": "git push && git push --tags"
+    "test": "npm run build && jest --config jest.config.ts",
+    "test:coverage": "jest --config jest.config.ts --coverage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AlexandreBellas/bling-erp-api.git"
   },
   "keywords": [
-    "bling",
+    "javascript",
+    "api",
+    "php",
+    "typescript",
+    "csharp",
+    "integration",
+    "js",
     "erp",
-    "api"
+    "ts",
+    "nfe",
+    "sefaz",
+    "bling",
+    "bling-erp"
   ],
   "author": "AlexandreBellas; vitor-san",
   "license": "ISC",
@@ -36,61 +41,30 @@
     "url": "https://github.com/AlexandreBellas/bling-erp-api/issues"
   },
   "homepage": "https://github.com/AlexandreBellas/bling-erp-api#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ],
-    "*.ts": [
-      "prettier --write",
-      "eslint --fix",
-      "git add"
-    ]
-  },
   "dependencies": {
-    "axios": "^0.23.0",
-    "xml2js": "^0.4.23"
+    "axios": "^1.6.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
     "@types/chance": "^1.1.3",
     "@types/jest": "^27.5.2",
     "@types/uuid": "^8.3.3",
-    "@types/xml2js": "^0.4.9",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "chance": "^1.1.8",
-    "commitizen": "^4.2.4",
-    "coveralls": "^3.1.1",
     "cpf_cnpj": "^0.2.0",
-    "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.25.2",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "husky": "^4.3.6",
-    "jest": "^27.3.0",
-    "lint-staged": "^10.5.3",
+    "eslint-plugin-promise": "^6.1.1",
+    "jest": "^29.7.0",
     "prettier": "^2.4.1",
-    "travis": "^0.1.1",
-    "ts-jest": "^27.0.7",
+    "ts-jest": "^29.1.1",
     "ts-node": "^10.3.0",
-    "typescript": "^4.4.4",
+    "typescript": "^5.0.0",
     "uuid": "^8.3.2"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "publishConfig": {
     "access": "public"
