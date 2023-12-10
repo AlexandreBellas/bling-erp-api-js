@@ -1,4 +1,4 @@
-import convertDateToString from '@helpers/functions/convert-date-to-string'
+import convertDateToString from '../../helpers/functions/convert-date-to-string'
 import { IBlingRepository } from '../../repositories/bling.repository.interface'
 
 /**
