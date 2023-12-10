@@ -1,7 +1,7 @@
 {
   "name": "bling-erp-api",
-  "version": "5.0.0-prerelease",
-  "description": "Pacote de interação com a REST API do serviço Bling ERP",
+  "version": "5.0.0",
+  "description": "Pacote de integração com a API do Bling ERP",
   "main": "lib/bling.js",
   "directories": {
     "test": "test"
@@ -14,12 +14,7 @@
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint --fix 'src/**/*.ts'",
     "test": "npm run build && jest --config jest.config.ts",
-    "test:coverage": "jest --config jest.config.ts --coverage",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run format",
-    "version": "npm run lint && git add -A src",
-    "postversion": "git push && git push --tags"
+    "test:coverage": "jest --config jest.config.ts --coverage"
   },
   "repository": {
     "type": "git",
