@@ -1,6 +1,4 @@
 import type { Config } from 'jest'
-import { pathsToModuleNameMapper } from 'ts-jest'
-import { compilerOptions } from './tsconfig.json'
 
 const config: Config = {
   transform: {
@@ -14,9 +12,6 @@ const config: Config = {
     '/coverage/'
   ],
   testPathIgnorePatterns: ['<rootDir>/lib/'],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>/'
-  }),
   maxWorkers: 1,
   maxConcurrency: 2,
   collectCoverageFrom: ['**/*.(t|j)s'],
