@@ -4,7 +4,8 @@
 [![install size](https://packagephobia.com/badge?p=bling-erp-api)](https://packagephobia.com/result?p=bling-erp-api)
 [![code coverage](https://coveralls.io/repos/github/AlexandreBellas/bling-erp-api/badge.svg?branch=main)](https://coveralls.io/github/AlexandreBellas/bling-erp-api?branch=main)
 
-Pacote de integração com a [API v3 do ERP Bling](https://developer.bling.com.br). O mais completo existente (e se não é, será).
+Pacote de integração com a [API v3 do ERP Bling](https://developer.bling.com.br).
+O mais completo existente (e se não é, será).
 
 Disponível para:
 
@@ -52,9 +53,12 @@ Vale destacar que o fluxo de criação e autorização do aplicativo **não é f
 pela biblioteca**. Ou seja, a biblioteca somente recebe o `access_token` gerado
 a partir do _endpoint_ `/token`. [Veja a referência](https://developer.bling.com.br/aplicativos#tokens-de-acesso).
 
+_Será disponibilizado em breve neste repositório um projeto demonstrativo da
+autenticação citada acima. Fique ligado._
+
 ## Entidades disponíveis
 
-As entidades atualmente permitidas para interação são:
+Todas as entidades do Bling atualmente são permitidas para interação. São elas:
 
 - [x] Borderos (`.borderos`)
 - [x] Campos customizados (`.camposCustomizados`)
@@ -99,27 +103,27 @@ As entidades atualmente permitidas para interação são:
 Para listar seus produtos, basta executar:
 
 ```js
-// Também disponível pelo método:
+// Também disponível como:
 // import Bling from 'bling-erp-api'
 const Bling = require('bling-erp-api')
 const apiKey = 'sua_api_key'
 
 const blingConnection = new Bling(apiKey)
 
-const products = await blingConnection.products.get()
+const products = await blingConnection.produtos.get()
 
 console.log(products)
 ```
 
-## Executando testes automatizados
+## Executando os testes do projeto
 
-Para isso, faça o clone do projeto e execute
+Faça o clone do projeto, instale as dependências e execute:
 
 ```bash
 npm run test
 ```
 
-## Contribuição
+## Recursos
 
-Basta fazer um _fork_ do projeto e abrir novos _pull requests_ ou interagir
-abrindo _issues_ sobre os problemas encontrados.
+- [Guia de contribuição](https://github.com/AlexandreBellas/bling-erp-api/blob/v5.0.0/CONTRIBUTING.md)
+- [Apoie o projeto](https://www.paypal.com/donate/?hosted_button_id=G2NJKZ5MUMKBS)

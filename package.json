@@ -1,8 +1,8 @@
 {
   "name": "bling-erp-api",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Pacote de interação com a REST API do serviço Bling ERP",
-  "main": "lib/src/bling.js",
+  "main": "lib/bling.js",
   "directories": {
     "test": "test"
   },
@@ -26,9 +26,19 @@
     "url": "git+https://github.com/AlexandreBellas/bling-erp-api.git"
   },
   "keywords": [
-    "bling",
+    "javascript",
+    "api",
+    "php",
+    "typescript",
+    "csharp",
+    "integration",
+    "js",
     "erp",
-    "api"
+    "ts",
+    "nfe",
+    "sefaz",
+    "bling",
+    "bling-erp"
   ],
   "author": "AlexandreBellas; vitor-san",
   "license": "ISC",
