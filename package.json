@@ -1,6 +1,6 @@
 {
   "name": "bling-erp-api",
-  "version": "5.0.0",
+  "version": "5.0.0-prerelease",
   "description": "Pacote de interação com a REST API do serviço Bling ERP",
   "main": "lib/bling.js",
   "directories": {
@@ -10,7 +10,7 @@
     "lib/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint --fix 'src/**/*.ts'",
     "test": "npm run build && jest --config jest.config.ts",
