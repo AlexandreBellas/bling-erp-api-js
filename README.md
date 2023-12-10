@@ -53,8 +53,8 @@ Vale destacar que o fluxo de criação e autorização do aplicativo **não é f
 pela biblioteca**. Ou seja, a biblioteca somente recebe o `access_token` gerado
 a partir do _endpoint_ `/token`. [Veja a referência](https://developer.bling.com.br/aplicativos#tokens-de-acesso).
 
-_Será disponibilizado em breve neste repositório um projeto demonstrativo da
-autenticação citada acima. Fique ligado._
+Para entender na prática como a autenticação citada acima funciona, [veja o
+projeto de demonstração](https://github.com/AlexandreBellas/bling-erp-api/tree/main/demo).
 
 ## Entidades disponíveis
 
