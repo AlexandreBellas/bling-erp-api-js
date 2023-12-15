@@ -76,6 +76,18 @@ export class Contatos extends Entity {
         limite: params?.limite,
         pesquisa: params?.pesquisa,
         criterio: params?.criterio,
+        dataInclusaoInicial: this.prepareStringOrDateParam(
+          params?.dataInclusaoInicial
+        ),
+        dataInclusaoFinal: this.prepareStringOrDateParam(
+          params?.dataInclusaoFinal
+        ),
+        dataAlteracaoInicial: this.prepareStringOrDateParam(
+          params?.dataAlteracaoInicial
+        ),
+        dataAlteracaoFinal: this.prepareStringOrDateParam(
+          params?.dataAlteracaoFinal
+        ),
         idTipoContato: params?.idTipoContato,
         idVendedor: params?.idVendedor,
         uf: params?.uf,
