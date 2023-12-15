@@ -1,10 +1,7 @@
 import { IFormato } from '../types/formato.type'
 
 export interface IGetParams {
-  formato?: IFormato
-}
-
-export interface IGetBody {
+  formato: IFormato
   idsVendas: number[]
 }
 

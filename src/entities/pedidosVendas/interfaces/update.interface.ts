@@ -92,6 +92,11 @@ export interface IUpdateBody {
     cnpj?: string
     nomeUsuario?: string
   }
+  taxas?: {
+    taxaComissao?: number
+    custoFrete?: number
+    valorBase?: number
+  }
 }
 
 export interface IUpdateResponse {

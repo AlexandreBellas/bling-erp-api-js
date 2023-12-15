@@ -3,13 +3,13 @@ export default {
     id: 12345678,
     nome: 'Contato',
     codigo: 'ASD001',
-    situacao: 'A',
+    situacao: 'A' as const,
     numeroDocumento: '12345678910',
     telefone: '(54) 3333-4444',
     celular: '(54) 99999-8888',
     fantasia: 'Nome fantasia',
-    tipo: 'J',
-    indicadorIe: 1,
+    tipo: 'J' as const,
+    indicadorIe: 1 as const,
     ie: '123.456.789.101',
     rg: '1234567890',
     orgaoEmissor: '1234567890',
@@ -20,7 +20,7 @@ export default {
         cep: '95702-000',
         bairro: 'Imigrante',
         municipio: 'Bento Gonçalves',
-        uf: 'RS',
+        uf: 'RS' as const,
         numero: '914',
         complemento: 'Sede 101'
       },
@@ -29,7 +29,7 @@ export default {
         cep: '95702-000',
         bairro: 'Imigrante',
         municipio: 'Bento Gonçalves',
-        uf: 'RS',
+        uf: 'RS' as const,
         numero: '914',
         complemento: 'Sede 101'
       }
@@ -39,11 +39,11 @@ export default {
     },
     dadosAdicionais: {
       dataNascimento: '1990-08-24',
-      sexo: 'M',
+      sexo: 'M' as const,
       naturalidade: 'Brasileira'
     },
     financeiro: {
-      limiteCredito: 0,
+      limiteCredito: 0 as const,
       condicaoPagamento: '30',
       categoria: {
         id: 12345678

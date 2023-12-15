@@ -20,6 +20,22 @@ export interface IGetParams {
    */
   criterio?: ICriterio
   /**
+   * Data de inclusão inicial
+   */
+  dataInclusaoInicial?: Date | string
+  /**
+   * Data de inclusão final
+   */
+  dataInclusaoFinal?: Date | string
+  /**
+   * Data de alteração inicial
+   */
+  dataAlteracaoInicial?: Date | string
+  /**
+   * Data de alteração final
+   */
+  dataAlteracaoFinal?: Date | string
+  /**
    * ID do tipo do contato
    */
   idTipoContato?: number

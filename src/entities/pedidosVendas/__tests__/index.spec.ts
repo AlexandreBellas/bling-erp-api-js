@@ -1,11 +1,20 @@
 import { Chance } from 'chance'
 import { PedidosVendas } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { ICreateResponse } from '../interfaces/create.interface'
+import { IDeleteManyResponse } from '../interfaces/delete-many.interface'
+import { IFindResponse } from '../interfaces/find.interface'
+import { IGenerateNfceResponse } from '../interfaces/generate-nfce.interface'
+import { IGenerateNfeResponse } from '../interfaces/generate-nfe.interface'
+import { IGetResponse } from '../interfaces/get.interface'
+import { IUpdateResponse } from '../interfaces/update.interface'
 import changeSituationResponse from './change-situation-response'
 import createResponse, { createRequestBody } from './create-response'
 import deleteManyResponse from './delete-many-response'
 import deleteResponse from './delete-response'
 import findResponse from './find-response'
+import generateNfceResponse from './generate-nfce-response'
+import generateNfeResponse from './generate-nfe-response'
 import getResponse from './get-response'
 import postAccountsResponse from './post-accounts-response'
 import postStockResponse from './post-stock-response'
@@ -45,6 +54,9 @@ describe('Pedidos - Vendas entity', () => {
       params: { idsPedidosVendas }
     })
     expect(response).toBe(deleteManyResponse)
+
+    const typingResponseTest: IDeleteManyResponse = deleteManyResponse
+    expect(typingResponseTest).toBe(deleteManyResponse)
   })
 
   it('should delete successfully', async () => {
@@ -59,6 +71,9 @@ describe('Pedidos - Vendas entity', () => {
       id: String(idPedidoVenda)
     })
     expect(response).toBe(deleteResponse)
+
+    const typingResponseTest: null = deleteResponse
+    expect(typingResponseTest).toBe(deleteResponse)
   })
 
   it('should get successfully', async () => {
@@ -88,6 +103,9 @@ describe('Pedidos - Vendas entity', () => {
       }
     })
     expect(response).toBe(getResponse)
+
+    const typingResponseTest: IGetResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should find successfully', async () => {
@@ -102,6 +120,9 @@ describe('Pedidos - Vendas entity', () => {
       id: String(idPedidoVenda)
     })
     expect(response).toBe(findResponse)
+
+    const typingResponseTest: IFindResponse = findResponse
+    expect(typingResponseTest).toBe(findResponse)
   })
 
   it('should change situation successfully', async () => {
@@ -118,6 +139,9 @@ describe('Pedidos - Vendas entity', () => {
       body: {}
     })
     expect(response).toBe(changeSituationResponse)
+
+    const typingResponseTest: null = changeSituationResponse
+    expect(typingResponseTest).toBe(changeSituationResponse)
   })
 
   it('should post stock to deposit successfully', async () => {
@@ -136,6 +160,9 @@ describe('Pedidos - Vendas entity', () => {
       body: {}
     })
     expect(response).toBe(postStockToDepositResponse)
+
+    const typingResponseTest: null = postStockToDepositResponse
+    expect(typingResponseTest).toBe(postStockToDepositResponse)
   })
 
   it('should post stock successfully', async () => {
@@ -150,6 +177,9 @@ describe('Pedidos - Vendas entity', () => {
       body: {}
     })
     expect(response).toBe(postStockResponse)
+
+    const typingResponseTest: null = postStockResponse
+    expect(typingResponseTest).toBe(postStockResponse)
   })
 
   it('should reverse stock successfully', async () => {
@@ -164,6 +194,9 @@ describe('Pedidos - Vendas entity', () => {
       body: {}
     })
     expect(response).toBe(reverseStockResponse)
+
+    const typingResponseTest: null = reverseStockResponse
+    expect(typingResponseTest).toBe(reverseStockResponse)
   })
 
   it('should post accounts successfully', async () => {
@@ -178,6 +211,9 @@ describe('Pedidos - Vendas entity', () => {
       body: {}
     })
     expect(response).toBe(postAccountsResponse)
+
+    const typingResponseTest: null = postAccountsResponse
+    expect(typingResponseTest).toBe(postAccountsResponse)
   })
 
   it('should reverse accounts successfully', async () => {
@@ -192,6 +228,43 @@ describe('Pedidos - Vendas entity', () => {
       body: {}
     })
     expect(response).toBe(reverseAccountsResponse)
+
+    const typingResponseTest: null = reverseAccountsResponse
+    expect(typingResponseTest).toBe(reverseAccountsResponse)
+  })
+
+  it('should generate nfe successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idPedidoVenda = chance.natural()
+    repository.setResponse(generateNfeResponse)
+
+    const response = await entity.generateNfe({ idPedidoVenda })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `pedidos/vendas/${idPedidoVenda}/gerar-nfe`,
+      body: {}
+    })
+    expect(response).toBe(generateNfeResponse)
+
+    const typingResponseTest: IGenerateNfeResponse = generateNfeResponse
+    expect(typingResponseTest).toBe(generateNfeResponse)
+  })
+
+  it('should generate nfce successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idPedidoVenda = chance.natural()
+    repository.setResponse(generateNfceResponse)
+
+    const response = await entity.generateNfce({ idPedidoVenda })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `pedidos/vendas/${idPedidoVenda}/gerar-nfce`,
+      body: {}
+    })
+    expect(response).toBe(generateNfceResponse)
+
+    const typingResponseTest: IGenerateNfceResponse = generateNfceResponse
+    expect(typingResponseTest).toBe(generateNfceResponse)
   })
 
   it('should create successfully', async () => {
@@ -205,6 +278,9 @@ describe('Pedidos - Vendas entity', () => {
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
+
+    const typingResponseTest: ICreateResponse = createResponse
+    expect(typingResponseTest).toBe(createResponse)
   })
 
   it('should update successfully', async () => {
@@ -223,5 +299,8 @@ describe('Pedidos - Vendas entity', () => {
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)
+
+    const typingResponseTest: IUpdateResponse = updateResponse
+    expect(typingResponseTest).toBe(updateResponse)
   })
 })

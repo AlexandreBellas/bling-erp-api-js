@@ -20,6 +20,7 @@ import { Homologacao } from './entities/homologacao'
 import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
 import { LogisticasObjetos } from './entities/logisticasObjetos'
+import { LogisticasRemessas } from './entities/logisticasRemessas'
 import { LogisticasServicos } from './entities/logisticasServicos'
 import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
 import { Nfces } from './entities/nfces'
@@ -249,6 +250,15 @@ export default class Bling {
    */
   public get logisticasObjetos(): LogisticasObjetos {
     return this.getModule(LogisticasObjetos)
+  }
+
+  /**
+   * Obtém a instância de interação com logísticas - remessas.
+   *
+   * @return {LogisticasRemessas}
+   */
+  public get logisticasRemessas(): LogisticasRemessas {
+    return this.getModule(LogisticasRemessas)
   }
 
   /**

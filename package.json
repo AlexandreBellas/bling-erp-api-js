@@ -1,6 +1,6 @@
 {
   "name": "bling-erp-api",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Pacote de integração com a API do Bling ERP",
   "main": "lib/bling.js",
   "directories": {
@@ -51,8 +51,6 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "chance": "^1.1.8",
-    "cpf_cnpj": "^0.2.0",
-    "dotenv": "^10.0.0",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",

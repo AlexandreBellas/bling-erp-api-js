@@ -1,6 +1,10 @@
 import { Chance } from 'chance'
 import { Contatos } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { ICreateResponse } from '../interfaces/create.interface'
+import { IFindTypesResponse } from '../interfaces/find-types.interface'
+import { IFindResponse } from '../interfaces/find.interface'
+import { IGetResponse } from '../interfaces/get.interface'
 import changeSituationManyResponse, {
   changeSituationManyRequest
 } from './change-situation-many-response'
@@ -46,6 +50,9 @@ describe('Contatos entity', () => {
       params: { idsContatos }
     })
     expect(response).toBe(deleteManyResponse)
+
+    const typingResponseTest: null = deleteManyResponse
+    expect(typingResponseTest).toBe(deleteManyResponse)
   })
 
   it('should delete successfully', async () => {
@@ -60,6 +67,9 @@ describe('Contatos entity', () => {
       id: String(idContato)
     })
     expect(response).toBe(deleteResponse)
+
+    const typingResponseTest: null = deleteResponse
+    expect(typingResponseTest).toBe(deleteResponse)
   })
 
   it('should get successfully', async () => {
@@ -75,6 +85,10 @@ describe('Contatos entity', () => {
         pagina: undefined,
         pesquisa: undefined,
         criterio: undefined,
+        dataInclusaoInicial: undefined,
+        dataInclusaoFinal: undefined,
+        dataAlteracaoInicial: undefined,
+        dataAlteracaoFinal: undefined,
         idTipoContato: undefined,
         idVendedor: undefined,
         uf: undefined,
@@ -84,6 +98,9 @@ describe('Contatos entity', () => {
       }
     })
     expect(response).toBe(getResponse)
+
+    const typingResponseTest: IGetResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should find successfully', async () => {
@@ -98,6 +115,9 @@ describe('Contatos entity', () => {
       id: String(idContato)
     })
     expect(response).toBe(findResponse)
+
+    const typingResponseTest: IFindResponse = findResponse
+    expect(typingResponseTest).toBe(findResponse)
   })
 
   it('should find types successfully', async () => {
@@ -112,6 +132,9 @@ describe('Contatos entity', () => {
       id: `${idContato}/tipos`
     })
     expect(response).toBe(findTypesResponse)
+
+    const typingResponseTest: IFindTypesResponse = findTypesResponse
+    expect(typingResponseTest).toBe(findTypesResponse)
   })
 
   it('should change situation successfully', async () => {
@@ -130,6 +153,9 @@ describe('Contatos entity', () => {
       body: changeSituationRequest
     })
     expect(response).toBe(changeSituationResponse)
+
+    const typingResponseTest: null = changeSituationResponse
+    expect(typingResponseTest).toBe(changeSituationResponse)
   })
 
   it('should change situation many successfully', async () => {
@@ -144,7 +170,10 @@ describe('Contatos entity', () => {
       endpoint: 'contatos/situacoes',
       body: changeSituationManyRequest
     })
-    expect(response).toBe(changeSituationResponse)
+    expect(response).toBe(changeSituationManyResponse)
+
+    const typingResponseTest: null = changeSituationManyResponse
+    expect(typingResponseTest).toBe(changeSituationManyResponse)
   })
 
   it('should create successfully', async () => {
@@ -158,6 +187,9 @@ describe('Contatos entity', () => {
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
+
+    const typingResponseTest: ICreateResponse = createResponse
+    expect(typingResponseTest).toBe(createResponse)
   })
 
   it('should update successfully', async () => {
@@ -176,5 +208,8 @@ describe('Contatos entity', () => {
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)
+
+    const typingResponseTest: null = updateResponse
+    expect(typingResponseTest).toBe(updateResponse)
   })
 })
