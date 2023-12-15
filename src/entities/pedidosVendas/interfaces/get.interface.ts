@@ -64,29 +64,27 @@ export interface IGetParams {
 }
 
 export interface IGetResponse {
-  data: [
-    {
-      id?: number
-      numero?: number
-      numeroLoja?: string
-      data: string
-      dataSaida: string
-      dataPrevista: string
-      totalProdutos?: number
-      total?: number
-      contato: {
-        id: number
-        nome: string
-        tipoPessoa?: ITipoPessoa
-        numeroDocumento?: string
-      }
-      situacao?: {
-        id: number
-        valor: number
-      }
-      loja?: {
-        id: number
-      }
+  data: {
+    id?: number
+    numero?: number
+    numeroLoja?: string
+    data: string
+    dataSaida: string
+    dataPrevista: string
+    totalProdutos?: number
+    total?: number
+    contato: {
+      id: number
+      nome: string
+      tipoPessoa?: ITipoPessoa
+      numeroDocumento?: string
     }
-  ]
+    situacao?: {
+      id: number
+      valor: number
+    }
+    loja?: {
+      id: number
+    }
+  }[]
 }

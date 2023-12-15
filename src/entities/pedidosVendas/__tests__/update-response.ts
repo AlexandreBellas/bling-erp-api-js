@@ -118,5 +118,10 @@ export const updateRequestBody = {
   intermediador: {
     cnpj: '13921649000197',
     nomeUsuario: 'usuario'
+  },
+  taxas: {
+    taxaComissao: 1,
+    custoFrete: 9.99,
+    valorBase: 129.9
   }
 }

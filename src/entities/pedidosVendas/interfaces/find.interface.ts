@@ -102,5 +102,10 @@ export interface IFindResponse {
       cnpj?: string
       nomeUsuario?: string
     }
+    taxas?: {
+      taxaComissao?: number
+      custoFrete?: number
+      valorBase?: number
+    }
   }
 }
