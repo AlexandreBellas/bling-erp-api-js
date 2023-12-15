@@ -1,6 +1,8 @@
 import { Chance } from 'chance'
 import { NaturezasDeOperacoes } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { ICalculateItemTaxResponse } from '../interfaces/calculate-item-tax.interface'
+import { IGetResponse } from '../interfaces/get.interface'
 import calculateItemTaxResponse, {
   calculateItemTaxRequestBody
 } from './calculate-item-tax-response'
@@ -37,6 +39,9 @@ describe('Naturezas de Operação entity', () => {
       }
     })
     expect(response).toBe(getResponse)
+
+    const typingResponseTest: IGetResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should calculate item tax successfully', async () => {
@@ -54,5 +59,9 @@ describe('Naturezas de Operação entity', () => {
       body: calculateItemTaxRequestBody
     })
     expect(response).toBe(calculateItemTaxResponse)
+
+    const typingResponseTest: ICalculateItemTaxResponse =
+      calculateItemTaxResponse
+    expect(typingResponseTest).toBe(calculateItemTaxResponse)
   })
 })
