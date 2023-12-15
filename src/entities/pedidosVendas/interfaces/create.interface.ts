@@ -85,6 +85,11 @@ export interface ICreateBody {
     cnpj?: string
     nomeUsuario?: string
   }
+  taxas?: {
+    taxaComissao?: number
+    custoFrete?: number
+    valorBase?: number
+  }
 }
 
 export interface ICreateResponse {

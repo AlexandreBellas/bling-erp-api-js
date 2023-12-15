@@ -16,7 +16,7 @@ export default {
     },
     situacao: {
       id: 12345678,
-      valor: 1 as const
+      valor: 1
     },
     loja: {
       id: 12345678
@@ -27,7 +27,7 @@ export default {
     observacoesInternas: 'Observações internas do pedido.',
     desconto: {
       valor: 15.45,
-      unidade: 'REAL'
+      unidade: 'REAL' as const
     },
     categoria: {
       id: 12345678
@@ -106,6 +106,11 @@ export default {
     intermediador: {
       cnpj: '13921649000197',
       nomeUsuario: 'usuario'
+    },
+    taxas: {
+      taxaComissao: 1,
+      custoFrete: 9.99,
+      valorBase: 129.9
     }
   }
 }

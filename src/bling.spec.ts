@@ -21,6 +21,7 @@ import { Homologacao } from './entities/homologacao'
 import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
 import { LogisticasObjetos } from './entities/logisticasObjetos'
+import { LogisticasRemessas } from './entities/logisticasRemessas'
 import { LogisticasServicos } from './entities/logisticasServicos'
 import { NaturezasDeOperacoes } from './entities/naturezasDeOperacoes'
 import { Nfces } from './entities/nfces'
@@ -144,6 +145,12 @@ describe('Bling main module', () => {
   it('should retrieve logísticas - objetos entity', () => {
     expect(createBling(chance.word()).logisticasObjetos).toBeInstanceOf(
       LogisticasObjetos
+    )
+  })
+
+  it('should retrieve logísticas - remessas entity', () => {
+    expect(createBling(chance.word()).logisticasRemessas).toBeInstanceOf(
+      LogisticasRemessas
     )
   })
 
