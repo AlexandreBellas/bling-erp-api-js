@@ -14,6 +14,8 @@ Disponível para:
 - [ ] PHP (em breve)
 - [ ] C# (em breve)
 
+Atualizado com a versão `v291` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-01-31)).
+
 **Atenção**: a versão 5.0.0+ do `bling-erp-api` utiliza a API v3 do Bling. Caso
 deseje utilizar a API v2 do Bling,
 [utilize a versão 4.0.0](https://github.com/AlexandreBellas/bling-erp-api/tree/v4.0.0).
@@ -79,6 +81,7 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Logísticas (`.logisticas`)
 - [x] Logísticas - Etiquetas (`.logisticasEtiquetas`)
 - [x] Logísticas - Objetos (`.logisticasObjetos`)
+- [x] Logísticas - Remessas (`.logisticasRemessas`)
 - [x] Logísticas - Serviços (`.logisticasServicos`)
 - [x] Naturezas de Operações (`.naturezasDeOperacoes`)
 - [x] Notas Fiscais de Consumidor Eletrônicas (`.nfces`)
