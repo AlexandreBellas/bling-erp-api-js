@@ -7,6 +7,14 @@ import {
 } from './interfaces/delete-many.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
+import {
+  IGenerateNfceParams,
+  IGenerateNfceResponse
+} from './interfaces/generate-nfce.interface'
+import {
+  IGenerateNfeParams,
+  IGenerateNfeResponse
+} from './interfaces/generate-nfe.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IPostAccountsParams } from './interfaces/post-accounts.interface'
 import { IPostStockToDepositParams } from './interfaces/post-stock-to-deposit.interface'
@@ -238,6 +246,44 @@ export class PedidosVendas extends Entity {
   public async reverseAccounts(params: IReverseAccountsParams): Promise<null> {
     return await this.repository.store({
       endpoint: `pedidos/vendas/${params.idPedidoVenda}/estornar-contas`,
+      body: {}
+    })
+  }
+
+  /**
+   * Gera nota fiscal eletrônica a partir do pedido de venda.
+   *
+   * @param {IGenerateNfeParams} params O conteúdo para o lançamento.
+   *
+   * @returns {Promise<IGenerateNfeResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Vendas/post_pedidos_vendas__idPedidoVenda__gerar_nfe
+   */
+  public async generateNfe(
+    params: IGenerateNfeParams
+  ): Promise<IGenerateNfeResponse> {
+    return await this.repository.store({
+      endpoint: `pedidos/vendas/${params.idPedidoVenda}/gerar-nfe`,
+      body: {}
+    })
+  }
+
+  /**
+   * Gera nota fiscal de consumidor eletrônica a partir do pedido de venda.
+   *
+   * @param {IGenerateNfceParams} params O conteúdo para o lançamento.
+   *
+   * @returns {Promise<IGenerateNfceResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Vendas/post_pedidos_vendas__idPedidoVenda__gerar_nfce
+   */
+  public async generateNfce(
+    params: IGenerateNfceParams
+  ): Promise<IGenerateNfceResponse> {
+    return await this.repository.store({
+      endpoint: `pedidos/vendas/${params.idPedidoVenda}/gerar-nfce`,
       body: {}
     })
   }

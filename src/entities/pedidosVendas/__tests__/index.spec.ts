@@ -4,6 +4,8 @@ import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.r
 import { ICreateResponse } from '../interfaces/create.interface'
 import { IDeleteManyResponse } from '../interfaces/delete-many.interface'
 import { IFindResponse } from '../interfaces/find.interface'
+import { IGenerateNfceResponse } from '../interfaces/generate-nfce.interface'
+import { IGenerateNfeResponse } from '../interfaces/generate-nfe.interface'
 import { IGetResponse } from '../interfaces/get.interface'
 import { IUpdateResponse } from '../interfaces/update.interface'
 import changeSituationResponse from './change-situation-response'
@@ -11,6 +13,8 @@ import createResponse, { createRequestBody } from './create-response'
 import deleteManyResponse from './delete-many-response'
 import deleteResponse from './delete-response'
 import findResponse from './find-response'
+import generateNfceResponse from './generate-nfce-response'
+import generateNfeResponse from './generate-nfe-response'
 import getResponse from './get-response'
 import postAccountsResponse from './post-accounts-response'
 import postStockResponse from './post-stock-response'
@@ -227,6 +231,40 @@ describe('Pedidos - Vendas entity', () => {
 
     const typingResponseTest: null = reverseAccountsResponse
     expect(typingResponseTest).toBe(reverseAccountsResponse)
+  })
+
+  it('should generate nfe successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idPedidoVenda = chance.natural()
+    repository.setResponse(generateNfeResponse)
+
+    const response = await entity.generateNfe({ idPedidoVenda })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `pedidos/vendas/${idPedidoVenda}/gerar-nfe`,
+      body: {}
+    })
+    expect(response).toBe(generateNfeResponse)
+
+    const typingResponseTest: IGenerateNfeResponse = generateNfeResponse
+    expect(typingResponseTest).toBe(generateNfeResponse)
+  })
+
+  it('should generate nfce successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idPedidoVenda = chance.natural()
+    repository.setResponse(generateNfceResponse)
+
+    const response = await entity.generateNfce({ idPedidoVenda })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `pedidos/vendas/${idPedidoVenda}/gerar-nfce`,
+      body: {}
+    })
+    expect(response).toBe(generateNfceResponse)
+
+    const typingResponseTest: IGenerateNfceResponse = generateNfceResponse
+    expect(typingResponseTest).toBe(generateNfceResponse)
   })
 
   it('should create successfully', async () => {
