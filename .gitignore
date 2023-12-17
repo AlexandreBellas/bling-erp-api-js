@@ -103,9 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# NPM package lock file
-package-lock.json
-
 # TS build output
 lib/
 
