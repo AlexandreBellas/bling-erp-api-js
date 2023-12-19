@@ -12,10 +12,13 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
+        working-directory: ./typescript
         run: npm install
 
       - name: Build project
+        working-directory: ./typescript
         run: npm run build
 
       - name: Execute tests
+        working-directory: ./typescript
         run: npm run test
