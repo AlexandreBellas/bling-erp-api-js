@@ -1,0 +1,27 @@
+name: Calculate test coverage
+
+on: ["push", "pull_request"]
+
+jobs:
+  calculate-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./typescript
+        run: npm install
+
+      - name: Build project
+        working-directory: ./typescript
+        run: npm run build
+
+      - name: Execute tests
+        working-directory: ./typescript
+        run: npm run test:coverage
+
+      - name: Send to coveralls
+        uses: coverallsapp/github-action@v2
