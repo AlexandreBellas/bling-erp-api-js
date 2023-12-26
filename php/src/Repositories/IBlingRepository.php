@@ -2,8 +2,8 @@
 
 namespace AleBatistella\BlingErpApi\Repositories;
 
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\RequestOptions;
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\ResponseOptions;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\RequestOptions;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\ResponseOptions;
 
 interface IBlingRepository
 {

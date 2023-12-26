@@ -1,22 +1,23 @@
 <?php
 
-namespace AleBatistella\BlingErpApi\Entities\Shared\DTO\Error;
+namespace AleBatistella\BlingErpApi\Entities\Borderos\Schema\Find;
 
 use AleBatistella\BlingErpApi\Contracts\IResponseRootObject;
 use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\ResponseOptions;
 
 /**
- * Objeto representativo da resposta da requisição com erro.
+ * Resposta da busca de borderôs.
  */
-readonly final class ErrorResponse implements IResponseRootObject
+readonly final class FindResponse implements IResponseRootObject
 {
   /**
    * Constrói o objeto.
    *
-   * @param Error $error
+   * @param FindResponseData $data
    */
-  private function __construct(public Error $error)
-  {
+  public function __construct(
+    public FindResponseData $data
+  ) {
   }
 
   /**
@@ -33,7 +34,7 @@ readonly final class ErrorResponse implements IResponseRootObject
   public static function from(array $attributes): static
   {
     return new self(
-      error: Error::from($attributes['error'])
+      data: FindResponseData::from($attributes)
     );
   }
 
@@ -43,7 +44,7 @@ readonly final class ErrorResponse implements IResponseRootObject
   public function toArray(): array
   {
     return [
-      'error' => $this->error->toArray(),
+      'data' => $this->data->toArray(),
     ];
   }
 }

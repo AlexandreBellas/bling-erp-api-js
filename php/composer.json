@@ -2,14 +2,15 @@
   "name": "alebatistella/bling-erp-api",
   "description": "Pacote de integração com a API do Bling ERP",
   "type": "library",
+  "version": "0.0.1",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "AleBatistella\\BlingErpApi\\": "src/",
-      "AleBatistella\\BlingErpApi\\Entities\\Shared": "src/entities/@shared"
+      "AleBatistella\\BlingErpApi\\": "./src/",
+      "AleBatistella\\BlingErpApi\\Entities\\Shared\\": "./src/Entities/@shared/"
     },
     "files": [
-      "src/Helpers/functions.php"
+      "./src/Helpers/functions.php"
     ]
   },
   "authors": [
@@ -22,6 +23,8 @@
     "guzzlehttp/guzzle": "^7.8"
   },
   "require-dev": {
-    "laravel/laravel": "^10.2"
+    "laravel/laravel": "^10.2",
+    "phpunit/phpunit": "^10.5",
+    "fakerphp/faker": "^1.23"
   }
 }

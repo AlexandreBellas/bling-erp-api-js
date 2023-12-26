@@ -9,19 +9,17 @@ use AleBatistella\BlingErpApi\Entities\Shared\DTO\Error\ErrorResponse;
  */
 class BlingApiException extends \Exception
 {
-  /** @property-read ErrorResponse $rawResponse A resposta da requisição. */
-  private readonly ErrorResponse $rawResponse;
-
   /**
    * Constrói o objeto.
    *
    * @param ErrorResponse $rawResponse A resposta crua da requisição.
+   * @param int $status O _status_ HTTP da resposta.
    */
-  public function __construct(ErrorResponse $rawResponse)
-  {
-    $this->rawResponse = $rawResponse;
-
-    parent::__construct($rawResponse->error->description);
+  public function __construct(
+    private ErrorResponse $rawResponse,
+    private int $status
+  ) {
+    parent::__construct($rawResponse->error->description, $status);
   }
 
   /**
@@ -30,5 +28,15 @@ class BlingApiException extends \Exception
   public function getResponse(): ErrorResponse
   {
     return $this->rawResponse;
+  }
+
+  /**
+   * Obtém o _status_ HTTP.
+   *
+   * @return int
+   */
+  public function getHttpStatus(): int
+  {
+    return $this->status;
   }
 }

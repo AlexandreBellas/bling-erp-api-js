@@ -3,6 +3,9 @@
     "@shared": "Shared",
     "exceptions": "Error"
   },
+  "material-icon-theme.files.associations": {
+    "*.spec.php": "test-ts"
+  },
   "cSpell.words": [
     "agrupadores",
     "aliquota",

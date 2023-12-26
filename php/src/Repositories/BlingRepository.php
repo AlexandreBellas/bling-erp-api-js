@@ -2,10 +2,10 @@
 
 namespace AleBatistella\BlingErpApi\Repositories;
 
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\Body;
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\Headers;
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\RequestOptions;
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\ResponseOptions;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\Body;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\Headers;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\RequestOptions;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\ResponseOptions;
 use GuzzleHttp\Client;
 
 /**
@@ -42,11 +42,12 @@ class BlingRepository implements IBlingRepository
       'headers' => $options->headers?->content,
     ]);
 
-    $rawResponseBody = $response->getBody()->getContents();
-
     return new ResponseOptions(
-      body: new Body(json_decode($rawResponseBody, true)),
-      headers: new Headers($response->getHeaders())
+      endpoint: $options->endpoint,
+      method: 'GET',
+      status: $response->getStatusCode(),
+      headers: new Headers($response->getHeaders()),
+      body: $this->buildResponseBody($response->getBody()->getContents()),
     );
   }
 
@@ -69,11 +70,12 @@ class BlingRepository implements IBlingRepository
       'headers' => $options->headers?->content,
     ]);
 
-    $rawResponseBody = $response->getBody()->getContents();
-
     return new ResponseOptions(
-      body: new Body(json_decode($rawResponseBody, true)),
-      headers: new Headers($response->getHeaders())
+      endpoint: $options->endpoint,
+      method: 'POST',
+      status: $response->getStatusCode(),
+      headers: new Headers($response->getHeaders()),
+      body: $this->buildResponseBody($response->getBody()->getContents()),
     );
   }
 
@@ -88,11 +90,12 @@ class BlingRepository implements IBlingRepository
       'headers' => $options->headers?->content,
     ]);
 
-    $rawResponseBody = $response->getBody()->getContents();
-
     return new ResponseOptions(
-      body: new Body(json_decode($rawResponseBody, true)),
-      headers: new Headers($response->getHeaders())
+      endpoint: $options->endpoint,
+      method: 'PATCH',
+      status: $response->getStatusCode(),
+      headers: new Headers($response->getHeaders()),
+      body: $this->buildResponseBody($response->getBody()->getContents()),
     );
   }
 
@@ -107,11 +110,12 @@ class BlingRepository implements IBlingRepository
       'headers' => $options->headers?->content,
     ]);
 
-    $rawResponseBody = $response->getBody()->getContents();
-
     return new ResponseOptions(
-      body: new Body(json_decode($rawResponseBody, true)),
-      headers: new Headers($response->getHeaders())
+      endpoint: $options->endpoint,
+      method: 'PUT',
+      status: $response->getStatusCode(),
+      headers: new Headers($response->getHeaders()),
+      body: $this->buildResponseBody($response->getBody()->getContents()),
     );
   }
 
@@ -126,11 +130,31 @@ class BlingRepository implements IBlingRepository
       'headers' => $options->headers?->content,
     ]);
 
-    $rawResponseBody = $response->getBody()->getContents();
-
     return new ResponseOptions(
-      body: new Body(json_decode($rawResponseBody, true)),
-      headers: new Headers($response->getHeaders())
+      endpoint: $options->endpoint,
+      method: 'DELETE',
+      status: $response->getStatusCode(),
+      headers: new Headers($response->getHeaders()),
+      body: $this->buildResponseBody($response->getBody()->getContents()),
     );
+  }
+
+  /**
+   * Monta o corpo da resposta.
+   *
+   * @param mixed $contents
+   *
+   * @return ?Body
+   */
+  private function buildResponseBody(mixed $contents): ?Body
+  {
+    $body = null;
+
+    if (!is_null($contents)) {
+      $arrResponseBody = json_decode($contents, true);
+      $body = is_array($arrResponseBody) ? new Body(json_decode($contents, true)) : null;
+    }
+
+    return $body;
   }
 }

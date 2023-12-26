@@ -13,3 +13,15 @@ if (!function_exists('convertDateToString')) {
     return $date->format('Y-m-d');
   }
 }
+
+if (!function_exists('fake')) {
+  /**
+   * Cria objeto para dados _fake_.
+   *
+   * @return \Faker\Generator
+   */
+  function fake(): \Faker\Generator
+  {
+    return \Faker\Factory::create();
+  }
+}

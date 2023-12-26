@@ -2,8 +2,11 @@
 
 namespace AleBatistella\BlingErpApi\Entities\Borderos;
 
+use AleBatistella\BlingErpApi\Entities\Borderos\Schema\Find\FindResponse;
 use AleBatistella\BlingErpApi\Entities\Shared\BaseEntity;
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\RequestOptions;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\RequestOptions;
+use AleBatistella\BlingErpApi\Exceptions\BlingApiException;
+use AleBatistella\BlingErpApi\Exceptions\BlingInternalException;
 
 /**
  * Entidade para interação com borderôs.
@@ -18,15 +21,17 @@ class Borderos extends BaseEntity
    * @param int $idBordero ID para deleção.
    *
    * @return null Não há retorno.
-   * @throws {BlingApiException|BlingInternalException}
+   * @throws BlingApiException|BlingInternalException
    *
    * @see https://developer.bling.com.br/referencia#/Border%C3%B4s/delete_borderos__idBordero_
    */
   public function delete(int $idBordero): null
   {
-    return $this->repository->destroy(new RequestOptions(
+    $response = $this->repository->destroy(new RequestOptions(
       endpoint: "borderos/$idBordero"
     ));
+
+    return $response->body;
   }
 
   /**
@@ -34,15 +39,17 @@ class Borderos extends BaseEntity
    *
    * @param params Parâmetros para a busca (somente o ID).
    *
-   * @return {Promise<IFindSuccessResponse>} Os dados do borderô pesquisado.
-   * @throws {BlingApiException|BlingInternalException}
+   * @return FindResponse Os dados do borderô pesquisado.
+   * @throws BlingApiException|BlingInternalException
    *
    * @see https://developer.bling.com.br/referencia#/Border%C3%B4s/get_borderos__idBordero_
    */
-  public function find(int $idBordero)
+  public function find(int $idBordero): FindResponse
   {
-    return $this->repository->show(new RequestOptions(
+    $response = $this->repository->show(new RequestOptions(
       endpoint: "borderos/$idBordero"
     ));
+
+    return FindResponse::fromResponse($response);
   }
 }
