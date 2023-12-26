@@ -2,8 +2,8 @@
 
 namespace AleBatistella\BlingErpApi\Repositories;
 
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\RequestBody;
-use AleBatistella\BlingErpApi\Entities\Shared\DTO\RequestHeaders;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Body;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Headers;
 use AleBatistella\BlingErpApi\Entities\Shared\DTO\RequestOptions;
 use AleBatistella\BlingErpApi\Entities\Shared\DTO\ResponseOptions;
 use GuzzleHttp\Client;
@@ -45,8 +45,8 @@ class BlingRepository implements IBlingRepository
     $rawResponseBody = $response->getBody()->getContents();
 
     return new ResponseOptions(
-      body: new RequestBody(json_decode($rawResponseBody, true)),
-      headers: new RequestHeaders($response->getHeaders())
+      body: new Body(json_decode($rawResponseBody, true)),
+      headers: new Headers($response->getHeaders())
     );
   }
 
@@ -72,8 +72,8 @@ class BlingRepository implements IBlingRepository
     $rawResponseBody = $response->getBody()->getContents();
 
     return new ResponseOptions(
-      body: new RequestBody(json_decode($rawResponseBody, true)),
-      headers: new RequestHeaders($response->getHeaders())
+      body: new Body(json_decode($rawResponseBody, true)),
+      headers: new Headers($response->getHeaders())
     );
   }
 
@@ -91,8 +91,8 @@ class BlingRepository implements IBlingRepository
     $rawResponseBody = $response->getBody()->getContents();
 
     return new ResponseOptions(
-      body: new RequestBody(json_decode($rawResponseBody, true)),
-      headers: new RequestHeaders($response->getHeaders())
+      body: new Body(json_decode($rawResponseBody, true)),
+      headers: new Headers($response->getHeaders())
     );
   }
 
@@ -110,8 +110,8 @@ class BlingRepository implements IBlingRepository
     $rawResponseBody = $response->getBody()->getContents();
 
     return new ResponseOptions(
-      body: new RequestBody(json_decode($rawResponseBody, true)),
-      headers: new RequestHeaders($response->getHeaders())
+      body: new Body(json_decode($rawResponseBody, true)),
+      headers: new Headers($response->getHeaders())
     );
   }
 
@@ -129,8 +129,8 @@ class BlingRepository implements IBlingRepository
     $rawResponseBody = $response->getBody()->getContents();
 
     return new ResponseOptions(
-      body: new RequestBody(json_decode($rawResponseBody, true)),
-      headers: new RequestHeaders($response->getHeaders())
+      body: new Body(json_decode($rawResponseBody, true)),
+      headers: new Headers($response->getHeaders())
     );
   }
 }

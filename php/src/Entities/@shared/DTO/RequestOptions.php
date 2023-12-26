@@ -3,7 +3,7 @@
 namespace AleBatistella\BlingErpApi\Entities\Shared\DTO;
 
 /**
- * Opções para envio de uma requisição.
+ * Dados para envio de uma requisição.
  */
 class RequestOptions
 {
@@ -11,15 +11,15 @@ class RequestOptions
    * Constrói o objeto.
    *
    * @param string $endpoint
-   * @param ?RequestQueryParams $queryParams
-   * @param ?RequestHeaders $headers
-   * @param ?RequestBody $body
+   * @param ?QueryParams $queryParams
+   * @param ?Headers $headers
+   * @param ?Body $body
    */
   public function __construct(
     public string $endpoint,
-    public ?RequestQueryParams $queryParams,
-    public ?RequestHeaders $headers,
-    public ?RequestBody $body,
+    public ?QueryParams $queryParams = null,
+    public ?Headers $headers = null,
+    public ?Body $body = null,
   ) {
   }
 }

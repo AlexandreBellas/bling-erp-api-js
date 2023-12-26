@@ -14,7 +14,7 @@ abstract class BaseEntity
    *
    * @param IBlingRepository $repository Repositório para conexão com o Bling.
    */
-  public function __construct(private IBlingRepository $repository)
+  public function __construct(protected IBlingRepository $repository)
   {
   }
 

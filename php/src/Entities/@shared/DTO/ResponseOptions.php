@@ -3,19 +3,20 @@
 namespace AleBatistella\BlingErpApi\Entities\Shared\DTO;
 
 /**
- * Objeto representativo de todas os dados de resposta da requisição.
+ * Dados da resposta de uma requisição.
  */
 class ResponseOptions
 {
   /**
    * Constrói o objeto.
    *
-   * @param ?RequestBody $body
-   * @param ?RequestHeaders $headers
+   * @param ?Body $body
+   * @param ?Headers $headers
    */
   public function __construct(
-    public ?RequestBody $body = null,
-    public ?RequestHeaders $headers = [],
+    public int $status,
+    public ?Headers $headers = [],
+    public ?Body $body = null,
   ) {
   }
 }
