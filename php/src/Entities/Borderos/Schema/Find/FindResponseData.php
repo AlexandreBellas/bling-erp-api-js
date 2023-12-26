@@ -41,7 +41,10 @@ readonly final class FindResponseData implements IResponseObject
       historico: $attributes['historico'],
       portador: Id::from($attributes['portador']),
       categoria: Id::from($attributes['categoria']),
-      pagamentos: FindResponseDataPagamentos::from($attributes['pagamentos']),
+      pagamentos: array_map(
+        fn(array $item): FindResponseDataPagamentos => FindResponseDataPagamentos::from($item),
+        $attributes['pagamentos']
+      ),
     );
   }
 
@@ -54,8 +57,8 @@ readonly final class FindResponseData implements IResponseObject
       'id'         => $this->id,
       'data'       => $this->data,
       'historico'  => $this->historico,
-      'portador'   => $this->portador,
-      'categoria'  => $this->categoria,
+      'portador'   => $this->portador->toArray(),
+      'categoria'  => $this->categoria->toArray(),
       'pagamentos' => array_map(
         static fn(FindResponseDataPagamentos $response): array => $response->toArray(),
         $this->pagamentos

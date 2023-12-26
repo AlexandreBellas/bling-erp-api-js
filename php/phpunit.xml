@@ -5,7 +5,7 @@
   <coverage />
   <testsuites>
     <testsuite name="Package tests">
-      <directory suffix=".spec.php">./src</directory>
+      <directory suffix=".spec.php">./src/Entities</directory>
     </testsuite>
   </testsuites>
   <php>
@@ -14,5 +14,9 @@
     <include>
       <directory suffix=".php">./src</directory>
     </include>
+    <exclude>
+      <directory suffix=".php">./src/Entities/@shared</directory>
+      <directory suffix=".php">./vendor</directory>
+    </exclude>
   </source>
 </phpunit>

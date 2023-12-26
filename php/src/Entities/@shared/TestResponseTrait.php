@@ -12,7 +12,7 @@ use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\ResponseOptions;
 trait TestResponseTrait
 {
   /**
-   * Gera uma resposta vazia.
+   * Gera uma resposta.
    *
    * @param ?string $endpoint
    * @param ?string $method
@@ -35,5 +35,17 @@ trait TestResponseTrait
       body: $body,
     ) extends ResponseOptions {
     };
+  }
+
+  /**
+   * Gera um corpo de requisição.
+   *
+   * @param array $content
+   *
+   * @return Body
+   */
+  private function buildBody(array $content): Body
+  {
+    return new class ($content) extends Body { };
   }
 }

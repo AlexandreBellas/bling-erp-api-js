@@ -34,7 +34,7 @@ readonly final class FindResponse implements IResponseRootObject
   public static function from(array $attributes): static
   {
     return new self(
-      data: FindResponseData::from($attributes)
+      data: FindResponseData::from($attributes['data'])
     );
   }
 
