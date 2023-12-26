@@ -3,7 +3,7 @@ name: On commit => execute test workflow
 on: push
 
 jobs:
-  unit-feature-tests:
+  js-ts-unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,3 +22,20 @@ jobs:
       - name: Execute tests
         working-directory: ./typescript
         run: npm run test
+
+  php-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: composer update
+
+      - name: Dump autoload classes
+        run: composer dump-autoload -o
+
+      - name: Execute tests
+        run: vendor/phpunit/phpunit/phpunit -c php/phpunit.xml
