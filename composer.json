@@ -6,11 +6,11 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "AleBatistella\\BlingErpApi\\": "./src/",
-      "AleBatistella\\BlingErpApi\\Entities\\Shared\\": "./src/Entities/@shared/"
+      "AleBatistella\\BlingErpApi\\": "./php/src/",
+      "AleBatistella\\BlingErpApi\\Entities\\Shared\\": "./php/src/Entities/@shared/"
     },
     "files": [
-      "./src/Helpers/functions.php"
+      "./php/src/Helpers/functions.php"
     ]
   },
   "authors": [

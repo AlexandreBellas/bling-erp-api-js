@@ -7,7 +7,7 @@ Disponível para:
 
 - [x] JavaScript ([veja a documentação](https://github.com/AlexandreBellas/bling-erp-api/tree/develop/typescript/README.md))
 - [x] TypeScript ([veja a documentação](https://github.com/AlexandreBellas/bling-erp-api/tree/develop/typescript/README.md))
-- [ ] PHP (em desenvolvimento)
+- [x] PHP ([veja a documentação](https://github.com/AlexandreBellas/bling-erp-api/tree/develop/php/README.md))
 - [ ] C# (em breve)
 
 ## Instalação
@@ -19,6 +19,12 @@ desejada.
 
 ```bash
 npm i bling-erp-api
+```
+
+### PHP
+
+```bash
+composer require alebatistella/bling-erp-api
 ```
 
 ## Recursos
