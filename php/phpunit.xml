@@ -4,8 +4,11 @@
   bootstrap="vendor/autoload.php" colors="true" cacheDirectory=".phpunit.cache">
   <coverage />
   <testsuites>
-    <testsuite name="Package tests">
+    <testsuite name="Entities tests">
       <directory suffix=".spec.php">./src/Entities</directory>
+    </testsuite>
+    <testsuite name="Package tests">
+      <file>./src/BlingTest.spec.php</file>
     </testsuite>
   </testsuites>
   <php>
