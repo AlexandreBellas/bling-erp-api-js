@@ -27,9 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          node-version: 20
+          php-version: "8.2"
 
       - name: Install dependencies
         run: composer update
