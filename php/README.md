@@ -91,5 +91,5 @@ dd($products);
 Faça o clone do projeto, instale as dependências e execute:
 
 ```bash
-vendor/phpunit/phpunit/phpunit
+vendor/phpunit/phpunit/phpunit -c php/phpunit.xml
 ```
