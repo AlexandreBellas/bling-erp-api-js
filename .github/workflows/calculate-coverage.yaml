@@ -1,6 +1,9 @@
 name: Calculate test coverage
 
-on: ["push", "pull_request"]
+on:
+  push:
+    branches:
+      - "main"
 
 jobs:
   calculate-coverage:
