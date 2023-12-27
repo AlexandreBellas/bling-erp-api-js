@@ -3,10 +3,14 @@
     "@shared": "Shared",
     "exceptions": "Error"
   },
+  "material-icon-theme.files.associations": {
+    "*.spec.php": "test-ts"
+  },
   "cSpell.words": [
     "agrupadores",
     "aliquota",
     "Amazônia",
+    "autoload",
     "borderô",
     "Borderos",
     "borderôs",
@@ -19,6 +23,7 @@
     "Customizados",
     "Eletrônicas",
     "Frotista",
+    "guzzlehttp",
     "ICMS",
     "ICMSST",
     "ICRT",
