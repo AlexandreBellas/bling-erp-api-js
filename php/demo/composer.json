@@ -1,0 +1,19 @@
+{
+  "name": "alebatistella/bling-erp-api-demo",
+  "type": "project",
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Alebatistella\\BlingErpApiDemo\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Alexandre Batistella Bellas",
+      "email": "alexandre.bellas@gmail.com"
+    }
+  ],
+  "require": {
+    "alebatistella/bling-erp-api": "dev-main"
+  }
+}
