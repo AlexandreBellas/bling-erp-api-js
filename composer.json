@@ -26,5 +26,15 @@
     "laravel/laravel": "^10.2",
     "phpunit/phpunit": "^10.5",
     "fakerphp/faker": "^1.23"
+  },
+  "archive": {
+    "exclude": [
+      "./typescript",
+      "./.github",
+      "./.vscode",
+      "./.editorconfig",
+      "./.gitignore",
+      "./CONTRIBUTING.md"
+    ]
   }
 }

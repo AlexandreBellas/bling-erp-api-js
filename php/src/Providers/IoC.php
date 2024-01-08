@@ -20,7 +20,7 @@ class IoC
   public static function getRepository(string $accessToken): IBlingRepository
   {
     return new BlingRepository(
-      baseUrl: 'https://www.bling.com.br/Api/v3',
+      baseUrl: 'https://www.bling.com.br/Api/v3/',
       accessToken: $accessToken
     );
   }
