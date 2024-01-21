@@ -24,25 +24,13 @@ Para instalar, execute o comando:
 npm i bling-erp-api
 ```
 
-## Importação do módulo
-
-### CommonJS
-
-```js
-const Bling = require('bling-erp-api')
-```
-
-### ES6
-
-```ts
-import Bling from 'bling-erp-api'
-```
-
 ## Criação de uma nova conexão
 
 Para criar uma conexão ao serviço do Bling, basta instanciar o objeto com a [API key](https://developer.bling.com.br/autenticacao) em seu construtor.
 
 ```js
+import Bling from 'bling-erp-api'
+
 const apiKey = 'sua_api_key'
 const blingConnection = new Bling(apiKey)
 ```
@@ -102,11 +90,9 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 Para listar seus produtos, basta executar:
 
 ```js
-// Também disponível como:
-// import Bling from 'bling-erp-api'
-const Bling = require('bling-erp-api')
-const apiKey = 'sua_api_key'
+import Bling from 'bling-erp-api'
 
+const apiKey = 'sua_api_key'
 const blingConnection = new Bling(apiKey)
 
 const products = await blingConnection.produtos.get()
