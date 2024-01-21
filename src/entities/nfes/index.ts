@@ -4,7 +4,10 @@ import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IPostAccountsParams } from './interfaces/post-accounts.interface'
+import { IPostStockToDepositParams } from './interfaces/post-stock-to-deposit.interface'
+import { IPostStockParams } from './interfaces/post-stock.interface'
 import { IReverseAccountsParams } from './interfaces/reverse-accounts.interface'
+import { IReverseStockParams } from './interfaces/reverse-stock.interface'
 import { ISendParams, ISendResponse } from './interfaces/send.interface'
 import {
   IUpdateBody,
@@ -121,7 +124,7 @@ export class Nfes extends Entity {
   /**
    * Lança as contas de uma nota fiscal.
    *
-   * @param {IPostAccountsParams} params O conteúdo para a criação.
+   * @param {IPostAccountsParams} params O conteúdo para o lançamento.
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
@@ -138,7 +141,7 @@ export class Nfes extends Entity {
   /**
    * Estorna as contas de uma nota fiscal.
    *
-   * @param {IReverseAccountsParams} params O conteúdo para a criação.
+   * @param {IReverseAccountsParams} params O conteúdo para o estorno.
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
@@ -148,6 +151,59 @@ export class Nfes extends Entity {
   public async reverseAccounts(params: IReverseAccountsParams): Promise<null> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/estornar-contas`,
+      body: {}
+    })
+  }
+
+  /**
+   * Lança o estoque de uma nota fiscal no depósito padrão.
+   *
+   * @param {IPostStockParams} params O conteúdo para o lançamento.
+   *
+   * @returns {Promise<null>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__lancar_estoque
+   */
+  public async postStock(params: IPostStockParams): Promise<null> {
+    return await this.repository.store({
+      endpoint: `nfe/${params.idNotaFiscal}/lancar-estoque`,
+      body: {}
+    })
+  }
+
+  /**
+   * Lança o estoque de uma nota fiscal especificando o depósito.
+   *
+   * @param {IPostStockToDepositParams} params O conteúdo para o lançamento.
+   *
+   * @returns {Promise<null>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__lancar_estoque__idDeposito_
+   */
+  public async postStockToDeposit(
+    params: IPostStockToDepositParams
+  ): Promise<null> {
+    return await this.repository.store({
+      endpoint: `nfe/${params.idNotaFiscal}/lancar-estoque/${params.idDeposito}`,
+      body: {}
+    })
+  }
+
+  /**
+   * Estorna o estoque de uma nota fiscal.
+   *
+   * @param {IReverseStockParams} params O conteúdo para o estorno.
+   *
+   * @returns {Promise<null>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__estornar_estoque
+   */
+  public async reverseStock(params: IReverseStockParams): Promise<null> {
+    return await this.repository.store({
+      endpoint: `nfe/${params.idNotaFiscal}/estornar-estoque`,
       body: {}
     })
   }
