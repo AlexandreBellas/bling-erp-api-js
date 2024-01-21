@@ -1,8 +1,0 @@
-# Dependencies
-node_modules/
-
-# Testing
-coverage/
-
-# Build assets
-lib/
