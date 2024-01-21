@@ -1,6 +1,11 @@
 export default {
   data: {
-    id: 12345678
+    id: 12345678,
+    numero: '6541',
+    serie: '1',
+    contato: {
+      nome: 'Contato do Bling'
+    }
   }
 }
 

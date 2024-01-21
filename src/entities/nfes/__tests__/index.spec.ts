@@ -1,12 +1,21 @@
 import { Chance } from 'chance'
 import { Nfes } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { ICreateResponse } from '../interfaces/create.interface'
+import { IDeleteResponse } from '../interfaces/delete.interface'
+import { IFindResponse } from '../interfaces/find.interface'
+import { IGetResponse } from '../interfaces/get.interface'
+import { ISendResponse } from '../interfaces/send.interface'
+import { IUpdateResponse } from '../interfaces/update.interface'
 import createResponse, { createRequestBody } from './create-response'
 import deleteResponse from './delete-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
 import postAccountsResponse from './post-accounts-response'
+import postStockResponse from './post-stock-response'
+import postStockToDepositResponse from './post-stock-to-deposit-response'
 import reverseAccountsResponse from './reverse-accounts-response'
+import reverseStockResponse from './reverse-stock-response'
 import sendResponse from './send-response'
 import updateResponse, { updateRequestBody } from './update-response'
 
@@ -41,6 +50,9 @@ describe('NF-es entity', () => {
       params: { idsNotas }
     })
     expect(response).toBe(deleteResponse)
+
+    const typingResponseTest: IDeleteResponse = deleteResponse
+    expect(typingResponseTest).toBe(deleteResponse)
   })
 
   it('should get successfully', async () => {
@@ -62,6 +74,9 @@ describe('NF-es entity', () => {
       }
     })
     expect(response).toBe(getResponse)
+
+    const typingResponseTest: IGetResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should find successfully', async () => {
@@ -76,6 +91,9 @@ describe('NF-es entity', () => {
       id: String(idNotaFiscal)
     })
     expect(response).toBe(findResponse)
+
+    const typingResponseTest: IFindResponse = findResponse
+    expect(typingResponseTest).toBe(findResponse)
   })
 
   it('should create successfully', async () => {
@@ -89,6 +107,9 @@ describe('NF-es entity', () => {
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
+
+    const typingResponseTest: ICreateResponse = createResponse
+    expect(typingResponseTest).toBe(createResponse)
   })
 
   it('should send successfully', async () => {
@@ -103,6 +124,9 @@ describe('NF-es entity', () => {
       body: {}
     })
     expect(response).toBe(sendResponse)
+
+    const typingResponseTest: ISendResponse = sendResponse
+    expect(typingResponseTest).toBe(sendResponse)
   })
 
   it('should post accounts successfully', async () => {
@@ -117,6 +141,9 @@ describe('NF-es entity', () => {
       body: {}
     })
     expect(response).toBe(postAccountsResponse)
+
+    const typingResponseTest: null = postAccountsResponse
+    expect(typingResponseTest).toBe(postAccountsResponse)
   })
 
   it('should reverse accounts successfully', async () => {
@@ -131,6 +158,64 @@ describe('NF-es entity', () => {
       body: {}
     })
     expect(response).toBe(reverseAccountsResponse)
+
+    const typingResponseTest: null = reverseAccountsResponse
+    expect(typingResponseTest).toBe(reverseAccountsResponse)
+  })
+
+  it('should post stock successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idNotaFiscal = chance.natural()
+    repository.setResponse(postStockResponse)
+
+    const response = await entity.postStock({ idNotaFiscal })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `nfe/${idNotaFiscal}/lancar-estoque`,
+      body: {}
+    })
+    expect(response).toBe(postStockResponse)
+
+    const typingResponseTest: null = postStockResponse
+    expect(typingResponseTest).toBe(postStockResponse)
+  })
+
+  it('should post stock to deposit successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idNotaFiscal = chance.natural()
+    const idDeposito = chance.natural()
+    repository.setResponse(postStockToDepositResponse)
+
+    const response = await entity.postStockToDeposit({
+      idNotaFiscal,
+      idDeposito
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `nfe/${idNotaFiscal}/lancar-estoque/${idDeposito}`,
+      body: {}
+    })
+    expect(response).toBe(postStockToDepositResponse)
+
+    const typingResponseTest: null = postStockToDepositResponse
+    expect(typingResponseTest).toBe(postStockToDepositResponse)
+  })
+
+  it('should reverse stock successfully', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idNotaFiscal = chance.natural()
+    repository.setResponse(reverseStockResponse)
+
+    const response = await entity.reverseStock({ idNotaFiscal })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: `nfe/${idNotaFiscal}/estornar-estoque`,
+      body: {}
+    })
+    expect(response).toBe(reverseStockResponse)
+
+    const typingResponseTest: null = reverseStockResponse
+    expect(typingResponseTest).toBe(reverseStockResponse)
   })
 
   it('should update successfully', async () => {
@@ -149,5 +234,8 @@ describe('NF-es entity', () => {
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)
+
+    const typingResponseTest: IUpdateResponse = updateResponse
+    expect(typingResponseTest).toBe(updateResponse)
   })
 })
