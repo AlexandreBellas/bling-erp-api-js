@@ -121,6 +121,3 @@ lib/
 # Ignore all local history of files
 .history
 .ionide
-
-# PHP
-vendor/

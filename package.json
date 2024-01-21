@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlexandreBellas/bling-erp-api.git"
+    "url": "git+https://github.com/AlexandreBellas/bling-erp-api-js.git"
   },
   "keywords": [
     "javascript",
@@ -38,9 +38,9 @@
   "author": "AlexandreBellas; vitor-san",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AlexandreBellas/bling-erp-api/issues"
+    "url": "https://github.com/AlexandreBellas/bling-erp-api-js/issues"
   },
-  "homepage": "https://github.com/AlexandreBellas/bling-erp-api#readme",
+  "homepage": "https://github.com/AlexandreBellas/bling-erp-api-js#readme",
   "dependencies": {
     "axios": "^1.6.2"
   },
