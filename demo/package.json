@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bling-erp-api": "^5.1.0",
+    "bling-erp-api": "^5.2.0",
     "express": "^4.18.2"
   },
   "devDependencies": {
