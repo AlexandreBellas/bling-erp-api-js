@@ -3,7 +3,7 @@
  */
 export type IDefaultParams = Record<
   string,
-  number | number[] | string | string[] | Date | undefined
+  number | number[] | string | string[] | boolean | Date | undefined
 >
 
 /**

@@ -1,6 +1,8 @@
 import { Chance } from 'chance'
 import { ContasContabeis } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { IFindResponse } from '../interfaces/find.interface'
+import { IGetResponse } from '../interfaces/get.interface'
 import findResponse from './find-response'
 import getResponse from './get-response'
 
@@ -29,10 +31,17 @@ describe('Contas contábeis entity', () => {
       endpoint: 'contas-contabeis',
       params: {
         limite: undefined,
-        pagina: undefined
+        pagina: undefined,
+        ocultarInvisiveis: undefined,
+        ocultarContasIntegracaoPagamento: undefined,
+        ocultarTipoContaBancaria: undefined,
+        situacoes: undefined
       }
     })
     expect(response).toBe(getResponse)
+
+    const typingResponseTest: IGetResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should find successfully', async () => {
@@ -47,5 +56,8 @@ describe('Contas contábeis entity', () => {
       id: String(idContaContabil)
     })
     expect(response).toBe(findResponse)
+
+    const typingResponseTest: IFindResponse = findResponse
+    expect(typingResponseTest).toBe(findResponse)
   })
 })
