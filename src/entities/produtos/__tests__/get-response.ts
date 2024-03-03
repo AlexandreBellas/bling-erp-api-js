@@ -8,7 +8,9 @@ export default {
       tipo: 'P' as const,
       situacao: 'A' as const,
       formato: 'S' as const,
-      descricaoCurta: 'Descrição curta'
+      descricaoCurta: 'Descrição curta',
+      imagemURL:
+        'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg'
     }
   ]
 }
