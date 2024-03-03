@@ -25,6 +25,7 @@ export interface IFindResponse {
     situacao: ISituacao
     formato: IFormato
     descricaoCurta?: string
+    imagemURL?: string
     dataValidade?: string
     unidade?: string
     pesoLiquido?: number
@@ -85,7 +86,16 @@ export interface IFindResponse {
     }
     midia?: {
       video: { url: string }
-      imagens: { externas: { link: string }[] }
+      imagens: {
+        externas?: { link: string }[]
+        internas?: {
+          linkMiniatura: string
+          validade: string
+          ordem: number
+          anexo: { id: number }
+          anexoVinculo: { id: number }
+        }[]
+      }
     }
     linhaProduto?: { id: number }
     estrutura?: {

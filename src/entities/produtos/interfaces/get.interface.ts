@@ -73,5 +73,6 @@ export interface IGetResponse {
     situacao: ISituacao
     formato: IFormato
     descricaoCurta?: string
+    imagemURL?: string
   }[]
 }

@@ -8,6 +8,8 @@ export default {
     situacao: 'A' as const,
     formato: 'S' as const,
     descricaoCurta: 'Descrição curta',
+    imagemURL:
+      'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
     dataValidade: '2020-01-01',
     unidade: 'UN',
     pesoLiquido: 1,
@@ -23,6 +25,7 @@ export default {
     descricaoComplementar: 'Descrição complementar',
     linkExterno: 'https://www.google.com',
     observacoes: 'Observações',
+    descricaoEmbalagemDiscreta: 'Produto teste',
     categoria: {
       id: 123456789
     },
@@ -32,7 +35,7 @@ export default {
       crossdocking: 1,
       localizacao: '14A'
     },
-    actionEstoque: 'Z' as const,
+    actionEstoque: undefined,
     dimensoes: {
       largura: 1,
       altura: 1,
@@ -40,7 +43,7 @@ export default {
       unidadeMedida: 1
     },
     tributacao: {
-      origem: 0,
+      origem: 0 as const,
       nFCI: '',
       ncm: '',
       cest: '',
@@ -79,6 +82,19 @@ export default {
           {
             link: 'https://shutterstock.com/lalala123'
           }
+        ],
+        internas: [
+          {
+            linkMiniatura: 'https://www.bling.com.br/imagens/miniatura.jpg',
+            validade: '2020-01-01 00:00:00',
+            ordem: 1,
+            anexo: {
+              id: 12345678
+            },
+            anexoVinculo: {
+              id: 12345678
+            }
+          }
         ]
       }
     },
@@ -115,6 +131,8 @@ export default {
         situacao: 'A' as const,
         formato: 'S' as const,
         descricaoCurta: 'Descrição curta',
+        imagemURL:
+          'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
         dataValidade: '2020-01-01',
         unidade: 'UN',
         pesoLiquido: 1,
@@ -130,6 +148,7 @@ export default {
         descricaoComplementar: 'Descrição complementar',
         linkExterno: 'https://www.google.com',
         observacoes: 'Observações',
+        descricaoEmbalagemDiscreta: 'Produto teste',
         categoria: {
           id: 123456789
         },
@@ -139,7 +158,7 @@ export default {
           crossdocking: 1,
           localizacao: '14A'
         },
-        actionEstoque: 'Z' as const,
+        actionEstoque: undefined,
         dimensoes: {
           largura: 1,
           altura: 1,
@@ -185,6 +204,19 @@ export default {
             externas: [
               {
                 link: 'https://shutterstock.com/lalala123'
+              }
+            ],
+            internas: [
+              {
+                linkMiniatura: 'https://www.bling.com.br/imagens/miniatura.jpg',
+                validade: '2020-01-01 00:00:00',
+                ordem: 1,
+                anexo: {
+                  id: 12345678
+                },
+                anexoVinculo: {
+                  id: 12345678
+                }
               }
             ]
           }
