@@ -4,14 +4,7 @@ import { IIndicadorIE } from '../types/indicador-ie.type'
 import { ISexo } from '../types/sexo.type'
 import { ISituacao } from '../types/situacao.type'
 
-export interface IFindParams {
-  /**
-   * ID do contato
-   */
-  idContato: number
-}
-
-export interface IFindResponse {
+export interface IFindFinalCustomerResponse {
   data: {
     id: number
     nome: string

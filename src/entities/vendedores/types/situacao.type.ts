@@ -5,5 +5,6 @@
  * - `I`: Inativo
  * - `S`: Sem movimento
  * - `E`: Excluído
+ * - `T`: Todos
  */
-export type ISituacao = 'A' | 'I' | 'S' | 'E'
+export type ISituacao = 'A' | 'I' | 'S' | 'E' | 'T'
