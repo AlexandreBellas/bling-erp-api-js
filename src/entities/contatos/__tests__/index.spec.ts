@@ -2,6 +2,7 @@ import { Chance } from 'chance'
 import { Contatos } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
 import { ICreateResponse } from '../interfaces/create.interface'
+import { IFindFinalCustomerResponse } from '../interfaces/find-final-customer.interface'
 import { IFindTypesResponse } from '../interfaces/find-types.interface'
 import { IFindResponse } from '../interfaces/find.interface'
 import { IGetResponse } from '../interfaces/get.interface'
@@ -14,6 +15,7 @@ import changeSituationResponse, {
 import createResponse, { createRequestBody } from './create-response'
 import deleteManyResponse from './delete-many-response'
 import deleteResponse from './delete-response'
+import findFinalCustomerResponse from './find-final-customer.response'
 import findResponse from './find-response'
 import findTypesResponse from './find-types-response'
 import getResponse from './get-response'
@@ -135,6 +137,22 @@ describe('Contatos entity', () => {
 
     const typingResponseTest: IFindTypesResponse = findTypesResponse
     expect(typingResponseTest).toBe(findTypesResponse)
+  })
+
+  it('should find final customer successfully', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    repository.setResponse(findFinalCustomerResponse)
+
+    const response = await entity.findFinalCustomer()
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: 'contatos/consumidor-final'
+    })
+    expect(response).toBe(findFinalCustomerResponse)
+
+    const typingResponseTest: IFindFinalCustomerResponse =
+      findFinalCustomerResponse
+    expect(typingResponseTest).toBe(findFinalCustomerResponse)
   })
 
   it('should change situation successfully', async () => {

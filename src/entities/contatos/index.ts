@@ -7,6 +7,7 @@ import {
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteManyParams } from './interfaces/delete-many.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
+import { IFindFinalCustomerResponse } from './interfaces/find-final-customer.interface'
 import {
   IFindTypesParams,
   IFindTypesResponse
@@ -131,6 +132,20 @@ export class Contatos extends Entity {
     return await this.repository.show({
       endpoint: 'contatos',
       id: `${params.idContato}/tipos`
+    })
+  }
+
+  /**
+   * Obtém os dados do contato Consumidor Final.
+   *
+   * @returns {Promise<IFindFinalCustomerResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Contatos/get_contatos_consumidor_final
+   */
+  public async findFinalCustomer(): Promise<IFindFinalCustomerResponse> {
+    return await this.repository.index({
+      endpoint: 'contatos/consumidor-final'
     })
   }
 
