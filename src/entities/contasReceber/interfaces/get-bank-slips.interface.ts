@@ -10,7 +10,7 @@ export interface IGetBankSlipsResponse {
   numberNF: string
   amountAccounts: number
   amountValuesAccounts: number
-  haveAccountWithIntegration: true
+  haveAccountWithIntegration: boolean
   accounts: {
     id: number
     idExternal: string

@@ -1,3 +1,5 @@
+import { ICodigoFiscal } from '../types/codigo-fiscal.type'
+import { IOrigemSituacao } from '../types/origem-situacao.type'
 import { ISituacao } from '../types/situacao.type'
 
 interface ContasReceberOcorrenciaUnicaDTO {
@@ -52,18 +54,36 @@ export interface IFindResponse {
     situacao: ISituacao
     vencimento: string
     valor: number
-    contato: { id: number }
-    formaPagamento: { id: number }
+    idTransacao?: string
+    linkQRCodePix?: string
+    linkBoleto?: string
+    dataEmissao?: string
+    contato: {
+      id: number
+      nome?: string
+      numeroDocumento?: string
+      tipo?: string
+    }
+    formaPagamento: { id: number; codigoFiscal?: ICodigoFiscal }
+    contaContabil?: { id?: number; descricao?: string }
+    origem?: {
+      id?: number
+      tipoOrigem?: string
+      numero?: string
+      dataEmissao?: string
+      valor?: number
+      situacao?: IOrigemSituacao
+      url?: string
+    }
     saldo: number
-    dataEmissao: string
     vencimentoOriginal: string
-    numeroDocumento: string
-    competencia: string
-    historico: string
+    numeroDocumento?: string
+    competencia?: string
+    historico?: string
     numeroBanco: string
-    portador: { id: number }
-    categoria: { id: number }
-    vendedor: { id: number }
+    portador?: { id: number }
+    categoria?: { id: number }
+    vendedor?: { id: number }
     borderos: number[]
     ocorrencia:
       | ContasReceberOcorrenciaUnicaDTO

@@ -66,6 +66,7 @@ export interface IGetParams {
 export interface IGetResponse {
   data: {
     id?: number
+    idProdutoPai?: number
     nome: string
     codigo?: string
     preco?: number

@@ -3,6 +3,7 @@
 import { Entity } from './entities/@shared/entity'
 import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
+import { CanaisDeVenda } from './entities/canaisDeVenda'
 import { CategoriasLojas } from './entities/categoriasLojas'
 import { CategoriasProdutos } from './entities/categoriasProdutos'
 import { CategoriasReceitasDespesas } from './entities/categoriasReceitasDespesas'
@@ -352,7 +353,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com produtos - fornecedores.
    *
    * @return {ProdutosFornecedores}
@@ -362,7 +362,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com produtos - fornecedores.
    *
    * @return {ProdutosLojas}
@@ -372,7 +371,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com produtos - variações.
    *
    * @return {ProdutosVariacoes}
@@ -382,7 +380,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com situações.
    *
    * @return {Situacoes}
@@ -392,7 +389,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com situações - módulos.
    *
    * @return {SituacoesModulos}
@@ -402,7 +398,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com situações - transições.
    *
    * @return {SituacoesTransicoes}
@@ -412,7 +407,6 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com usuários.
    *
    * @return {Usuarios}
@@ -422,12 +416,20 @@ export default class Bling {
   }
 
   /**
-   *
    * Obtém a instância de interação com vendedores.
    *
    * @return {Vendedores}
    */
   public get vendedores(): Vendedores {
     return this.getModule(Vendedores)
+  }
+
+  /**
+   * Obtém a instância de interação com canais de venda.
+   *
+   * @return {CanaisDeVenda}
+   */
+  public get canaisDeVenda(): CanaisDeVenda {
+    return this.getModule(CanaisDeVenda)
   }
 }

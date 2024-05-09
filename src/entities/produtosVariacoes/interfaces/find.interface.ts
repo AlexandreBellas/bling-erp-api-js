@@ -18,6 +18,7 @@ export interface IFindParams {
 export interface IFindResponse {
   data: {
     id?: number
+    idProdutoPai?: number
     nome: string
     codigo?: string
     preco?: number
@@ -104,6 +105,7 @@ export interface IFindResponse {
     }[]
     variacoes: {
       id?: number
+      idProdutoPai?: number
       nome: string
       codigo?: string
       preco?: number
