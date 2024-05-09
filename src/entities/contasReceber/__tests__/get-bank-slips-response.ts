@@ -10,7 +10,7 @@ export default {
       idExternal: 'BWbXB',
       dueDate: '2023-09-12',
       value: 111.2,
-      situation: 'aberto',
+      situation: 'aberto' as const,
       iconSituation: 'aberto',
       descriptionSituation: 'Em aberto'
     }

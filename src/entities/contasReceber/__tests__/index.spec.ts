@@ -11,6 +11,12 @@ import findResponse from './find-response'
 import getBankSlipsResponse from './get-bank-slips-response'
 import getResponse from './get-response'
 import updateResponse, { updateRequestBody } from './update-response'
+import { IGetResponse } from '../interfaces/get.interface'
+import { IFindResponse } from '../interfaces/find.interface'
+import { IGetBankSlipsResponse } from '../interfaces/get-bank-slips.interface'
+import { ICreateResponse } from '../interfaces/create.interface'
+import { IDownloadResponse } from '../interfaces/download.interface'
+import { IUpdateResponse } from '../interfaces/update.interface'
 
 const chance = Chance()
 
@@ -39,6 +45,8 @@ describe('Contas a receber entity', () => {
       id: String(idContaReceber)
     })
     expect(response).toBe(deleteResponse)
+    const typingResponseTest: null = deleteResponse
+    expect(typingResponseTest).toBe(deleteResponse)
   })
 
   it('should get successfully', async () => {
@@ -63,6 +71,8 @@ describe('Contas a receber entity', () => {
       }
     })
     expect(response).toBe(getResponse)
+    const typingResponseTest: IGetResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should find successfully', async () => {
@@ -77,6 +87,8 @@ describe('Contas a receber entity', () => {
       id: String(idContaReceber)
     })
     expect(response).toBe(findResponse)
+    const typingResponseTest: IFindResponse = findResponse
+    expect(typingResponseTest).toBe(findResponse)
   })
 
   it('should get bank slips successfully', async () => {
@@ -96,6 +108,8 @@ describe('Contas a receber entity', () => {
       }
     })
     expect(response).toBe(getBankSlipsResponse)
+    const typingResponseTest: IGetBankSlipsResponse = getBankSlipsResponse
+    expect(typingResponseTest).toBe(getBankSlipsResponse)
   })
 
   it('should create successfully', async () => {
@@ -109,6 +123,8 @@ describe('Contas a receber entity', () => {
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
+    const typingResponseTest: ICreateResponse = createResponse
+    expect(typingResponseTest).toBe(createResponse)
   })
 
   it('should download successfully', async () => {
@@ -126,6 +142,8 @@ describe('Contas a receber entity', () => {
       body: downloadRequestBody
     })
     expect(response).toBe(downloadResponse)
+    const typingResponseTest: IDownloadResponse = downloadResponse
+    expect(typingResponseTest).toBe(downloadResponse)
   })
 
   it('should cancel bank slips successfully', async () => {
@@ -139,6 +157,8 @@ describe('Contas a receber entity', () => {
       body: cancelBankSlipRequest
     })
     expect(response).toBe(cancelBankSlipsResponse)
+    const typingResponseTest: null = cancelBankSlipsResponse
+    expect(typingResponseTest).toBe(cancelBankSlipsResponse)
   })
 
   it('should update successfully', async () => {
@@ -157,5 +177,7 @@ describe('Contas a receber entity', () => {
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)
+    const typingResponseTest: IUpdateResponse = updateResponse
+    expect(typingResponseTest).toBe(updateResponse)
   })
 })

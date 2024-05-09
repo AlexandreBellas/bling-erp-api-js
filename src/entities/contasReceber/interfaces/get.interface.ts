@@ -1,3 +1,5 @@
+import { ICodigoFiscal } from '../types/codigo-fiscal.type'
+import { IOrigemSituacao } from '../types/origem-situacao.type'
 import { ISituacao } from '../types/situacao.type'
 
 export interface IGetParams {
@@ -15,6 +17,7 @@ export interface IGetParams {
   idPortador?: number
   idVendedor?: number
   idFormaPagamento?: number
+  boletoGerado?: number
 }
 
 export interface IGetResponse {
@@ -23,7 +26,26 @@ export interface IGetResponse {
     situacao: ISituacao
     vencimento: string
     valor: number
-    contato: { id: number }
-    formaPagamento: { id: number }
+    idTransacao?: string
+    linkQRCodePix?: string
+    linkBoleto?: string
+    dataEmissao?: string
+    contato: {
+      id: number
+      nome?: string
+      numeroDocumento?: string
+      tipo?: string
+    }
+    formaPagamento?: { id: number; codigoFiscal?: ICodigoFiscal }
+    contaContabil?: { id?: number; descricao?: string }
+    origem?: {
+      id?: number
+      tipoOrigem?: string
+      numero?: string
+      dataEmissao?: string
+      valor?: number
+      situacao?: IOrigemSituacao
+      url?: string
+    }
   }[]
 }
