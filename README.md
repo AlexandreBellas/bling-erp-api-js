@@ -48,6 +48,7 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 
 - [x] Borderos (`.borderos`)
 - [x] Campos customizados (`.camposCustomizados`)
+- [x] Canais de Venda (`.canaisDeVenda`)
 - [x] Categorias - Lojas (`.categoriasLojas`)
 - [x] Categorias - Produtos (`.categoriasProdutos`)
 - [x] Categorias - Receitas e Despesas (`.categoriasReceitasDespesas`)
