@@ -7,6 +7,10 @@ export interface IFindBalanceParams {
    * IDs dos produtos
    */
   idsProdutos: number[]
+  /**
+   * Código do produto
+   */
+  codigo?: string
 }
 
 export interface IFindBalanceResponse {

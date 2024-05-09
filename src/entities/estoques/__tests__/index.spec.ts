@@ -5,6 +5,9 @@ import createResponse, { createRequestBody } from './create-response'
 import findResponse from './find-balance-response'
 import getResponse from './get-balances-response'
 import updateResponse, { updateRequestBody } from './update-response'
+import { IFindBalanceResponse } from '../interfaces/find-balance.interface'
+import { IGetBalancesResponse } from '../interfaces/get-balances.interface'
+import { ICreateResponse } from '../interfaces/create.interface'
 
 const chance = Chance()
 
@@ -38,6 +41,8 @@ describe('Estoques entity', () => {
       params: { idsProdutos }
     })
     expect(response).toBe(findResponse)
+    const typingResponseTest: IFindBalanceResponse = findResponse
+    expect(typingResponseTest).toBe(findResponse)
   })
 
   it('should get balances successfully', async () => {
@@ -55,6 +60,8 @@ describe('Estoques entity', () => {
       params: { idsProdutos }
     })
     expect(response).toBe(getResponse)
+    const typingResponseTest: IGetBalancesResponse = getResponse
+    expect(typingResponseTest).toBe(getResponse)
   })
 
   it('should create successfully', async () => {
@@ -68,6 +75,8 @@ describe('Estoques entity', () => {
       body: createRequestBody
     })
     expect(response).toBe(createResponse)
+    const typingResponseTest: ICreateResponse = createResponse
+    expect(typingResponseTest).toBe(createResponse)
   })
 
   it('should update successfully', async () => {
@@ -86,5 +95,7 @@ describe('Estoques entity', () => {
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)
+    const typingResponseTest: null = updateResponse
+    expect(typingResponseTest).toBe(updateResponse)
   })
 })
