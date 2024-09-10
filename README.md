@@ -10,7 +10,7 @@
 Pacote de integração com a [API v3 do ERP Bling](https://developer.bling.com.br)
 para Javascript/TypeScript. O mais completo existente.
 
-Atualizado com a versão `v300` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-02-28)).
+Atualizado com a versão `v301` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-05-22)).
 
 **Atenção**: a versão 5.0.0+ do `bling-erp-api` para Javascript/TypeScript
 utiliza a API v3 do Bling. Caso deseja utilizar a API v2 do Bling,
@@ -44,7 +44,7 @@ projeto de demonstração](https://github.com/AlexandreBellas/bling-erp-api-js/t
 
 ## Entidades disponíveis
 
-Todas as entidades do Bling atualmente são permitidas para interação. São elas:
+Quase todas as entidades do Bling atualmente são permitidas para interação. São elas:
 
 - [x] Borderos (`.borderos`)
 - [x] Campos customizados (`.camposCustomizados`)
@@ -61,7 +61,8 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Depósitos (`.depositos`)
 - [x] Empresas (`.empresas`)
 - [x] Estoques (`.estoques`)
-- [x] Formas de pagamento (`.formasDePagamento`)
+- [x] Formas de Pagamento (`.formasDePagamento`)
+- [ ] Grupos de Produtos (`.gruposDeProdutos`)
 - [x] Homologação (`.homologacao`)
 - [x] Logísticas (`.logisticas`)
 - [x] Logísticas - Etiquetas (`.logisticasEtiquetas`)
@@ -73,6 +74,7 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Notas Fiscais de Serviço Eletrônicas (`.nfses`)
 - [x] Notas Fiscais Eletrônicas (`.nfes`)
 - [x] Notificações (`.notificacoes`)
+- [ ] Ordens de Produção (`.ordensDeProducao`)
 - [x] Pedidos - Compras (`.pedidosCompras`)
 - [x] Pedidos - Vendas (`.pedidosVendas`)
 - [x] Produtos (`.produtos`)
@@ -80,6 +82,7 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Produtos - Fornecedores (`.produtosFornecedores`)
 - [x] Produtos - Lojas (`.produtosLojas`)
 - [x] Produtos - Variações (`.produtosVariacoes`)
+- [ ] Propostas Comerciais (`.propostasComerciais`)
 - [x] Situações (`.situacoes`)
 - [x] Situações - Módulos (`.situacoesModulos`)
 - [x] Situações - Transições (`.situacoesTransicoes`)

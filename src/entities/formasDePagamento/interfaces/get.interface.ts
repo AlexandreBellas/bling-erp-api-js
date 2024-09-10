@@ -1,6 +1,7 @@
 import ISituacao from 'src/entities/@shared/types/situacao.type'
 import { IPadrao } from '../types/padrao.type'
 import { ITipoPagamento } from '../types/tipo-pagamento.type'
+import { IFinalidade } from '../types/finalidade.type'
 
 export interface IGetParams {
   /**
@@ -30,8 +31,9 @@ export interface IGetResponse {
     id: number
     descricao: string
     tipoPagamento: ITipoPagamento
-    situacao: ISituacao
-    fixa: boolean
-    padrao: IPadrao
+    situacao?: ISituacao
+    fixa?: boolean
+    padrao?: IPadrao
+    finalidade: IFinalidade
   }[]
 }

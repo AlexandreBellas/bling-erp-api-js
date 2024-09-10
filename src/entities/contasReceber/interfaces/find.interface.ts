@@ -86,9 +86,9 @@ export interface IFindResponse {
     vendedor?: { id: number }
     borderos: number[]
     ocorrencia:
-      | ContasReceberOcorrenciaUnicaDTO
-      | ContasReceberOcorrenciaParceladaDTO
-      | ContasReceberOcorrenciaDTO
-      | ContasReceberOcorrenciaSemanalDTO
+    | ContasReceberOcorrenciaUnicaDTO
+    | ContasReceberOcorrenciaParceladaDTO
+    | ContasReceberOcorrenciaDTO
+    | ContasReceberOcorrenciaSemanalDTO
   }
 }
