@@ -95,7 +95,8 @@ describe('Produtos entity', () => {
         idLoja: undefined,
         codigo: undefined,
         nome: undefined,
-        idsProdutos: undefined
+        idsProdutos: undefined,
+        codigos: undefined
       }
     })
     expect(response).toBe(getResponse)

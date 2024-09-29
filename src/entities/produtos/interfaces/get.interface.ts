@@ -61,6 +61,10 @@ export interface IGetParams {
    * IDs dos produtos
    */
   idsProdutos?: number[]
+  /**
+   * Códigos (SKU) dos produtos
+   */
+  codigos?: string[]
 }
 
 export interface IGetResponse {
@@ -70,6 +74,10 @@ export interface IGetResponse {
     nome: string
     codigo?: string
     preco?: number
+    precoCusto?: number
+    estoque?: {
+      saldoVirtualTotal?: number
+    }
     tipo: ITipo
     situacao: ISituacao
     formato: IFormato

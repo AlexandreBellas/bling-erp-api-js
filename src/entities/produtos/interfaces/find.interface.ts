@@ -18,7 +18,6 @@ export interface IFindParams {
 export interface IFindResponse {
   data: {
     id?: number
-    idProdutoPai?: number
     nome: string
     codigo?: string
     preco?: number
@@ -48,6 +47,17 @@ export interface IFindResponse {
       maximo?: number
       crossdocking?: number
       localizacao?: string
+      saldoVirtualTotal?: number
+    }
+    fornecedor?: {
+      id?: number
+      contato?: {
+        id?: number
+        nome?: string
+      }
+      codigo?: string
+      precoCusto?: number
+      precoCompra?: number
     }
     actionEstoque?: IActionEstoque
     dimensoes?: {
@@ -144,6 +154,17 @@ export interface IFindResponse {
         maximo?: number
         crossdocking?: number
         localizacao?: string
+        saldoVirtualTotal?: number
+      }
+      fornecedor?: {
+        id?: number
+        contato?: {
+          id?: number
+          nome?: string
+        }
+        codigo?: string
+        precoCusto?: number
+        precoCompra?: number
       }
       actionEstoque?: IActionEstoque
       dimensoes?: {
@@ -203,7 +224,10 @@ export interface IFindResponse {
       variacao: {
         nome: string
         ordem: number
-        produtoPai: { cloneInfo: boolean }
+        produtoPai: {
+          id?: number
+          cloneInfo: boolean
+        }
       }
     }[]
   }

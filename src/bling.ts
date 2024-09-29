@@ -28,6 +28,7 @@ import { Nfces } from './entities/nfces'
 import { Nfes } from './entities/nfes'
 import { Nfses } from './entities/nfses'
 import { Notificacoes } from './entities/notificacoes'
+import { OrdensDeProducao } from './entities/ordensDeProducao'
 import { PedidosCompras } from './entities/pedidosCompras'
 import { PedidosVendas } from './entities/pedidosVendas'
 import { Produtos } from './entities/produtos'
@@ -431,5 +432,14 @@ export default class Bling {
    */
   public get canaisDeVenda(): CanaisDeVenda {
     return this.getModule(CanaisDeVenda)
+  }
+
+  /**
+   * Obtém a instância de interação com ordens de produção.
+   *
+   * @return {OrdensDeProducao}
+   */
+  public get ordensDeProducao(): OrdensDeProducao {
+    return this.getModule(OrdensDeProducao)
   }
 }

@@ -1,5 +1,6 @@
 import { Empresas } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { IMeResponse } from '../interfaces/me.interface'
 import meResponse from './me-response'
 
 describe('Empresas entity', () => {
@@ -25,5 +26,8 @@ describe('Empresas entity', () => {
       endpoint: 'empresas/me/dados-basicos'
     })
     expect(response).toBe(meResponse)
+
+    const typingResponseTest: IMeResponse = meResponse
+    expect(typingResponseTest).toBe(meResponse)
   })
 })

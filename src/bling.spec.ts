@@ -41,6 +41,7 @@ import { SituacoesTransicoes } from './entities/situacoesTransicoes'
 import { Usuarios } from './entities/usuarios'
 import { Vendedores } from './entities/vendedores'
 import { CanaisDeVenda } from './entities/canaisDeVenda'
+import { OrdensDeProducao } from './entities/ordensDeProducao'
 
 const chance = Chance()
 
@@ -250,6 +251,12 @@ describe('Bling main module', () => {
   it('should retrieve canais de venda entity', () => {
     expect(createBling(chance.word()).canaisDeVenda).toBeInstanceOf(
       CanaisDeVenda
+    )
+  })
+
+  it('should retrieve ordens de produção entity', () => {
+    expect(createBling(chance.word()).ordensDeProducao).toBeInstanceOf(
+      OrdensDeProducao
     )
   })
 })
