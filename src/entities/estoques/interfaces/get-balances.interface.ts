@@ -4,9 +4,9 @@ export interface IGetBalancesParams {
    */
   idsProdutos: number[]
   /**
-   * Código do produto
+   * Códigos dos produtos
    */
-  codigo?: string
+  codigos?: string[]
 }
 
 export interface IGetBalancesResponse {

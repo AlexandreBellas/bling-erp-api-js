@@ -36,6 +36,7 @@ import { ProdutosEstruturas } from './entities/produtosEstruturas'
 import { ProdutosFornecedores } from './entities/produtosFornecedores'
 import { ProdutosLojas } from './entities/produtosLojas'
 import { ProdutosVariacoes } from './entities/produtosVariacoes'
+import { PropostasComerciais } from './entities/propostasComerciais'
 import { Situacoes } from './entities/situacoes'
 import { SituacoesModulos } from './entities/situacoesModulos'
 import { SituacoesTransicoes } from './entities/situacoesTransicoes'
@@ -441,5 +442,14 @@ export default class Bling {
    */
   public get ordensDeProducao(): OrdensDeProducao {
     return this.getModule(OrdensDeProducao)
+  }
+
+  /**
+   * Obtém a instância de interação com propostas comerciais.
+   *
+   * @return {PropostasComerciais}
+   */
+  public get propostasComerciais(): PropostasComerciais {
+    return this.getModule(PropostasComerciais)
   }
 }
