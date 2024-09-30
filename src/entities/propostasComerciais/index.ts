@@ -38,7 +38,7 @@ export class PropostasComerciais extends Entity {
     return await this.repository.destroy({
       endpoint: 'propostas-comerciais',
       id: '',
-      params: { idsProdutos: params.idsPropostasComerciais }
+      params: { idsPropostasComerciais: params.idsPropostasComerciais }
     })
   }
 
