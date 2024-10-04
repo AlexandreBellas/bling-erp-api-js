@@ -12,7 +12,7 @@ export interface IUpdateBody {
   precoCompra?: number
   padrao?: boolean
   produto: { id: number }
-  fornecedor: { id: number }
+  fornecedor?: { id?: number }
   garantia?: number
 }
 

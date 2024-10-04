@@ -1,6 +1,7 @@
 import IUF from 'src/entities/@shared/types/uf.type'
 import { ISituacaoNfce } from '../types/situacao.type'
 import { ITipoNfce } from '../types/tipo.type'
+import IFretePorConta from 'src/entities/@shared/types/frete-por-conta.type'
 
 export interface IFindParams {
   /**
@@ -38,6 +39,33 @@ export interface IFindResponse {
     }
     naturezaOperacao?: { id: number }
     loja?: { id: number }
-    serie: string
+    serie: number
+    valorNota?: number
+    chaveAcesso?: string
+    xml?: string
+    linkDanfe?: string
+    linkPDF?: string
+    numeroPedidoLoja?: string
+    transporte?: {
+      fretePorConta?: IFretePorConta
+      transportador?: {
+        nome: string
+        numeroDocumento?: string
+      }
+      volumes?: { id?: number }[]
+      etiqueta?: {
+        nome?: string
+        endereco?: string
+        numero?: string
+        complemento?: string
+        municipio?: string
+        uf?: IUF
+        cep?: string
+        bairro?: string
+      }
+    }
+    vendedor?: {
+      id: number
+    }
   }
 }

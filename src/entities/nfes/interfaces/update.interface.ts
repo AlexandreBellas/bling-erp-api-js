@@ -7,6 +7,7 @@ import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
 import IUF from 'src/entities/@shared/types/uf.type'
 import { IFinalidadeNfe } from '../types/finalidade.type'
 import { ITipoNfe } from '../types/tipo.type'
+import { IEspecie } from '../types/especie.type'
 
 export interface IUpdateParams {
   /**
@@ -101,7 +102,7 @@ export interface IUpdateBody {
     }
     volume?: {
       quantidade?: number
-      especie?: string
+      especie?: IEspecie
       numero?: string
       pesoBruto?: number
       pesoLiquido?: number
