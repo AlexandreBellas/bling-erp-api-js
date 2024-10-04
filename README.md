@@ -10,7 +10,7 @@
 Pacote de integração com a [API v3 do ERP Bling](https://developer.bling.com.br)
 para Javascript/TypeScript. O mais completo existente.
 
-Atualizado com a versão `v304` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-07-04)).
+Atualizado com a versão `v305` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-07-04)).
 
 **Atenção**: a versão 5.0.0+ do `bling-erp-api` para Javascript/TypeScript
 utiliza a API v3 do Bling. Caso deseja utilizar a API v2 do Bling,
@@ -44,7 +44,7 @@ projeto de demonstração](https://github.com/AlexandreBellas/bling-erp-api-js/t
 
 ## Entidades disponíveis
 
-Quase todas as entidades do Bling atualmente são permitidas para interação. São elas:
+Todas as entidades do Bling atualmente são permitidas para interação. São elas:
 
 - [x] Borderos (`.borderos`)
 - [x] Campos customizados (`.camposCustomizados`)
@@ -62,7 +62,7 @@ Quase todas as entidades do Bling atualmente são permitidas para interação. S
 - [x] Empresas (`.empresas`)
 - [x] Estoques (`.estoques`)
 - [x] Formas de Pagamento (`.formasDePagamento`)
-- [ ] Grupos de Produtos (`.gruposDeProdutos`)
+- [x] Grupos de Produtos (`.gruposDeProdutos`)
 - [x] Homologação (`.homologacao`)
 - [x] Logísticas (`.logisticas`)
 - [x] Logísticas - Etiquetas (`.logisticasEtiquetas`)

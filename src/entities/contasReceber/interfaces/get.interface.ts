@@ -7,14 +7,16 @@ export interface IGetParams {
   limite?: number
   situacoes?: ISituacao[]
   /**
-   * `E`: filtrar por data de emissão
-   * `V`: filtrar por data de vencimento
+   * - `E`: filtrar por data de emissão
+   * - `V`: filtrar por data de vencimento
+   * - `R`: Data de recebimento
    */
-  tipoFiltroData?: 'E' | 'V'
+  tipoFiltroData?: 'E' | 'V' | 'R'
   dataInicial?: Date | string
   dataFinal?: Date | string
   idsCategorias?: number[]
   idPortador?: number
+  idContato?: number
   idVendedor?: number
   idFormaPagamento?: number
   boletoGerado?: number

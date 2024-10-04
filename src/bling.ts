@@ -17,6 +17,7 @@ import { Depositos } from './entities/depositos'
 import { Empresas } from './entities/empresas'
 import { Estoques } from './entities/estoques'
 import { FormasDePagamento } from './entities/formasDePagamento'
+import { GruposDeProdutos } from './entities/gruposDeProdutos'
 import { Homologacao } from './entities/homologacao'
 import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
@@ -451,5 +452,14 @@ export default class Bling {
    */
   public get propostasComerciais(): PropostasComerciais {
     return this.getModule(PropostasComerciais)
+  }
+
+  /**
+   * Obtém a instância de interação com grupos de produtos.
+   *
+   * @return {GruposDeProdutos}
+   */
+  public get gruposDeProdutos(): GruposDeProdutos {
+    return this.getModule(GruposDeProdutos)
   }
 }
