@@ -1,18 +1,18 @@
 export default {
-  numberSale: '149',
-  numberNF: '000001',
-  amountAccounts: 1,
-  amountValuesAccounts: 111.2,
-  haveAccountWithIntegration: true,
-  accounts: [
+  venda: {
+    numero: "123"
+  },
+  notaFiscal: {
+    numero: "000001"
+  },
+  valorTotal: 111.2,
+  contas: [
     {
       id: 1328793273,
-      idExternal: 'BWbXB',
-      dueDate: '2023-09-12',
-      value: 111.2,
-      situation: 'aberto' as const,
-      iconSituation: 'aberto',
-      descriptionSituation: 'Em aberto'
+      numeroExterno: "BWbXB",
+      vencimento: "2023-09-12",
+      valor: 111.2,
+      situacao: 1 as const
     }
   ]
 }

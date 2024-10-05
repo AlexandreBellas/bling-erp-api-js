@@ -1,37 +1,15 @@
-interface ContasReceberBankSlipsCancelUnicoDTO {
-  type2FA: number
-  code2FA: string
-  /**
-   * caso for cancelar uma conta sem idOrigem enviar o valor `0`
-   */
-  idOrigem: number
-  idDuplicata: number
-  reason: string
-}
+import { ITipoAutenticacao } from "../types/tipo-autenticacao.type"
 
-interface ContasReceberBankSlipsCancelTodosDTO {
-  type2FA: number
-  code2FA: string
-  idOrigem: number
-  reason: string
+export interface ICancelBankSlipsBody {
+  autenticacao?: {
+    tipo: ITipoAutenticacao
+    codigo: string
+  },
+  origem?: {
+    id: number
+  },
+  conta?: {
+    id: number
+  },
+  motivo: string
 }
-
-interface ContasReceberBankSlipsCancelUnicoSem2FADTO {
-  /**
-   * caso for cancelar uma conta sem idOrigem enviar o valor `0`
-   */
-  idOrigem: number
-  idDuplicata: number
-  reason: string
-}
-
-interface ContasReceberBankSlipsCancelTodosSem2FADTO {
-  idOrigem: number
-  reason: string
-}
-
-export type ICancelBankSlipsBody =
-  | ContasReceberBankSlipsCancelUnicoDTO
-  | ContasReceberBankSlipsCancelTodosDTO
-  | ContasReceberBankSlipsCancelUnicoSem2FADTO
-  | ContasReceberBankSlipsCancelTodosSem2FADTO

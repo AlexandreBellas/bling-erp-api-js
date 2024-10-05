@@ -213,7 +213,7 @@ export default {
   }
 }
 
-export const calculateItemTaxRequestBody = {
+export const obtainTaxRequestBody = {
   tipoNota: 1 as const,
   uf: 'RS' as const,
   municipio: {

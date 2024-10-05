@@ -1,11 +1,11 @@
 import { Chance } from 'chance'
 import { NaturezasDeOperacoes } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
-import { ICalculateItemTaxResponse } from '../interfaces/calculate-item-tax.interface'
+import { IObtainTaxResponse } from '../interfaces/obtain-tax.interface'
 import { IGetResponse } from '../interfaces/get.interface'
-import calculateItemTaxResponse, {
-  calculateItemTaxRequestBody
-} from './calculate-item-tax-response'
+import obtainTaxResponse, {
+  obtainTaxRequestBody
+} from './obtain-tax-response'
 import getResponse from './get-response'
 
 const chance = Chance()
@@ -44,24 +44,24 @@ describe('Naturezas de Operação entity', () => {
     expect(typingResponseTest).toBe(getResponse)
   })
 
-  it('should calculate item tax successfully', async () => {
+  it('should obtain tax successfully', async () => {
     const spy = jest.spyOn(repository, 'store')
     const idNaturezaOperacao = chance.natural()
-    repository.setResponse(calculateItemTaxResponse)
+    repository.setResponse(obtainTaxResponse)
 
-    const response = await entity.calculateItemTax({
+    const response = await entity.obtainTax({
       idNaturezaOperacao,
-      ...calculateItemTaxRequestBody
+      ...obtainTaxRequestBody
     })
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: `naturezas-operacoes/${idNaturezaOperacao}/calcular-imposto-item`,
-      body: calculateItemTaxRequestBody
+      body: obtainTaxRequestBody
     })
-    expect(response).toBe(calculateItemTaxResponse)
+    expect(response).toBe(obtainTaxResponse)
 
-    const typingResponseTest: ICalculateItemTaxResponse =
-      calculateItemTaxResponse
-    expect(typingResponseTest).toBe(calculateItemTaxResponse)
+    const typingResponseTest: IObtainTaxResponse =
+      obtainTaxResponse
+    expect(typingResponseTest).toBe(obtainTaxResponse)
   })
 })

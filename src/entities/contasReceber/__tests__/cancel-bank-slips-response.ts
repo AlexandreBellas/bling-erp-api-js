@@ -1,9 +1,15 @@
 export default null
 
 export const cancelBankSlipRequest = {
-  type2FA: 1,
-  code2FA: '111111',
-  idOrigem: 16853468718,
-  idDuplicata: 16853468712,
-  reason: 'motivo'
+  autenticacao: {
+    tipo: 1 as const,
+    codigo: "111111"
+  },
+  origem: {
+    id: 5436875653
+  },
+  conta: {
+    id: 6423836115
+  },
+  motivo: "Cancelado por força maior"
 }
