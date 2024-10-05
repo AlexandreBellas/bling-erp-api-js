@@ -91,10 +91,12 @@ export class PedidosVendas extends Entity {
         dataInicial: this.prepareStringOrDateParam(params?.dataInicial),
         dataFinal: this.prepareStringOrDateParam(params?.dataFinal),
         dataAlteracaoInicial: this.prepareStringOrDateParam(
-          params?.dataAlteracaoInicial
+          params?.dataAlteracaoInicial,
+          true
         ),
         dataAlteracaoFinal: this.prepareStringOrDateParam(
-          params?.dataAlteracaoFinal
+          params?.dataAlteracaoFinal,
+          true
         ),
         dataPrevistaInicial: this.prepareStringOrDateParam(
           params?.dataPrevistaInicial

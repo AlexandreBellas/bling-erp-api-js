@@ -55,7 +55,7 @@ describe('Naturezas de Operação entity', () => {
     })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: `naturezas-operacoes/${idNaturezaOperacao}/calcular-imposto-item`,
+      endpoint: `naturezas-operacoes/${idNaturezaOperacao}/obter-tributacao`,
       body: obtainTaxRequestBody
     })
     expect(response).toBe(obtainTaxResponse)

@@ -1,6 +1,6 @@
 import { Entity } from '../@shared/entity'
 import { ISendResponse } from '../nfces/interfaces/send.interface'
-import { ICancelParams } from './interfaces/cancel.interface'
+import { ICancelBody, ICancelParams } from './interfaces/cancel.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
@@ -127,17 +127,18 @@ export class Nfses extends Entity {
   /**
    * Cancela uma nota de serviço.
    *
-   * @param {ICancelParams} params Os parâmetros de envio.
+   * @param {ICancelParams & ICancelBody} params Os parâmetros de envio.
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Servi%C3%A7o%20Eletr%C3%B4nicas/post_nfse__idNotaServico__cancelar
    */
-  public async cancel(params: ICancelParams): Promise<null> {
+  public async cancel(params: ICancelParams & ICancelBody): Promise<null> {
+    const { idNotaServico, ...body } = params
     return await this.repository.store({
-      endpoint: `nfse/${params.idNotaServico}/cancelar`,
-      body: {}
+      endpoint: `nfse/${idNotaServico}/cancelar`,
+      body
     })
   }
 
