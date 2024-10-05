@@ -21,11 +21,13 @@ export abstract class Entity {
    * Prepara um parâmetro de data para chamada do repositório.
    *
    * @param param Parâmetro do tipo `string`, `Date` ou `undefined`
+   * @param includeTime Define se horas e minutos são inclusos no resultado
    *
    * @returns {string|undefined}
    */
   protected prepareStringOrDateParam(
-    param?: string | Date
+    param?: string | Date,
+    includeTime: boolean = false
   ): string | undefined {
     if (param === undefined) {
       return undefined
@@ -35,6 +37,6 @@ export abstract class Entity {
       return param
     }
 
-    return convertDateToString(param)
+    return convertDateToString(param, includeTime)
   }
 }

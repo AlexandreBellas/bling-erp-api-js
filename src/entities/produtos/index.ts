@@ -84,22 +84,27 @@ export class Produtos extends Entity {
         tipo: params?.tipo,
         idComponente: params?.idComponente,
         dataInclusaoInicial: this.prepareStringOrDateParam(
-          params?.dataInclusaoInicial
+          params?.dataInclusaoInicial,
+          true
         ),
         dataInclusaoFinal: this.prepareStringOrDateParam(
-          params?.dataInclusaoFinal
+          params?.dataInclusaoFinal,
+          true
         ),
         dataAlteracaoInicial: this.prepareStringOrDateParam(
-          params?.dataAlteracaoInicial
+          params?.dataAlteracaoInicial,
+          true
         ),
         dataAlteracaoFinal: this.prepareStringOrDateParam(
-          params?.dataAlteracaoFinal
+          params?.dataAlteracaoFinal,
+          true
         ),
         idCategoria: params?.idCategoria,
         idLoja: params?.idLoja,
         codigo: params?.codigo,
         nome: params?.nome,
-        idsProdutos: params?.idsProdutos
+        idsProdutos: params?.idsProdutos,
+        codigos: params?.codigos
       }
     })
   }

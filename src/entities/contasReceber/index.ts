@@ -88,23 +88,23 @@ export class ContasReceber extends Entity {
   }
 
   /**
-   * Obtém os boletos - Bling conta.
+   * Obtém boletos de contas a receber.
    *
    * @param {IGetBankSlipsParams} params Parâmetros da busca.
    *
    * @returns {Promise<IGetBankSlipsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/get_contas_receber_view_bankslips
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/get_contas_receber_boletos
    */
   public async getBankSlips(
     params: IGetBankSlipsParams
   ): Promise<IGetBankSlipsResponse> {
     return await this.repository.index({
-      endpoint: 'contas/receber/view/bankslips',
+      endpoint: 'contas/receber/boletos',
       params: {
         idOrigem: params.idOrigem,
-        situations: params.situations
+        situacoes: params.situacoes
       }
     })
   }
@@ -158,7 +158,7 @@ export class ContasReceber extends Entity {
    */
   public async cancelBankSlips(body: ICancelBankSlipsBody): Promise<null> {
     return await this.repository.store({
-      endpoint: 'contas/receber/cancel/bankslips',
+      endpoint: 'contas/receber/boletos/cancelar',
       body
     })
   }

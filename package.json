@@ -1,6 +1,6 @@
 {
   "name": "bling-erp-api",
-  "version": "5.7.0",
+  "version": "5.8.0",
   "description": "Pacote de integração com a API do Bling ERP",
   "main": "lib/bling.js",
   "directories": {

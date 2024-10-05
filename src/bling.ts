@@ -17,6 +17,7 @@ import { Depositos } from './entities/depositos'
 import { Empresas } from './entities/empresas'
 import { Estoques } from './entities/estoques'
 import { FormasDePagamento } from './entities/formasDePagamento'
+import { GruposDeProdutos } from './entities/gruposDeProdutos'
 import { Homologacao } from './entities/homologacao'
 import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
@@ -28,6 +29,7 @@ import { Nfces } from './entities/nfces'
 import { Nfes } from './entities/nfes'
 import { Nfses } from './entities/nfses'
 import { Notificacoes } from './entities/notificacoes'
+import { OrdensDeProducao } from './entities/ordensDeProducao'
 import { PedidosCompras } from './entities/pedidosCompras'
 import { PedidosVendas } from './entities/pedidosVendas'
 import { Produtos } from './entities/produtos'
@@ -35,6 +37,7 @@ import { ProdutosEstruturas } from './entities/produtosEstruturas'
 import { ProdutosFornecedores } from './entities/produtosFornecedores'
 import { ProdutosLojas } from './entities/produtosLojas'
 import { ProdutosVariacoes } from './entities/produtosVariacoes'
+import { PropostasComerciais } from './entities/propostasComerciais'
 import { Situacoes } from './entities/situacoes'
 import { SituacoesModulos } from './entities/situacoesModulos'
 import { SituacoesTransicoes } from './entities/situacoesTransicoes'
@@ -431,5 +434,32 @@ export default class Bling {
    */
   public get canaisDeVenda(): CanaisDeVenda {
     return this.getModule(CanaisDeVenda)
+  }
+
+  /**
+   * Obtém a instância de interação com ordens de produção.
+   *
+   * @return {OrdensDeProducao}
+   */
+  public get ordensDeProducao(): OrdensDeProducao {
+    return this.getModule(OrdensDeProducao)
+  }
+
+  /**
+   * Obtém a instância de interação com propostas comerciais.
+   *
+   * @return {PropostasComerciais}
+   */
+  public get propostasComerciais(): PropostasComerciais {
+    return this.getModule(PropostasComerciais)
+  }
+
+  /**
+   * Obtém a instância de interação com grupos de produtos.
+   *
+   * @return {GruposDeProdutos}
+   */
+  public get gruposDeProdutos(): GruposDeProdutos {
+    return this.getModule(GruposDeProdutos)
   }
 }

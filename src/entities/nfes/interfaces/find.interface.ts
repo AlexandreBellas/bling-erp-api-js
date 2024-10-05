@@ -44,6 +44,7 @@ export interface IFindResponse {
     xml?: string
     linkDanfe?: string
     linkPDF?: string
+    numeroPedidoLoja?: string
     transporte?: {
       fretePorConta?: IFretePorConta
       transportador?: {
@@ -61,6 +62,9 @@ export interface IFindResponse {
         cep?: string
         bairro?: string
       }
+    }
+    vendedor?: {
+      id: number
     }
   }
 }

@@ -101,7 +101,7 @@ export const createRequestBody = {
     },
     volume: {
       quantidade: 5,
-      especie: 'Volumes',
+      especie: 1 as const,
       numero: '1',
       pesoBruto: 0.5,
       pesoLiquido: 0.35

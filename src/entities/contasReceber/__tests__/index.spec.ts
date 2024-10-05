@@ -101,7 +101,7 @@ describe('Contas a receber entity', () => {
     })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'contas/receber/view/bankslips',
+      endpoint: 'contas/receber/boletos',
       params: {
         idOrigem,
         situations: undefined
@@ -153,7 +153,7 @@ describe('Contas a receber entity', () => {
     const response = await entity.cancelBankSlips(cancelBankSlipRequest)
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: 'contas/receber/cancel/bankslips',
+      endpoint: 'contas/receber/boletos/cancelar',
       body: cancelBankSlipRequest
     })
     expect(response).toBe(cancelBankSlipsResponse)

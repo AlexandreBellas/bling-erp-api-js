@@ -10,7 +10,7 @@
 Pacote de integração com a [API v3 do ERP Bling](https://developer.bling.com.br)
 para Javascript/TypeScript. O mais completo existente.
 
-Atualizado com a versão `v300` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-02-28)).
+Atualizado com a versão `v310` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-10-02)).
 
 **Atenção**: a versão 5.0.0+ do `bling-erp-api` para Javascript/TypeScript
 utiliza a API v3 do Bling. Caso deseja utilizar a API v2 do Bling,
@@ -61,7 +61,8 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Depósitos (`.depositos`)
 - [x] Empresas (`.empresas`)
 - [x] Estoques (`.estoques`)
-- [x] Formas de pagamento (`.formasDePagamento`)
+- [x] Formas de Pagamento (`.formasDePagamento`)
+- [x] Grupos de Produtos (`.gruposDeProdutos`)
 - [x] Homologação (`.homologacao`)
 - [x] Logísticas (`.logisticas`)
 - [x] Logísticas - Etiquetas (`.logisticasEtiquetas`)
@@ -73,6 +74,7 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Notas Fiscais de Serviço Eletrônicas (`.nfses`)
 - [x] Notas Fiscais Eletrônicas (`.nfes`)
 - [x] Notificações (`.notificacoes`)
+- [x] Ordens de Produção (`.ordensDeProducao`)
 - [x] Pedidos - Compras (`.pedidosCompras`)
 - [x] Pedidos - Vendas (`.pedidosVendas`)
 - [x] Produtos (`.produtos`)
@@ -80,6 +82,7 @@ Todas as entidades do Bling atualmente são permitidas para interação. São el
 - [x] Produtos - Fornecedores (`.produtosFornecedores`)
 - [x] Produtos - Lojas (`.produtosLojas`)
 - [x] Produtos - Variações (`.produtosVariacoes`)
+- [x] Propostas Comerciais (`.propostasComerciais`)
 - [x] Situações (`.situacoes`)
 - [x] Situações - Módulos (`.situacoesModulos`)
 - [x] Situações - Transições (`.situacoesTransicoes`)

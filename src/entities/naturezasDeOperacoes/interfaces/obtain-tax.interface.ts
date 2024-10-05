@@ -6,14 +6,14 @@ import { IMotivoDesoneracaoICMS } from '../types/motivo-desoneracao-icms.type'
 import { ITipoNota } from '../types/tipo-nota.type'
 import { ITributacao } from '../types/tributacao.type'
 
-export interface ICalculateItemTaxParams {
+export interface IObtainTaxParams {
   /**
    * ID da natureza de operação
    */
   idNaturezaOperacao: number
 }
 
-export interface ICalculateItemTaxBody {
+export interface IObtainTaxBody {
   tipoNota: ITipoNota
   uf: IUF
   municipio: { id: number }
@@ -32,7 +32,7 @@ export interface ICalculateItemTaxBody {
   }
 }
 
-export interface ICalculateItemTaxResponse {
+export interface IObtainTaxResponse {
   data: {
     faturada?: boolean
     observacoes?: string

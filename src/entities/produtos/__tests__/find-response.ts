@@ -1,7 +1,6 @@
 export default {
   data: {
     id: 123456789,
-    idProdutoPai: 123456789,
     nome: 'Produto 1',
     codigo: 'CODE_123',
     preco: 1,
@@ -9,8 +8,7 @@ export default {
     situacao: 'A' as const,
     formato: 'S' as const,
     descricaoCurta: 'Descrição curta',
-    imagemURL:
-      'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
+    imagemURL: 'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
     dataValidade: '2020-01-01',
     unidade: 'UN',
     pesoLiquido: 1,
@@ -34,7 +32,18 @@ export default {
       minimo: 1,
       maximo: 100,
       crossdocking: 1,
-      localizacao: '14A'
+      localizacao: '14A',
+      saldoVirtualTotal: 1
+    },
+    fornecedor: {
+      id: 123456789,
+      contato: {
+        id: 123456789,
+        nome: 'Fornecedor padrão'
+      },
+      codigo: 'SKU-FORNECEDOR',
+      precoCusto: 55.55,
+      precoCompra: 55.55
     },
     actionEstoque: undefined,
     dimensoes: {
@@ -125,7 +134,6 @@ export default {
     variacoes: [
       {
         id: 123456789,
-        idProdutoPai: 123456789,
         nome: 'Produto 1',
         codigo: 'CODE_123',
         preco: 1,
@@ -133,8 +141,7 @@ export default {
         situacao: 'A' as const,
         formato: 'S' as const,
         descricaoCurta: 'Descrição curta',
-        imagemURL:
-          'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
+        imagemURL: 'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
         dataValidade: '2020-01-01',
         unidade: 'UN',
         pesoLiquido: 1,
@@ -158,7 +165,18 @@ export default {
           minimo: 1,
           maximo: 100,
           crossdocking: 1,
-          localizacao: '14A'
+          localizacao: '14A',
+          saldoVirtualTotal: 1
+        },
+        fornecedor: {
+          id: 123456789,
+          contato: {
+            id: 123456789,
+            nome: 'Fornecedor padrão'
+          },
+          codigo: 'SKU-FORNECEDOR',
+          precoCusto: 55.55,
+          precoCompra: 55.55
         },
         actionEstoque: undefined,
         dimensoes: {
@@ -250,6 +268,7 @@ export default {
           nome: 'Tamanho:G;Cor:Verde',
           ordem: 1,
           produtoPai: {
+            id: 12345678,
             cloneInfo: true
           }
         }

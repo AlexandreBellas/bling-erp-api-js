@@ -1,9 +1,9 @@
 import { Entity } from '../@shared/entity'
 import {
-  ICalculateItemTaxBody,
-  ICalculateItemTaxParams,
-  ICalculateItemTaxResponse
-} from './interfaces/calculate-item-tax.interface'
+  IObtainTaxBody,
+  IObtainTaxParams,
+  IObtainTaxResponse
+} from './interfaces/obtain-tax.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 
 /**
@@ -35,21 +35,21 @@ export class NaturezasDeOperacoes extends Entity {
   }
 
   /**
-   * Calcula os impostos de um item.
+   * Obtém regras de tributação da natureza de operação.
    *
-   * @param {ICalculateItemTaxParams & ICalculateItemTaxBody} params O conteúdo para o cálculo.
+   * @param {IObtainTaxParams & IObtainTaxBody} params O conteúdo para o cálculo.
    *
-   * @returns {Promise<ICalculateItemTaxResponse>}
+   * @returns {Promise<IObtainTaxResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Naturezas%20de%20Opera%C3%A7%C3%B5es/post_naturezas_operacoes__idNaturezaOperacao__calcular_imposto_item
+   * @see https://developer.bling.com.br/referencia#/Naturezas%20de%20Opera%C3%A7%C3%B5es/post_naturezas_operacoes__idNaturezaOperacao__obter_tributacao
    */
-  public async calculateItemTax(
-    params: ICalculateItemTaxParams & ICalculateItemTaxBody
-  ): Promise<ICalculateItemTaxResponse> {
+  public async obtainTax(
+    params: IObtainTaxParams & IObtainTaxBody
+  ): Promise<IObtainTaxResponse> {
     const { idNaturezaOperacao, ...body } = params
     return await this.repository.store({
-      endpoint: `naturezas-operacoes/${idNaturezaOperacao}/calcular-imposto-item`,
+      endpoint: `naturezas-operacoes/${idNaturezaOperacao}/obter-tributacao`,
       body
     })
   }

@@ -8,9 +8,9 @@ export interface IFindBalanceParams {
    */
   idsProdutos: number[]
   /**
-   * Código do produto
+   * Códigos dos produtos
    */
-  codigo?: string
+  codigos?: string[]
 }
 
 export interface IFindBalanceResponse {
