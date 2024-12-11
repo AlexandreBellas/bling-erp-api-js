@@ -41,9 +41,6 @@
     "url": "https://github.com/AlexandreBellas/bling-erp-api-js/issues"
   },
   "homepage": "https://github.com/AlexandreBellas/bling-erp-api-js#readme",
-  "dependencies": {
-    "axios": "^1.6.2"
-  },
   "devDependencies": {
     "@types/chance": "^1.1.6",
     "@types/jest": "^29.5.11",

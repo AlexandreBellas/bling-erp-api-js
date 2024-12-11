@@ -1,7 +1,8 @@
-import axios, { AxiosError, AxiosInstance } from 'axios'
-import { IDefaultErrorResponse } from '../entities/@shared/interfaces/error.interface'
-import { BlingApiException } from '../exceptions/bling-api.exception'
-import { BlingInternalException } from '../exceptions/bling-internal.exception'
+import { request } from 'node:https';
+import { IncomingMessage } from 'node:http';
+import { URL, URLSearchParams } from 'node:url';
+import { BlingApiException } from '../exceptions/bling-api.exception';
+import { BlingInternalException } from '../exceptions/bling-internal.exception';
 import {
   IBlingRepository,
   IDefaultHeaders,
@@ -11,47 +12,99 @@ import {
   IReplaceOptions,
   IShowOptions,
   IStoreOptions,
-  IUpdateOptions
-} from './bling.repository.interface'
+  IUpdateOptions,
+} from './bling.repository.interface';
 
 interface IBlingRepositoryProps {
   /**
    * A URL base para chamada da API.
    */
-  baseUrl: string
+  baseUrl: string;
 
   /**
    * O _token_ de autenticação.
    */
-  accessToken: string
+  accessToken: string;
 }
 
 /**
  * Repositório para acesso à API do Bling.
  */
 export class BlingRepository implements IBlingRepository {
-  /** @property Propriedades da classe. */
-  private props: IBlingRepositoryProps
-
-  /** @property A instância `axios` para chamadas API. */
-  private api: AxiosInstance
-
   /**
    * Constrói o objeto.
    *
    * @param props As propriedades da classe.
    */
-  constructor(props: IBlingRepositoryProps) {
-    this.props = props
+  public constructor(
+    /** @property Propriedades da classe. */
+    private readonly props: IBlingRepositoryProps,
+  ) { }
 
-    this.api = axios.create({
-      baseURL: this.props.baseUrl
-    })
+  private async call<T>(
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
+    endpoint: string,
+    options: {
+      params?: IDefaultParams;
+      headers?: IDefaultHeaders;
+      data?: unknown;
+    },
+  ): Promise<T> {
+    const urlObject = new URL(`${this.props.baseUrl}${endpoint}`);
 
-    this.api.interceptors.request.use((config) => {
-      config.headers.Authorization = `Bearer ${this.props.accessToken}`
-      return config
-    })
+    if (options.params) {
+      urlObject.search = new URLSearchParams(
+        options.params as Record<string, string | readonly string[]>,
+      ).toString();
+    }
+
+    return new Promise<T>((resolve, reject) => {
+      const req = request(
+        urlObject,
+        {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+            Authorization: `Bearer ${this.props.accessToken}`,
+          },
+        },
+        (res: IncomingMessage) => {
+          const chunks: Array<Uint8Array> = [];
+
+          res.on('data', chunk => chunks.push(chunk));
+
+          res.on('end', () => {
+            const data = Buffer.concat(chunks).toString();
+            const parsedData = JSON.parse(data);
+
+            if (res.statusCode?.toString().startsWith('2')) {
+              resolve(
+                options.headers?.shouldIncludeHeadersInResponse
+                  ? { headers: res.headers, ...parsedData }
+                  : parsedData,
+              );
+            } else {
+              reject(new BlingApiException(parsedData));
+            }
+          });
+        },
+      );
+
+      req.on('error', () => {
+        reject(
+          new BlingInternalException(
+            `Não foi possível realizar a chamada HTTP: ${method} ${endpoint}`,
+          ),
+        );
+      });
+
+      if (options.data) {
+        req.write(JSON.stringify(options.data));
+      }
+
+      req.end();
+    });
   }
 
   /**
@@ -63,27 +116,15 @@ export class BlingRepository implements IBlingRepository {
     IIndexBody,
     IIndexResponse,
     IParams extends IDefaultParams = IDefaultParams,
-    IHeaders extends IDefaultHeaders = IDefaultHeaders
+    IHeaders extends IDefaultHeaders = IDefaultHeaders,
   >(
-    options: IIndexOptions<IIndexBody, IParams, IHeaders>
+    options: IIndexOptions<IIndexBody, IParams, IHeaders>,
   ): Promise<IIndexResponse> {
-    return await this.api
-      .get<IIndexResponse>(`${options.endpoint}`, {
-        params: options.params,
-        headers: options.headers,
-        data: options.body
-      })
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
-      .catch((error: AxiosError<IDefaultErrorResponse>) =>
-        this.defaultCatchBehavior(error, options.endpoint)
-      )
+    return this.call<IIndexResponse>('GET', `${options.endpoint}`, {
+      params: options.params,
+      headers: options.headers,
+      data: options.body,
+    });
   }
 
   /**
@@ -94,25 +135,13 @@ export class BlingRepository implements IBlingRepository {
   public async show<
     IShowResponse,
     IParams extends IDefaultParams = IDefaultParams,
-    IHeaders extends IDefaultHeaders = IDefaultHeaders
+    IHeaders extends IDefaultHeaders = IDefaultHeaders,
   >(options: IShowOptions<IParams, IHeaders>): Promise<IShowResponse> {
-    const endpoint = `${options.endpoint}/${options.id}`
-    return await this.api
-      .get<IShowResponse>(endpoint, {
-        params: options.params,
-        headers: options.headers
-      })
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
-      .catch((error: AxiosError<IDefaultErrorResponse>) =>
-        this.defaultCatchBehavior(error, endpoint)
-      )
+    const endpoint = `${options.endpoint}/${options.id}`;
+    return this.call<IShowResponse>('GET', endpoint, {
+      params: options.params,
+      headers: options.headers,
+    });
   }
 
   /**
@@ -124,26 +153,15 @@ export class BlingRepository implements IBlingRepository {
     IStoreBody,
     IStoreResponse,
     IParams extends IDefaultParams = IDefaultParams,
-    IHeaders extends IDefaultHeaders = IDefaultHeaders
+    IHeaders extends IDefaultHeaders = IDefaultHeaders,
   >(
-    options: IStoreOptions<IStoreBody, IParams, IHeaders>
+    options: IStoreOptions<IStoreBody, IParams, IHeaders>,
   ): Promise<IStoreResponse> {
-    return await this.api
-      .post<IStoreResponse>(`${options.endpoint}`, options.body, {
-        params: options.params,
-        headers: options.headers
-      })
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
-      .catch((error: AxiosError<IDefaultErrorResponse>) =>
-        this.defaultCatchBehavior(error, options.endpoint)
-      )
+    return this.call<IStoreResponse>('POST', `${options.endpoint}`, {
+      params: options.params,
+      headers: options.headers,
+      data: options.body,
+    });
   }
 
   /**
@@ -155,27 +173,16 @@ export class BlingRepository implements IBlingRepository {
     IUpdateBody,
     IUpdateResponse,
     IParams extends IDefaultParams = IDefaultParams,
-    IHeaders extends IDefaultHeaders = IDefaultHeaders
+    IHeaders extends IDefaultHeaders = IDefaultHeaders,
   >(
-    options: IUpdateOptions<IUpdateBody, IParams, IHeaders>
+    options: IUpdateOptions<IUpdateBody, IParams, IHeaders>,
   ): Promise<IUpdateResponse> {
-    const endpoint = `${options.endpoint}/${options.id}`
-    return await this.api
-      .patch<IUpdateResponse>(endpoint, options.body, {
-        params: options.params,
-        headers: options.headers
-      })
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
-      .catch((error: AxiosError<IDefaultErrorResponse>) =>
-        this.defaultCatchBehavior(error, endpoint)
-      )
+    const endpoint = `${options.endpoint}/${options.id}`;
+    return this.call<IUpdateResponse>('PATCH', endpoint, {
+      params: options.params,
+      headers: options.headers,
+      data: options.body,
+    });
   }
 
   /**
@@ -187,27 +194,16 @@ export class BlingRepository implements IBlingRepository {
     IReplaceBody,
     IReplaceResponse,
     IParams extends IDefaultParams = IDefaultParams,
-    IHeaders extends IDefaultHeaders = IDefaultHeaders
+    IHeaders extends IDefaultHeaders = IDefaultHeaders,
   >(
-    options: IReplaceOptions<IReplaceBody, IParams, IHeaders>
+    options: IReplaceOptions<IReplaceBody, IParams, IHeaders>,
   ): Promise<IReplaceResponse> {
-    const endpoint = `${options.endpoint}/${options.id}`
-    return await this.api
-      .patch<IReplaceResponse>(endpoint, options.body, {
-        params: options.params,
-        headers: options.headers
-      })
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
-      .catch((error: AxiosError<IDefaultErrorResponse>) =>
-        this.defaultCatchBehavior(error, endpoint)
-      )
+    const endpoint = `${options.endpoint}/${options.id}`;
+    return this.call<IReplaceResponse>('PATCH', endpoint, {
+      params: options.params,
+      headers: options.headers,
+      data: options.body,
+    });
   }
 
   /**
@@ -218,48 +214,12 @@ export class BlingRepository implements IBlingRepository {
   public async destroy<
     IDestroyResponse,
     IParams extends IDefaultParams = IDefaultParams,
-    IHeaders extends IDefaultHeaders = IDefaultHeaders
+    IHeaders extends IDefaultHeaders = IDefaultHeaders,
   >(options: IDestroyOptions<IParams, IHeaders>): Promise<IDestroyResponse> {
-    const endpoint = `${options.endpoint}/${options.id}`
-    return await this.api
-      .delete<IDestroyResponse>(endpoint, {
-        params: options.params,
-        headers: options.headers
-      })
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
-      .catch((error: AxiosError<IDefaultErrorResponse>) =>
-        this.defaultCatchBehavior(error, endpoint)
-      )
-  }
-
-  /**
-   * Trata os erros da API de forma padrão.
-   *
-   * @param rawError Erro do axios.
-   * @param endpoint _Endpoint_ de chamada.
-   *
-   * @returns {never}
-   * @throws {BlingApiException|BlingInternalException}
-   */
-  private defaultCatchBehavior(
-    rawError: AxiosError<IDefaultErrorResponse>,
-    endpoint: string
-  ): never {
-    const data = rawError.response?.data
-
-    if (!data) {
-      throw new BlingInternalException(
-        `Não foi possível realizar a chamada HTTP: ${rawError.config?.method} ${endpoint}`
-      )
-    }
-
-    throw new BlingApiException(data)
+    const endpoint = `${options.endpoint}/${options.id}`;
+    return this.call<IDestroyResponse>('DELETE', endpoint, {
+      params: options.params,
+      headers: options.headers,
+    });
   }
 }
