@@ -8,7 +8,7 @@ import { IBlingRepository } from '../repositories/bling.repository.interface'
  */
 export function getRepository(accessToken: string): IBlingRepository {
   return new BlingRepository({
-    baseUrl: 'https://www.bling.com.br/Api/v3',
+    baseUrl: 'https://api.bling.com.br/Api/v3',
     accessToken
   })
 }
