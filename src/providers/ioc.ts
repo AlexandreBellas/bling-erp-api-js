@@ -6,9 +6,12 @@ import { IBlingRepository } from '../repositories/bling.repository.interface'
  *
  * @returns {IBlingRepository}
  */
-export function getRepository(accessToken: string): IBlingRepository {
+export function getRepository(
+  accessToken: string,
+  baseUrl: string
+): IBlingRepository {
   return new BlingRepository({
-    baseUrl: 'https://www.bling.com.br/Api/v3',
+    baseUrl,
     accessToken
   })
 }
