@@ -65,8 +65,11 @@ export default class Bling {
    *
    * @param accessToken O token de acesso à API do Bling.
    */
-  constructor(accessToken: string) {
-    this.#repository = getRepository(accessToken)
+  constructor(
+    accessToken: string,
+    baseUrl = 'https://api.bling.com.br/Api/v3'
+  ) {
+    this.#repository = getRepository(accessToken, baseUrl)
     this.#modules = {}
   }
 
