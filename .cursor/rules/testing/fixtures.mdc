@@ -1,0 +1,62 @@
+---
+description: Test fixture files for mocked API responses
+globs: src/**/__tests__/**
+alwaysApply: false
+---
+
+# Test Fixtures
+
+## File Naming
+
+`<operation>-response.ts` in the entity's `__tests__/` folder:
+
+- `find-response.ts`
+- `create-response.ts`
+- `delete-response.ts`
+- `change-situation-response.ts`
+- `get-modules-response.ts`
+
+Match operation names to entity method names (`find`, `create`, `getModules`, etc.).
+
+## Default Export
+
+Export the mock API response as **default**:
+
+```
+export default { data: { ... } }
+```
+
+See `src/entities/camposCustomizados/__tests__/find-response.ts`, `src/entities/camposCustomizados/__tests__/delete-response.ts`.
+
+## Request Body Exports
+
+When tests need a stable request payload, export a named constant alongside the response fixture:
+
+- `createRequestBody` in `src/entities/camposCustomizados/__tests__/create-response.ts`
+- `updateRequestBody` in `src/entities/camposCustomizados/__tests__/update-response.ts`
+
+Import both in `index.spec.ts` for `create`/`update` tests.
+
+## Shape Fidelity
+
+Fixture objects should mirror the corresponding `I*Response` / `I*Body` interfaces in `interfaces/`. Use realistic placeholder ids (e.g. `12345678`) consistent with existing fixtures.
+
+## Type Assertions in Fixtures
+
+Cast literal unions when needed: `1 as ISituacao` in `create-response.ts` fixtures importing from `@shared/types`.
+
+## Special Fixture Names
+
+Some modules use descriptive fixture filenames when operations are domain-specific:
+
+- `find-final-customer.response.ts` in `src/entities/contatos/__tests__/`
+- `generate-over-demand-response.ts` in `src/entities/ordensDeProducao/__tests__/`
+- `get-configurations-response.ts` in `src/entities/nfses/__tests__/`
+
+Follow the dominant kebab-case `-response.ts` pattern for new fixtures unless matching an existing anomaly in the same module.
+
+## Rules
+
+- Fixtures contain **data only** — no functions or class definitions.
+- Do not import entity classes into fixture files.
+- One primary operation per fixture file; split large responses rather than combining unrelated operations.

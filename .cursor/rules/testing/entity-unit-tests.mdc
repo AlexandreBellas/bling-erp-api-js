@@ -1,0 +1,65 @@
+---
+description: Entity unit test structure and conventions
+globs: src/**/__tests__/**,src/**/*.spec.ts
+alwaysApply: false
+---
+
+# Entity Unit Tests
+
+## Location
+
+Tests are **colocated** inside each entity folder:
+
+```
+src/entities/<module>/__tests__/index.spec.ts
+src/entities/<module>/__tests__/<operation>-response.ts
+```
+
+Every entity module with an `index.ts` should have a corresponding `__tests__/index.spec.ts` (41 entity modules follow this pattern).
+
+## Spec Structure
+
+Follow `src/entities/camposCustomizados/__tests__/index.spec.ts`:
+
+1. Import `Chance` for random test data.
+2. Import entity from `'../'`.
+3. Import `InMemoryBlingRepository` from `../../../repositories/bling-in-memory.repository`.
+4. Import fixtures from `./*-response` files.
+5. `describe` block named `'<Resource> entity'` (Portuguese where existing tests use it).
+6. `beforeEach` — new repository + entity instance.
+7. `afterEach` — `jest.restoreAllMocks()`.
+8. One `it('should <action> successfully', ...)` per public method.
+
+## Assertions Per Test
+
+1. `jest.spyOn(repository, '<verb>')` for the expected repository method (`index`, `show`, `store`, `update`, `replace`, `destroy`).
+2. `repository.setResponse(fixture)` (or verb-specific setter when tests isolate verbs).
+3. Call entity method with generated or fixture params.
+4. `expect(spy).toHaveBeenCalledWith({ endpoint, id?, params?, body? })` — exact match to entity implementation.
+5. `expect(response).toBe(fixture)` — reference equality to mock return.
+
+## Repository Verb Spying
+
+Spy the repository method the entity actually calls, not the HTTP verb name. Cross-check `src/entities/<module>/index.ts` when unsure.
+
+## Edge Cases to Cover
+
+- Optional query params passed as `undefined` when omitted (`pagina`, `limite` in `src/entities/camposCustomizados/__tests__/index.spec.ts`).
+- Destructured update bodies (id stripped from body in `update` tests).
+- Composite `id` paths for sub-resources (`changeSituation` tests).
+
+## Running Tests
+
+- `npm test` — build then Jest (`package.json`).
+- `npm run test:coverage` — coverage to `./coverage` (`jest.config.ts`).
+
+## Config Notes
+
+- `maxWorkers: 1` in `jest.config.ts` — do not raise without cause.
+- `testPathIgnorePatterns` excludes `lib/`.
+- Coverage collected from `**/*.(t|j)s` excluding coverage dir and `jest.config.ts`.
+
+## What Not to Test Here
+
+- Real HTTP calls to Bling (no integration tests in repo).
+- Axios interceptor behavior (belongs to repository layer if tested separately).

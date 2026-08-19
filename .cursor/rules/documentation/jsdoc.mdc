@@ -1,0 +1,56 @@
+---
+description: JSDoc documentation standards for public API
+globs: src/bling.ts,src/entities/**/index.ts,src/repositories/**,src/exceptions/**
+alwaysApply: false
+---
+
+# JSDoc Standards
+
+## Language
+
+Documentation is written in **Brazilian Portuguese**, matching existing entity and facade docs.
+
+## Class-Level Block
+
+Every entity class and `Bling` includes:
+
+- One-line description of the resource/module.
+- `@see` link to the Bling reference section for that resource.
+
+Reference: class header in `src/entities/camposCustomizados/index.ts`, `src/entities/nfes/index.ts`, `src/bling.ts`.
+
+## Method-Level Block
+
+Each public entity method documents:
+
+1. **Description** — what the operation does.
+2. **`@param`** — for each argument; use `{Type}` and Portuguese description.
+3. **`@returns`** — `{Promise<...>}` with brief note if empty (`Não há retorno`).
+4. **`@throws {BlingApiException|BlingInternalException}`** — always for entity methods.
+5. **`@see`** — deep link to the specific Bling API operation URL.
+
+For parameterless methods, omit `@param`. For optional params, note optionality in the description.
+
+## Repository & Exceptions
+
+- Repository public methods use `@inheritDoc` where overriding interface (`src/repositories/bling.repository.ts`).
+- Private methods document `@param`, `@returns`, `@throws` when non-obvious (`defaultCatchBehavior`).
+- Exception classes document purpose and constructor params (`src/exceptions/bling-api.exception.ts`).
+
+## Property Tags
+
+Use `@property` on class fields when documenting internal state in repository (`src/repositories/bling.repository.ts`, `src/repositories/bling-in-memory.repository.ts`).
+
+## `@example` on Facade
+
+`Bling` class includes a minimal `@example` in `src/bling.ts` — preserve this pattern for the main entry only; entity classes do not need `@example` blocks.
+
+## Interfaces
+
+Interface files generally have **no JSDoc** except on domain `types/` explaining enum values. Document behavior on the entity method, not on every interface field.
+
+## Links
+
+Base reference: `https://developer.bling.com.br/referencia`
+
+Use URL-encoded resource names as in existing `@see` tags (`src/entities/contatos/index.ts`).

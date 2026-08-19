@@ -1,0 +1,49 @@
+---
+description: Shared cross-entity types and base entity class
+globs: src/entities/@shared/**,src/helpers/**
+alwaysApply: false
+---
+
+# Shared Code
+
+## `@shared` Entity Infrastructure
+
+`src/entities/@shared/` holds code reused across entity modules.
+
+### `entity.ts`
+
+Abstract base for all entities. Subclasses receive `IBlingRepository` and may use `prepareStringOrDateParam` for date query parameters.
+
+### `interfaces/error.interface.ts`
+
+Canonical Bling API error response typing consumed by `BlingApiException` and the repository.
+
+### `types/`
+
+Cross-resource domain unions imported by multiple modules:
+
+| File | Purpose |
+|------|---------|
+| `situacao.type.ts` | Active/inactive `0 \| 1` |
+| `uf.type.ts` | Brazilian state codes |
+| `tipoPessoa.type.ts` | Person type |
+| `contribuinte.type.ts` | Taxpayer indicator |
+| `crt.type.ts` | Tax regime |
+| `frete-por-conta.type.ts` | Freight responsibility |
+| `origem.type.ts` | Product origin |
+| `tipo-item.type.ts` | Item type |
+| `modelo-documento-referenciado.type.ts` | Referenced document model |
+
+Add here only when **two or more** entity modules need the same type. Otherwise keep types in the entity's `types/` folder.
+
+## Helpers
+
+`src/helpers/functions/convert-date-to-string.ts` — formats `Date` as `YYYY-MM-DD` or with time; used by `Entity.prepareStringOrDateParam`.
+
+`src/helpers/types/newable.type.ts` — constructor type for `Bling.getModule` generic constraint.
+
+## Conventions
+
+- Shared types use `export default` for the type alias (`situacao.type.ts`).
+- Shared interfaces use named `export interface`.
+- Do not import entity-specific code into `@shared` or `helpers/`.

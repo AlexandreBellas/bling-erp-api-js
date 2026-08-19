@@ -1,0 +1,41 @@
+---
+description: ESLint and Prettier formatting standards
+globs: src/**,.eslintrc.json
+alwaysApply: false
+---
+
+# Linting & Formatting
+
+## Tools
+
+- **ESLint** — `npm run lint` (`eslint --fix 'src/**/*.ts'`)
+- **Prettier** — `npm run format` (`prettier --write 'src/**/*.ts'`)
+- ESLint extends: `standard`, `@typescript-eslint/recommended`, `prettier` (`.eslintrc.json`)
+
+## Project-Specific ESLint Overrides
+
+| Scope | Rule |
+|-------|------|
+| `src/entities/*` | `camelcase: off` — API field names are Portuguese camelCase |
+| `*.spec.ts`, `*.test.ts` | `no-undef: off` |
+| All files | `space-before-function-paren: off` |
+| Global | `@typescript-eslint/no-var-requires: off` |
+
+## Style Aligned with Codebase
+
+- Single quotes for strings.
+- No semicolon enforcement conflicts — follow Prettier output on save/format.
+- 2-space indentation (observe existing files).
+- Trailing commas in multiline objects where Prettier adds them.
+
+## Before Committing
+
+Run `npm run lint` and `npm run format` after editing `src/`. CI builds and tests on push to `main` (`.github/workflows/calculate-coverage.yaml`).
+
+## Entity Folder Imports
+
+Import entity class from `'../'` in tests (`src/entities/camposCustomizados/__tests__/index.spec.ts`).
+
+Import repository from `'../../../repositories/bling-in-memory.repository'` relative to `__tests__/`.
+
+Match import ordering: external packages first, then project modules, then local fixtures.

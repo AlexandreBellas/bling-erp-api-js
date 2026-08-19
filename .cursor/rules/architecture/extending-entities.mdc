@@ -1,0 +1,52 @@
+---
+description: Checklist for adding or extending Bling API modules
+globs: src/entities/**,src/bling.ts
+alwaysApply: false
+---
+
+# Extending Entity Modules
+
+Use Bling's official reference as the source of truth: https://developer.bling.com.br/referencia
+
+## New Resource Module
+
+1. **Create folder** `src/entities/<camelCaseName>/` matching an existing naming pattern (`src/entities/depositos/`, `src/entities/gruposDeProdutos/`).
+
+2. **Add `index.ts`** — class extending `Entity`, one method per Bling operation. Follow `src/entities/camposCustomizados/index.ts` for a medium module or `src/entities/empresas/index.ts` for a minimal one.
+
+3. **Add interfaces** — one file per operation in `interfaces/` named `<operation>.interface.ts` (e.g. `find.interface.ts`, `post-stock.interface.ts`). Export `I<Operation>Params`, `I<Operation>Body`, `I<Operation>Response` as needed. See `src/entities/nfes/interfaces/`.
+
+4. **Add types** — union/enum types in `types/<name>.type.ts` when Bling documents discrete values. See `src/entities/contatos/types/criterio.type.ts`, `src/entities/nfes/types/situacao.type.ts`.
+
+5. **Reuse `@shared`** — import shared types instead of duplicating (`src/entities/@shared/types/`).
+
+6. **Register in facade** — import and add getter in `src/bling.ts`.
+
+7. **Add tests** — `__tests__/index.spec.ts` plus `*-response.ts` fixtures. Mirror `src/entities/camposCustomizados/__tests__/`.
+
+8. **Update README** — entity checklist in `README.md` if the resource is user-facing.
+
+## New Operation on Existing Module
+
+1. Add interface file under the module's `interfaces/`.
+2. Add entity method calling the correct repository verb (see `architecture/repository-layer.mdc`).
+3. Add fixture + spec case in `__tests__/`.
+4. Match HTTP verb used by siblings for the same semantic (PATCH situation → `update` vs `replace`; check the resource's existing `changeSituation`).
+
+## Choosing `update` vs `replace`
+
+- Bling **PATCH** partial updates → `repository.update` (`src/entities/camposCustomizados/index.ts`).
+- Bling **PUT** full resource replace → `repository.replace` (`src/entities/contatos/index.ts` `update` method).
+- Verify against Bling docs; the repository maps both to HTTP PATCH in `src/repositories/bling.repository.ts`.
+
+## Special Cases
+
+- **Response headers required** — set `shouldIncludeHeadersInResponse: true` (`src/entities/homologacao/index.ts`).
+- **GET with body** — `index` supports optional `body` in options (`bling.repository.interface.ts`); rare, follow homologacao if needed.
+- **Non-CRUD action endpoints** — name method after Bling action; use `store` for POST actions (`src/entities/pedidosVendas/index.ts`).
+
+## Do Not
+
+- Create alternate HTTP clients outside `src/repositories/`.
+- Put test fixtures in `interfaces/` or production types in `__tests__/`.
+- Skip `@see` links to Bling reference in JSDoc.

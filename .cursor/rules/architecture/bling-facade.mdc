@@ -1,0 +1,46 @@
+---
+description: Bling facade class and module registration
+globs: src/bling.ts
+alwaysApply: false
+---
+
+# Bling Facade
+
+`src/bling.ts` is the package entry (`package.json` → `lib/bling.js`).
+
+## Responsibilities
+
+1. Accept `accessToken` and optional `baseUrl` (default `https://api.bling.com.br/Api/v3`).
+2. Obtain `IBlingRepository` via `getRepository` from `src/providers/ioc.ts`.
+3. Lazily instantiate and cache entity modules through private `getModule`.
+4. Expose one **camelCase getter** per entity for consumer ergonomics.
+
+## Module Registration Pattern
+
+When adding a resource:
+
+1. Import the entity class from `src/entities/<module>/`.
+2. Add a public getter returning `this.getModule(<EntityClass>)`.
+3. Place imports alphabetically or grouped consistently with existing blocks in `src/bling.ts`.
+
+`getModule` uses `Newable<T>` from `src/helpers/types/newable.type.ts` and caches by `EntityClass.name`.
+
+## Getter Naming
+
+Getter names match README entity list and Bling consumer docs:
+
+- Compound resources use camelCase (`camposCustomizados`, `pedidosVendas`, `logisticasEtiquetas`).
+- Getter return type is the concrete entity class.
+
+## What Does Not Belong Here
+
+- HTTP logic, axios, or endpoint strings.
+- Business validation beyond construction.
+- OAuth/token exchange (documented in `README.md`; demo in `demo/`).
+
+## Private Fields
+
+- `#repository` — shared across all modules for one `Bling` instance.
+- `#modules` — `Record<string, Entity | undefined>` cache.
+
+Each entity shares the same repository instance, so all modules use the same token and base URL for a given connection.

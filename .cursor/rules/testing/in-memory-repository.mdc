@@ -1,0 +1,60 @@
+---
+description: In-memory repository mock for isolated entity tests
+globs: src/**/__tests__/**,src/repositories/bling-in-memory.repository.ts
+alwaysApply: false
+---
+
+# In-Memory Repository Testing
+
+## Purpose
+
+`src/repositories/bling-in-memory.repository.ts` implements `IBlingRepository` without network I/O. Entity tests verify **wiring** — correct endpoint, id, params, and body passed to the repository.
+
+## Setup Pattern
+
+From `src/entities/camposCustomizados/__tests__/index.spec.ts`:
+
+```
+repository = new InMemoryBlingRepository()
+entity = new CamposCustomizados(repository)
+```
+
+Instantiate the entity directly with the mock; do not use `Bling` facade in unit tests unless testing facade behavior specifically.
+
+## Configuring Responses
+
+| Method | Setter |
+|--------|--------|
+| Any (fallback) | `setResponse` |
+| `index` | `setIndexResponse` |
+| `show` | `setShowResponse` |
+| `store` | `setStoreResponse` |
+| `update` | `setUpdateResponse` |
+| `replace` | `setReplaceResponse` |
+| `destroy` | `setDestroyResponse` |
+
+Verb-specific setters override the fallback for that method only.
+
+## Spying
+
+Use `jest.spyOn(repository, 'index' | 'show' | 'store' | 'update' | 'replace' | 'destroy')` to assert call arguments.
+
+The in-memory implementation ignores options; spies capture what the entity passed.
+
+## Random Input Data
+
+Use `Chance` (`chance` package) for ids and optional fields to avoid brittle hard-coded values — see `src/entities/camposCustomizados/__tests__/index.spec.ts`.
+
+Pick union values with `chance.pickone([...])` cast to shared types when needed.
+
+## Headers Flag Tests
+
+When entity sets `shouldIncludeHeadersInResponse: true`, assert it in `toHaveBeenCalledWith` — see `src/entities/homologacao/__tests__/index.spec.ts`.
+
+## Cleanup
+
+Always `jest.restoreAllMocks()` in `afterEach` to prevent spy leakage between tests.
+
+## Extending the Mock
+
+If `IBlingRepository` gains new methods, update `InMemoryBlingRepository` with matching setters and stubs before entity tests can use them. Keep parity with `src/repositories/bling.repository.interface.ts`.

@@ -1,0 +1,45 @@
+---
+description: Exception types and API error handling flow
+globs: src/exceptions/**,src/repositories/bling.repository.ts
+alwaysApply: false
+---
+
+# Exceptions & Errors
+
+## Types
+
+| Class | File | When thrown |
+|-------|------|-------------|
+| `BlingApiException` | `src/exceptions/bling-api.exception.ts` | Bling returns a structured error body (`IDefaultErrorResponse`) |
+| `BlingInternalException` | `src/exceptions/bling-internal.exception.ts` | Network/transport failure or empty error payload |
+
+## API Error Shape
+
+`src/entities/@shared/interfaces/error.interface.ts` defines `IDefaultErrorResponse` with nested `error.type`, `error.message`, `error.description`, and optional `error.fields` for validation errors.
+
+`BlingApiException`:
+
+- Sets `Error.message` from `response.error.description`.
+- Exposes full payload via readonly `response` getter.
+
+## Handling Flow
+
+Only `BlingRepository.defaultCatchBehavior` in `src/repositories/bling.repository.ts` interprets axios errors. Entities propagate exceptions; they do not wrap or swallow them.
+
+Consumers should catch `BlingApiException` for business/API errors and `BlingInternalException` for connectivity issues.
+
+## Entity Documentation
+
+Every public entity method documents:
+
+```
+@throws {BlingApiException|BlingInternalException}
+```
+
+Follow wording in `src/entities/contatos/index.ts` or `src/entities/nfes/index.ts`.
+
+## Extension Rules
+
+- Do not introduce new exception types unless the library needs a distinct handling contract.
+- Do not parse error bodies in entity methods.
+- If Bling adds error fields, extend `IDefaultErrorResponse` in `@shared` rather than per-entity duplicates.

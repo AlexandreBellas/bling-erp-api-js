@@ -1,0 +1,47 @@
+---
+description: High-level architecture of the Bling ERP API wrapper
+alwaysApply: true
+---
+
+# Project Overview
+
+This package is a thin TypeScript wrapper around the [Bling ERP API v3](https://developer.bling.com.br/). It exposes typed entity modules that mirror Bling resource groups and delegates HTTP transport to a shared repository layer.
+
+## Layering
+
+| Layer | Location | Responsibility |
+|-------|----------|----------------|
+| Facade | `src/bling.ts` | Entry point, lazy entity module wiring, public API surface |
+| Entities | `src/entities/<module>/` | One class per Bling resource; maps methods to repository calls |
+| Repository | `src/repositories/` | HTTP verbs, auth headers, error normalization |
+| Providers | `src/providers/ioc.ts` | Repository factory for the facade constructor |
+| Exceptions | `src/exceptions/` | Typed errors for API and internal failures |
+| Helpers | `src/helpers/` | Cross-cutting utilities (date conversion, generic types) |
+| Shared | `src/entities/@shared/` | Base entity class, cross-entity types, error response shape |
+
+## Assumptions
+
+- Targets **Bling API v3** (`https://api.bling.com.br/Api/v3` by default in `src/bling.ts`).
+- Consumers supply a valid **Bearer access token**; OAuth/app registration is out of scope (see `README.md` and `demo/`).
+- Endpoint paths and query parameter names follow Bling docs (Portuguese, kebab-case segments).
+- Compiled output lives in `lib/` (`tsconfig.build.json` excludes tests).
+- Runtime dependency is **axios** only (`package.json`).
+
+## Entity Module Inventory
+
+Each folder under `src/entities/` (except `@shared`) is a Bling resource module wired in `src/bling.ts`:
+
+`borderos`, `camposCustomizados`, `canaisDeVenda`, `categoriasLojas`, `categoriasProdutos`, `categoriasReceitasDespesas`, `contasContabeis`, `contasPagar`, `contasReceber`, `contatos`, `contatosTipos`, `contratos`, `depositos`, `empresas`, `estoques`, `formasDePagamento`, `gruposDeProdutos`, `homologacao`, `logisticas`, `logisticasEtiquetas`, `logisticasObjetos`, `logisticasRemessas`, `logisticasServicos`, `naturezasDeOperacoes`, `nfces`, `nfes`, `nfses`, `notificacoes`, `ordensDeProducao`, `pedidosCompras`, `pedidosVendas`, `produtos`, `produtosEstruturas`, `produtosFornecedores`, `produtosLojas`, `produtosVariacoes`, `propostasComerciais`, `situacoes`, `situacoesModulos`, `situacoesTransicoes`, `usuarios`, `vendedores`.
+
+## Consumer Flow
+
+1. Instantiate `Bling` from `src/bling.ts` with `accessToken` (optional `baseUrl`).
+2. Access a resource via its camelCase getter (e.g. `bling.contatos`).
+3. Call entity methods; they return typed promises or throw `BlingApiException` / `BlingInternalException`.
+
+## Modularity Principles
+
+- **One entity folder = one Bling resource group** with `index.ts` exporting the entity class.
+- **No HTTP in entities** beyond `this.repository.*` calls.
+- **No cross-entity imports** except from `@shared` and shared `types/`.
+- **Lazy singleton modules** per `Bling` instance via private `getModule` in `src/bling.ts`.

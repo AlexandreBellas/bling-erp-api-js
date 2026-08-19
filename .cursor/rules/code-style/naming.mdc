@@ -1,0 +1,46 @@
+---
+description: File, interface, and type naming conventions
+globs: src/**
+alwaysApply: false
+---
+
+# Naming Conventions
+
+## Folders & Files
+
+| Artifact | Pattern | Example |
+|----------|---------|---------|
+| Entity folder | camelCase, Portuguese Bling name | `src/entities/pedidosVendas/` |
+| Entity entry | `index.ts` | `src/entities/contatos/index.ts` |
+| Operation interface | `<operation>.interface.ts` | `find.interface.ts`, `delete-many.interface.ts` |
+| Domain type | `<name>.type.ts` | `situacao.type.ts`, `criterio.type.ts` |
+| Test spec | `index.spec.ts` | `src/entities/produtos/__tests__/index.spec.ts` |
+| Test fixture | `<operation>-response.ts` | `find-response.ts`, `create-response.ts` |
+
+## TypeScript Identifiers
+
+| Kind | Convention | Example |
+|------|------------|---------|
+| Entity class | PascalCase, plural/resource name | `Contatos`, `Nfes` |
+| Interface | `I` prefix + PascalCase | `IFindParams`, `ICreateResponse` |
+| Type alias | `I` prefix for domain unions | `ISituacao`, `ICriterio` |
+| Interface file exports | Split Params / Body / Response | `src/entities/contatos/interfaces/change-situation.interface.ts` |
+| Bling query params | camelCase matching API | `idContato`, `dataInclusaoInicial` |
+| Endpoints | kebab-case path strings | `'campos-customizados'`, `'contas/receber'` |
+
+## Method Names
+
+English verbs describing the action, aligned with Bling docs:
+
+- `get` — collection listing
+- `find` — single resource by id
+- `create`, `update`, `delete`
+- `changeSituation`, `deleteMany`, `postStock`, `send`, `download`, etc.
+
+## ESLint Note
+
+`camelcase` is **disabled** for `src/entities/*` (`.eslintrc.json`) because interfaces intentionally mirror Bling's Portuguese API field names (`idCampoCustomizado`, `idsProdutos`).
+
+## Facade Getters
+
+camelCase property names on `Bling` matching entity purpose (`bling.formasDePagamento`, `bling.naturezasDeOperacoes`).

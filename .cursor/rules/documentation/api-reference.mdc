@@ -1,0 +1,51 @@
+---
+description: Linking implementation to official Bling API reference
+globs: src/entities/**/index.ts,README.md
+alwaysApply: false
+---
+
+# Bling API Reference Links
+
+## Source of Truth
+
+All endpoints, parameters, and response shapes must match [Bling API v3 reference](https://developer.bling.com.br/referencia).
+
+Changelog tracking: [Bling changelogs](https://developer.bling.com.br/changelogs) (README cites API version alignment).
+
+## `@see` in Entity Methods
+
+Every entity method in `index.ts` includes a `@see` pointing to the exact operation in the Bling reference.
+
+Copy URL structure from an existing method in the same resource or a similar one:
+
+- `src/entities/camposCustomizados/index.ts` — custom fields
+- `src/entities/pedidosVendas/index.ts` — orders with actions
+- `src/entities/nfses/index.ts` — fiscal documents
+
+## Class-Level `@see`
+
+Entity class JSDoc links to the resource group anchor (e.g. `#/Contatos`, `#/Campos%20Customizados`).
+
+## README Entity List
+
+`README.md` maintains the consumer-facing checklist of `bling.<getter>` accessors. Update when adding a new module to `src/bling.ts`.
+
+## Authentication Docs
+
+OAuth and token acquisition are **not** implemented in this library. Point consumers to:
+
+- `README.md` — authentication section
+- `https://developer.bling.com.br/aplicativos#tokens-de-acesso`
+- `demo/` — working authorization demo
+
+## Endpoint Verification
+
+Before merging new operations:
+
+1. Confirm HTTP verb and path in Bling reference.
+2. Map to correct `repository.*` method (`architecture/repository-layer.mdc`).
+3. Match query/body field names exactly to Bling (Portuguese camelCase).
+
+## Versioning
+
+Package major version 5.x targets API v3 (`README.md`). Breaking Bling API changes may require interface updates across affected `interfaces/` files.

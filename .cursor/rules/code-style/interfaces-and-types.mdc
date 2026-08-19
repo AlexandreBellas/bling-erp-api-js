@@ -1,0 +1,65 @@
+---
+description: Interface and type file organization per entity
+globs: src/entities/**/interfaces/**,src/entities/**/types/**
+alwaysApply: false
+---
+
+# Interfaces & Types
+
+## Interfaces (`interfaces/`)
+
+One file per API operation or logical request/response pair.
+
+### Standard CRUD Files
+
+| File | Typical exports |
+|------|-----------------|
+| `get.interface.ts` | `IGetParams`, `IGetResponse` |
+| `find.interface.ts` | `IFindParams`, `IFindResponse` |
+| `create.interface.ts` | `ICreateBody`, `ICreateResponse` |
+| `update.interface.ts` | `IUpdateParams`, `IUpdateBody`, `IUpdateResponse` |
+| `delete.interface.ts` | `IDeleteParams` |
+
+Reference: `src/entities/camposCustomizados/interfaces/`, `src/entities/gruposDeProdutos/interfaces/`.
+
+### Action / Sub-resource Files
+
+Name after the Bling operation in kebab-case converted to camelCase:
+
+- `change-situation.interface.ts`
+- `post-stock.interface.ts`
+- `reverse-accounts.interface.ts`
+- `get-bank-slips.interface.ts`
+- `find-by-module.interface.ts`
+- `cancel-bank-slips.interface.ts`
+
+See `src/entities/pedidosVendas/interfaces/`, `src/entities/contasReceber/interfaces/`, `src/entities/nfses/interfaces/`.
+
+### Response Envelope
+
+Most Bling responses wrap data in a `data` property. Mirror that in `I*Response` interfaces (`src/entities/camposCustomizados/interfaces/find.interface.ts`).
+
+List endpoints may return `data` as an array with pagination implied by `pagina`/`limite` params (`src/entities/contatos/interfaces/get.interface.ts`).
+
+### Cross-module Type Imports
+
+Import shared types with default import:
+
+```
+import ISituacao from '../../@shared/types/situacao.type'
+```
+
+Import module-local types from `../types/`.
+
+## Types (`types/`)
+
+Use `type` aliases for numeric literal unions documenting Bling enum values. Include JSDoc listing each value's meaning (`src/entities/contatos/types/criterio.type.ts`, `src/entities/@shared/types/situacao.type.ts`).
+
+Export as `export default` for single-type files.
+
+## Rules
+
+- Do not combine unrelated operations in one interface file.
+- Params interfaces hold path/query identifiers; body interfaces hold POST/PATCH payloads.
+- When an operation has no params, export only response interface (`src/entities/homologacao/interfaces/get.interface.ts`).
+- Keep interfaces free of runtime logic; no functions or classes.

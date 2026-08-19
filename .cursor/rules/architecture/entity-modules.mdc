@@ -1,0 +1,66 @@
+---
+description: Entity module structure and method conventions
+globs: src/entities/**
+alwaysApply: false
+---
+
+# Entity Modules
+
+## Folder Layout
+
+Each module under `src/entities/<name>/`:
+
+```
+index.ts              # Entity class (public API)
+interfaces/*.interface.ts   # Request/response types per operation
+types/*.type.ts       # Domain enums/unions for that resource
+__tests__/            # Colocated unit tests (excluded from build)
+```
+
+Reference layouts: `src/entities/camposCustomizados/`, `src/entities/contatos/`, `src/entities/nfes/`, `src/entities/empresas/`.
+
+## Base Class
+
+All entities extend `Entity` from `src/entities/@shared/entity.ts`:
+
+- Receives `IBlingRepository` via constructor (injected by `Bling` or tests).
+- Provides `prepareStringOrDateParam` for `Date` → API string conversion via `src/helpers/functions/convert-date-to-string.ts`.
+
+## Class Conventions
+
+- Export a **PascalCase** class matching the folder purpose (e.g. `CamposCustomizados` in `src/entities/camposCustomizados/index.ts`).
+- Class-level JSDoc links to the Bling reference section (`@see https://developer.bling.com.br/referencia#/<Resource>`).
+- Methods are `async`, return `Promise<...>`, and document `@throws {BlingApiException|BlingInternalException}`.
+- Each method JSDoc includes a `@see` link to the exact Bling operation.
+
+## Common Method Names
+
+Align with Bling semantics used across the codebase:
+
+| Method | Typical repository call | Reference |
+|--------|----------------------|-----------|
+| `get` | `index` | `src/entities/produtos/index.ts` |
+| `find` | `show` | `src/entities/contatos/index.ts` |
+| `create` | `store` | `src/entities/camposCustomizados/index.ts` |
+| `update` | `update` or `replace` | `src/entities/camposCustomizados/index.ts`, `src/entities/contatos/index.ts` |
+| `delete` | `destroy` | `src/entities/camposCustomizados/index.ts` |
+| `changeSituation` | `update` or `replace` on `.../situacoes` | `src/entities/produtos/index.ts` |
+
+Domain-specific names mirror Bling actions: `send`, `download`, `postStock`, `reverseAccounts`, `generateNfe`, `me`, etc. See `src/entities/nfes/index.ts`, `src/entities/contasReceber/index.ts`, `src/entities/empresas/index.ts`.
+
+## Endpoint & Parameter Patterns
+
+- **Endpoints**: kebab-case path segments (`campos-customizados`, `contas/receber`, `nfe`).
+- **Resource ids**: `String(params.idXxx)` in `show`/`update`/`destroy`.
+- **Nested routes**: embed in `id` (e.g. `` id: `${params.idContato}/tipos` `` in `src/entities/contatos/index.ts`).
+- **Bulk delete**: `destroy` with `id: ''` and ids in `params` (`src/entities/produtos/index.ts`, `src/entities/contatos/index.ts`).
+- **Date filters**: pass through `this.prepareStringOrDateParam`; use `includeTime: true` when the API expects datetime (`src/entities/contatos/index.ts`).
+- **Update params**: destructure id from params, pass remainder as `body` (`src/entities/camposCustomizados/index.ts`).
+
+## Shared Types
+
+Reuse types from `src/entities/@shared/types/` when Bling fields overlap (e.g. `situacao.type.ts`, `uf.type.ts`, `tipoPessoa.type.ts`). Module-specific unions live in local `types/`.
+
+## Public Visibility
+
+Most entity methods use `public`; some older modules omit the keyword — match the prevailing style in the sibling file being edited.
