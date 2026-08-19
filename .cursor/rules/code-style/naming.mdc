@@ -21,7 +21,7 @@ alwaysApply: false
 
 | Kind | Convention | Example |
 |------|------------|---------|
-| Entity class | PascalCase, plural/resource name | `Contatos`, `Nfes` |
+| Entity class | PascalCase, resource name | `Contatos`, `Nfes`, `Homologacao` |
 | Interface | `I` prefix + PascalCase | `IFindParams`, `ICreateResponse` |
 | Type alias | `I` prefix for domain unions | `ISituacao`, `ICriterio` |
 | Interface file exports | Split Params / Body / Response | `src/entities/contatos/interfaces/change-situation.interface.ts` |
@@ -39,7 +39,7 @@ English verbs describing the action, aligned with Bling docs:
 
 ## ESLint Note
 
-`camelcase` is **disabled** for `src/entities/*` (`.eslintrc.json`) because interfaces intentionally mirror Bling's Portuguese API field names (`idCampoCustomizado`, `idsProdutos`).
+`camelcase` is **disabled** for `src/entities/**` (`.eslintrc.json`) so Bling field names and header keys in nested `interfaces/` files are not rewritten.
 
 ## Facade Getters
 

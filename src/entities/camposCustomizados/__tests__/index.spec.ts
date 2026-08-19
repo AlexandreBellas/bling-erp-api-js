@@ -1,7 +1,7 @@
 import { Chance } from 'chance'
 import { CamposCustomizados } from '../'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
-import ISituacao from '../../@shared/types/situacao.type'
+import ISituacao from 'src/entities/@shared/types/situacao.type'
 import changeSituationResponse from './change-situation-response'
 import createResponse, { createRequestBody } from './create-response'
 import deleteResponse from './delete-response'

@@ -15,7 +15,7 @@ src/entities/<module>/__tests__/index.spec.ts
 src/entities/<module>/__tests__/<operation>-response.ts
 ```
 
-Every entity module with an `index.ts` should have a corresponding `__tests__/index.spec.ts` (41 entity modules follow this pattern).
+Every entity module with an `index.ts` should have a corresponding `__tests__/index.spec.ts` (42 entity modules follow this pattern).
 
 ## Spec Structure
 
@@ -57,7 +57,7 @@ Spy the repository method the entity actually calls, not the HTTP verb name. Cro
 
 - `maxWorkers: 1` in `jest.config.ts` — do not raise without cause.
 - `testPathIgnorePatterns` excludes `lib/`.
-- Coverage collected from `**/*.(t|j)s` excluding coverage dir and `jest.config.ts`.
+- Coverage collected from `**/*.(t|j)s`; `coveragePathIgnorePatterns` excludes `/coverage/`, `jest.config.ts`, and `/lib/`.
 
 ## What Not to Test Here
 

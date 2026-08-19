@@ -24,7 +24,7 @@ Cross-resource domain unions imported by multiple modules:
 
 | File | Purpose |
 |------|---------|
-| `situacao.type.ts` | Active/inactive `0 \| 1` |
+| `situacao.type.ts` | Active/inactive `0 \| 1` only — not other situação enums |
 | `uf.type.ts` | Brazilian state codes |
 | `tipoPessoa.type.ts` | Person type |
 | `contribuinte.type.ts` | Taxpayer indicator |
@@ -34,16 +34,17 @@ Cross-resource domain unions imported by multiple modules:
 | `tipo-item.type.ts` | Item type |
 | `modelo-documento-referenciado.type.ts` | Referenced document model |
 
-Add here only when **two or more** entity modules need the same type. Otherwise keep types in the entity's `types/` folder.
+Add here only when **two or more** modules share the **same** Bling value set. Same property name (`situacao`) with different unions stays in each entity’s `types/`.
 
 ## Helpers
 
-`src/helpers/functions/convert-date-to-string.ts` — formats `Date` as `YYYY-MM-DD` or with time; used by `Entity.prepareStringOrDateParam`.
+`src/helpers/functions/convert-date-to-string.ts` — used by `Entity.prepareStringOrDateParam`. Builds `YYYY-M-D` or `YYYY-M-D H:M:S` from `Date` getters (**not** zero-padded). Strings are passed through unchanged.
 
 `src/helpers/types/newable.type.ts` — constructor type for `Bling.getModule` generic constraint.
 
 ## Conventions
 
-- Shared types use `export default` for the type alias (`situacao.type.ts`).
+- Shared types: `type IFoo = …` plus `export default IFoo`.
+- Entity-local types: named `export type IFoo = …`.
 - Shared interfaces use named `export interface`.
 - Do not import entity-specific code into `@shared` or `helpers/`.

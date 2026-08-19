@@ -20,13 +20,13 @@
   },
   "overrides": [
     {
-      "files": ["*.spec.js", "*.test.ts", "*.test.js"],
+      "files": ["*.spec.ts", "*.spec.js", "*.test.ts", "*.test.js"],
       "rules": {
         "no-undef": "off"
       }
     },
     {
-      "files": ["src/entities/*"],
+      "files": ["src/entities/**"],
       "rules": {
         "camelcase": "off"
       }

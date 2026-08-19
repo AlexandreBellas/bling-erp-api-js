@@ -26,10 +26,10 @@ Each public entity method documents:
 1. **Description** — what the operation does.
 2. **`@param`** — for each argument; use `{Type}` and Portuguese description.
 3. **`@returns`** — `{Promise<...>}` with brief note if empty (`Não há retorno`).
-4. **`@throws {BlingApiException|BlingInternalException}`** — always for entity methods.
+4. **`@throws {BlingApiException|BlingInternalException}`** — on methods that call the repository.
 5. **`@see`** — deep link to the specific Bling API operation URL.
 
-For parameterless methods, omit `@param`. For optional params, note optionality in the description.
+For parameterless methods, omit `@param`. For optional params, note optionality in the description. Orchestrators such as `Homologacao.execute()` may omit `@throws` when they only delegate.
 
 ## Repository & Exceptions
 
@@ -47,7 +47,7 @@ Use `@property` on class fields when documenting internal state in repository (`
 
 ## Interfaces
 
-Interface files generally have **no JSDoc** except on domain `types/` explaining enum values. Document behavior on the entity method, not on every interface field.
+Domain `types/` JSDoc lists each enum value. Interface field JSDoc is optional. Document operation behavior on the entity method.
 
 ## Links
 

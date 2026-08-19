@@ -1,6 +1,6 @@
 # AGENTS.md
 
-TypeScript/JavaScript client for the [Bling ERP API v3](https://developer.bling.com.br/). Consumers instantiate `Bling` with a Bearer access token and call typed methods on 41 resource modules (contacts, products, NFe, orders, logistics, etc.). HTTP is centralized in a repository layer; entities map Bling endpoints to `get`, `find`, `create`, `update`, `delete`, and domain-specific actions with full TypeScript interfaces.
+TypeScript/JavaScript client for the [Bling ERP API v3](https://developer.bling.com.br/). Consumers instantiate `Bling` with a Bearer access token and call typed methods on 42 resource modules (contacts, products, NFe, orders, logistics, etc.). HTTP is centralized in a repository layer; entities map Bling endpoints to `get`, `find`, `create`, `update`, `delete`, and domain-specific actions with full TypeScript interfaces.
 
 ## Cursor Rules
 

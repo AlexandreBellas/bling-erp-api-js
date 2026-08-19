@@ -20,13 +20,7 @@ Match operation names to entity method names (`find`, `create`, `getModules`, et
 
 ## Default Export
 
-Export the mock API response as **default**:
-
-```
-export default { data: { ... } }
-```
-
-See `src/entities/camposCustomizados/__tests__/find-response.ts`, `src/entities/camposCustomizados/__tests__/delete-response.ts`.
+Export the mock **return value** as default: usually `{ data: { ... } }`, or `null` when the entity returns `Promise<null>` (`src/entities/camposCustomizados/__tests__/find-response.ts`, `src/entities/camposCustomizados/__tests__/delete-response.ts`).
 
 ## Request Body Exports
 

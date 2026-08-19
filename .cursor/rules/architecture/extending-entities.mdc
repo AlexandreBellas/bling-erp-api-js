@@ -18,7 +18,7 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 
 4. **Add types** — union/enum types in `types/<name>.type.ts` when Bling documents discrete values. See `src/entities/contatos/types/criterio.type.ts`, `src/entities/nfes/types/situacao.type.ts`.
 
-5. **Reuse `@shared`** — import shared types instead of duplicating (`src/entities/@shared/types/`).
+5. **Reuse `@shared`** — import from `src/entities/@shared/types/` only when the value set matches. Do not reuse shared `situacao.type.ts` for a different Bling situação enum.
 
 6. **Register in facade** — import and add getter in `src/bling.ts`.
 
@@ -41,9 +41,10 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 
 ## Special Cases
 
-- **Response headers required** — set `shouldIncludeHeadersInResponse: true` (`src/entities/homologacao/index.ts`).
-- **GET with body** — `index` supports optional `body` in options (`bling.repository.interface.ts`); rare, follow homologacao if needed.
-- **Non-CRUD action endpoints** — name method after Bling action; use `store` for POST actions (`src/entities/pedidosVendas/index.ts`).
+- **Response headers required** — set `shouldIncludeHeadersInResponse: true` (`src/entities/homologacao/index.ts`). Homologação is the headers example, not GET-with-body.
+- **GET with body** — `IIndexOptions` allows optional `body`; no current entity uses it. Add only if [Bling reference](https://developer.bling.com.br/referencia) documents a GET payload.
+- **Non-CRUD action endpoints** — name the method after the Bling action; use `store` for POST actions (`src/entities/pedidosVendas/index.ts`).
+- **Orchestration** — `Homologacao.execute()` sequences other entity methods and returns `Promise<void>`; ordinary CRUD methods `await this.repository.*` and use `Promise<null>` when Bling has no body.
 
 ## Do Not
 

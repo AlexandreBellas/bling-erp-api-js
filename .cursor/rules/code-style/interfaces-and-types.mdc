@@ -24,7 +24,7 @@ Reference: `src/entities/camposCustomizados/interfaces/`, `src/entities/gruposDe
 
 ### Action / Sub-resource Files
 
-Name after the Bling operation in kebab-case converted to camelCase:
+Kebab-case **file** names from the English method name (`changeSituation` → `change-situation.interface.ts`):
 
 - `change-situation.interface.ts`
 - `post-stock.interface.ts`
@@ -43,23 +43,23 @@ List endpoints may return `data` as an array with pagination implied by `pagina`
 
 ### Cross-module Type Imports
 
-Import shared types with default import:
+Prefer `src/entities/@shared/types/<file>.type` (`tsconfig` `baseUrl: "./"`). Relative `../../@shared/types/` is equivalent.
 
-```
-import ISituacao from '../../@shared/types/situacao.type'
-```
+Shared types: **default** import. Module-local types: **named** import from `../types/`.
 
-Import module-local types from `../types/`.
+Reuse `@shared/types/situacao.type.ts` only for `0 | 1` active/inactive. Other situação enums stay in the entity `types/` folder.
 
 ## Types (`types/`)
 
-Use `type` aliases for numeric literal unions documenting Bling enum values. Include JSDoc listing each value's meaning (`src/entities/contatos/types/criterio.type.ts`, `src/entities/@shared/types/situacao.type.ts`).
+Use `type` aliases for Bling discrete values (numeric **or** string unions). JSDoc each value (`src/entities/contatos/types/criterio.type.ts`).
 
-Export as `export default` for single-type files.
+- `@shared/types/`: `type IFoo = …` then `export default IFoo`.
+- Entity `types/`: `export type IFoo = …`. Related aliases may share a file (`ISituacao` and `ISituacaoString` in `src/entities/contasReceber/types/situacao.type.ts`).
 
 ## Rules
 
 - Do not combine unrelated operations in one interface file.
 - Params interfaces hold path/query identifiers; body interfaces hold POST/PATCH payloads.
-- When an operation has no params, export only response interface (`src/entities/homologacao/interfaces/get.interface.ts`).
+- When an operation has no params, export only the response interface (`src/entities/homologacao/interfaces/get.interface.ts`).
 - Keep interfaces free of runtime logic; no functions or classes.
+- Field-level JSDoc on interfaces is optional (`src/entities/gruposDeProdutos/interfaces/get.interface.ts`); required behavior lives on the entity method.

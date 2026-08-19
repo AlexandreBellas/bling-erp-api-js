@@ -11,11 +11,13 @@ alwaysApply: false
 Each module under `src/entities/<name>/`:
 
 ```
-index.ts              # Entity class (public API)
+index.ts                    # Entity class (public API)
 interfaces/*.interface.ts   # Request/response types per operation
-types/*.type.ts       # Domain enums/unions for that resource
-__tests__/            # Colocated unit tests (excluded from build)
+types/*.type.ts             # Optional: domain unions for that resource
+__tests__/                  # Colocated unit tests (excluded from build)
 ```
+
+Add `types/` only when the resource has discrete Bling values that are not already in `@shared`.
 
 Reference layouts: `src/entities/camposCustomizados/`, `src/entities/contatos/`, `src/entities/nfes/`, `src/entities/empresas/`.
 
@@ -30,8 +32,7 @@ All entities extend `Entity` from `src/entities/@shared/entity.ts`:
 
 - Export a **PascalCase** class matching the folder purpose (e.g. `CamposCustomizados` in `src/entities/camposCustomizados/index.ts`).
 - Class-level JSDoc links to the Bling reference section (`@see https://developer.bling.com.br/referencia#/<Resource>`).
-- Methods are `async`, return `Promise<...>`, and document `@throws {BlingApiException|BlingInternalException}`.
-- Each method JSDoc includes a `@see` link to the exact Bling operation.
+- Methods are `async` and return `Promise<...>`. Repository-backed methods document `@throws {BlingApiException|BlingInternalException}` and a `@see` link to the Bling operation.
 
 ## Common Method Names
 
@@ -54,12 +55,12 @@ Domain-specific names mirror Bling actions: `send`, `download`, `postStock`, `re
 - **Resource ids**: `String(params.idXxx)` in `show`/`update`/`destroy`.
 - **Nested routes**: embed in `id` (e.g. `` id: `${params.idContato}/tipos` `` in `src/entities/contatos/index.ts`).
 - **Bulk delete**: `destroy` with `id: ''` and ids in `params` (`src/entities/produtos/index.ts`, `src/entities/contatos/index.ts`).
-- **Date filters**: pass through `this.prepareStringOrDateParam`; use `includeTime: true` when the API expects datetime (`src/entities/contatos/index.ts`).
+- **Date filters**: `this.prepareStringOrDateParam(value)` or `this.prepareStringOrDateParam(value, true)` when Bling expects datetime (second argument is positional; see `src/entities/contatos/index.ts`).
 - **Update params**: destructure id from params, pass remainder as `body` (`src/entities/camposCustomizados/index.ts`).
 
 ## Shared Types
 
-Reuse types from `src/entities/@shared/types/` when Bling fields overlap (e.g. `situacao.type.ts`, `uf.type.ts`, `tipoPessoa.type.ts`). Module-specific unions live in local `types/`.
+Reuse `@shared` types only when the Bling field uses the **same value set** (`uf.type.ts`, `tipoPessoa.type.ts`, `origem.type.ts`, …). `@shared/types/situacao.type.ts` is **only** `0 | 1` (inactive/active). Resource-specific situação enums belong in that module’s `types/situacao.type.ts` (see `src/entities/contatos/types/situacao.type.ts`, `src/entities/produtos/types/situacao.type.ts`).
 
 ## Public Visibility
 

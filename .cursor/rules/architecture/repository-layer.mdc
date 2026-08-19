@@ -28,9 +28,9 @@ All calls accept an options object extending `IDefaultOptions` with:
 - `endpoint` — path segment(s) without leading slash
 - `params` — query parameters (`IDefaultParams`)
 - `headers` — optional (`IDefaultHeaders`)
-- `shouldIncludeHeadersInResponse` — merges response headers into return value (used in `src/entities/homologacao/index.ts`)
+- `shouldIncludeHeadersInResponse` — optional flag typed as `true`; merges response headers into the return value (`src/entities/homologacao/index.ts`)
 
-Body-bearing calls add `body`; id-bearing calls add `id` (string, may include sub-paths like `` `${idContato}/situacoes` ``).
+`index` also allows optional `body` (`IIndexOptions`); no entity currently sends it. `store` / `update` / `replace` require `body`. Id-bearing calls add `id` (string, may include sub-paths like `` `${idContato}/situacoes` ``).
 
 ## Implementation
 

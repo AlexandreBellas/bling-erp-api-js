@@ -1,5 +1,5 @@
 /**
- * Converte um objeto `Date` para o formato `YYYY-MM-DD` (opcionalmente `YYYY-MM-DD HH:MM:SS`).
+ * Converte um objeto `Date` para `YYYY-M-D` (opcionalmente `YYYY-M-D H:M:S`), sem zero-padding.
  */
 export default (date: Date, includeTime: boolean = false) => {
   const baseTime = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`

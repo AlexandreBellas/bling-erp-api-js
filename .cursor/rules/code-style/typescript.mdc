@@ -30,7 +30,7 @@ Tests and fixtures are development-only; published package contains `lib/**/*` p
 
 ## Typing Practices
 
-- Repository calls should use explicit generic response types inferred from entity interface return types.
+- Do **not** pass explicit generics on `this.repository.*` calls; the method’s `Promise<I*Response>` (or `Promise<null>`) return type is enough.
 - Prefer interfaces for object shapes; type aliases for unions (`types/*.type.ts`).
 - Optional API fields use `?` on interface properties (`src/entities/camposCustomizados/interfaces/create.interface.ts`).
 - Use `String(...)` when passing numeric ids to repository `id` fields.
@@ -38,8 +38,9 @@ Tests and fixtures are development-only; published package contains `lib/**/*` p
 
 ## Async
 
-- All entity public methods are `async` and `await` repository calls.
+- Entity methods are `async`. Ordinary operations `await this.repository.*`.
 - Return `Promise<null>` when Bling returns no meaningful body.
+- `Homologacao.execute()` is an orchestrator: it awaits other entity methods and returns `Promise<void>`.
 
 ## Dependencies
 
