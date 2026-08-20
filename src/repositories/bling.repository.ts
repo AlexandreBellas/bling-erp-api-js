@@ -1,4 +1,10 @@
-import axios, { AxiosError, AxiosInstance } from 'axios'
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig
+} from 'axios'
+import { IAuthProvider } from '../auth/interfaces/auth-provider.interface'
 import { IDefaultErrorResponse } from '../entities/@shared/interfaces/error.interface'
 import { BlingApiException } from '../exceptions/bling-api.exception'
 import { BlingInternalException } from '../exceptions/bling-internal.exception'
@@ -21,9 +27,13 @@ interface IBlingRepositoryProps {
   baseUrl: string
 
   /**
-   * O _token_ de autenticação.
+   * Estratégia de autenticação (headers e refresh em 401).
    */
-  accessToken: string
+  authProvider: IAuthProvider
+}
+
+interface IRetriableRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean
 }
 
 /**
@@ -49,9 +59,48 @@ export class BlingRepository implements IBlingRepository {
     })
 
     this.api.interceptors.request.use((config) => {
-      config.headers.Authorization = `Bearer ${this.props.accessToken}`
+      const applied: Record<string, string> = {}
+      this.props.authProvider.applyRequestHeaders(applied)
+
+      if (!config.headers) {
+        return config
+      }
+
+      for (const key in applied) {
+        if (Object.prototype.hasOwnProperty.call(applied, key)) {
+          config.headers.set(key, applied[key])
+        }
+      }
+
       return config
     })
+
+    this.api.interceptors.response.use(
+      (response) => response,
+      async (error: AxiosError<IDefaultErrorResponse>) => {
+        const config = error.config as IRetriableRequestConfig | undefined
+        const handleUnauthorized = this.props.authProvider.handleUnauthorized
+        const canRetry =
+          error.response?.status === 401 &&
+          Boolean(config) &&
+          !config?._retry &&
+          typeof handleUnauthorized === 'function'
+
+        if (!canRetry || !config || !handleUnauthorized) {
+          return await Promise.reject(error)
+        }
+
+        config._retry = true
+
+        const refreshed = await handleUnauthorized()
+
+        if (!refreshed) {
+          return await Promise.reject(error)
+        }
+
+        return await this.api.request(config)
+      }
+    )
   }
 
   /**
@@ -68,17 +117,20 @@ export class BlingRepository implements IBlingRepository {
     options: IIndexOptions<IIndexBody, IParams, IHeaders>
   ): Promise<IIndexResponse> {
     return await this.api
-      .get<IIndexResponse>(`${options.endpoint}`, {
-        params: options.params,
-        headers: options.headers,
-        data: options.body
-      })
+      .get<IIndexResponse>(
+        `${options.endpoint}`,
+        this.buildAxiosConfig({
+          params: options.params,
+          headers: options.headers,
+          data: options.body
+        })
+      )
       .then((response) =>
         options.shouldIncludeHeadersInResponse
           ? {
-              headers: response.headers,
-              ...response.data
-            }
+            headers: response.headers,
+            ...response.data
+          }
           : response.data
       )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
@@ -98,16 +150,19 @@ export class BlingRepository implements IBlingRepository {
   >(options: IShowOptions<IParams, IHeaders>): Promise<IShowResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .get<IShowResponse>(endpoint, {
-        params: options.params,
-        headers: options.headers
-      })
+      .get<IShowResponse>(
+        endpoint,
+        this.buildAxiosConfig({
+          params: options.params,
+          headers: options.headers
+        })
+      )
       .then((response) =>
         options.shouldIncludeHeadersInResponse
           ? {
-              headers: response.headers,
-              ...response.data
-            }
+            headers: response.headers,
+            ...response.data
+          }
           : response.data
       )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
@@ -129,16 +184,20 @@ export class BlingRepository implements IBlingRepository {
     options: IStoreOptions<IStoreBody, IParams, IHeaders>
   ): Promise<IStoreResponse> {
     return await this.api
-      .post<IStoreResponse>(`${options.endpoint}`, options.body, {
-        params: options.params,
-        headers: options.headers
-      })
+      .post<IStoreResponse>(
+        `${options.endpoint}`,
+        options.body,
+        this.buildAxiosConfig({
+          params: options.params,
+          headers: options.headers
+        })
+      )
       .then((response) =>
         options.shouldIncludeHeadersInResponse
           ? {
-              headers: response.headers,
-              ...response.data
-            }
+            headers: response.headers,
+            ...response.data
+          }
           : response.data
       )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
@@ -161,16 +220,20 @@ export class BlingRepository implements IBlingRepository {
   ): Promise<IUpdateResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .patch<IUpdateResponse>(endpoint, options.body, {
-        params: options.params,
-        headers: options.headers
-      })
+      .patch<IUpdateResponse>(
+        endpoint,
+        options.body,
+        this.buildAxiosConfig({
+          params: options.params,
+          headers: options.headers
+        })
+      )
       .then((response) =>
         options.shouldIncludeHeadersInResponse
           ? {
-              headers: response.headers,
-              ...response.data
-            }
+            headers: response.headers,
+            ...response.data
+          }
           : response.data
       )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
@@ -193,16 +256,20 @@ export class BlingRepository implements IBlingRepository {
   ): Promise<IReplaceResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .patch<IReplaceResponse>(endpoint, options.body, {
-        params: options.params,
-        headers: options.headers
-      })
+      .patch<IReplaceResponse>(
+        endpoint,
+        options.body,
+        this.buildAxiosConfig({
+          params: options.params,
+          headers: options.headers
+        })
+      )
       .then((response) =>
         options.shouldIncludeHeadersInResponse
           ? {
-              headers: response.headers,
-              ...response.data
-            }
+            headers: response.headers,
+            ...response.data
+          }
           : response.data
       )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
@@ -222,21 +289,53 @@ export class BlingRepository implements IBlingRepository {
   >(options: IDestroyOptions<IParams, IHeaders>): Promise<IDestroyResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .delete<IDestroyResponse>(endpoint, {
-        params: options.params,
-        headers: options.headers
-      })
+      .delete<IDestroyResponse>(
+        endpoint,
+        this.buildAxiosConfig({
+          params: options.params,
+          headers: options.headers
+        })
+      )
       .then((response) =>
         options.shouldIncludeHeadersInResponse
           ? {
-              headers: response.headers,
-              ...response.data
-            }
+            headers: response.headers,
+            ...response.data
+          }
           : response.data
       )
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
+  }
+
+  /**
+   * Monta o config do axios omitindo propriedades `undefined`.
+   *
+   * @param options Params, headers e body opcionais.
+   *
+   * @returns {AxiosRequestConfig}
+   */
+  private buildAxiosConfig(options: {
+    params?: IDefaultParams | undefined
+    headers?: IDefaultHeaders | undefined
+    data?: unknown
+  }): AxiosRequestConfig {
+    const config: AxiosRequestConfig = {}
+
+    if (options.params !== undefined) {
+      config.params = options.params
+    }
+
+    if (options.headers !== undefined) {
+      config.headers = options.headers
+    }
+
+    if (options.data !== undefined) {
+      config.data = options.data
+    }
+
+    return config
   }
 
   /**

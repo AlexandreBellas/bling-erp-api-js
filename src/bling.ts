@@ -1,5 +1,14 @@
 'use strict'
 
+import { DEFAULT_API_BASE_URL } from './auth/constants'
+import { createAuthProvider } from './auth/create-auth-provider'
+import {
+  IBlingOptions,
+  IJwtAuthOptions,
+  IOAuthAuthOptions,
+  IOpaqueAuthOptions
+} from './auth/interfaces/auth-options.interface'
+import { OAuthClient } from './auth/oauth-client'
 import { Entity } from './entities/@shared/entity'
 import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
@@ -43,33 +52,29 @@ import { SituacoesModulos } from './entities/situacoesModulos'
 import { SituacoesTransicoes } from './entities/situacoesTransicoes'
 import { Usuarios } from './entities/usuarios'
 import { Vendedores } from './entities/vendedores'
+import { BlingInternalException } from './exceptions/bling-internal.exception'
 import { Newable } from './helpers/types/newable.type'
 import { getRepository } from './providers/ioc'
 import { IBlingRepository } from './repositories/bling.repository.interface'
 
 /**
- * Módulo conector à API do Bling.
+ * Base compartilhada do conector: getters de entidades e repositório HTTP.
  *
- * @class
- * @example
- * // Constrói um novo conector
- * const accessToken = 'sua-api-key'
- * const bling = new Bling(accessToken)
+ * Não instancie diretamente. Use `Bling.create`.
+ *
+ * @see https://developer.bling.com.br/referencia
  */
-export default class Bling {
+export abstract class BlingBase {
   #repository: IBlingRepository
   #modules: Record<string, Entity | undefined>
 
   /**
-   * Constrói o objeto.
+   * Constrói o conector a partir de um repositório já autenticado.
    *
-   * @param accessToken O token de acesso à API do Bling.
+   * @param repository Repositório HTTP compartilhado entre as entidades.
    */
-  constructor(
-    accessToken: string,
-    baseUrl = 'https://api.bling.com.br/Api/v3'
-  ) {
-    this.#repository = getRepository(accessToken, baseUrl)
+  protected constructor(repository: IBlingRepository) {
+    this.#repository = repository
     this.#modules = {}
   }
 
@@ -466,3 +471,149 @@ export default class Bling {
     return this.getModule(GruposDeProdutos)
   }
 }
+
+/**
+ * Cliente autenticado com JWT (`auth.method: 'jwt'`).
+ */
+export class BlingJwtClient extends BlingBase {
+  constructor(repository: IBlingRepository) {
+    super(repository)
+  }
+}
+
+/**
+ * Cliente autenticado com token opaco legado (`auth.method: 'opaque'`).
+ */
+export class BlingOpaqueClient extends BlingBase {
+  constructor(repository: IBlingRepository) {
+    super(repository)
+  }
+}
+
+/**
+ * Cliente OAuth (`auth.method: 'oauth'`).
+ * 
+ * Acesse `bling.auth` para o fluxo de autorização.
+ */
+export class BlingOAuthClient extends BlingBase {
+  constructor(
+    repository: IBlingRepository,
+    readonly auth: OAuthClient
+  ) {
+    super(repository)
+  }
+}
+
+/**
+ * Factory do conector à API do Bling.
+ *
+ * OAuth com `clientSecret` é **somente no servidor**.
+ *
+ * @example
+ * const jwt = Bling.create({
+ *   auth: { method: 'jwt', accessToken: 'seu-jwt' }
+ * })
+ *
+ * @example
+ * const oauth = Bling.create({
+ *   auth: {
+ *     method: 'oauth',
+ *     clientId: 'id',
+ *     clientSecret: 'secret',
+ *     onTokens: async (tokens) => persistir(tokens)
+ *   }
+ * })
+ * const url = oauth.auth.getAuthorizationUrl({ state: 'csrf' })
+ *
+ * @see https://developer.bling.com.br/aplicativos#fluxo-de-autoriza%C3%A7%C3%A3o
+ * @see https://developer.bling.com.br/migracao-jwt
+ */
+export class Bling {
+  private constructor() { }
+
+  /**
+   * Cria um cliente JWT.
+   *
+   * @param options URL base opcional e `auth.method: 'jwt'`.
+   *
+   * @returns {BlingJwtClient}
+   */
+  static create(options: IBlingOptions<IJwtAuthOptions>): BlingJwtClient
+
+  /**
+   * Cria um cliente com token opaco legado.
+   *
+   * @param options URL base opcional e `auth.method: 'opaque'`.
+   *
+   * @returns {BlingOpaqueClient}
+   */
+  static create(options: IBlingOptions<IOpaqueAuthOptions>): BlingOpaqueClient
+
+  /**
+   * Cria um cliente OAuth (authorization code, refresh e revoke).
+   *
+   * @param options URL base opcional e `auth.method: 'oauth'`.
+   *
+   * @returns {BlingOAuthClient}
+   */
+  static create(options: IBlingOptions<IOAuthAuthOptions>): BlingOAuthClient
+
+  /**
+   * Cria o conector conforme `auth.method`.
+   *
+   * @param options Opções nomeadas de conexão.
+   *
+   * @returns {BlingBase}
+   */
+  static create(options: IBlingOptions): BlingBase {
+    const baseUrl = options.baseUrl ?? DEFAULT_API_BASE_URL
+
+    switch (options.auth.method) {
+      case 'jwt':
+        return new BlingJwtClient(
+          getRepository({
+            baseUrl,
+            authProvider: createAuthProvider(options.auth)
+          })
+        )
+      case 'opaque':
+        return new BlingOpaqueClient(
+          getRepository({
+            baseUrl,
+            authProvider: createAuthProvider(options.auth)
+          })
+        )
+      case 'oauth': {
+        const authProvider = createAuthProvider(options.auth)
+        return new BlingOAuthClient(
+          getRepository({ baseUrl, authProvider }),
+          authProvider.oauthClient
+        )
+      }
+      default: {
+        const exhaustive: never = options.auth
+        throw new BlingInternalException(
+          `Método de autenticação não suportado: ${String(exhaustive)}`
+        )
+      }
+    }
+  }
+}
+
+export default Bling
+
+export type {
+  IBlingAuthOptions,
+  IBlingOptions,
+  IJwtAuthOptions,
+  IOAuthAuthOptions,
+  IOpaqueAuthOptions
+} from './auth/interfaces/auth-options.interface'
+export type { IAuthorizationUrlParams } from './auth/interfaces/authorization-url.interface'
+export type { IRevokeOptions } from './auth/interfaces/revoke.interface'
+export type { IBlingTokenSet } from './auth/interfaces/token-set.interface'
+export { OAuthClient } from './auth/oauth-client'
+export type { IRevokeAction } from './auth/types/revoke-action.type'
+export type { IRevokeTarget } from './auth/types/revoke-target.type'
+export type { ITokenTypeHint } from './auth/types/token-type-hint.type'
+

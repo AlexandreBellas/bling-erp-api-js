@@ -32,11 +32,14 @@ Entity class JSDoc links to the resource group anchor (e.g. `#/Contatos`, `#/Cam
 
 ## Authentication Docs
 
-OAuth and token acquisition are **not** implemented in this library. Point consumers to:
+Auth is implemented in `src/auth/` and constructed via `Bling.create({ auth })`.
 
-- `README.md` — authentication section
-- `https://developer.bling.com.br/aplicativos#tokens-de-acesso`
-- `demo/` — working authorization demo
+Point consumers to:
+
+- `README.md` — JWT, opaque, and OAuth examples (`onTokens`, server-side secret)
+- `https://developer.bling.com.br/aplicativos#fluxo-de-autoriza%C3%A7%C3%A3o`
+- `https://developer.bling.com.br/migracao-jwt`
+- `demo/` — authorization-code sample using `Bling.create({ auth: { method: 'oauth' } })`
 
 ## Endpoint Verification
 
@@ -48,4 +51,4 @@ Before merging new operations:
 
 ## Versioning
 
-Package major version 5.x targets API v3 (`README.md`). Breaking Bling API changes may require interface updates across affected `interfaces/` files.
+Package major version 6.x targets API v3 with `Bling.create({ auth })` (`README.md`). Breaking Bling API changes may require interface updates across affected `interfaces/` files.

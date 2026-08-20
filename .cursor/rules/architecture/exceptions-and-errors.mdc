@@ -1,6 +1,6 @@
 ---
 description: Exception types and API error handling flow
-globs: src/exceptions/**,src/repositories/bling.repository.ts
+globs: src/exceptions/**,src/repositories/bling.repository.ts,src/auth/oauth-client.ts
 alwaysApply: false
 ---
 
@@ -24,7 +24,7 @@ alwaysApply: false
 
 ## Handling Flow
 
-Only `BlingRepository.defaultCatchBehavior` in `src/repositories/bling.repository.ts` interprets axios errors. Entities propagate exceptions; they do not wrap or swallow them.
+`BlingRepository.defaultCatchBehavior` and `OAuthClient` interpret axios errors into the same two exception types. Entities propagate exceptions; they do not wrap or swallow them.
 
 Consumers should catch `BlingApiException` for business/API errors and `BlingInternalException` for connectivity issues.
 

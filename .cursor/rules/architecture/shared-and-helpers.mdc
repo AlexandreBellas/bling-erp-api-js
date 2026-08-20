@@ -40,7 +40,7 @@ Add here only when **two or more** modules share the **same** Bling value set. S
 
 `src/helpers/functions/convert-date-to-string.ts` — used by `Entity.prepareStringOrDateParam`. Builds `YYYY-M-D` or `YYYY-M-D H:M:S` from `Date` getters (**not** zero-padded). Strings are passed through unchanged.
 
-`src/helpers/types/newable.type.ts` — constructor type for `Bling.getModule` generic constraint.
+`getModule` uses `Newable<T>` from `src/helpers/types/newable.type.ts` and caches by `EntityClass.name` (`BlingBase`).
 
 ## Conventions
 

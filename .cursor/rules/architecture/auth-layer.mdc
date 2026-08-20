@@ -1,0 +1,37 @@
+---
+description: Auth strategies, OAuth client, and Bling.create options
+globs: src/auth/**
+alwaysApply: false
+---
+
+# Auth Layer
+
+`src/auth/` is the Strategy layer for JWT, opaque, and OAuth. Entities never import it.
+
+## Public construction
+
+`Bling.create({ baseUrl?, auth })` with discriminated `auth.method`:
+
+- `jwt` — Bearer + `enable-jwt: 1` on resource calls; no `.auth`.
+- `opaque` — Bearer only (legacy); no `.auth`.
+- `oauth` — `OAuthClient` on `BlingOAuthClient.auth`; always JWT for token exchange and resource calls. **Server-side only.**
+
+No `tokenFormat` option. OAuth always sends `enable-jwt: 1` on `POST /oauth/token`.
+
+## Internals
+
+| Piece | Role |
+|-------|------|
+| `IAuthProvider` | `applyRequestHeaders`; optional `handleUnauthorized` |
+| `JwtAuthProvider` / `OpaqueAuthProvider` / `OAuthAuthProvider` | Concrete strategies |
+| `createAuthProvider` | Sole `auth.method` switch |
+| `OAuthClient` | authorize URL, code exchange, refresh, revoke |
+| Defaults | Resource `https://api.bling.com.br/Api/v3`; OAuth `https://www.bling.com.br/Api/v3` |
+
+Coalesce in-flight refresh when `autoRefresh` is on. Basic auth on token/revoke **headers only**. Reuse `BlingApiException` / `BlingInternalException`. Do not parse JWT payloads.
+
+Revoke body: `token`, `token_type_hint`; advanced `revoke_action` (`logout` \| `uninstall`) and `revoke_target` (`user` \| `company`).
+
+## Tests
+
+Colocate under `src/auth/**/__tests__`. Mock axios; do not hit live Bling.

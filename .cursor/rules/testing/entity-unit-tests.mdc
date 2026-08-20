@@ -62,4 +62,4 @@ Spy the repository method the entity actually calls, not the HTTP verb name. Cro
 ## What Not to Test Here
 
 - Real HTTP calls to Bling (no integration tests in repo).
-- Axios interceptor behavior (belongs to repository layer if tested separately).
+- Auth interceptors belong in `src/repositories/__tests__/`; OAuth/token tests in `src/auth/**/__tests__`.

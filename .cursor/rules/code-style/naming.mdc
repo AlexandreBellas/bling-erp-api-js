@@ -43,4 +43,4 @@ English verbs describing the action, aligned with Bling docs:
 
 ## Facade Getters
 
-camelCase property names on `Bling` matching entity purpose (`bling.formasDePagamento`, `bling.naturezasDeOperacoes`).
+camelCase property names on `BlingBase` matching entity purpose (`bling.formasDePagamento`, `bling.naturezasDeOperacoes`). OAuth-only: `bling.auth`.

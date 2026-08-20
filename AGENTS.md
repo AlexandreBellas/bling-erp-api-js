@@ -1,6 +1,6 @@
 # AGENTS.md
 
-TypeScript/JavaScript client for the [Bling ERP API v3](https://developer.bling.com.br/). Consumers instantiate `Bling` with a Bearer access token and call typed methods on 42 resource modules (contacts, products, NFe, orders, logistics, etc.). HTTP is centralized in a repository layer; entities map Bling endpoints to `get`, `find`, `create`, `update`, `delete`, and domain-specific actions with full TypeScript interfaces.
+TypeScript/JavaScript client for the [Bling ERP API v3](https://developer.bling.com.br/). Consumers call `Bling.create({ auth })` with `method: 'jwt' | 'opaque' | 'oauth'` and then typed methods on 42 resource modules (contacts, products, NFe, orders, logistics, etc.). HTTP is centralized in a repository layer that delegates headers/401 retry to `IAuthProvider`; entities map Bling endpoints to `get`, `find`, `create`, `update`, `delete`, and domain-specific actions. OAuth (`authorization_code`, refresh, revoke) lives in `src/auth/` and is **server-side only**.
 
 ## Cursor Rules
 
@@ -11,9 +11,10 @@ Rules live under `.cursor/rules/`. Each file is scoped by topic; open the linked
 | Rule | Summary |
 |------|---------|
 | [overview](.cursor/rules/architecture/overview.mdc) | Layering, assumptions, and full entity module inventory |
+| [auth-layer](.cursor/rules/architecture/auth-layer.mdc) | `IAuthProvider` strategies, `OAuthClient`, `Bling.create` auth options |
 | [repository-layer](.cursor/rules/architecture/repository-layer.mdc) | `IBlingRepository` verb mapping and axios transport |
 | [entity-modules](.cursor/rules/architecture/entity-modules.mdc) | Per-resource folder layout and method conventions |
-| [bling-facade](.cursor/rules/architecture/bling-facade.mdc) | `Bling` entry class and lazy module registration |
+| [bling-facade](.cursor/rules/architecture/bling-facade.mdc) | `Bling.create`, leaf clients, and lazy module registration |
 | [extending-entities](.cursor/rules/architecture/extending-entities.mdc) | Checklist for new modules and operations |
 | [exceptions-and-errors](.cursor/rules/architecture/exceptions-and-errors.mdc) | `BlingApiException` / `BlingInternalException` flow |
 | [shared-and-helpers](.cursor/rules/architecture/shared-and-helpers.mdc) | `@shared` types, base `Entity`, and helpers |

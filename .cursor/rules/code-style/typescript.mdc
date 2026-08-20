@@ -27,7 +27,7 @@ Tests and fixtures are development-only; published package contains `lib/**/*` p
 
 - ES module `import`/`export` in source (compiled to CommonJS).
 - `'use strict'` at top of `src/bling.ts` (legacy; preserve if editing that file).
-- Default export for `Bling` class; named exports for entities, exceptions, repository types.
+- Default export for `Bling`; named exports for `BlingBase`, client classes, `OAuthClient`, auth types, entities, exceptions, repository types.
 
 ## Typing Practices
 

@@ -48,6 +48,6 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 
 ## Do Not
 
-- Create alternate HTTP clients outside `src/repositories/`.
+- Create alternate HTTP clients outside `src/repositories/` (OAuth token/revoke HTTP belongs in `src/auth/oauth-client.ts` only).
 - Put test fixtures in `interfaces/` or production types in `__tests__/`.
 - Skip `@see` links to Bling reference in JSDoc.

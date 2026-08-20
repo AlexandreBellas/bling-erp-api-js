@@ -1,7 +1,13 @@
 'use strict'
 
 import { Chance } from 'chance'
-import Bling from './bling'
+import Bling, {
+  BlingBase,
+  BlingJwtClient,
+  BlingOAuthClient,
+  BlingOpaqueClient
+} from './bling'
+import { OAuthClient } from './auth/oauth-client'
 import { Borderos } from './entities/borderos'
 import { CamposCustomizados } from './entities/camposCustomizados'
 import { CategoriasLojas } from './entities/categoriasLojas'
@@ -48,12 +54,41 @@ import { GruposDeProdutos } from './entities/gruposDeProdutos'
 const chance = Chance()
 
 const createBling = (accessToken: string) => {
-  return new Bling(accessToken)
+  return Bling.create({
+    auth: { method: 'jwt', accessToken }
+  })
 }
 
 describe('Bling main module', () => {
-  it('should instantiate correctly', () => {
-    expect(createBling(chance.word())).toBeInstanceOf(Bling)
+  it('should instantiate a JWT client', () => {
+    const bling = createBling(chance.word())
+
+    expect(bling).toBeInstanceOf(BlingJwtClient)
+    expect(bling).toBeInstanceOf(BlingBase)
+    expect(bling).not.toBeInstanceOf(Bling)
+    expect((bling as unknown as { auth?: unknown }).auth).toBeUndefined()
+  })
+
+  it('should instantiate an opaque client without auth', () => {
+    const bling = Bling.create({
+      auth: { method: 'opaque', accessToken: chance.word() }
+    })
+
+    expect(bling).toBeInstanceOf(BlingOpaqueClient)
+    expect((bling as unknown as { auth?: unknown }).auth).toBeUndefined()
+  })
+
+  it('should instantiate an OAuth client with auth', () => {
+    const bling = Bling.create({
+      auth: {
+        method: 'oauth',
+        clientId: chance.word(),
+        clientSecret: chance.word()
+      }
+    })
+
+    expect(bling).toBeInstanceOf(BlingOAuthClient)
+    expect(bling.auth).toBeInstanceOf(OAuthClient)
   })
 
   it('should retrieve borderôs entity', () => {

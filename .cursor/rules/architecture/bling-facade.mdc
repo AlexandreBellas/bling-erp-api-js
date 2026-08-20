@@ -10,37 +10,28 @@ alwaysApply: false
 
 ## Responsibilities
 
-1. Accept `accessToken` and optional `baseUrl` (default `https://api.bling.com.br/Api/v3`).
-2. Obtain `IBlingRepository` via `getRepository` from `src/providers/ioc.ts`.
-3. Lazily instantiate and cache entity modules through private `getModule`.
-4. Expose one **camelCase getter** per entity for consumer ergonomics.
+1. Expose `Bling.create(options)` with discriminated `auth.method` (`jwt` | `opaque` | `oauth`).
+2. Return `BlingJwtClient` / `BlingOpaqueClient` / `BlingOAuthClient` (all extend `BlingBase`). Only OAuth has `readonly auth: OAuthClient`.
+3. Obtain `IBlingRepository` via `getRepository({ baseUrl, authProvider })`.
+4. Lazily instantiate entity modules through private `getModule` on `BlingBase`.
+
+`Bling` is a factory (private constructor). `BlingBase` is abstract. Do not use `new Bling(...)`.
 
 ## Module Registration Pattern
 
 When adding a resource:
 
 1. Import the entity class from `src/entities/<module>/`.
-2. Add a public getter returning `this.getModule(<EntityClass>)`.
-3. Place imports alphabetically or grouped consistently with existing blocks in `src/bling.ts`.
+2. Add a public getter on `BlingBase` returning `this.getModule(<EntityClass>)`.
 
-`getModule` uses `Newable<T>` from `src/helpers/types/newable.type.ts` and caches by `EntityClass.name`.
-
-## Getter Naming
-
-Getter names match README entity list and Bling consumer docs:
-
-- Compound resources use camelCase (`camposCustomizados`, `pedidosVendas`, `logisticasEtiquetas`).
-- Getter return type is the concrete entity class.
+`getModule` uses `Newable<T>` and caches by `EntityClass.name`.
 
 ## What Does Not Belong Here
 
 - HTTP logic, axios, or endpoint strings.
-- Business validation beyond construction.
-- OAuth/token exchange (documented in `README.md`; demo in `demo/`).
+- Auth header/refresh logic — that is `src/auth/` + repository interceptors.
 
-## Private Fields
+## Private Fields (`BlingBase`)
 
-- `#repository` — shared across all modules for one `Bling` instance.
+- `#repository` — shared across all modules for one client instance.
 - `#modules` — `Record<string, Entity | undefined>` cache.
-
-Each entity shares the same repository instance, so all modules use the same token and base URL for a given connection.

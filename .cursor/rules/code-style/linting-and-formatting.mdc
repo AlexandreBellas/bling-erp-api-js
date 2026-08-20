@@ -16,7 +16,7 @@ alwaysApply: false
 
 | Scope | Rule |
 |-------|------|
-| `src/entities/**` | `camelcase: off` — Bling field/header names in nested entity files |
+| `src/entities/**`, `src/auth/**` | `camelcase: off` — Bling field/header names (`access_token`, `enable-jwt`) |
 | `*.spec.ts`, `*.spec.js`, `*.test.ts`, `*.test.js` | `no-undef: off` |
 | All files | `space-before-function-paren: off` |
 | Global | `@typescript-eslint/no-var-requires: off` |

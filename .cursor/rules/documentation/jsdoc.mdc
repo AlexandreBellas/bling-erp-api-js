@@ -1,6 +1,6 @@
 ---
 description: JSDoc documentation standards for public API
-globs: src/bling.ts,src/entities/**/index.ts,src/repositories/**,src/exceptions/**
+globs: src/bling.ts,src/entities/**/index.ts,src/repositories/**,src/exceptions/**,src/auth/**
 alwaysApply: false
 ---
 

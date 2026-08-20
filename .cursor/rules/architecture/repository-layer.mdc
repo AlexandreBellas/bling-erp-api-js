@@ -21,36 +21,23 @@ alwaysApply: false
 | `replace` | PATCH `endpoint/id` | Full replacements (despite "replace" name; see `BlingRepository.replace`) |
 | `destroy` | DELETE `endpoint/id` | Delete single or bulk (empty `id` + query params) |
 
-### Options Shape
-
-All calls accept an options object extending `IDefaultOptions` with:
-
-- `endpoint` — path segment(s) without leading slash
-- `params` — query parameters (`IDefaultParams`)
-- `headers` — optional (`IDefaultHeaders`)
-- `shouldIncludeHeadersInResponse` — optional flag typed as `true`; merges response headers into the return value (`src/entities/homologacao/index.ts`)
-
-`index` also allows optional `body` (`IIndexOptions`); no entity currently sends it. `store` / `update` / `replace` require `body`. Id-bearing calls add `id` (string, may include sub-paths like `` `${idContato}/situacoes` ``).
-
 ## Implementation
 
 `src/repositories/bling.repository.ts`:
 
-- Creates an axios instance with `baseURL` from constructor props.
-- Injects `Authorization: Bearer <accessToken>` via request interceptor.
-- Maps axios responses to `response.data` (or data + headers when flagged).
-- On failure: throws `BlingApiException` when Bling returns `IDefaultErrorResponse` (`src/entities/@shared/interfaces/error.interface.ts`); otherwise `BlingInternalException`.
+- Creates axios with `baseURL`; constructor takes `{ baseUrl, authProvider }` — **no stored token**.
+- Request interceptor: `authProvider.applyRequestHeaders` (does not branch on `auth.method`).
+- Response interceptor: on **401**, `handleUnauthorized()` and retry **once**.
+- Maps axios errors to `BlingApiException` / `BlingInternalException`.
+
+OAuth HTTP (`/oauth/token`, `/oauth/revoke`) lives in `src/auth/oauth-client.ts`, not here.
 
 ## Test Double
 
-`src/repositories/bling-in-memory.repository.ts` implements `IBlingRepository` for unit tests:
-
-- Per-verb response setters (`setIndexResponse`, `setShowResponse`, etc.) and a global `setResponse` fallback.
-- Ignores options; returns configured mocks.
+`src/repositories/bling-in-memory.repository.ts` is unchanged and auth-agnostic.
 
 ## Rules for Changes
 
 - Add new HTTP patterns only here — never in entity classes.
-- Keep generic type parameters on repository methods when extending the interface.
-- Preserve error mapping in `defaultCatchBehavior`; entities should not catch axios errors.
-- If Bling uses PUT for an endpoint, confirm whether `update` or `replace` is correct by checking an existing similar entity (e.g. `src/entities/contatos/index.ts` uses `replace` for PUT-style updates).
+- Preserve error mapping in `defaultCatchBehavior`.
+- Interceptor tests belong in `src/repositories/__tests__/`.
