@@ -82,7 +82,7 @@ describe('PropostasComerciais entity', () => {
         dataInicial: undefined,
         dataFinal: undefined,
         pagina: undefined,
-        limite: undefined,
+        limite: undefined
       }
     })
     expect(response).toBe(getResponse)

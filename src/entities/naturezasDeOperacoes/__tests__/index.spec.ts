@@ -3,9 +3,7 @@ import { NaturezasDeOperacoes } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
 import { IObtainTaxResponse } from '../interfaces/obtain-tax.interface'
 import { IGetResponse } from '../interfaces/get.interface'
-import obtainTaxResponse, {
-  obtainTaxRequestBody
-} from './obtain-tax-response'
+import obtainTaxResponse, { obtainTaxRequestBody } from './obtain-tax-response'
 import getResponse from './get-response'
 
 const chance = Chance()
@@ -60,8 +58,7 @@ describe('Naturezas de Operação entity', () => {
     })
     expect(response).toBe(obtainTaxResponse)
 
-    const typingResponseTest: IObtainTaxResponse =
-      obtainTaxResponse
+    const typingResponseTest: IObtainTaxResponse = obtainTaxResponse
     expect(typingResponseTest).toBe(obtainTaxResponse)
   })
 })

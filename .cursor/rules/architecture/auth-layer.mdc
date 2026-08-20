@@ -22,7 +22,7 @@ No `tokenFormat` option. OAuth always sends `enable-jwt: 1` on `POST /oauth/toke
 
 | Piece | Role |
 |-------|------|
-| `IAuthProvider` | `applyRequestHeaders`; optional `handleUnauthorized` |
+| `IAuthProvider` | `applyRequestHeaders`; optional `ensureFreshToken`, `handleUnauthorized` |
 | `JwtAuthProvider` / `OpaqueAuthProvider` / `OAuthAuthProvider` | Concrete strategies |
 | `createAuthProvider` | Sole `auth.method` switch |
 | `OAuthClient` | authorize URL, code exchange, refresh, revoke |

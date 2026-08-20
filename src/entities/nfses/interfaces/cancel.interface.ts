@@ -1,4 +1,4 @@
-import { ICancelarCodigoMotivo } from "../types/cancelar-codigo-motivo.type"
+import { ICancelarCodigoMotivo } from '../types/cancelar-codigo-motivo.type'
 
 export interface ICancelParams {
   /**

@@ -100,7 +100,8 @@ describe('NFS-es entity', () => {
     })
     expect(response).toBe(getConfigurationsResponse)
 
-    const typingResponseTest: IGetConfigurationsResponse = getConfigurationsResponse
+    const typingResponseTest: IGetConfigurationsResponse =
+      getConfigurationsResponse
     expect(typingResponseTest).toBe(getConfigurationsResponse)
   })
 

@@ -26,8 +26,8 @@ alwaysApply: false
 `src/repositories/bling.repository.ts`:
 
 - Creates axios with `baseURL`; constructor takes `{ baseUrl, authProvider }` — **no stored token**.
-- Request interceptor: `authProvider.applyRequestHeaders` (does not branch on `auth.method`).
-- Response interceptor: on **401**, `handleUnauthorized()` and retry **once**.
+- Request interceptor: optional `authProvider.ensureFreshToken`, then `applyRequestHeaders` (does not branch on `auth.method`).
+- Response interceptor: on **401**, `handleUnauthorized()` and retry **once**. Refresh throw does **not** replace original 401.
 - Maps axios errors to `BlingApiException` / `BlingInternalException`.
 
 OAuth HTTP (`/oauth/token`, `/oauth/revoke`) lives in `src/auth/oauth-client.ts`, not here.

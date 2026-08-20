@@ -13,6 +13,13 @@ export interface IAuthProvider {
   applyRequestHeaders(headers: Record<string, string>): void
 
   /**
+   * Garante um access token utilizável antes de enviar a requisição.
+   *
+   * Usado no cold start quando só há `refreshToken`.
+   */
+  ensureFreshToken?(): Promise<void>
+
+  /**
    * Tenta recuperar de um `401`. Deve retornar `true` se a requisição original
    * puder ser repetida uma vez (por exemplo, após refresh).
    */

@@ -83,4 +83,79 @@ describe('OAuthAuthProvider', () => {
     await expect(provider.handleUnauthorized()).resolves.toBe(false)
     expect(refreshSpy).not.toHaveBeenCalled()
   })
+
+  it('should resolve handleUnauthorized to false when autoRefresh is on but there is no refresh token', async () => {
+    const provider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret',
+      autoRefresh: true
+    })
+    const refreshSpy = jest.spyOn(provider.oauthClient, 'refreshTokens')
+
+    await expect(provider.handleUnauthorized()).resolves.toBe(false)
+    expect(refreshSpy).not.toHaveBeenCalled()
+  })
+
+  it('should propagate refreshTokens rejection from handleUnauthorized', async () => {
+    const provider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret',
+      refreshToken: 'refresh'
+    })
+    const refreshError = new Error('refresh failed')
+    jest
+      .spyOn(provider.oauthClient, 'refreshTokens')
+      .mockRejectedValue(refreshError)
+
+    await expect(provider.handleUnauthorized()).rejects.toBe(refreshError)
+  })
+
+  it('should eagerly refresh when ensureFreshToken runs without an access token', async () => {
+    const provider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret',
+      refreshToken: 'refresh'
+    })
+    const refreshSpy = jest
+      .spyOn(provider.oauthClient, 'refreshTokens')
+      .mockResolvedValue({
+        access_token: 'new',
+        refresh_token: 'refresh-2'
+      })
+
+    await provider.ensureFreshToken()
+
+    expect(refreshSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should no-op ensureFreshToken when both tokens are absent', async () => {
+    const provider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret'
+    })
+    const refreshSpy = jest.spyOn(provider.oauthClient, 'refreshTokens')
+
+    await provider.ensureFreshToken()
+
+    expect(refreshSpy).not.toHaveBeenCalled()
+  })
+
+  it('should no-op ensureFreshToken when an access token is already present', async () => {
+    const provider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret',
+      accessToken: 'jwt-token',
+      refreshToken: 'refresh'
+    })
+    const refreshSpy = jest.spyOn(provider.oauthClient, 'refreshTokens')
+
+    await provider.ensureFreshToken()
+
+    expect(refreshSpy).not.toHaveBeenCalled()
+  })
 })

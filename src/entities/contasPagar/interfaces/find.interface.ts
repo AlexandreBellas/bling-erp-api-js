@@ -65,9 +65,9 @@ export interface IFindResponse {
     categoria: { id: number }
     borderos: number[]
     ocorrencia:
-    | ContasPagarOcorrenciaUnicaDTO
-    | ContasPagarOcorrenciaParceladaDTO
-    | ContasPagarOcorrenciaDTO
-    | ContasPagarOcorrenciaSemanalDTO
+      | ContasPagarOcorrenciaUnicaDTO
+      | ContasPagarOcorrenciaParceladaDTO
+      | ContasPagarOcorrenciaDTO
+      | ContasPagarOcorrenciaSemanalDTO
   }
 }

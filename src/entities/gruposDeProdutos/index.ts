@@ -7,10 +7,7 @@ import {
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import {
-  IUpdateBody,
-  IUpdateParams
-} from './interfaces/update.interface'
+import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Grupos de Produtos.
@@ -72,7 +69,7 @@ export class GruposDeProdutos extends Entity {
         nome: params?.nome,
         nomePai: params?.nomePai,
         pagina: params?.pagina,
-        limite: params?.limite,
+        limite: params?.limite
       }
     })
   }
@@ -121,9 +118,7 @@ export class GruposDeProdutos extends Entity {
    *
    * @see https://developer.bling.com.br/referencia#/Grupos%20de%20Produtos/put_grupos_produtos__idGrupoProduto_
    */
-  public async update(
-    params: IUpdateParams & IUpdateBody
-  ): Promise<null> {
+  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
     const { idGrupoProduto, ...body } = params
 
     return await this.repository.replace({

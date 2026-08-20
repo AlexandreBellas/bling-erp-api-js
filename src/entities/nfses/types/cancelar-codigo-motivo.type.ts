@@ -3,7 +3,4 @@
  * - `2`: Serviço não Prestado
  * - `9`: Outros
  */
-export type ICancelarCodigoMotivo =
-  | 1
-  | 2
-  | 9
+export type ICancelarCodigoMotivo = 1 | 2 | 9

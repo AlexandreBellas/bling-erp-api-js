@@ -1,5 +1,8 @@
 import { Entity } from '../@shared/entity'
-import { IChangeSituationBody, IChangeSituationParams } from './interfaces/change-situation.interface'
+import {
+  IChangeSituationBody,
+  IChangeSituationParams
+} from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
@@ -110,9 +113,7 @@ export class OrdensDeProducao extends Entity {
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Produ%C3%A7%C3%A3o/put_ordens_producao__idOrdemProducao_
    */
-  public async update(
-    params: IUpdateParams & IUpdateBody
-  ): Promise<null> {
+  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
     const { idOrdemProducao, ...body } = params
 
     return await this.repository.replace({
@@ -121,6 +122,7 @@ export class OrdensDeProducao extends Entity {
       body
     })
   }
+
   /**
    * Altera a situação de uma ordem de produção.
    *

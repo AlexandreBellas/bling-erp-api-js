@@ -39,7 +39,7 @@ English verbs describing the action, aligned with Bling docs:
 
 ## ESLint Note
 
-`camelcase` is **disabled** for `src/entities/**` (`.eslintrc.json`) so Bling field names and header keys in nested `interfaces/` files are not rewritten.
+`camelcase` is **disabled** for `src/entities/**` (`eslint.config.ts`) so Bling field names and header keys in nested `interfaces/` files are not rewritten.
 
 ## Facade Getters
 

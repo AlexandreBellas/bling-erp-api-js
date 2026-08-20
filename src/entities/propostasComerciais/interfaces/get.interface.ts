@@ -1,4 +1,3 @@
-
 export interface IGetParams {
   /**
    * O valor referente a situação da proposta: Pendente, Aguardando, Não aprovado, Aprovado, Concluido, Rascunho. Para mais situações, pesquisar pelo número separado por vírgula.
@@ -41,5 +40,4 @@ export interface IGetResponse {
       id?: number
     }
   }[]
-
 }

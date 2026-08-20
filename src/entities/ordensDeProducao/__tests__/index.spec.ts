@@ -112,7 +112,8 @@ describe('OrdensDeProducao entity', () => {
     })
     expect(response).toBe(generateOverDemandResponse)
 
-    const typingResponseTest: IGenerateOverDemandResponse = generateOverDemandResponse
+    const typingResponseTest: IGenerateOverDemandResponse =
+      generateOverDemandResponse
     expect(typingResponseTest).toBe(generateOverDemandResponse)
   })
 

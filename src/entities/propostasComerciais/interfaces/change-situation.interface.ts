@@ -1,4 +1,3 @@
-
 export interface IChangeSituationParams {
   /**
    * ID da proposta comercial

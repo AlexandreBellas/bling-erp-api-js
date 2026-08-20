@@ -158,4 +158,103 @@ describe('BlingRepository interceptors', () => {
     })
     expect(adapter).toHaveBeenCalledTimes(2)
   })
+
+  it('should surface the original 401 when handleUnauthorized rejects', async () => {
+    const authProvider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret',
+      accessToken: 'expired',
+      refreshToken: 'refresh'
+    })
+    jest
+      .spyOn(authProvider, 'handleUnauthorized')
+      .mockRejectedValue(new Error('refresh failed'))
+
+    const repository = new BlingRepository({
+      baseUrl: 'https://api.bling.com.br/Api/v3',
+      authProvider
+    })
+
+    const adapter = jest.fn(async (config) => {
+      const error = Object.assign(new Error('Unauthorized'), {
+        isAxiosError: true,
+        response: {
+          status: 401,
+          data: {
+            error: {
+              type: 'invalid_token',
+              message: 'Erro',
+              description: 'Token inválido'
+            }
+          },
+          headers: {},
+          config
+        },
+        config
+      })
+      throw error
+    })
+    assignAdapter(repository, adapter)
+
+    await expect(
+      repository.index({ endpoint: 'produtos' })
+    ).rejects.toMatchObject({
+      message: 'Token inválido'
+    })
+    expect(adapter).toHaveBeenCalledTimes(1)
+  })
+
+  it('should await ensureFreshToken before sending the first request', async () => {
+    const authProvider = new OAuthAuthProvider({
+      method: 'oauth',
+      clientId: 'id',
+      clientSecret: 'secret',
+      refreshToken: 'refresh'
+    })
+    const sequence: string[] = []
+    jest
+      .spyOn(authProvider, 'ensureFreshToken')
+      .mockImplementation(async () => {
+        sequence.push('ensureFreshToken')
+        jest
+          .spyOn(authProvider.oauthClient, 'accessToken', 'get')
+          .mockReturnValue('fresh')
+      })
+    const applyRequestHeaders =
+      authProvider.applyRequestHeaders.bind(authProvider)
+    jest
+      .spyOn(authProvider, 'applyRequestHeaders')
+      .mockImplementation((headers) => {
+        sequence.push('applyRequestHeaders')
+        applyRequestHeaders(headers)
+      })
+
+    const repository = new BlingRepository({
+      baseUrl: 'https://api.bling.com.br/Api/v3',
+      authProvider
+    })
+    const adapter = jest.fn(async (config) => {
+      sequence.push('request')
+      return {
+        data: { data: [] },
+        status: 200,
+        statusText: 'OK',
+        headers: {},
+        config
+      }
+    })
+    assignAdapter(repository, adapter)
+
+    await repository.index({ endpoint: 'produtos' })
+
+    expect(sequence).toEqual([
+      'ensureFreshToken',
+      'applyRequestHeaders',
+      'request'
+    ])
+    expect(adapter.mock.calls[0]?.[0].headers.get('Authorization')).toBe(
+      'Bearer fresh'
+    )
+  })
 })

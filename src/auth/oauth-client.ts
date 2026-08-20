@@ -24,7 +24,7 @@ export class OAuthClient {
   private readonly oauthBaseUrl: string
   private readonly onTokens?: IOAuthAuthOptions['onTokens']
   private readonly http: AxiosInstance
-  private currentTokenSet?: IBlingTokenSet
+  private currentTokenSet?: Partial<IBlingTokenSet>
 
   /**
    * Constrói o cliente OAuth.
@@ -44,11 +44,8 @@ export class OAuthClient {
 
     if (options.accessToken || options.refreshToken) {
       this.currentTokenSet = {
-        access_token: options.accessToken ?? ''
-      }
-
-      if (options.refreshToken) {
-        this.currentTokenSet.refresh_token = options.refreshToken
+        ...(options.accessToken ? { access_token: options.accessToken } : {}),
+        ...(options.refreshToken ? { refresh_token: options.refreshToken } : {})
       }
     }
   }
@@ -69,9 +66,11 @@ export class OAuthClient {
   }
 
   /**
-   * Obtém o último conjunto de tokens retornado pelo Bling.
+   * Obtém o último conjunto de tokens conhecido.
+   *
+   * Pode ser parcial quando o cliente foi construído só com `refreshToken`.
    */
-  public get tokenSet(): IBlingTokenSet | undefined {
+  public get tokenSet(): Partial<IBlingTokenSet> | undefined {
     return this.currentTokenSet
   }
 

@@ -6,8 +6,8 @@ export default {
         {
           produto: {
             id: 12345678,
-            nome: "Nome do produto",
-            codigo: "Código do produto"
+            nome: 'Nome do produto',
+            codigo: 'Código do produto'
           },
           quantidade: 1
         }

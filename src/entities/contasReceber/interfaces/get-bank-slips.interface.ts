@@ -8,10 +8,10 @@ export interface IGetBankSlipsParams {
 export interface IGetBankSlipsResponse {
   venda: {
     numero: string
-  },
+  }
   notaFiscal: {
     numero: string
-  },
+  }
   valorTotal: number
   contas: {
     id: number

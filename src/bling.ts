@@ -492,7 +492,7 @@ export class BlingOpaqueClient extends BlingBase {
 
 /**
  * Cliente OAuth (`auth.method: 'oauth'`).
- * 
+ *
  * Acesse `bling.auth` para o fluxo de autorização.
  */
 export class BlingOAuthClient extends BlingBase {
@@ -529,7 +529,7 @@ export class BlingOAuthClient extends BlingBase {
  * @see https://developer.bling.com.br/migracao-jwt
  */
 export class Bling {
-  private constructor() { }
+  private constructor() {}
 
   /**
    * Cria um cliente JWT.
@@ -616,4 +616,3 @@ export { OAuthClient } from './auth/oauth-client'
 export type { IRevokeAction } from './auth/types/revoke-action.type'
 export type { IRevokeTarget } from './auth/types/revoke-target.type'
 export type { ITokenTypeHint } from './auth/types/token-type-hint.type'
-

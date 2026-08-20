@@ -11,10 +11,7 @@ import {
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import {
-  IUpdateBody,
-  IUpdateParams
-} from './interfaces/update.interface'
+import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
  * Entidade para interação com propostas comerciais.
@@ -75,16 +72,10 @@ export class PropostasComerciais extends Entity {
       params: {
         situacao: params?.situacao,
         idContato: params?.idContato,
-        dataInicial: this.prepareStringOrDateParam(
-          params?.dataInicial,
-          true
-        ),
-        dataFinal: this.prepareStringOrDateParam(
-          params?.dataFinal,
-          true
-        ),
+        dataInicial: this.prepareStringOrDateParam(params?.dataInicial, true),
+        dataFinal: this.prepareStringOrDateParam(params?.dataFinal, true),
         pagina: params?.pagina,
-        limite: params?.limite,
+        limite: params?.limite
       }
     })
   }
@@ -154,9 +145,7 @@ export class PropostasComerciais extends Entity {
    *
    * @see https://developer.bling.com.br/referencia#/Propostas%20Comerciais/put_propostas_comerciais__idPropostaComercial_
    */
-  public async update(
-    params: IUpdateParams & IUpdateBody
-  ): Promise<null> {
+  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
     const { idPropostaComercial, ...body } = params
 
     return await this.repository.replace({

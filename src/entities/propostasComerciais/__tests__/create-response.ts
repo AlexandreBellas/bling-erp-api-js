@@ -5,8 +5,8 @@ export default {
 }
 
 export const createRequestBody = {
-  data: "2024-04-29",
-  situacao: "Concluído",
+  data: '2024-04-29',
+  situacao: 'Concluído',
   numero: 13,
   contato: {
     id: 12345678
@@ -17,33 +17,33 @@ export const createRequestBody = {
   desconto: 10,
   outrasDespesas: 11,
   garantia: 3,
-  dataProximoContato: "2024-05-01",
-  observacoes: "Observações da proposta comercial",
-  observacaoInterna: "Observações internas da proposta comercial",
+  dataProximoContato: '2024-05-01',
+  observacoes: 'Observações da proposta comercial',
+  observacaoInterna: 'Observações internas da proposta comercial',
   totalOutrosItens: 1,
-  aosCuidadosDe: "Nome do Contato",
-  introducao: "Introdução da proposta comercial",
-  prazoEntrega: "Prazo de entrega proposta comercial",
+  aosCuidadosDe: 'Nome do Contato',
+  introducao: 'Introdução da proposta comercial',
+  prazoEntrega: 'Prazo de entrega proposta comercial',
   itens: [
     {
       produto: {
         id: 12345678,
-        descricao: "Bolo"
+        descricao: 'Bolo'
       },
-      codigo: "BLG-5",
-      unidade: "UN",
+      codigo: 'BLG-5',
+      unidade: 'UN',
       quantidade: 1.1,
       desconto: 1.2,
       valor: 3.1,
-      descricaoDetalhada: "Descrição detalhada do produto"
+      descricaoDetalhada: 'Descrição detalhada do produto'
     }
   ],
   parcelas: [
     {
       numeroDias: 10,
-      dataVencimento: "2024-04-29",
+      dataVencimento: '2024-04-29',
       valor: 10.55,
-      observacoes: "Observacao da forma de pagamento",
+      observacoes: 'Observacao da forma de pagamento',
       formaPagamento: [
         {
           id: 12345678
@@ -62,7 +62,7 @@ export const createRequestBody = {
     pesoBruto: 2.4,
     contato: {
       id: 12345678,
-      nome: "Nome do transportador"
+      nome: 'Nome do transportador'
     },
     volumes: {}
   }

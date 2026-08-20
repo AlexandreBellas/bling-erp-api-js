@@ -107,7 +107,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(
-    options: IIndexOptions<IIndexBody, IParams, IHeaders>
+    _options: IIndexOptions<IIndexBody, IParams, IHeaders>
   ): Promise<IIndexResponse> {
     return this.indexResponse ?? this.response
   }
@@ -119,7 +119,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IShowResponse,
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
-  >(options: IShowOptions<IParams, IHeaders>): Promise<IShowResponse> {
+  >(_options: IShowOptions<IParams, IHeaders>): Promise<IShowResponse> {
     return this.showResponse ?? this.response
   }
 
@@ -132,7 +132,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(
-    options: IStoreOptions<IStoreBody, IParams, IHeaders>
+    _options: IStoreOptions<IStoreBody, IParams, IHeaders>
   ): Promise<IStoreResponse> {
     return this.storeResponse ?? this.response
   }
@@ -146,7 +146,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(
-    options: IUpdateOptions<IUpdateBody, IParams, IHeaders>
+    _options: IUpdateOptions<IUpdateBody, IParams, IHeaders>
   ): Promise<IUpdateResponse> {
     return this.updateResponse ?? this.response
   }
@@ -160,7 +160,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
   >(
-    options: IReplaceOptions<IReplaceBody, IParams, IHeaders>
+    _options: IReplaceOptions<IReplaceBody, IParams, IHeaders>
   ): Promise<IReplaceResponse> {
     return this.replaceResponse ?? this.response
   }
@@ -172,7 +172,7 @@ export class InMemoryBlingRepository implements IBlingRepository {
     IDestroyResponse,
     IParams extends IDefaultParams = IDefaultParams,
     IHeaders extends IDefaultHeaders = IDefaultHeaders
-  >(options: IDestroyOptions<IParams, IHeaders>): Promise<IDestroyResponse> {
+  >(_options: IDestroyOptions<IParams, IHeaders>): Promise<IDestroyResponse> {
     return this.destroyResponse ?? this.response
   }
 }

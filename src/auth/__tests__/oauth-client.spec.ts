@@ -41,6 +41,18 @@ describe('OAuthClient', () => {
     )
   })
 
+  it('should omit redirect_uri when only state is provided', () => {
+    const client = createClient()
+    const url = new URL(
+      client.getAuthorizationUrl({
+        state: 'csrf'
+      })
+    )
+
+    expect(url.searchParams.get('state')).toBe('csrf')
+    expect(url.searchParams.has('redirect_uri')).toBe(false)
+  })
+
   it('should exchange the authorization code with JWT and Basic headers', async () => {
     const tokens = {
       access_token: 'jwt',
@@ -73,6 +85,20 @@ describe('OAuthClient', () => {
     expect(client.accessToken).toBe('jwt')
     expect(client.refreshToken).toBe('refresh')
     expect(onTokens).toHaveBeenCalledWith(tokens)
+  })
+
+  it('should keep refresh-token-only construction without an empty access_token', () => {
+    const client = new OAuthClient({
+      method: 'oauth',
+      clientId: 'client-id',
+      clientSecret: 'client-secret',
+      refreshToken: 'refresh-only'
+    })
+
+    expect(client.accessToken).toBeUndefined()
+    expect(client.refreshToken).toBe('refresh-only')
+    expect(client.tokenSet).toEqual({ refresh_token: 'refresh-only' })
+    expect(client.tokenSet).not.toHaveProperty('access_token')
   })
 
   it('should refresh tokens with grant_type=refresh_token', async () => {
@@ -127,6 +153,19 @@ describe('OAuthClient', () => {
     )
     expect((post.mock.calls[0][1] as URLSearchParams).toString()).toBe(
       'token=jwt&token_type_hint=access_token&revoke_action=logout&revoke_target=company'
+    )
+  })
+
+  it('should revoke with only the token field when optional params are omitted', async () => {
+    post.mockResolvedValue({ data: '' })
+    const client = createClient()
+
+    await client.revoke({
+      token: 'jwt'
+    })
+
+    expect((post.mock.calls[0][1] as URLSearchParams).toString()).toBe(
+      'token=jwt'
     )
   })
 

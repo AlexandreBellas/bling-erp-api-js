@@ -37,6 +37,17 @@ export class OAuthAuthProvider implements IAuthProvider {
   }
 
   /**
+   * @inheritDoc
+   */
+  public async ensureFreshToken(): Promise<void> {
+    if (this.oauthClient.accessToken || !this.oauthClient.refreshToken) {
+      return
+    }
+
+    await this.handleUnauthorized()
+  }
+
+  /**
    * Renova o access token uma vez por onda de `401` paralelos.
    *
    * @returns {Promise<boolean>} `true` se o refresh concluiu e a chamada pode ser repetida.

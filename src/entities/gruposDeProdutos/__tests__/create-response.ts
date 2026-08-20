@@ -5,7 +5,7 @@ export default {
 }
 
 export const createRequestBody = {
-  nome: "Grupo 1",
+  nome: 'Grupo 1',
   grupoProdutoPai: {
     id: 123456
   }

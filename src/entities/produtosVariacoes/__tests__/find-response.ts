@@ -8,7 +8,8 @@ export default {
     situacao: 'A' as const,
     formato: 'S' as const,
     descricaoCurta: 'Descrição curta',
-    imagemURL: 'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
+    imagemURL:
+      'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
     dataValidade: '2020-01-01',
     unidade: 'UN',
     pesoLiquido: 1,
@@ -141,7 +142,8 @@ export default {
         situacao: 'A' as const,
         formato: 'S' as const,
         descricaoCurta: 'Descrição curta',
-        imagemURL: 'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
+        imagemURL:
+          'https://www.bling.com.br/imagens/imagens-produtos/123456789.jpg',
         dataValidade: '2020-01-01',
         unidade: 'UN',
         pesoLiquido: 1,

@@ -1,4 +1,4 @@
-import { IFreteModalidade } from "../types/frete-modalidade.type"
+import { IFreteModalidade } from '../types/frete-modalidade.type'
 
 export interface IFindParams {
   /**
