@@ -1,5 +1,5 @@
-import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
-import IUF from 'src/entities/@shared/types/uf.type'
+import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
+import IUF from '../../@shared/types/uf.type'
 import { IIndicadorIE } from '../types/indicador-ie.type'
 import { ISexo } from '../types/sexo.type'
 import { ISituacao } from '../types/situacao.type'

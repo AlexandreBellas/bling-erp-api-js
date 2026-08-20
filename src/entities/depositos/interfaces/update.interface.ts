@@ -1,5 +1,5 @@
-import { IDefaultErrorFieldsResponse } from 'src/entities/@shared/interfaces/error.interface'
-import ISituacao from 'src/entities/@shared/types/situacao.type'
+import { IDefaultErrorFieldsResponse } from '../../@shared/interfaces/error.interface'
+import ISituacao from '../../@shared/types/situacao.type'
 
 export interface IUpdateParams {
   /**

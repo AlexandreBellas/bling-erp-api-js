@@ -5,11 +5,11 @@
     "declaration": true,
     "removeComments": true,
     "outDir": "./lib",
+    "rootDir": "./src",
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./"
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

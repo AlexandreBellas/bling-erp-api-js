@@ -1,6 +1,6 @@
-import IFretePorConta from 'src/entities/@shared/types/frete-por-conta.type'
-import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
-import IUF from 'src/entities/@shared/types/uf.type'
+import IFretePorConta from '../../@shared/types/frete-por-conta.type'
+import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
+import IUF from '../../@shared/types/uf.type'
 import { IDescontoUnidade } from '../types/desconto-unidade.type'
 
 export interface IFindParams {

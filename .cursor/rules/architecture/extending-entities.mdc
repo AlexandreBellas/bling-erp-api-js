@@ -18,7 +18,7 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 
 4. **Add types** — union/enum types in `types/<name>.type.ts` when Bling documents discrete values. See `src/entities/contatos/types/criterio.type.ts`, `src/entities/nfes/types/situacao.type.ts`.
 
-5. **Reuse `@shared`** — import from `src/entities/@shared/types/` only when the value set matches. Do not reuse shared `situacao.type.ts` for a different Bling situação enum.
+5. **Reuse `@shared`** — import from `../../@shared/types/` (relative) only when the value set matches. Do not reuse shared `situacao.type.ts` for a different Bling situação enum.
 
 6. **Register in facade** — import and add getter in `src/bling.ts`.
 

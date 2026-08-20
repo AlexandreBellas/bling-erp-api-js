@@ -1,4 +1,4 @@
-import { IDefaultErrorResponse } from 'src/entities/@shared/interfaces/error.interface'
+import { IDefaultErrorResponse } from '../../@shared/interfaces/error.interface'
 
 export interface IDeleteManyParams {
   /**

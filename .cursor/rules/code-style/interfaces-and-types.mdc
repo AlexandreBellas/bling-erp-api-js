@@ -43,7 +43,7 @@ List endpoints may return `data` as an array with pagination implied by `pagina`
 
 ### Cross-module Type Imports
 
-Prefer `src/entities/@shared/types/<file>.type` (`tsconfig` `baseUrl: "./"`). Relative `../../@shared/types/` is equivalent.
+Use relative `../../@shared/types/<file>.type` from `interfaces/` or `__tests__/`. Do not import via `src/...` (that required deprecated `baseUrl`).
 
 Shared types: **default** import. Module-local types: **named** import from `../types/`.
 

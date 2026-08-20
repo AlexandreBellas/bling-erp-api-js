@@ -1,4 +1,4 @@
-import ITipoPessoa from 'src/entities/@shared/types/tipoPessoa.type'
+import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
 
 export interface IGetParams {
   /**

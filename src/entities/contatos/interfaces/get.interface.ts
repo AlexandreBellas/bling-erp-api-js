@@ -1,4 +1,4 @@
-import IUF from 'src/entities/@shared/types/uf.type'
+import IUF from '../../@shared/types/uf.type'
 import { ICriterio } from '../types/criterio.type'
 import { ISituacao } from '../types/situacao.type'
 

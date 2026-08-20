@@ -1,5 +1,5 @@
-import ICRT from 'src/entities/@shared/types/crt.type'
-import IUF from 'src/entities/@shared/types/uf.type'
+import ICRT from '../../@shared/types/crt.type'
+import IUF from '../../@shared/types/uf.type'
 
 export interface ICreateParams {
   /**

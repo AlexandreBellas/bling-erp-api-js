@@ -1,4 +1,4 @@
-import ISituacao from 'src/entities/@shared/types/situacao.type'
+import ISituacao from '../../@shared/types/situacao.type'
 import { IPadrao } from '../types/padrao.type'
 
 export interface IGetParams {

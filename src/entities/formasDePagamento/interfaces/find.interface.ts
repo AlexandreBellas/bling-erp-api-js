@@ -1,4 +1,4 @@
-import ISituacao from 'src/entities/@shared/types/situacao.type'
+import ISituacao from '../../@shared/types/situacao.type'
 import { IBandeiraCartao } from '../types/bandeira-cartao.type'
 import { IDestino } from '../types/destino.type'
 import { IFinalidade } from '../types/finalidade.type'

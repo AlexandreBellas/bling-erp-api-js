@@ -11,7 +11,8 @@ alwaysApply: false
 - **Target**: ES6, **Module**: CommonJS.
 - **Strict mode** enabled.
 - **Declarations** emitted to `lib/` with source maps.
-- **Base URL**: `./` for path resolution.
+- **rootDir**: `./src` (required by TypeScript 6+ so `lib/` mirrors `src/`).
+- Do **not** use `baseUrl`. Import with relative paths (`../@shared/entity`, `../../@shared/types/situacao.type`). `tsc` does not rewrite path aliases, so `src/...` imports would leak into published `.d.ts` and fail at runtime.
 
 ## Build vs Test
 

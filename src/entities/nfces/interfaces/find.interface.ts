@@ -1,7 +1,7 @@
-import IUF from 'src/entities/@shared/types/uf.type'
+import IUF from '../../@shared/types/uf.type'
 import { ISituacaoNfce } from '../types/situacao.type'
 import { ITipoNfce } from '../types/tipo.type'
-import IFretePorConta from 'src/entities/@shared/types/frete-por-conta.type'
+import IFretePorConta from '../../@shared/types/frete-por-conta.type'
 
 export interface IFindParams {
   /**
