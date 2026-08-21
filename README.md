@@ -10,13 +10,9 @@
 Pacote de integração com a [API v3 do ERP Bling](https://developer.bling.com.br)
 para Javascript/TypeScript. O mais completo existente.
 
-Atualizado com a versão `v310` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-10-02)).
+Cobre autenticações JWT, fluxo OAuth e token opaco (legado).
 
-**Atenção**: a versão 5.0.0+ do `bling-erp-api` para Javascript/TypeScript
-utiliza a API v3 do Bling. Caso deseja utilizar a API v2 do Bling,
-[utilize a versão 4.0.0](https://github.com/AlexandreBellas/bling-erp-api-js/tree/v4.0.0).
-A versão **6.0.0** troca `new Bling(accessToken)` por `Bling.create({ auth })`
-e passa a cobrir JWT, token opaco legado e o fluxo OAuth.
+Atualizado com a versão `v310` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-10-02)).
 
 ## Instalação
 
@@ -28,8 +24,8 @@ npm i bling-erp-api
 
 ## Criação de uma nova conexão
 
-A construção é sempre `Bling.create({ auth })`. O campo `auth.method` escolhe
-como o token será usado ou obtido.
+Instancie via `Bling.create({ auth })`. O campo `auth.method` escolhe como o
+token será usado ou obtido.
 
 ### JWT (recomendado)
 
@@ -97,20 +93,19 @@ await blingConnection.auth.exchangeAuthorizationCode(code)
 const products = await blingConnection.produtos.get()
 ```
 
-`bling.auth` existe **somente** no cliente OAuth (`BlingOAuthClient`). Clientes
-JWT e opacos não têm essa propriedade.
+`blingConnection.auth` existe **somente** no cliente OAuth (`BlingOAuthClient`).
+Clientes JWT e opacos não têm essa propriedade.
 
 Refresh: o access token é renovado com `POST /oauth/token` e
 `grant_type=refresh_token` (refresh vale 30 dias). Com `autoRefresh` (padrão
 quando há `refreshToken`), um `401` nas chamadas de recurso dispara o refresh
 e **uma** nova tentativa.
 
-[Fluxo de autorização](https://developer.bling.com.br/aplicativos#fluxo-de-autoriza%C3%A7%C3%A3o).
-Exemplo completo: [projeto de demonstração](https://github.com/AlexandreBellas/bling-erp-api-js/tree/main/demo).
+Entenda o [fluxo de autorização](https://developer.bling.com.br/aplicativos#fluxo-de-autoriza%C3%A7%C3%A3o) e como aplicá-lo neste [projeto de demonstração](https://github.com/AlexandreBellas/bling-erp-api-js/tree/main/demo).
 
 ## Entidades disponíveis
 
-Todas as entidades do Bling atualmente são permitidas para interação. São elas:
+Todas as entidaA construção é sempredes do Bling atualmente são permitidas para interação. São elas:
 
 - [x] Borderos (`.borderos`)
 - [x] Campos customizados (`.camposCustomizados`)
