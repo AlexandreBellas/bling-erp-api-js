@@ -50,7 +50,15 @@ export class ProdutosLojas extends Entity {
         limite: params?.limite,
         idProduto: params?.idProduto,
         idLoja: params?.idLoja,
-        idCategoriaProduto: params?.idCategoriaProduto
+        idCategoriaProduto: params?.idCategoriaProduto,
+        dataAlteracaoInicial: this.prepareStringOrDateParam(
+          params?.dataAlteracaoInicial,
+          true
+        ),
+        dataAlteracaoFinal: this.prepareStringOrDateParam(
+          params?.dataAlteracaoFinal,
+          true
+        )
       }
     })
   }

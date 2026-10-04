@@ -263,7 +263,7 @@ export class BlingRepository implements IBlingRepository {
   ): Promise<IReplaceResponse> {
     const endpoint = `${options.endpoint}/${options.id}`
     return await this.api
-      .patch<IReplaceResponse>(
+      .put<IReplaceResponse>(
         endpoint,
         options.body,
         this.buildAxiosConfig({

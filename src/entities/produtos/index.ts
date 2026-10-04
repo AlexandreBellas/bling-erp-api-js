@@ -16,6 +16,11 @@ import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import {
+  IReplaceBody,
+  IReplaceParams,
+  IReplaceResponse
+} from './interfaces/replace.interface'
+import {
   IUpdateBody,
   IUpdateParams,
   IUpdateResponse
@@ -184,18 +189,46 @@ export class Produtos extends Entity {
   }
 
   /**
-   * Altera um produto.
+   * Altera parcialmente um produto.
+   *
+   * Atualização parcial via PATCH. Campos omitidos permanecem inalterados.
+   * Para substituir o recurso completo, use {@link Produtos.replace}.
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<IUpdateResponse>}
+   * @returns {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Produtos/put_produtos__idProduto_
+   * @see https://developer.bling.com.br/referencia#/Produtos/patch_produtos__idProduto_
    */
   public async update(
     params: IUpdateParams & IUpdateBody
   ): Promise<IUpdateResponse> {
+    const { idProduto, ...body } = params
+
+    return await this.repository.update({
+      endpoint: 'produtos',
+      id: String(idProduto),
+      body
+    })
+  }
+
+  /**
+   * Substitui um produto.
+   *
+   * Substituição completa via PUT. Envie o recurso inteiro.
+   * Para alterar apenas alguns campos, use {@link Produtos.update}.
+   *
+   * @param {IReplaceParams & IReplaceBody} params Os parâmetros da substituição.
+   *
+   * @returns {Promise<IReplaceResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Produtos/put_produtos__idProduto_
+   */
+  public async replace(
+    params: IReplaceParams & IReplaceBody
+  ): Promise<IReplaceResponse> {
     const { idProduto, ...body } = params
 
     return await this.repository.replace({

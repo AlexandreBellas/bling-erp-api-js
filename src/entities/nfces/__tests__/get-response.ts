@@ -5,6 +5,7 @@ export default {
       tipo: 1 as const,
       situacao: 1 as const,
       numero: '6541',
+      chaveAcesso: '62634519764512837946527549134679858182373412',
       dataEmissao: '2023-01-12 09:52:12',
       dataOperacao: '2023-01-12 09:52:12',
       contato: {

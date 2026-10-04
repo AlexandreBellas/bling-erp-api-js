@@ -38,7 +38,7 @@ describe('Estoques entity', () => {
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'estoques/saldos',
       id: String(idDeposito),
-      params: { idsProdutos }
+      params: { idsProdutos, codigos: undefined }
     })
     expect(response).toBe(findResponse)
     const typingResponseTest: IFindBalanceResponse = findResponse
@@ -57,7 +57,7 @@ describe('Estoques entity', () => {
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'estoques/saldos',
-      params: { idsProdutos }
+      params: { idsProdutos, codigos: undefined }
     })
     expect(response).toBe(getResponse)
     const typingResponseTest: IGetBalancesResponse = getResponse

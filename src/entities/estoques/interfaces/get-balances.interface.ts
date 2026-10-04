@@ -11,7 +11,7 @@ export interface IGetBalancesParams {
 
 export interface IGetBalancesResponse {
   data: {
-    produto: { id: number }
+    produto: { id: number; codigo?: string }
     saldoFisicoTotal: number
     saldoVirtualTotal: number
     depositos: {

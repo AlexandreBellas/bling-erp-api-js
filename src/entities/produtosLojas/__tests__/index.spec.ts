@@ -49,7 +49,9 @@ describe('Produtos - Lojas entity', () => {
         pagina: undefined,
         idProduto: undefined,
         idLoja: undefined,
-        idCategoriaProduto: undefined
+        idCategoriaProduto: undefined,
+        dataAlteracaoInicial: undefined,
+        dataAlteracaoFinal: undefined
       }
     })
     expect(response).toBe(getResponse)

@@ -15,7 +15,7 @@ export interface IFindBalanceParams {
 
 export interface IFindBalanceResponse {
   data: {
-    produto: { id: number }
+    produto: { id: number; codigo?: string }
     saldoFisicoTotal: number
     saldoVirtualTotal: number
   }[]

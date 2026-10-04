@@ -8,7 +8,14 @@ import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
 import { ITipo } from '../types/tipo.type'
 
-export interface ICreateBody {
+export interface IReplaceParams {
+  /**
+   * ID do produto
+   */
+  idProduto: number
+}
+
+export interface IReplaceBody {
   id?: number
   nome: string
   codigo?: string
@@ -198,7 +205,7 @@ interface ICreateResponseActionItem {
   warnings?: string[]
 }
 
-export interface ICreateResponse {
+export interface IReplaceResponse {
   data: {
     id?: number
     variations?: {

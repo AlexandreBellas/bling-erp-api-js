@@ -43,6 +43,7 @@ describe('NFC-es entity', () => {
       params: {
         limite: undefined,
         pagina: undefined,
+        idTransportador: undefined,
         situacao: undefined,
         dataEmissaoInicial: undefined,
         dataEmissaoFinal: undefined

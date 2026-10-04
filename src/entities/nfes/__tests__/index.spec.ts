@@ -67,6 +67,7 @@ describe('NF-es entity', () => {
         limite: undefined,
         pagina: undefined,
         numeroLoja: undefined,
+        idTransportador: undefined,
         situacao: undefined,
         tipo: undefined,
         dataEmissaoInicial: undefined,

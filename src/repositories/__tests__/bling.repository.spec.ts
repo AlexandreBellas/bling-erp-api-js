@@ -257,4 +257,36 @@ describe('BlingRepository interceptors', () => {
       'Bearer fresh'
     )
   })
+
+  it('should send PATCH on update and PUT on replace', async () => {
+    const repository = new BlingRepository({
+      baseUrl: 'https://api.bling.com.br/Api/v3',
+      authProvider: new JwtAuthProvider({
+        method: 'jwt',
+        accessToken: 'jwt-token'
+      })
+    })
+    const adapter = jest.fn(async (config) => ({
+      data: { data: { id: 1 } },
+      status: 200,
+      statusText: 'OK',
+      headers: {},
+      config
+    }))
+    assignAdapter(repository, adapter)
+
+    await repository.update({
+      endpoint: 'produtos',
+      id: '1',
+      body: { nome: 'Parcial' }
+    })
+    await repository.replace({
+      endpoint: 'produtos',
+      id: '1',
+      body: { nome: 'Completo' }
+    })
+
+    expect(adapter.mock.calls[0]?.[0].method).toBe('patch')
+    expect(adapter.mock.calls[1]?.[0].method).toBe('put')
+  })
 })

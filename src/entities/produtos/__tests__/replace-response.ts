@@ -28,7 +28,7 @@ export default {
   }
 }
 
-export const createRequestBody = {
+export const replaceRequestBody = {
   id: 123456789,
   nome: 'Produto 1',
   codigo: 'CODE_123',

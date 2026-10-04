@@ -58,6 +58,7 @@ export class Nfes extends Entity {
         pagina: params?.pagina,
         limite: params?.limite,
         numeroLoja: params?.numeroLoja,
+        idTransportador: params?.idTransportador,
         situacao: params?.situacao,
         tipo: params?.tipo,
         dataEmissaoInicial: this.prepareStringOrDateParam(

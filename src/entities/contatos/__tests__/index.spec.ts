@@ -156,7 +156,7 @@ describe('Contatos entity', () => {
   })
 
   it('should change situation successfully', async () => {
-    const spy = jest.spyOn(repository, 'replace')
+    const spy = jest.spyOn(repository, 'update')
     const idContato = chance.natural()
     repository.setResponse(changeSituationResponse)
 

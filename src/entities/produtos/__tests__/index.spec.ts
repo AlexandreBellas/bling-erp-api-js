@@ -6,6 +6,7 @@ import { ICreateResponse } from '../interfaces/create.interface'
 import { IDeleteManyResponse } from '../interfaces/delete-many.interface'
 import { IFindResponse } from '../interfaces/find.interface'
 import { IGetResponse } from '../interfaces/get.interface'
+import { IReplaceResponse } from '../interfaces/replace.interface'
 import { IUpdateResponse } from '../interfaces/update.interface'
 import changeSituationManyResponse, {
   changeSituationManyRequest
@@ -18,6 +19,7 @@ import deleteManyResponse from './delete-many-response'
 import deleteResponse from './delete-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
+import replaceResponse, { replaceRequestBody } from './replace-response'
 import updateResponse, { updateRequestBody } from './update-response'
 
 const chance = Chance()
@@ -179,7 +181,7 @@ describe('Produtos entity', () => {
   })
 
   it('should update successfully', async () => {
-    const spy = jest.spyOn(repository, 'replace')
+    const spy = jest.spyOn(repository, 'update')
     const idProduto = chance.natural()
     repository.setResponse(updateResponse)
 
@@ -197,5 +199,26 @@ describe('Produtos entity', () => {
 
     const typingResponseTest: IUpdateResponse = updateResponse
     expect(typingResponseTest).toBe(updateResponse)
+  })
+
+  it('should replace successfully', async () => {
+    const spy = jest.spyOn(repository, 'replace')
+    const idProduto = chance.natural()
+    repository.setResponse(replaceResponse)
+
+    const response = await entity.replace({
+      idProduto,
+      ...replaceRequestBody
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: 'produtos',
+      id: String(idProduto),
+      body: replaceRequestBody
+    })
+    expect(response).toBe(replaceResponse)
+
+    const typingResponseTest: IReplaceResponse = replaceResponse
+    expect(typingResponseTest).toBe(replaceResponse)
   })
 })

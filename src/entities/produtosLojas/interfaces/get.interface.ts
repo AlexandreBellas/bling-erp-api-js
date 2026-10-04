@@ -19,6 +19,14 @@ export interface IGetParams {
    * ID da categoria do produto vinculada à loja
    */
   idCategoriaProduto?: number
+  /**
+   * Data de alteração inicial
+   */
+  dataAlteracaoInicial?: Date | string
+  /**
+   * Data de alteração final
+   */
+  dataAlteracaoFinal?: Date | string
 }
 
 export interface IGetResponse {

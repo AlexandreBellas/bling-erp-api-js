@@ -167,7 +167,7 @@ export class Contatos extends Entity {
     params: IChangeSituationParams & IChangeSituationBody
   ): Promise<null> {
     const { idContato, ...body } = params
-    return await this.repository.replace({
+    return await this.repository.update({
       endpoint: 'contatos',
       id: `${idContato}/situacoes`,
       body

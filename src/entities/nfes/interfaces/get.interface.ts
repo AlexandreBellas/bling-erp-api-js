@@ -16,6 +16,10 @@ export interface IGetParams {
    */
   numeroLoja?: string
   /**
+   * ID do contato do transportador
+   */
+  idTransportador?: number
+  /**
    *
    */
   situacao?: ISituacaoNfe
@@ -39,6 +43,7 @@ export interface IGetResponse {
     tipo: ITipoNfe
     situacao?: ISituacaoNfe
     numero?: string
+    chaveAcesso?: string
     dataEmissao?: string
     dataOperacao?: string
     contato: {
