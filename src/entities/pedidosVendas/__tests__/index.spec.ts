@@ -76,6 +76,22 @@ describe('Pedidos - Vendas entity', () => {
     expect(typingResponseTest).toBe(deleteResponse)
   })
 
+  it('should forward idUnidadeNegocio on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      idUnidadeNegocio: chance.natural()
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'pedidos/vendas',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -99,7 +115,8 @@ describe('Pedidos - Vendas entity', () => {
         idLoja: undefined,
         idVendedor: undefined,
         idControleCaixa: undefined,
-        numerosLojas: undefined
+        numerosLojas: undefined,
+        idUnidadeNegocio: undefined
       }
     })
     expect(response).toBe(getResponse)

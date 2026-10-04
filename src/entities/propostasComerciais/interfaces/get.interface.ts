@@ -6,7 +6,7 @@ export interface IGetParams {
   /**
    * ID do contato
    */
-  idContato?: string
+  idContato?: number
   /**
    * Data inicial
    */
@@ -38,6 +38,7 @@ export interface IGetResponse {
     }
     loja?: {
       id?: number
+      unidadeNegocio?: { id: number }
     }
   }[]
 }

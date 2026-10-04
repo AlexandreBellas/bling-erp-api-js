@@ -1,5 +1,6 @@
 import IUF from '../../@shared/types/uf.type'
 import { ICriterio } from '../types/criterio.type'
+import { ITipoPessoaFiltro } from '../types/tipo-pessoa-filtro.type'
 import { ISituacao } from '../types/situacao.type'
 
 export interface IGetParams {
@@ -59,6 +60,10 @@ export interface IGetParams {
    * CPF/CNPJ, desconsiderando a pontuação
    */
   numeroDocumento?: string
+  /**
+   * Tipo de pessoa. `1` Física, `2` Jurídica, `3` Estrangeiro.
+   */
+  tipoPessoa?: ITipoPessoaFiltro
 }
 
 export interface IGetResponse {

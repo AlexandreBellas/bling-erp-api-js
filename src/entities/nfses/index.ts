@@ -1,12 +1,11 @@
 import { Entity } from '../@shared/entity'
-import { ISendResponse } from '../nfces/interfaces/send.interface'
 import { ICancelBody, ICancelParams } from './interfaces/cancel.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetConfigurationsResponse } from './interfaces/get-configurations.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { ISendParams } from './interfaces/send.interface'
+import { ISendParams, ISendResponse } from './interfaces/send.interface'
 import { IUpdateConfigurationsBody } from './interfaces/update-configurations.interface'
 
 /**

@@ -1,3 +1,5 @@
+import { IOcorrencia } from './create.interface'
+
 export interface IUpdateParams {
   idContaPagar: number
 }
@@ -14,6 +16,7 @@ export interface IUpdateBody {
   historico?: string
   portador?: { id: number }
   categoria?: { id: number }
+  ocorrencia?: IOcorrencia
 }
 
 export interface IUpdateResponse {

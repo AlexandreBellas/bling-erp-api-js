@@ -58,6 +58,7 @@ export class CanaisDeVenda extends Entity {
    * @param {IGetTypesParams} params Parâmetros da busca.
    *
    * @returns {Promise<IGetTypesResponse>}
+   * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Canais%20de%20Venda/get_canais_venda_tipos
    */

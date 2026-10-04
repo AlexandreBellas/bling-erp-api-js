@@ -1,6 +1,8 @@
+import { IDefaultErrorFieldsResponse } from '../../@shared/interfaces/error.interface'
 import IContribuinte from '../../@shared/types/contribuinte.type'
 import IFretePorConta from '../../@shared/types/frete-por-conta.type'
 import IModeloDocumentoReferenciado from '../../@shared/types/modelo-documento-referenciado.type'
+import IModalidadeIcms from '../../@shared/types/modalidade-icms.type'
 import IOrigem from '../../@shared/types/origem.type'
 import ITipoItem from '../../@shared/types/tipo-item.type'
 import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
@@ -58,6 +60,23 @@ export interface IUpdateBody {
     contadorOrdemOperacao?: string
     chaveAcesso?: string
   }
+  documentosReferenciados?: {
+    modelo: IModeloDocumentoReferenciado
+    data?: string
+    numero?: string
+    serie?: string
+    contadorOrdemOperacao?: string
+    chaveAcesso?: string
+  }[]
+  operacaoComExterior?: boolean
+  exportacao?: {
+    localEmbarque?: string
+    ufEmbarque?: IUF
+  }
+  /**
+   * Obrigatório quando a finalidade for 5 (Crédito) ou 6 (Débito).
+   */
+  tipoNota?: string
   itens?: {
     codigo: string
     descricao?: string
@@ -73,12 +92,42 @@ export interface IUpdateBody {
     codigoServico?: string
     origem?: IOrigem
     informacoesAdicionais?: string
+    valorTotal?: number
+    gtin?: string
+    cfop?: string
+    impostos?: {
+      valorAproximadoTotalTributos?: number
+      icms?: {
+        st?: number
+        origem?: IOrigem
+        modalidade?: IModalidadeIcms
+        aliquota?: number
+        valor?: number
+      }
+    }
+    documentoReferenciado?: {
+      chaveAcesso?: string
+      numeroItem?: string
+    }
+    unidadeTributavel?: {
+      unidade?: string
+      quantidade?: number
+    }
+    exportacao?: {
+      drawback?: string
+      registroExportacao?: string
+      chaveAcessoNFe?: string
+    }
   }[]
 
   parcelas: {
     data: string
     valor: number
     observacoes?: string
+    /**
+     * cAut (ou NSU): código de autorização da operação financeira.
+     */
+    caut?: string
     formaPagamento?: { id: number }
   }[]
 
@@ -140,5 +189,6 @@ export interface IUpdateResponse {
     numero: string
     serie: string
     contato: { nome?: string }
+    alertas?: IDefaultErrorFieldsResponse[]
   }
 }

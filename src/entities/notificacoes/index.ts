@@ -1,6 +1,10 @@
 import { Entity } from '../@shared/entity'
 import { ICreateParams, ICreateResponse } from './interfaces/create.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
+import {
+  IGetQuantityParams,
+  IGetQuantityResponse
+} from './interfaces/get-quantity.interface'
 
 /**
  * Entidade para interação com notificações.
@@ -21,6 +25,27 @@ export class Notificacoes extends Entity {
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({
       endpoint: 'notificacoes',
+      params: {
+        periodo: params?.periodo
+      }
+    })
+  }
+
+  /**
+   * Obtém a quantidade de notificações de uma empresa em um período.
+   *
+   * @param {IGetQuantityParams} params Parâmetros da busca.
+   *
+   * @returns {Promise<IGetQuantityResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Notifica%C3%A7%C3%B5es/get_notificacoes_quantidade
+   */
+  public async getQuantity(
+    params?: IGetQuantityParams
+  ): Promise<IGetQuantityResponse> {
+    return await this.repository.index({
+      endpoint: 'notificacoes/quantidade',
       params: {
         periodo: params?.periodo
       }

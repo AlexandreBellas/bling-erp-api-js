@@ -6,6 +6,10 @@ import deleteResponse from './delete-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
 import updateResponse, { updateRequestBody } from './update-response'
+import type * as CreateTypes from '../interfaces/create.interface'
+import type * as FindTypes from '../interfaces/find.interface'
+import type * as GetTypes from '../interfaces/get.interface'
+import type * as UpdateTypes from '../interfaces/update.interface'
 
 const chance = Chance()
 
@@ -34,6 +38,24 @@ describe('Produtos - Lojas entity', () => {
       id: String(idProdutoLoja)
     })
     expect(response).toBe(deleteResponse)
+  })
+
+  it('should keep fixtures assignable to the declared types', () => {
+    const typedCreateResponse: CreateTypes.ICreateResponse = createResponse
+    const typedCreateBody: CreateTypes.ICreateBody = createRequestBody
+    const typedFindResponse: FindTypes.IFindResponse = findResponse
+    const typedGetResponse: GetTypes.IGetResponse = getResponse
+    const typedUpdateResponse: UpdateTypes.IUpdateResponse = updateResponse
+    const typedUpdateBody: UpdateTypes.IUpdateBody = updateRequestBody
+
+    expect([
+      typedCreateResponse,
+      typedCreateBody,
+      typedFindResponse,
+      typedGetResponse,
+      typedUpdateResponse,
+      typedUpdateBody
+    ]).toHaveLength(6)
   })
 
   it('should get successfully', async () => {

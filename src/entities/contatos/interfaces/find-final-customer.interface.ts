@@ -1,6 +1,7 @@
 import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
 import IUF from '../../@shared/types/uf.type'
 import { IIndicadorIE } from '../types/indicador-ie.type'
+import { IOrgaoPublico } from '../types/orgao-publico.type'
 import { ISexo } from '../types/sexo.type'
 import { ISituacao } from '../types/situacao.type'
 
@@ -20,6 +21,9 @@ export interface IFindFinalCustomerResponse {
     rg: string
     orgaoEmissor: string
     email: string
+    emailNotaFiscal?: string
+    inscricaoMunicipal?: string
+    orgaoPublico?: IOrgaoPublico
     endereco: {
       geral: {
         endereco: string

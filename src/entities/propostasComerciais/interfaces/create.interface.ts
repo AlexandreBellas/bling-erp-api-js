@@ -9,6 +9,7 @@ export interface ICreateBody {
   }
   loja?: {
     id?: number
+    unidadeNegocio?: { id: number }
   }
   desconto?: number
   outrasDespesas?: number
@@ -39,7 +40,7 @@ export interface ICreateBody {
     observacoes?: string
     formaPagamento?: {
       id?: number
-    }[]
+    }
   }[]
   vendedor?: {
     id?: number

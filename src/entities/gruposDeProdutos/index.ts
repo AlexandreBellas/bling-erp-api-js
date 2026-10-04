@@ -60,7 +60,7 @@ export class GruposDeProdutos extends Entity {
    * @returns {Promise<IGetResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/GruposDeProdutos/get_produtos
+   * @see https://developer.bling.com.br/referencia#/Grupos%20de%20Produtos/get_grupos_produtos
    */
   public async get(params?: IGetParams): Promise<IGetResponse> {
     return await this.repository.index({

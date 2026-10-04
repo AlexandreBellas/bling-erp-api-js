@@ -11,6 +11,7 @@ export default {
         id: 12345678
       },
       situacao: {
+        id: 12345678,
         valor: 0 as const
       }
     }

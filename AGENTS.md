@@ -1,6 +1,6 @@
 # AGENTS.md
 
-TypeScript/JavaScript client for the [Bling ERP API v3](https://developer.bling.com.br/). Consumers call `Bling.create({ auth })` with `method: 'jwt' | 'opaque' | 'oauth'` and then typed methods on 42 resource modules (contacts, products, NFe, orders, logistics, etc.). HTTP is centralized in a repository layer that delegates headers/401 retry to `IAuthProvider`; entities map Bling endpoints to `get`, `find`, `create`, `update`, `delete`, and domain-specific actions. OAuth (`authorization_code`, refresh, revoke) lives in `src/auth/` and is **server-side only**.
+TypeScript/JavaScript client for the [Bling ERP API v3](https://developer.bling.com.br/). Consumers call `Bling.create({ auth })` with `method: 'jwt' | 'opaque' | 'oauth'` and then typed methods on 50 resource modules (contacts, products, NFe, orders, logistics, etc.). HTTP is centralized in a repository layer that delegates headers/401 retry to `IAuthProvider`; entities map Bling endpoints to `get`, `find`, `create`, `update`, `delete`, and domain-specific actions. OAuth (`authorization_code`, refresh, revoke) lives in `src/auth/` and is **server-side only**.
 
 ## Cursor Rules
 

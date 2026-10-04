@@ -18,6 +18,13 @@ export default {
     itensPorCaixa: 1,
     gtin: '1234567890123',
     gtinEmbalagem: '1234567890123',
+    duns: [
+      {
+        codigo: '12345678901234',
+        quantidade: 10
+      }
+    ],
+    artigoPerigoso: false,
     tipoProducao: 'P' as const,
     condicao: 0 as const,
     freteGratis: false,
@@ -51,7 +58,7 @@ export default {
       largura: 1,
       altura: 1,
       profundidade: 1,
-      unidadeMedida: 1
+      unidadeMedida: 1 as const
     },
     tributacao: {
       origem: 0 as const,
@@ -96,6 +103,7 @@ export default {
         ],
         internas: [
           {
+            link: 'https://www.bling.com.br/imagens/original.jpg',
             linkMiniatura: 'https://www.bling.com.br/imagens/miniatura.jpg',
             validade: '2020-01-01 00:00:00',
             ordem: 1,
@@ -152,6 +160,13 @@ export default {
         itensPorCaixa: 1,
         gtin: '1234567890123',
         gtinEmbalagem: '1234567890123',
+        duns: [
+          {
+            codigo: '12345678901234',
+            quantidade: 10
+          }
+        ],
+        artigoPerigoso: false,
         tipoProducao: 'P' as const,
         condicao: 0 as const,
         freteGratis: false,
@@ -185,7 +200,7 @@ export default {
           largura: 1,
           altura: 1,
           profundidade: 1,
-          unidadeMedida: 1
+          unidadeMedida: 1 as const
         },
         tributacao: {
           origem: 0,
@@ -230,6 +245,7 @@ export default {
             ],
             internas: [
               {
+                link: 'https://www.bling.com.br/imagens/original.jpg',
                 linkMiniatura: 'https://www.bling.com.br/imagens/miniatura.jpg',
                 validade: '2020-01-01 00:00:00',
                 ordem: 1,
@@ -271,6 +287,7 @@ export default {
           ordem: 1,
           produtoPai: {
             id: 12345678,
+
             cloneInfo: true
           }
         }

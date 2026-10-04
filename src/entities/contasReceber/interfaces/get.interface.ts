@@ -1,3 +1,4 @@
+import { IBoletoGerado } from '../types/boleto-gerado.type'
 import { ICodigoFiscal } from '../types/codigo-fiscal.type'
 import { IOrigemSituacao } from '../types/origem-situacao.type'
 import { ISituacao } from '../types/situacao.type'
@@ -16,10 +17,16 @@ export interface IGetParams {
   dataFinal?: Date | string
   idsCategorias?: number[]
   idPortador?: number
+  /**
+   * ID do contato
+   */
   idContato?: number
   idVendedor?: number
   idFormaPagamento?: number
-  boletoGerado?: number
+  /**
+   * Filtra por contas com boleto gerado.
+   */
+  boletoGerado?: IBoletoGerado
 }
 
 export interface IGetResponse {

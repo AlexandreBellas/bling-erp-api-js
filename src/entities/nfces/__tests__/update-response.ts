@@ -53,6 +53,22 @@ export const updateRequestBody = {
     contadorOrdemOperacao: '1',
     chaveAcesso: '62634519764512837946527549134679858182373412'
   },
+  documentosReferenciados: [
+    {
+      modelo: '55' as const,
+      data: '2023-01-12',
+      numero: '123',
+      serie: '1',
+      contadorOrdemOperacao: '1',
+      chaveAcesso: '62634519764512837946527549134679858182373412'
+    }
+  ],
+  operacaoComExterior: true,
+  exportacao: {
+    localEmbarque: 'Porto de Santos',
+    ufEmbarque: 'SP' as const
+  },
+  tipoNota: 'Nota complementar',
   itens: [
     {
       codigo: 'BLG-5',
@@ -68,7 +84,20 @@ export const updateRequestBody = {
       cest: '99.999.99',
       codigoServico: '99.99',
       origem: 0 as const,
-      informacoesAdicionais: 'Descrição do item'
+      informacoesAdicionais: 'Descrição do item',
+      unidadeTributavel: {
+        unidade: 'UN',
+        quantidade: 1
+      },
+      exportacao: {
+        drawback: '12345678901',
+        registroExportacao: '123456789012',
+        chaveAcessoNFe: '62634519764512837946527549134679858182373412'
+      },
+      documentoReferenciado: {
+        chaveAcesso: '62634519764512837946527549134679858182373412',
+        numeroItem: '1'
+      }
     }
   ],
   parcelas: [
@@ -76,6 +105,7 @@ export const updateRequestBody = {
       data: '2023-01-12',
       valor: 123.45,
       observacoes: 'Observação da parcela',
+      caut: '123456',
       formaPagamento: {
         id: 12345678
       }

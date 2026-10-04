@@ -6,6 +6,7 @@ export interface IUpdateParams {
 }
 
 export interface IUpdateBody {
+  id?: number
   descricao?: string
   codigo?: string
   precoCusto?: number

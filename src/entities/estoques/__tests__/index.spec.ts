@@ -24,6 +24,41 @@ describe('Estoques entity', () => {
     jest.restoreAllMocks()
   })
 
+  it('should forward filtroSaldoEstoque on findBalance', async () => {
+    const spy = jest.spyOn(repository, 'show')
+    const idDeposito = chance.natural()
+    const params = {
+      idsProdutos: [chance.natural()],
+      filtroSaldoEstoque: chance.pickone([0, 1, 2] as const)
+    }
+
+    await entity.findBalance({ idDeposito, ...params })
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'estoques/saldos',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
+  it('should forward filtroSaldoEstoque on getBalances', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      idsProdutos: [chance.natural()],
+      filtroSaldoEstoque: chance.pickone([0, 1, 2] as const)
+    }
+
+    await entity.getBalances(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'estoques/saldos',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
   it('should find balance successfully', async () => {
     const spy = jest.spyOn(repository, 'show')
     const idDeposito = chance.natural()
@@ -38,7 +73,11 @@ describe('Estoques entity', () => {
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'estoques/saldos',
       id: String(idDeposito),
-      params: { idsProdutos, codigos: undefined }
+      params: {
+        idsProdutos,
+        codigos: undefined,
+        filtroSaldoEstoque: undefined
+      }
     })
     expect(response).toBe(findResponse)
     const typingResponseTest: IFindBalanceResponse = findResponse
@@ -57,7 +96,11 @@ describe('Estoques entity', () => {
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'estoques/saldos',
-      params: { idsProdutos, codigos: undefined }
+      params: {
+        idsProdutos,
+        codigos: undefined,
+        filtroSaldoEstoque: undefined
+      }
     })
     expect(response).toBe(getResponse)
     const typingResponseTest: IGetBalancesResponse = getResponse

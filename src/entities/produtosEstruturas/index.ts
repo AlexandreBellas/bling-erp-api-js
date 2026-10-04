@@ -103,7 +103,7 @@ export class ProdutosEstruturas extends Entity {
    */
   public async addComponent(parameters: IAddComponentParameter): Promise<null> {
     return await this.repository.store({
-      endpoint: `produtos/estruturas/${parameters.params.idProdutoEstrutura}`,
+      endpoint: `produtos/estruturas/${parameters.params.idProdutoEstrutura}/componentes`,
       body: parameters.body
     })
   }

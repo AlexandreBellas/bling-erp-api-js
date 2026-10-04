@@ -3,9 +3,9 @@ export default {
     {
       id: 6423813145,
       descricao: 'Correios Cliente',
-      tipoIntegracao: 'Correios',
+      tipoIntegracao: 'Correios' as const,
       integracaoNativa: false,
-      situacao: 'H',
+      situacao: 'H' as const,
       integracao: {
         id: 12345678
       },

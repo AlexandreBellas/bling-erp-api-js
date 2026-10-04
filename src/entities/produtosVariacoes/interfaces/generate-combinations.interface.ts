@@ -7,6 +7,7 @@ import { ISituacao } from '../types/situacao.type'
 import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
 import { ITipo } from '../types/tipo.type'
+import { IUnidadeMedida } from '../types/unidade-medida.type'
 
 export interface IGenerateCombinationsBody {
   produtoPai: { id?: number }
@@ -26,6 +27,7 @@ export interface IGenerateCombinationsResponse {
     situacao: ISituacao
     formato: IFormato
     descricaoCurta?: string
+    imagemURL?: string
     dataValidade?: string
     unidade?: string
     pesoLiquido?: number
@@ -34,6 +36,12 @@ export interface IGenerateCombinationsResponse {
     itensPorCaixa?: number
     gtin?: string
     gtinEmbalagem?: string
+    descricaoEmbalagemDiscreta?: string
+    duns?: {
+      codigo: string
+      quantidade: number
+    }[]
+    artigoPerigoso?: boolean
     tipoProducao?: ITipoProducao
     condicao?: ICondicao
     freteGratis?: boolean
@@ -47,13 +55,24 @@ export interface IGenerateCombinationsResponse {
       maximo?: number
       crossdocking?: number
       localizacao?: string
+      saldoVirtualTotal?: number
+    }
+    fornecedor?: {
+      id?: number
+      contato?: {
+        id?: number
+        nome?: string
+      }
+      codigo?: string
+      precoCusto?: number
+      precoCompra?: number
     }
     actionEstoque?: IActionEstoque
     dimensoes?: {
       largura?: number
       altura?: number
       profundidade?: number
-      unidadeMedida?: number
+      unidadeMedida?: IUnidadeMedida
     }
     tributacao?: {
       origem?: number
@@ -86,7 +105,17 @@ export interface IGenerateCombinationsResponse {
     }
     midia?: {
       video: { url: string }
-      imagens: { externas: { link: string }[] }
+      imagens: {
+        externas?: { link: string }[]
+        internas?: {
+          link: string
+          linkMiniatura: string
+          validade: string
+          ordem: number
+          anexo: { id: number }
+          anexoVinculo: { id: number }
+        }[]
+      }
     }
     linhaProduto?: { id: number }
     estrutura?: {
@@ -112,6 +141,7 @@ export interface IGenerateCombinationsResponse {
       situacao: ISituacao
       formato: IFormato
       descricaoCurta?: string
+      imagemURL?: string
       dataValidade?: string
       unidade?: string
       pesoLiquido?: number
@@ -120,6 +150,12 @@ export interface IGenerateCombinationsResponse {
       itensPorCaixa?: number
       gtin?: string
       gtinEmbalagem?: string
+      descricaoEmbalagemDiscreta?: string
+      duns?: {
+        codigo: string
+        quantidade: number
+      }[]
+      artigoPerigoso?: boolean
       tipoProducao?: ITipoProducao
       condicao?: ICondicao
       freteGratis?: boolean
@@ -133,13 +169,24 @@ export interface IGenerateCombinationsResponse {
         maximo?: number
         crossdocking?: number
         localizacao?: string
+        saldoVirtualTotal?: number
+      }
+      fornecedor?: {
+        id?: number
+        contato?: {
+          id?: number
+          nome?: string
+        }
+        codigo?: string
+        precoCusto?: number
+        precoCompra?: number
       }
       actionEstoque?: IActionEstoque
       dimensoes?: {
         largura?: number
         altura?: number
         profundidade?: number
-        unidadeMedida?: number
+        unidadeMedida?: IUnidadeMedida
       }
       tributacao?: {
         origem?: number
@@ -172,7 +219,17 @@ export interface IGenerateCombinationsResponse {
       }
       midia?: {
         video: { url: string }
-        imagens: { externas: { link: string }[] }
+        imagens: {
+          externas?: { link: string }[]
+          internas?: {
+            link: string
+            linkMiniatura: string
+            validade: string
+            ordem: number
+            anexo: { id: number }
+            anexoVinculo: { id: number }
+          }[]
+        }
       }
       linhaProduto?: { id: number }
       estrutura?: {
@@ -192,7 +249,7 @@ export interface IGenerateCombinationsResponse {
       variacao: {
         nome: string
         ordem: number
-        produtoPai: { cloneInfo: boolean }
+        produtoPai: { id?: number; cloneInfo: boolean }
       }
     }[]
   }

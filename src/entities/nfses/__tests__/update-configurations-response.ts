@@ -3,7 +3,7 @@ export default null
 export const updateConfigurationsRequestBody = {
   basicas: {
     emissorPadrao: 3,
-    naturezaOperacao: 1
+    naturezaOperacao: '1'
   },
   ISS: {
     zerar: false,
@@ -16,6 +16,7 @@ export const updateConfigurationsRequestBody = {
         CNAE: '82.99',
         descricaoServico: 'Laudo de Vistoria Veicular',
         padrao: false,
+        indicadorOperacao: '100301',
         codigo: {
           listaServico: '0107',
           tributacao: '0107'
@@ -73,7 +74,7 @@ export const updateConfigurationsRequestBody = {
     proximoNumeroLote: 78,
     observacaoImpressaNota: 'OBS',
     descricaoComplementar: 'OBS',
-    tipoEmissao: 'R',
+    tipoEmissao: 'R' as const,
     campoNumeroDocContas: true,
     incentivadorFiscal: true,
     alterarSituacao: true,

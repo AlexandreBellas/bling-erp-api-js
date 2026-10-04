@@ -32,6 +32,25 @@ describe('NFC-es entity', () => {
     jest.restoreAllMocks()
   })
 
+  it('should forward document filters on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      situacao: 12 as const,
+      chaveAcesso: chance.natural(),
+      numero: chance.natural(),
+      serie: chance.natural()
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'nfce',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -44,6 +63,9 @@ describe('NFC-es entity', () => {
         limite: undefined,
         pagina: undefined,
         idTransportador: undefined,
+        chaveAcesso: undefined,
+        numero: undefined,
+        serie: undefined,
         situacao: undefined,
         dataEmissaoInicial: undefined,
         dataEmissaoFinal: undefined

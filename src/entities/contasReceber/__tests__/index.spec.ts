@@ -16,7 +16,6 @@ import { IFindResponse } from '../interfaces/find.interface'
 import { IGetBankSlipsResponse } from '../interfaces/get-bank-slips.interface'
 import { ICreateResponse } from '../interfaces/create.interface'
 import { IDownloadResponse } from '../interfaces/download.interface'
-import { IUpdateResponse } from '../interfaces/update.interface'
 
 const chance = Chance()
 
@@ -66,13 +65,49 @@ describe('Contas a receber entity', () => {
         dataFinal: undefined,
         idsCategorias: undefined,
         idPortador: undefined,
+        idContato: undefined,
         idVendedor: undefined,
-        idFormaPagamento: undefined
+        idFormaPagamento: undefined,
+        boletoGerado: undefined
       }
     })
     expect(response).toBe(getResponse)
     const typingResponseTest: IGetResponse = getResponse
     expect(typingResponseTest).toBe(getResponse)
+  })
+
+  it('should forward every filter on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    repository.setResponse(getResponse)
+    const params = {
+      pagina: chance.natural(),
+      limite: chance.natural(),
+      situacoes: [1, 2] as (1 | 2)[],
+      tipoFiltroData: 'V' as const,
+      idsCategorias: [chance.natural(), chance.natural()],
+      idPortador: chance.natural(),
+      idContato: chance.natural(),
+      idVendedor: chance.natural(),
+      idFormaPagamento: chance.natural(),
+      boletoGerado: chance.pickone([0, 1] as (0 | 1)[])
+    }
+
+    await entity.get({
+      ...params,
+      dataInicial: '2024-01-01',
+      dataFinal: '2024-01-31'
+    })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: 'contas/receber',
+      params: {
+        ...params,
+        dataInicial: '2024-01-01',
+        dataFinal: '2024-01-31'
+      }
+    })
+    const sent = spy.mock.calls[0][0].params as Record<string, unknown>
+    expect(Object.keys(sent).filter((k) => sent[k] === undefined)).toEqual([])
   })
 
   it('should find successfully', async () => {
@@ -177,7 +212,7 @@ describe('Contas a receber entity', () => {
       body: updateRequestBody
     })
     expect(response).toBe(updateResponse)
-    const typingResponseTest: IUpdateResponse = updateResponse
+    const typingResponseTest: null = updateResponse
     expect(typingResponseTest).toBe(updateResponse)
   })
 })

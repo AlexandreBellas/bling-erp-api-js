@@ -157,7 +157,7 @@ export class CamposCustomizados extends Entity {
   async update(params: IUpdateParams & IUpdateBody): Promise<IUpdateResponse> {
     const { idCampoCustomizado, ...body } = params
 
-    return await this.repository.update({
+    return await this.repository.replace({
       endpoint: 'campos-customizados',
       id: String(idCampoCustomizado),
       body

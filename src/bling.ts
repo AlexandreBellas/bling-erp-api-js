@@ -10,7 +10,10 @@ import {
 } from './auth/interfaces/auth-options.interface'
 import { OAuthClient } from './auth/oauth-client'
 import { Entity } from './entities/@shared/entity'
+import { Anuncios } from './entities/anuncios'
+import { AnunciosCategorias } from './entities/anunciosCategorias'
 import { Borderos } from './entities/borderos'
+import { Caixas } from './entities/caixas'
 import { CamposCustomizados } from './entities/camposCustomizados'
 import { CanaisDeVenda } from './entities/canaisDeVenda'
 import { CategoriasLojas } from './entities/categoriasLojas'
@@ -23,11 +26,13 @@ import { Contatos } from './entities/contatos'
 import { ContatosTipos } from './entities/contatosTipos'
 import { Contratos } from './entities/contratos'
 import { Depositos } from './entities/depositos'
+import { DocumentosCompartilhados } from './entities/documentosCompartilhados'
 import { Empresas } from './entities/empresas'
 import { Estoques } from './entities/estoques'
 import { FormasDePagamento } from './entities/formasDePagamento'
 import { GruposDeProdutos } from './entities/gruposDeProdutos'
 import { Homologacao } from './entities/homologacao'
+import { ListasPrecos } from './entities/listasPrecos'
 import { Logisticas } from './entities/logisticas'
 import { LogisticasEtiquetas } from './entities/logisticasEtiquetas'
 import { LogisticasObjetos } from './entities/logisticasObjetos'
@@ -39,12 +44,15 @@ import { Nfes } from './entities/nfes'
 import { Nfses } from './entities/nfses'
 import { Notificacoes } from './entities/notificacoes'
 import { OrdensDeProducao } from './entities/ordensDeProducao'
+import { OrdensServico } from './entities/ordensServico'
 import { PedidosCompras } from './entities/pedidosCompras'
 import { PedidosVendas } from './entities/pedidosVendas'
 import { Produtos } from './entities/produtos'
 import { ProdutosEstruturas } from './entities/produtosEstruturas'
 import { ProdutosFornecedores } from './entities/produtosFornecedores'
 import { ProdutosLojas } from './entities/produtosLojas'
+import { ProdutosLotes } from './entities/produtosLotes'
+import { ProdutosLotesLancamentos } from './entities/produtosLotesLancamentos'
 import { ProdutosVariacoes } from './entities/produtosVariacoes'
 import { PropostasComerciais } from './entities/propostasComerciais'
 import { Situacoes } from './entities/situacoes'
@@ -469,6 +477,78 @@ export abstract class BlingBase {
    */
   public get gruposDeProdutos(): GruposDeProdutos {
     return this.getModule(GruposDeProdutos)
+  }
+
+  /**
+   * Obtém a instância de interação com anúncios.
+   *
+   * @returns {Anuncios}
+   */
+  public get anuncios(): Anuncios {
+    return this.getModule(Anuncios)
+  }
+
+  /**
+   * Obtém a instância de interação com categorias de anúncios.
+   *
+   * @returns {AnunciosCategorias}
+   */
+  public get anunciosCategorias(): AnunciosCategorias {
+    return this.getModule(AnunciosCategorias)
+  }
+
+  /**
+   * Obtém a instância de interação com caixas e bancos.
+   *
+   * @returns {Caixas}
+   */
+  public get caixas(): Caixas {
+    return this.getModule(Caixas)
+  }
+
+  /**
+   * Obtém a instância de interação com documentos compartilhados.
+   *
+   * @returns {DocumentosCompartilhados}
+   */
+  public get documentosCompartilhados(): DocumentosCompartilhados {
+    return this.getModule(DocumentosCompartilhados)
+  }
+
+  /**
+   * Obtém a instância de interação com listas de preços.
+   *
+   * @returns {ListasPrecos}
+   */
+  public get listasPrecos(): ListasPrecos {
+    return this.getModule(ListasPrecos)
+  }
+
+  /**
+   * Obtém a instância de interação com ordens de serviço.
+   *
+   * @returns {OrdensServico}
+   */
+  public get ordensServico(): OrdensServico {
+    return this.getModule(OrdensServico)
+  }
+
+  /**
+   * Obtém a instância de interação com lotes de produtos.
+   *
+   * @returns {ProdutosLotes}
+   */
+  public get produtosLotes(): ProdutosLotes {
+    return this.getModule(ProdutosLotes)
+  }
+
+  /**
+   * Obtém a instância de interação com lançamentos de lotes de produtos.
+   *
+   * @returns {ProdutosLotesLancamentos}
+   */
+  public get produtosLotesLancamentos(): ProdutosLotesLancamentos {
+    return this.getModule(ProdutosLotesLancamentos)
   }
 }
 

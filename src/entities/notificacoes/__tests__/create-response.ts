@@ -8,6 +8,7 @@ export default {
       titulo: 'string',
       fonte: 'SEFAZ',
       linkAjuda: 'string',
+      acao: 'Acessar',
       dataCriacao: '2023-01-12',
       dataEnvio: '2023-01-12 00:00:00',
       dataVigencia: '2023-01-12',
@@ -19,8 +20,8 @@ export default {
         {
           tamanhoEmpresa: ['micro', 'pequena'],
           idMunicipio: ['2704104', '2704203'],
-          uf: ['SP', 'RS'],
-          crt: [1, 2]
+          uf: ['SP' as const, 'RS' as const],
+          crt: [1 as const, 2 as const]
         }
       ]
     }

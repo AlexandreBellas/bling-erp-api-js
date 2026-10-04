@@ -1,7 +1,9 @@
+import { ITipoEmissao } from '../types/tipo-emissao.type'
+
 export interface IGetConfigurationsResponse {
   basicas?: {
     emissorPadrao?: number
-    naturezaOperacao?: number
+    naturezaOperacao?: string
   }
   ISS?: {
     zerar?: boolean
@@ -13,6 +15,7 @@ export interface IGetConfigurationsResponse {
       CNAE: string
       descricaoServico: string
       padrao?: boolean
+      indicadorOperacao?: string
       codigo: {
         listaServico: string
         tributacao?: string
@@ -69,7 +72,7 @@ export interface IGetConfigurationsResponse {
     proximoNumeroLote?: number
     observacaoImpressaNota?: string
     descricaoComplementar?: string
-    tipoEmissao?: string
+    tipoEmissao?: ITipoEmissao
     campoNumeroDocContas?: boolean
     incentivadorFiscal?: boolean
     alterarSituacao?: boolean

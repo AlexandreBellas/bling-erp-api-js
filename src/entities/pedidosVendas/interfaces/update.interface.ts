@@ -22,7 +22,10 @@ export interface IUpdateBody {
     tipoPessoa?: ITipoPessoa
     numeroDocumento?: string
   }
-  loja?: { id: number }
+  loja?: {
+    id: number
+    unidadeNegocio?: { id: number }
+  }
   numeroPedidoCompra?: string
   outrasDespesas?: number
   observacoes?: string
@@ -47,6 +50,7 @@ export interface IUpdateBody {
     descricao: string
     descricaoDetalhada?: string
     produto?: { id: number }
+    naturezaOperacao?: { id?: number }
     comissao?: {
       base?: number
       aliquota?: number
@@ -58,6 +62,10 @@ export interface IUpdateBody {
     dataVencimento: string
     valor: number
     observacoes?: string
+    /**
+     * cAut (ou NSU): código de autorização da operação financeira.
+     */
+    caut?: string
     formaPagamento: { id: number }
   }[]
   transporte?: {

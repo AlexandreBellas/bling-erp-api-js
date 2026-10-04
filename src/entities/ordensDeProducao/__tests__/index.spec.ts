@@ -139,7 +139,7 @@ describe('OrdensDeProducao entity', () => {
   })
 
   it('should change situation successfully', async () => {
-    const spy = jest.spyOn(repository, 'update')
+    const spy = jest.spyOn(repository, 'replace')
     const idOrdemProducao = chance.natural()
     repository.setResponse(changeSituationResponse)
 

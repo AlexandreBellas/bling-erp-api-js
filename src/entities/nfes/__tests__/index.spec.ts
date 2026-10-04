@@ -2,12 +2,14 @@ import { Chance } from 'chance'
 import { Nfes } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
 import { ICreateResponse } from '../interfaces/create.interface'
+import { IDownloadDocumentResponse } from '../interfaces/download-document.interface'
 import { IDeleteResponse } from '../interfaces/delete.interface'
 import { IFindResponse } from '../interfaces/find.interface'
 import { IGetResponse } from '../interfaces/get.interface'
 import { ISendResponse } from '../interfaces/send.interface'
 import { IUpdateResponse } from '../interfaces/update.interface'
 import createResponse, { createRequestBody } from './create-response'
+import downloadDocumentResponse from './download-document-response'
 import deleteResponse from './delete-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
@@ -55,6 +57,58 @@ describe('NF-es entity', () => {
     expect(typingResponseTest).toBe(deleteResponse)
   })
 
+  it('should forward document filters on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      chaveAcesso: chance.natural(),
+      numero: chance.natural(),
+      serie: chance.natural()
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'nfe',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
+  it('should forward enviarEmail on send', async () => {
+    const spy = jest.spyOn(repository, 'store')
+    const idNotaFiscal = chance.natural()
+    const params = {
+      enviarEmail: chance.bool()
+    }
+
+    await entity.send({ idNotaFiscal, ...params })
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: `nfe/${idNotaFiscal}/enviar`,
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
+  it('should forward formato on downloadDocument', async () => {
+    const spy = jest.spyOn(repository, 'show')
+    const chaveAcesso = chance.string({ numeric: true, length: 44 })
+    const params = {
+      formato: chance.pickone(['pdf', 'xml'] as const)
+    }
+
+    await entity.downloadDocument({ chaveAcesso, ...params })
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'nfe/documento',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -68,6 +122,9 @@ describe('NF-es entity', () => {
         pagina: undefined,
         numeroLoja: undefined,
         idTransportador: undefined,
+        chaveAcesso: undefined,
+        numero: undefined,
+        serie: undefined,
         situacao: undefined,
         tipo: undefined,
         dataEmissaoInicial: undefined,
@@ -122,12 +179,35 @@ describe('NF-es entity', () => {
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: `nfe/${idNotaFiscal}/enviar`,
-      body: {}
+      body: {},
+      params: {
+        enviarEmail: undefined
+      }
     })
     expect(response).toBe(sendResponse)
 
     const typingResponseTest: ISendResponse = sendResponse
     expect(typingResponseTest).toBe(sendResponse)
+  })
+
+  it('should download document successfully', async () => {
+    const spy = jest.spyOn(repository, 'show')
+    const chaveAcesso = chance.hash()
+    const formato = 'pdf' as const
+    repository.setResponse(downloadDocumentResponse)
+
+    const response = await entity.downloadDocument({ chaveAcesso, formato })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: 'nfe/documento',
+      id: chaveAcesso,
+      params: { formato }
+    })
+    expect(response).toBe(downloadDocumentResponse)
+
+    const typingResponseTest: IDownloadDocumentResponse =
+      downloadDocumentResponse
+    expect(typingResponseTest).toBe(downloadDocumentResponse)
   })
 
   it('should post accounts successfully', async () => {

@@ -7,6 +7,7 @@ import { ISituacao } from '../types/situacao.type'
 import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
 import { ITipo } from '../types/tipo.type'
+import { IUnidadeMedida } from '../types/unidade-medida.type'
 
 export interface IFindParams {
   /**
@@ -34,6 +35,12 @@ export interface IFindResponse {
     itensPorCaixa?: number
     gtin?: string
     gtinEmbalagem?: string
+    descricaoEmbalagemDiscreta?: string
+    duns?: {
+      codigo: string
+      quantidade: number
+    }[]
+    artigoPerigoso?: boolean
     tipoProducao?: ITipoProducao
     condicao?: ICondicao
     freteGratis?: boolean
@@ -64,7 +71,7 @@ export interface IFindResponse {
       largura?: number
       altura?: number
       profundidade?: number
-      unidadeMedida?: number
+      unidadeMedida?: IUnidadeMedida
     }
     tributacao?: {
       origem?: number
@@ -100,6 +107,7 @@ export interface IFindResponse {
       imagens: {
         externas?: { link: string }[]
         internas?: {
+          link: string
           linkMiniatura: string
           validade: string
           ordem: number
@@ -133,6 +141,7 @@ export interface IFindResponse {
       situacao: ISituacao
       formato: IFormato
       descricaoCurta?: string
+      imagemURL?: string
       dataValidade?: string
       unidade?: string
       pesoLiquido?: number
@@ -141,6 +150,12 @@ export interface IFindResponse {
       itensPorCaixa?: number
       gtin?: string
       gtinEmbalagem?: string
+      descricaoEmbalagemDiscreta?: string
+      duns?: {
+        codigo: string
+        quantidade: number
+      }[]
+      artigoPerigoso?: boolean
       tipoProducao?: ITipoProducao
       condicao?: ICondicao
       freteGratis?: boolean
@@ -171,7 +186,7 @@ export interface IFindResponse {
         largura?: number
         altura?: number
         profundidade?: number
-        unidadeMedida?: number
+        unidadeMedida?: IUnidadeMedida
       }
       tributacao?: {
         origem?: number
@@ -204,7 +219,17 @@ export interface IFindResponse {
       }
       midia?: {
         video: { url: string }
-        imagens: { externas: { link: string }[] }
+        imagens: {
+          externas?: { link: string }[]
+          internas?: {
+            link: string
+            linkMiniatura: string
+            validade: string
+            ordem: number
+            anexo: { id: number }
+            anexoVinculo: { id: number }
+          }[]
+        }
       }
       linhaProduto?: { id: number }
       estrutura?: {

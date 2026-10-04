@@ -11,7 +11,10 @@ export default {
         id: 12345678
       },
       loja: {
-        id: 12345678
+        id: 12345678,
+        unidadeNegocio: {
+          id: 12345678
+        }
       }
     }
   ]

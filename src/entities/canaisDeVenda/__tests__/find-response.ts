@@ -11,6 +11,7 @@ export default {
         deposito: {
           id: 12345678
         },
+        idUnidadeNegocio: 12345678,
         padrao: true
       }
     ]

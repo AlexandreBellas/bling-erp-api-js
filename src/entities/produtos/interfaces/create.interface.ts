@@ -7,6 +7,7 @@ import { ISituacao } from '../types/situacao.type'
 import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
 import { ITipo } from '../types/tipo.type'
+import { IUnidadeMedida } from '../types/unidade-medida.type'
 
 export interface ICreateBody {
   id?: number
@@ -25,6 +26,12 @@ export interface ICreateBody {
   itensPorCaixa?: number
   gtin?: string
   gtinEmbalagem?: string
+  descricaoEmbalagemDiscreta?: string
+  duns?: {
+    codigo: string
+    quantidade: number
+  }[]
+  artigoPerigoso?: boolean
   tipoProducao?: ITipoProducao
   condicao?: ICondicao
   freteGratis?: boolean
@@ -44,7 +51,7 @@ export interface ICreateBody {
     largura?: number
     altura?: number
     profundidade?: number
-    unidadeMedida?: number
+    unidadeMedida?: IUnidadeMedida
   }
   tributacao?: {
     origem?: number
@@ -113,6 +120,12 @@ export interface ICreateBody {
     itensPorCaixa?: number
     gtin?: string
     gtinEmbalagem?: string
+    descricaoEmbalagemDiscreta?: string
+    duns?: {
+      codigo: string
+      quantidade: number
+    }[]
+    artigoPerigoso?: boolean
     tipoProducao?: ITipoProducao
     condicao?: ICondicao
     freteGratis?: boolean
@@ -132,7 +145,7 @@ export interface ICreateBody {
       largura?: number
       altura?: number
       profundidade?: number
-      unidadeMedida?: number
+      unidadeMedida?: IUnidadeMedida
     }
     tributacao?: {
       origem?: number
@@ -187,7 +200,7 @@ export interface ICreateBody {
     variacao: {
       nome: string
       ordem: number
-      produtoPai: { cloneInfo: boolean }
+      produtoPai: { id?: number; cloneInfo: boolean }
     }
   }[]
 }

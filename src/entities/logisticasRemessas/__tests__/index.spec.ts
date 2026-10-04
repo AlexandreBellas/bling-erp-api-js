@@ -65,11 +65,14 @@ describe('Logísticas - Remessas entity', () => {
     const idLogistica = chance.natural()
     repository.setResponse(getByLogisticResponse)
 
-    const response = await entity.getByLogistic({ idLogistica })
+    const situacao = chance.pickone([-4, -1, 0, 3, 6] as const)
+
+    const response = await entity.getByLogistic({ idLogistica, situacao })
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'logisticas',
-      id: `${idLogistica}/remessas`
+      id: `${idLogistica}/remessas`,
+      params: { situacao }
     })
     expect(response).toBe(getByLogisticResponse)
 

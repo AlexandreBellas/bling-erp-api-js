@@ -1,11 +1,17 @@
 import { Entity } from '../@shared/entity'
-import { IChangeSituationManyBody } from './interfaces/change-situation-many.interface'
+import {
+  IChangeSituationManyBody,
+  IChangeSituationManyResponse
+} from './interfaces/change-situation-many.interface'
 import {
   IChangeSituationBody,
   IChangeSituationParams
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteManyParams } from './interfaces/delete-many.interface'
+import {
+  IDeleteManyParams,
+  IDeleteManyResponse
+} from './interfaces/delete-many.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindFinalCustomerResponse } from './interfaces/find-final-customer.interface'
 import {
@@ -27,12 +33,14 @@ export class Contatos extends Entity {
    *
    * @param {IDeleteManyParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteManyResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contatos/delete_contatos
    */
-  public async deleteMany(params: IDeleteManyParams): Promise<null> {
+  public async deleteMany(
+    params: IDeleteManyParams
+  ): Promise<IDeleteManyResponse> {
     return await this.repository.destroy({
       endpoint: 'contatos',
       id: String(''),
@@ -98,7 +106,8 @@ export class Contatos extends Entity {
         uf: params?.uf,
         telefone: params?.telefone,
         idsContatos: params?.idsContatos,
-        numeroDocumento: params?.numeroDocumento
+        numeroDocumento: params?.numeroDocumento,
+        tipoPessoa: params?.tipoPessoa
       }
     })
   }
@@ -179,14 +188,14 @@ export class Contatos extends Entity {
    *
    * @param {IChangeSituationManyBody} body O corpo da requisição.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationManyResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contatos/post_contatos_situacoes
    */
   public async changeSituationMany(
     body: IChangeSituationManyBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationManyResponse> {
     return await this.repository.store({
       endpoint: 'contatos/situacoes',
       body

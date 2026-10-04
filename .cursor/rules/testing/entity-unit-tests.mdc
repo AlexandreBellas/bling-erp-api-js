@@ -15,7 +15,7 @@ src/entities/<module>/__tests__/index.spec.ts
 src/entities/<module>/__tests__/<operation>-response.ts
 ```
 
-Every entity module with an `index.ts` should have a corresponding `__tests__/index.spec.ts` (42 entity modules follow this pattern).
+Every entity module with an `index.ts` should have a corresponding `__tests__/index.spec.ts` (50 entity modules follow this pattern).
 
 ## Spec Structure
 
@@ -41,6 +41,10 @@ Follow `src/entities/camposCustomizados/__tests__/index.spec.ts`:
 ## Repository Verb Spying
 
 Spy the repository method the entity actually calls, not the HTTP verb name. Cross-check `src/entities/<module>/index.ts` when unsure.
+
+## Filters Need Defined Values
+
+`toHaveBeenCalledWith` treats a property set to `undefined` as absent. A test that calls `get()` without arguments cannot detect a dropped filter. For each filter, pass a defined value (`chance`) and assert it appears in `params`.
 
 ## Edge Cases to Cover
 

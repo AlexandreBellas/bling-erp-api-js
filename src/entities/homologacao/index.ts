@@ -91,7 +91,7 @@ export class Homologacao extends Entity {
 
     return await this.repository.update({
       endpoint: 'homologacao/produtos',
-      id: String(idProdutoHomologacao),
+      id: `${idProdutoHomologacao}/situacoes`,
       body,
       headers: {
         'x-bling-homologacao': hash

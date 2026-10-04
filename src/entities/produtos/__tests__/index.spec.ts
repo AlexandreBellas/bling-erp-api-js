@@ -75,6 +75,27 @@ describe('Produtos entity', () => {
     expect(typingResponseTest).toBe(deleteResponse)
   })
 
+  it('should forward stock and gtin filters on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      gtins: [
+        chance.string({ numeric: true }),
+        chance.string({ numeric: true })
+      ],
+      filtroSaldoEstoque: chance.pickone([0, 1, 2] as const),
+      filtroSaldoEstoqueDeposito: chance.natural()
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'produtos',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -98,7 +119,10 @@ describe('Produtos entity', () => {
         codigo: undefined,
         nome: undefined,
         idsProdutos: undefined,
-        codigos: undefined
+        codigos: undefined,
+        gtins: undefined,
+        filtroSaldoEstoque: undefined,
+        filtroSaldoEstoqueDeposito: undefined
       }
     })
     expect(response).toBe(getResponse)
@@ -143,6 +167,20 @@ describe('Produtos entity', () => {
 
     const typingResponseTest: null = changeSituationResponse
     expect(typingResponseTest).toBe(changeSituationResponse)
+  })
+
+  it('should change situation to deleted', async () => {
+    const spy = jest.spyOn(repository, 'update')
+    const idProduto = chance.natural()
+    repository.setResponse(changeSituationResponse)
+
+    await entity.changeSituation({ idProduto, situacao: 'E' })
+
+    expect(spy).toHaveBeenCalledWith({
+      endpoint: 'produtos',
+      id: `${idProduto}/situacoes`,
+      body: { situacao: 'E' }
+    })
   })
 
   it('should create successfully', async () => {

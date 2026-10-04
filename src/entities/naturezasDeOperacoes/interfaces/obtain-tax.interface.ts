@@ -5,6 +5,7 @@ import { IModalidadeBaseCalculoICMSST } from '../types/modalidade-base-calculo-i
 import { IMotivoDesoneracaoICMS } from '../types/motivo-desoneracao-icms.type'
 import { ITipoNota } from '../types/tipo-nota.type'
 import { ITributacao } from '../types/tributacao.type'
+import { ITipoPartilha } from '../types/tipo-partilha.type'
 
 export interface IObtainTaxParams {
   /**
@@ -17,7 +18,14 @@ export interface IObtainTaxBody {
   tipoNota: ITipoNota
   uf: IUF
   municipio: { id: number }
+  /**
+   * @deprecated Não consta na documentação oficial do endpoint.
+   */
   calcularImpostos?: boolean
+  /**
+   * Se false, os valores das regras de tributação de cada imposto serão zerados.
+   */
+  obterRegras?: boolean
   crt?: ICRT
   loja: {
     id: number
@@ -69,7 +77,7 @@ export interface IObtainTaxResponse {
       aliquotaPresumido?: number
       porcentagemBaseCalculoUfDestino?: number
       porcentagemIcmsUfDestino?: number
-      tipoPartilha?: number
+      tipoPartilha?: ITipoPartilha
       valorIcmsDesonerado?: number
       motivoDesoneracaoIcms?: IMotivoDesoneracaoICMS
       baseDiferimento?: number
@@ -221,6 +229,44 @@ export interface IObtainTaxResponse {
       valorImposto?: number
       observacoes?: string
       informacoesAdicionaisFisco?: string
+    }
+    ibsCbs?: {
+      regraOperacao?: { id: number }
+      cst?: string
+      classificacaoTributaria?: string
+      valorBaseCalculo?: number
+    }
+    ibs?: {
+      regraOperacao?: { id: number }
+      percentualIbsUf?: number
+      percentualIbsMunicipio?: number
+      percentualReducaoAliquotaUf?: number
+      percentualReducaoAliquotaMunicipio?: number
+      aliquotaEfetivaUf?: number
+      aliquotaEfetivaMunicipio?: number
+      percentualDiferimentoUf?: number
+      percentualDiferimentoMunicipio?: number
+      codigoCreditoPresumido?: string
+      percentualCreditoPresumido?: number
+    }
+    cbs?: {
+      regraOperacao?: { id: number }
+      percentualCbs?: number
+      percentualReducaoAliquota?: number
+      aliquotaEfetiva?: number
+      percentualDiferimento?: number
+      codigoCreditoPresumido?: string
+      percentualCreditoPresumido?: number
+    }
+    ibsCbsReg?: {
+      cstRegular?: string
+      classificacaoTributariaRegular?: string
+      aliquotaEfetivaRegularIbsUf?: number
+      aliquotaEfetivaRegularIbsMunicipio?: number
+      aliquotaEfetivaRegularCbs?: number
+      valorTributacaoRegularIbsUf?: number
+      valorTributacaoRegularIbsMunicipio?: number
+      valorTributacaoRegularCbs?: number
     }
   }
 }

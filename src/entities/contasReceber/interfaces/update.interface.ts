@@ -15,9 +15,3 @@ export interface IUpdateBody {
   categoria?: { id: number }
   vendedor?: { id: number }
 }
-
-export interface IUpdateResponse {
-  data: {
-    id: number
-  }
-}

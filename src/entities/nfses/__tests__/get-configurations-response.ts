@@ -1,7 +1,7 @@
 export default {
   basicas: {
     emissorPadrao: 3,
-    naturezaOperacao: 1
+    naturezaOperacao: '1'
   },
   ISS: {
     zerar: false,
@@ -14,6 +14,7 @@ export default {
         CNAE: '82.99',
         descricaoServico: 'Laudo de Vistoria Veicular',
         padrao: false,
+        indicadorOperacao: '100301',
         codigo: {
           listaServico: '0107',
           tributacao: '0107'
@@ -71,7 +72,7 @@ export default {
     proximoNumeroLote: 78,
     observacaoImpressaNota: 'OBS',
     descricaoComplementar: 'OBS',
-    tipoEmissao: 'R',
+    tipoEmissao: 'R' as const,
     campoNumeroDocContas: true,
     incentivadorFiscal: true,
     alterarSituacao: true,

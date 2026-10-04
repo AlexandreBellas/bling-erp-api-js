@@ -29,6 +29,10 @@ export interface IGetParams {
    * Data final do período da compra
    */
   dataFinal?: Date | string
+  /**
+   * IDs das notas fiscais vinculadas
+   */
+  idsNotasFiscais?: number[]
 }
 
 export interface IGetResponse {
@@ -40,6 +44,6 @@ export interface IGetResponse {
     totalProdutos?: number
     total?: number
     fornecedor: { id: number }
-    situacao?: { valor: ISituacao }
+    situacao?: { id?: number; valor: ISituacao }
   }[]
 }

@@ -14,6 +14,9 @@ export default {
     rg: '1234567890',
     orgaoEmissor: '1234567890',
     email: 'contato@email.com',
+    emailNotaFiscal: 'nfe@email.com',
+    inscricaoMunicipal: '123456789',
+    orgaoPublico: 'N' as const,
     endereco: {
       geral: {
         endereco: 'R. Olavo Bilac',

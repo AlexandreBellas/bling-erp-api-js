@@ -21,6 +21,23 @@ describe('Contas contábeis entity', () => {
     jest.restoreAllMocks()
   })
 
+  it('should forward integration alias and ordering filters on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      aliasIntegracao: chance.word(),
+      ordenacao: chance.pickone(['descricao', '-descricao'] as const)
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'contas-contabeis',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -35,7 +52,9 @@ describe('Contas contábeis entity', () => {
         ocultarInvisiveis: undefined,
         ocultarContasIntegracaoPagamento: undefined,
         ocultarTipoContaBancaria: undefined,
-        situacoes: undefined
+        situacoes: undefined,
+        aliasIntegracao: undefined,
+        ordenacao: undefined
       }
     })
     expect(response).toBe(getResponse)

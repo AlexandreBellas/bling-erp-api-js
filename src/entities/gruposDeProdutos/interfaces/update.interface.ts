@@ -6,6 +6,7 @@ export interface IUpdateParams {
 }
 
 export interface IUpdateBody {
+  id?: number
   nome: string
   grupoProdutoPai: {
     id: number

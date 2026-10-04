@@ -11,6 +11,10 @@ import postStockResponse from './post-stock-response'
 import reverseAccountsResponse from './reverse-accounts-response'
 import reverseStockResponse from './reverse-stock-response'
 import updateResponse, { updateRequestBody } from './update-response'
+import type * as CreateTypes from '../interfaces/create.interface'
+import type * as FindTypes from '../interfaces/find.interface'
+import type * as GetTypes from '../interfaces/get.interface'
+import type * as UpdateTypes from '../interfaces/update.interface'
 
 const chance = Chance()
 
@@ -41,6 +45,40 @@ describe('Pedidos - Compras entity', () => {
     expect(response).toBe(deleteResponse)
   })
 
+  it('should forward idsNotasFiscais on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      idsNotasFiscais: [chance.natural(), chance.natural()]
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'pedidos/compras',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
+  it('should keep fixtures assignable to the declared types', () => {
+    const typedCreateResponse: CreateTypes.ICreateResponse = createResponse
+    const typedCreateBody: CreateTypes.ICreateBody = createRequestBody
+    const typedFindResponse: FindTypes.IFindResponse = findResponse
+    const typedGetResponse: GetTypes.IGetResponse = getResponse
+    const typedUpdateResponse: UpdateTypes.IUpdateResponse = updateResponse
+    const typedUpdateBody: UpdateTypes.IUpdateBody = updateRequestBody
+
+    expect([
+      typedCreateResponse,
+      typedCreateBody,
+      typedFindResponse,
+      typedGetResponse,
+      typedUpdateResponse,
+      typedUpdateBody
+    ]).toHaveLength(6)
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -56,7 +94,8 @@ describe('Pedidos - Compras entity', () => {
         valorSituacao: undefined,
         idSituacao: undefined,
         dataInicial: undefined,
-        dataFinal: undefined
+        dataFinal: undefined,
+        idsNotasFiscais: undefined
       }
     })
     expect(response).toBe(getResponse)
@@ -79,14 +118,18 @@ describe('Pedidos - Compras entity', () => {
   it('should change situation successfully', async () => {
     const spy = jest.spyOn(repository, 'update')
     const idPedidoCompra = chance.natural()
+    const idSituacao = chance.natural()
     repository.setResponse(changeSituationResponse)
 
-    const response = await entity.changeSituation({ idPedidoCompra, valor: 0 })
+    const response = await entity.changeSituation({
+      idPedidoCompra,
+      idSituacao
+    })
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'pedidos/compras',
-      id: `${idPedidoCompra}/situacoes`,
-      body: { valor: 0 }
+      id: `${idPedidoCompra}/situacoes/${idSituacao}`,
+      body: {}
     })
     expect(response).toBe(changeSituationResponse)
   })

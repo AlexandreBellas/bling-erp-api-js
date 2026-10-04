@@ -38,12 +38,18 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 - Bling **PATCH** partial updates → `repository.update` (`src/entities/camposCustomizados/index.ts`).
 - Bling **PUT** full resource replace → `repository.replace` (`src/entities/contatos/index.ts` `update` method).
 - Verify against Bling docs. `replace` maps to HTTP PUT in `src/repositories/bling.repository.ts`.
+- Check the verb against the OpenAPI spec, not against sibling methods or the `@see` link. `camposCustomizados.update` and `ordensDeProducao.changeSituation` used `update` (PATCH) for operations the spec defines as PUT.
+- `readOnly` fields of the spec do not belong in input types (`ICreateBody`, `IUpdateBody`); `writeOnly` fields do not belong in response types.
+- Every parameter declared in `IGetParams`/`IFindParams` must be forwarded in `params`; a declared but unforwarded filter is silently dropped (`contasReceber.get` dropped `idContato` and `boletoGerado`).
 
 ## Special Cases
 
 - **Response headers required** — set `shouldIncludeHeadersInResponse: true` (`src/entities/homologacao/index.ts`). Homologação is the headers example, not GET-with-body.
 - **GET with body** — `IIndexOptions` allows optional `body`; no current entity uses it. Add only if [Bling reference](https://developer.bling.com.br/referencia) documents a GET payload.
 - **Non-CRUD action endpoints** — name the method after the Bling action; use `store` for POST actions (`src/entities/pedidosVendas/index.ts`).
+- **Situation change** — follow the reference body. `PATCH .../situacoes/{idSituacao}` with no body sends `body: {}` and puts both ids in the path (`src/entities/pedidosVendas/index.ts`, `src/entities/pedidosCompras/index.ts`). `PATCH .../situacao` or `.../padrao` with a JSON body sends that body (`src/entities/formasDePagamento/index.ts`).
+- **302 Location** — `show` with `preserveRedirect: true` and read `headers.location` (`src/entities/documentosCompartilhados/index.ts`).
+- **Array filters** — the interface property omits the trailing `[]` from the OpenAPI query name.
 - **Orchestration** — `Homologacao.execute()` sequences other entity methods and returns `Promise<void>`; ordinary CRUD methods `await this.repository.*` and use `Promise<null>` when Bling has no body.
 
 ## Do Not

@@ -29,7 +29,7 @@ export interface IFindResponse {
       diametro: number
     }
     embalagem: { id: number }
-    dataSaida: '2022-12-01'
+    dataSaida: string
     prazoEntregaPrevisto: number
     fretePrevisto: number
     valorDeclarado: number

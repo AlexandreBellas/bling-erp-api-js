@@ -112,7 +112,7 @@ describe('Produtos- Estruturas entity', () => {
     })
 
     expect(spy).toHaveBeenCalledWith({
-      endpoint: `produtos/estruturas/${idProdutoEstrutura}`,
+      endpoint: `produtos/estruturas/${idProdutoEstrutura}/componentes`,
       body: addComponentRequest
     })
     expect(response).toBe(addComponentResponse)

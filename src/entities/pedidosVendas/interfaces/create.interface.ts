@@ -15,7 +15,11 @@ export interface ICreateBody {
     tipoPessoa?: ITipoPessoa
     numeroDocumento?: string
   }
-  loja?: { id: number }
+  situacao?: { id: number }
+  loja?: {
+    id: number
+    unidadeNegocio?: { id: number }
+  }
   numeroPedidoCompra?: string
   outrasDespesas?: number
   observacoes?: string
@@ -40,6 +44,7 @@ export interface ICreateBody {
     descricao: string
     descricaoDetalhada?: string
     produto?: { id: number }
+    naturezaOperacao?: { id?: number }
     comissao?: {
       base?: number
       aliquota?: number
@@ -51,6 +56,10 @@ export interface ICreateBody {
     dataVencimento: string
     valor: number
     observacoes?: string
+    /**
+     * cAut (ou NSU): código de autorização da operação financeira.
+     */
+    caut?: string
     formaPagamento: { id: number }
   }[]
   transporte?: {

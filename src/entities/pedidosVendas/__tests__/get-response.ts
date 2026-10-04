@@ -20,7 +20,10 @@ export default {
         valor: 1 as const
       },
       loja: {
-        id: 12345678
+        id: 12345678,
+        unidadeNegocio: {
+          id: 12345678
+        }
       }
     }
   ]

@@ -8,7 +8,10 @@ export const updateRequestBody = {
     id: 12345678
   },
   loja: {
-    id: 12345678
+    id: 12345678,
+    unidadeNegocio: {
+      id: 12345678
+    }
   },
   desconto: 10,
   outrasDespesas: 11,
@@ -40,11 +43,9 @@ export const updateRequestBody = {
       dataVencimento: '2024-04-29',
       valor: 10.55,
       observacoes: 'Observacao da forma de pagamento',
-      formaPagamento: [
-        {
-          id: 12345678
-        }
-      ]
+      formaPagamento: {
+        id: 12345678
+      }
     }
   ],
   vendedor: {

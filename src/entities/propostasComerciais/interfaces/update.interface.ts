@@ -16,6 +16,7 @@ export interface IUpdateBody {
   }
   loja?: {
     id?: number
+    unidadeNegocio?: { id: number }
   }
   desconto?: number
   outrasDespesas?: number
@@ -46,7 +47,7 @@ export interface IUpdateBody {
     observacoes?: string
     formaPagamento?: {
       id?: number
-    }[]
+    }
   }[]
   vendedor?: {
     id?: number

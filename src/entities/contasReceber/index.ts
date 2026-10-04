@@ -13,11 +13,7 @@ import {
   IGetBankSlipsResponse
 } from './interfaces/get-bank-slips.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import {
-  IUpdateBody,
-  IUpdateParams,
-  IUpdateResponse
-} from './interfaces/update.interface'
+import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Contas a Receber.
@@ -64,8 +60,10 @@ export class ContasReceber extends Entity {
         dataFinal: this.prepareStringOrDateParam(params?.dataFinal),
         idsCategorias: params?.idsCategorias,
         idPortador: params?.idPortador,
+        idContato: params?.idContato,
         idVendedor: params?.idVendedor,
-        idFormaPagamento: params?.idFormaPagamento
+        idFormaPagamento: params?.idFormaPagamento,
+        boletoGerado: params?.boletoGerado
       }
     })
   }
@@ -154,7 +152,7 @@ export class ContasReceber extends Entity {
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/post_contas_receber_cancel_bankslips
+   * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/post_contas_receber_boletos_cancelar
    */
   public async cancelBankSlips(body: ICancelBankSlipsBody): Promise<null> {
     return await this.repository.store({
@@ -168,14 +166,12 @@ export class ContasReceber extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<IUpdateResponse>}
+   * @return {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/put_contas_receber__idContaReceber_
    */
-  public async update(
-    params: IUpdateParams & IUpdateBody
-  ): Promise<IUpdateResponse> {
+  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
     const { idContaReceber, ...body } = params
 
     return await this.repository.replace({

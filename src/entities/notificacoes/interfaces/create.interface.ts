@@ -17,6 +17,10 @@ export interface ICreateResponse {
     titulo: string
     fonte?: string
     linkAjuda?: string
+    /**
+     * Ação executada na notificação.
+     */
+    acao?: string
     dataCriacao?: string
     dataEnvio: string
     dataVigencia?: string

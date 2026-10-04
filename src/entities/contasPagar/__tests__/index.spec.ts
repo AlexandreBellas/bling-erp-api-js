@@ -7,6 +7,11 @@ import downloadResponse, { downloadRequestBody } from './download-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
 import updateResponse, { updateRequestBody } from './update-response'
+import type * as CreateTypes from '../interfaces/create.interface'
+import type * as DownloadTypes from '../interfaces/download.interface'
+import type * as FindTypes from '../interfaces/find.interface'
+import type * as GetTypes from '../interfaces/get.interface'
+import type * as UpdateTypes from '../interfaces/update.interface'
 
 const chance = Chance()
 
@@ -49,6 +54,29 @@ describe('Contas a pagar entity', () => {
       id: String(idContaPagar)
     })
     expect(response).toBe(findResponse)
+  })
+
+  it('should keep fixtures assignable to the declared types', () => {
+    const typedCreateResponse: CreateTypes.ICreateResponse = createResponse
+    const typedCreateBody: CreateTypes.ICreateBody = createRequestBody
+    const typedDownloadResponse: DownloadTypes.IDownloadResponse =
+      downloadResponse
+    const typedDownloadBody: DownloadTypes.IDownloadBody = downloadRequestBody
+    const typedFindResponse: FindTypes.IFindResponse = findResponse
+    const typedGetResponse: GetTypes.IGetResponse = getResponse
+    const typedUpdateResponse: UpdateTypes.IUpdateResponse = updateResponse
+    const typedUpdateBody: UpdateTypes.IUpdateBody = updateRequestBody
+
+    expect([
+      typedCreateResponse,
+      typedCreateBody,
+      typedDownloadResponse,
+      typedDownloadBody,
+      typedFindResponse,
+      typedGetResponse,
+      typedUpdateResponse,
+      typedUpdateBody
+    ]).toHaveLength(8)
   })
 
   it('should get successfully', async () => {

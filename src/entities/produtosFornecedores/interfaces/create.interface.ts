@@ -1,4 +1,5 @@
 export interface ICreateBody {
+  id?: number
   descricao?: string
   codigo?: string
   precoCusto?: number

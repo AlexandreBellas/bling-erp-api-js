@@ -17,6 +17,7 @@ export const createRequestBody = {
     numeroDocumento: '30188025000121',
     email: 'pedrosilva@bling.com.br',
     ie: '949895756023',
+    im: '145780150',
     telefone: '54 3771-7278',
     endereco: {
       endereco: 'Olavo Bilac',
@@ -43,6 +44,23 @@ export const createRequestBody = {
       valor: 100.25
     }
   ],
+  baseCalculo: 100.25,
+  tributacaoIbsCbs: {
+    indicadorOperacao: '100301',
+    tipoOperacao: '1',
+    tipoEnteGovernamental: '1',
+    indicadorUsoConsumoPessoal: 0 as const,
+    tributacao: {
+      codigoSituacaoTributaria: '000',
+      classificacaoTributaria: '000001',
+      codigoCreditoPresumido: '01',
+      cstRegimeRegular: '000',
+      classificacaoTributariaRegular: '000001',
+      percentualDiferimentoEstadual: 10,
+      percentualDiferimentoMunicipal: 10,
+      percentualDiferimentoCBS: 10
+    }
+  },
   parcelas: [
     {
       data: '2023-01-12',

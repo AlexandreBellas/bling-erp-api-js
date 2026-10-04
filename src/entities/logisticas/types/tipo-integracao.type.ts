@@ -5,6 +5,9 @@ export type ITipoIntegracao =
   | 'AmazonDBA'
   | 'B2WEntrega'
   | 'B2WO2O'
+  /**
+   * @deprecated Não consta na documentação oficial atual.
+   */
   | 'Cainiao'
   | 'Correios'
   | 'CorreiosLog'
@@ -17,6 +20,7 @@ export type ITipoIntegracao =
   | 'Jadlog'
   | 'Jamef'
   | 'Kangu'
+  | 'LogisticaAliExpress'
   | 'LogisticaShopee'
   | 'Loggi'
   | 'MagaluEntregas'
@@ -25,3 +29,4 @@ export type ITipoIntegracao =
   | 'MercadoEnvios'
   | 'OlistFulfillment'
   | 'TotalExpress'
+  | ''

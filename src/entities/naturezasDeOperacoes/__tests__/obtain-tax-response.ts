@@ -37,7 +37,7 @@ export default {
       aliquotaPresumido: 0,
       porcentagemBaseCalculoUfDestino: 0,
       porcentagemIcmsUfDestino: 0,
-      tipoPartilha: 0,
+      tipoPartilha: 0 as const,
       valorIcmsDesonerado: 0,
       motivoDesoneracaoIcms: 0 as const,
       baseDiferimento: 0,
@@ -209,6 +209,44 @@ export default {
       valorImposto: 0,
       observacoes: '',
       informacoesAdicionaisFisco: ''
+    },
+    ibsCbs: {
+      regraOperacao: { id: 12345678 },
+      cst: '000',
+      classificacaoTributaria: '000001',
+      valorBaseCalculo: 100
+    },
+    ibs: {
+      regraOperacao: { id: 12345678 },
+      percentualIbsUf: 0.1,
+      percentualIbsMunicipio: 0.1,
+      percentualReducaoAliquotaUf: 0,
+      percentualReducaoAliquotaMunicipio: 0,
+      aliquotaEfetivaUf: 0.1,
+      aliquotaEfetivaMunicipio: 0.1,
+      percentualDiferimentoUf: 0,
+      percentualDiferimentoMunicipio: 0,
+      codigoCreditoPresumido: '01',
+      percentualCreditoPresumido: 0
+    },
+    cbs: {
+      regraOperacao: { id: 12345678 },
+      percentualCbs: 0.9,
+      percentualReducaoAliquota: 0,
+      aliquotaEfetiva: 0.9,
+      percentualDiferimento: 0,
+      codigoCreditoPresumido: '01',
+      percentualCreditoPresumido: 0
+    },
+    ibsCbsReg: {
+      cstRegular: '000',
+      classificacaoTributariaRegular: '000001',
+      aliquotaEfetivaRegularIbsUf: 0.1,
+      aliquotaEfetivaRegularIbsMunicipio: 0.1,
+      aliquotaEfetivaRegularCbs: 0.9,
+      valorTributacaoRegularIbsUf: 0.1,
+      valorTributacaoRegularIbsMunicipio: 0.1,
+      valorTributacaoRegularCbs: 0.9
     }
   }
 }
@@ -219,7 +257,7 @@ export const obtainTaxRequestBody = {
   municipio: {
     id: 4302105
   },
-  calcularImpostos: true,
+  obterRegras: true,
   crt: 1 as const,
   loja: {
     id: 12345678,

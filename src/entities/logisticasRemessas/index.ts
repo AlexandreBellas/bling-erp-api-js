@@ -67,7 +67,10 @@ export class LogisticasRemessas extends Entity {
   ): Promise<IGetByLogisticResponse> {
     return await this.repository.show({
       endpoint: 'logisticas',
-      id: `${params.idLogistica}/remessas`
+      id: `${params.idLogistica}/remessas`,
+      params: {
+        situacao: params.situacao
+      }
     })
   }
 

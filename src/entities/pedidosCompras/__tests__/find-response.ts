@@ -10,6 +10,7 @@ export default {
       id: 12345678
     },
     situacao: {
+      id: 12345678,
       valor: 0 as const
     },
     ordemCompra: '351635',
@@ -29,7 +30,7 @@ export default {
     transporte: {
       frete: 15.78,
       transportador: 'Zé Transportes',
-      fretePorConta: 0,
+      fretePorConta: 0 as const,
       pesoBruto: 15.78,
       volumes: 11
     },
@@ -41,6 +42,10 @@ export default {
         valor: 149.99,
         quantidade: 12,
         aliquotaIPI: 15.85,
+        notaFiscal: {
+          id: 12345678,
+          quantidade: 12
+        },
         descricaoDetalhada: 'Descrição do item do pedido.',
         produto: {
           id: 12345678,

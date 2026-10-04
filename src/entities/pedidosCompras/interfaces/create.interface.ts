@@ -7,7 +7,7 @@ export interface ICreateBody {
   data?: string
   dataPrevista?: string
   fornecedor: { id: number }
-  situacao?: { valor: ISituacao }
+  situacao?: { id?: number; valor: ISituacao }
   ordemCompra?: string
   observacoes?: string
   observacoesInternas?: string
@@ -31,6 +31,10 @@ export interface ICreateBody {
     valor: number
     quantidade?: number
     aliquotaIPI?: number
+    notaFiscal?: {
+      id?: number
+      quantidade?: number
+    }
     descricaoDetalhada?: string
     produto?: { id: number }
   }[]

@@ -1,8 +1,4 @@
-export default {
-  data: {
-    id: 12345678
-  }
-}
+export default null
 
 export const updateRequestBody = {
   vencimento: '2023-01-12',

@@ -2,6 +2,7 @@ import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
+  AxiosResponse,
   InternalAxiosRequestConfig
 } from 'axios'
 import { IAuthProvider } from '../auth/interfaces/auth-provider.interface'
@@ -129,17 +130,11 @@ export class BlingRepository implements IBlingRepository {
         this.buildAxiosConfig({
           params: options.params,
           headers: options.headers,
+          preserveRedirect: options.preserveRedirect,
           data: options.body
         })
       )
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
+      .then((response) => this.includeHeaders(response, options))
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, options.endpoint)
       )
@@ -161,17 +156,11 @@ export class BlingRepository implements IBlingRepository {
         endpoint,
         this.buildAxiosConfig({
           params: options.params,
-          headers: options.headers
+          headers: options.headers,
+          preserveRedirect: options.preserveRedirect
         })
       )
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
+      .then((response) => this.includeHeaders(response, options))
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -196,17 +185,11 @@ export class BlingRepository implements IBlingRepository {
         options.body,
         this.buildAxiosConfig({
           params: options.params,
-          headers: options.headers
+          headers: options.headers,
+          preserveRedirect: options.preserveRedirect
         })
       )
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
+      .then((response) => this.includeHeaders(response, options))
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, options.endpoint)
       )
@@ -232,17 +215,11 @@ export class BlingRepository implements IBlingRepository {
         options.body,
         this.buildAxiosConfig({
           params: options.params,
-          headers: options.headers
+          headers: options.headers,
+          preserveRedirect: options.preserveRedirect
         })
       )
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
+      .then((response) => this.includeHeaders(response, options))
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -268,17 +245,11 @@ export class BlingRepository implements IBlingRepository {
         options.body,
         this.buildAxiosConfig({
           params: options.params,
-          headers: options.headers
+          headers: options.headers,
+          preserveRedirect: options.preserveRedirect
         })
       )
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
+      .then((response) => this.includeHeaders(response, options))
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -300,17 +271,11 @@ export class BlingRepository implements IBlingRepository {
         endpoint,
         this.buildAxiosConfig({
           params: options.params,
-          headers: options.headers
+          headers: options.headers,
+          preserveRedirect: options.preserveRedirect
         })
       )
-      .then((response) =>
-        options.shouldIncludeHeadersInResponse
-          ? {
-              headers: response.headers,
-              ...response.data
-            }
-          : response.data
-      )
+      .then((response) => this.includeHeaders(response, options))
       .catch((error: AxiosError<IDefaultErrorResponse>) =>
         this.defaultCatchBehavior(error, endpoint)
       )
@@ -327,6 +292,7 @@ export class BlingRepository implements IBlingRepository {
     params?: IDefaultParams | undefined
     headers?: IDefaultHeaders | undefined
     data?: unknown
+    preserveRedirect?: true
   }): AxiosRequestConfig {
     const config: AxiosRequestConfig = {}
 
@@ -342,7 +308,41 @@ export class BlingRepository implements IBlingRepository {
       config.data = options.data
     }
 
+    if (options.preserveRedirect) {
+      config.maxRedirects = 0
+      config.validateStatus = (status) =>
+        (status >= 200 && status < 300) || status === 302
+    }
+
     return config
+  }
+
+  /**
+   * Inclui os headers da resposta quando a operação precisa deles.
+   *
+   * @param response Resposta do axios.
+   * @param options Flags de headers e redirecionamento.
+   *
+   * @returns {T}
+   */
+  private includeHeaders<T>(
+    response: AxiosResponse<T>,
+    options: {
+      shouldIncludeHeadersInResponse?: true
+      preserveRedirect?: true
+    }
+  ): T {
+    if (!options.shouldIncludeHeadersInResponse && !options.preserveRedirect) {
+      return response.data
+    }
+
+    const data = response.data
+    const payload = data && typeof data === 'object' ? data : {}
+
+    return {
+      headers: response.headers,
+      ...payload
+    } as T
   }
 
   /**

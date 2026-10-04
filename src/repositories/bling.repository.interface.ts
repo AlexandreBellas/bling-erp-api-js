@@ -19,6 +19,11 @@ export interface IDefaultOptions<IParams, IHeaders> {
   params?: IParams
   headers?: IHeaders
   shouldIncludeHeadersInResponse?: true
+  /**
+   * Não segue o redirecionamento. Respostas 302 são sucesso e os headers
+   * (incluindo `Location`) voltam no resultado.
+   */
+  preserveRedirect?: true
 }
 
 /**

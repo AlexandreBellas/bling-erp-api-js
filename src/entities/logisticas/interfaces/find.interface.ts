@@ -6,6 +6,10 @@ export interface IFindParams {
    * ID da logística
    */
   idLogistica: number
+  /**
+   * Inclui serviços inativos na resposta quando verdadeiro.
+   */
+  listarServicosInativos?: boolean
 }
 
 export interface IFindResponse {
@@ -25,6 +29,7 @@ export interface IFindResponse {
       logistica: { id: number }
       transportador: { id: number }
       aliases: string[]
+      ativo?: boolean
     }[]
   }
 }

@@ -30,7 +30,10 @@ export interface IFindResponse {
       id: number
       valor: number
     }
-    loja?: { id: number }
+    loja?: {
+      id: number
+      unidadeNegocio?: { id: number }
+    }
     numeroPedidoCompra?: string
     outrasDespesas?: number
     observacoes?: string
@@ -56,6 +59,7 @@ export interface IFindResponse {
       descricao: string
       descricaoDetalhada?: string
       produto?: { id: number }
+      naturezaOperacao?: { id?: number }
       comissao?: {
         base?: number
         aliquota?: number
@@ -67,6 +71,10 @@ export interface IFindResponse {
       dataVencimento: string
       valor: number
       observacoes?: string
+      /**
+       * cAut (ou NSU): código de autorização da operação financeira.
+       */
+      caut?: string
       formaPagamento: { id: number }
     }[]
 

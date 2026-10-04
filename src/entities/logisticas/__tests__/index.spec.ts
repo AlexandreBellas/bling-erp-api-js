@@ -6,6 +6,10 @@ import deleteResponse from './delete-response'
 import findResponse from './find-response'
 import getResponse from './get-response'
 import updateResponse, { updateRequestBody } from './update-response'
+import type * as CreateTypes from '../interfaces/create.interface'
+import type * as FindTypes from '../interfaces/find.interface'
+import type * as GetTypes from '../interfaces/get.interface'
+import type * as UpdateTypes from '../interfaces/update.interface'
 
 const chance = Chance()
 
@@ -36,6 +40,57 @@ describe('Logísticas entity', () => {
     expect(response).toBe(deleteResponse)
   })
 
+  it('should forward integration filters on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      tipoIntegracao: 'LogisticaAliExpress' as const,
+      tiposIntegracoes: [chance.word(), chance.word()],
+      logisticasReversas: chance.bool()
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'logisticas',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
+  it('should forward listarServicosInativos on find', async () => {
+    const spy = jest.spyOn(repository, 'show')
+    const idLogistica = chance.natural()
+    const params = {
+      listarServicosInativos: chance.bool()
+    }
+
+    await entity.find({ idLogistica, ...params })
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'logisticas',
+        params: expect.objectContaining(params)
+      })
+    )
+  })
+
+  it('should keep fixtures assignable to the declared types', () => {
+    const typedCreateResponse: CreateTypes.ICreateResponse = createResponse
+    const typedCreateBody: CreateTypes.ICreateBody = createRequestBody
+    const typedFindResponse: FindTypes.IFindResponse = findResponse
+    const typedGetResponse: GetTypes.IGetResponse = getResponse
+    const typedUpdateBody: UpdateTypes.IUpdateBody = updateRequestBody
+
+    expect([
+      typedCreateResponse,
+      typedCreateBody,
+      typedFindResponse,
+      typedGetResponse,
+      typedUpdateBody
+    ]).toHaveLength(5)
+  })
+
   it('should get successfully', async () => {
     const spy = jest.spyOn(repository, 'index')
     repository.setResponse(getResponse)
@@ -48,7 +103,9 @@ describe('Logísticas entity', () => {
         limite: undefined,
         pagina: undefined,
         tipoIntegracao: undefined,
-        situacao: undefined
+        tiposIntegracoes: undefined,
+        situacao: undefined,
+        logisticasReversas: undefined
       }
     })
     expect(response).toBe(getResponse)
@@ -63,7 +120,10 @@ describe('Logísticas entity', () => {
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'logisticas',
-      id: String(idLogistica)
+      id: String(idLogistica),
+      params: {
+        listarServicosInativos: undefined
+      }
     })
     expect(response).toBe(findResponse)
   })

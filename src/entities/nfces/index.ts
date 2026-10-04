@@ -37,6 +37,9 @@ export class Nfces extends Entity {
         pagina: params?.pagina,
         limite: params?.limite,
         idTransportador: params?.idTransportador,
+        chaveAcesso: params?.chaveAcesso,
+        numero: params?.numero,
+        serie: params?.serie,
         situacao: params?.situacao,
         dataEmissaoInicial: this.prepareStringOrDateParam(
           params?.dataEmissaoInicial

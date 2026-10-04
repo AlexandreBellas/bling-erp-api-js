@@ -109,7 +109,10 @@ export class Produtos extends Entity {
         codigo: params?.codigo,
         nome: params?.nome,
         idsProdutos: params?.idsProdutos,
-        codigos: params?.codigos
+        codigos: params?.codigos,
+        gtins: params?.gtins,
+        filtroSaldoEstoque: params?.filtroSaldoEstoque,
+        filtroSaldoEstoqueDeposito: params?.filtroSaldoEstoqueDeposito
       }
     })
   }

@@ -1,4 +1,5 @@
 import ISituacao from '../../@shared/types/situacao.type'
+import { IAutoLiquidacao } from '../types/auto-liquidacao.type'
 import { IBandeiraCartao } from '../types/bandeira-cartao.type'
 import { IDestino } from '../types/destino.type'
 import { IFinalidade } from '../types/finalidade.type'
@@ -14,6 +15,9 @@ export interface ICreateBody {
   condicao?: string
   destino: IDestino
   finalidade: IFinalidade
+  juros?: number
+  multa?: number
+  utilizaDiasUteis?: boolean
   taxas?: {
     aliquota?: number
     valor?: number
@@ -23,6 +27,7 @@ export interface ICreateBody {
     bandeira: IBandeiraCartao
     tipo: ITipoCartao
     cnpjCredenciadora?: string
+    autoLiquidacao?: IAutoLiquidacao
   }
 }
 

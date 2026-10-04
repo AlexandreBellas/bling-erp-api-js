@@ -18,6 +18,14 @@ export interface IGetParams {
    * Parâmetro para filtrar os registros através da situação
    */
   situacao?: ISituacao
+  /**
+   * Tipos de integração considerados na listagem
+   */
+  tiposIntegracoes?: string[]
+  /**
+   * Filtra logísticas reversas
+   */
+  logisticasReversas?: boolean
 }
 
 export interface IGetResponse {

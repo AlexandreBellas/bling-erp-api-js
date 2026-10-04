@@ -108,7 +108,8 @@ export class PedidosVendas extends Entity {
         idLoja: params?.idLoja,
         idVendedor: params?.idVendedor,
         idControleCaixa: params?.idControleCaixa,
-        numerosLojas: params?.numerosLojas
+        numerosLojas: params?.numerosLojas,
+        idUnidadeNegocio: params?.idUnidadeNegocio
       }
     })
   }

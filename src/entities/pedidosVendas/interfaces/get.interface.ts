@@ -61,6 +61,10 @@ export interface IGetParams {
    * Conjunto de números de pedidos nas lojas
    */
   numerosLojas?: string[]
+  /**
+   * ID da unidade de negócio
+   */
+  idUnidadeNegocio?: number
 }
 
 export interface IGetResponse {
@@ -85,6 +89,7 @@ export interface IGetResponse {
     }
     loja?: {
       id: number
+      unidadeNegocio?: { id: number }
     }
   }[]
 }

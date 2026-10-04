@@ -1,5 +1,9 @@
 import { Entity } from '../@shared/entity'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
+import {
+  IDownloadDocumentParams,
+  IDownloadDocumentResponse
+} from './interfaces/download-document.interface'
 import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
@@ -59,6 +63,9 @@ export class Nfes extends Entity {
         limite: params?.limite,
         numeroLoja: params?.numeroLoja,
         idTransportador: params?.idTransportador,
+        chaveAcesso: params?.chaveAcesso,
+        numero: params?.numero,
+        serie: params?.serie,
         situacao: params?.situacao,
         tipo: params?.tipo,
         dataEmissaoInicial: this.prepareStringOrDateParam(
@@ -118,7 +125,10 @@ export class Nfes extends Entity {
   public async send(params: ISendParams): Promise<ISendResponse> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/enviar`,
-      body: {}
+      body: {},
+      params: {
+        enviarEmail: params.enviarEmail
+      }
     })
   }
 
@@ -228,6 +238,28 @@ export class Nfes extends Entity {
       endpoint: 'nfe',
       id: String(idNotaFiscal),
       body
+    })
+  }
+
+  /**
+   * Obtém o DANFE ou o XML de uma NF-e pela chave de acesso.
+   *
+   * @param {IDownloadDocumentParams} params Parâmetros da busca.
+   *
+   * @returns {Promise<IDownloadDocumentResponse>}
+   * @throws {BlingApiException|BlingInternalException}
+   *
+   * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/get_nfe_documento__chaveAcesso_
+   */
+  public async downloadDocument(
+    params: IDownloadDocumentParams
+  ): Promise<IDownloadDocumentResponse> {
+    return await this.repository.show({
+      endpoint: 'nfe/documento',
+      id: params.chaveAcesso,
+      params: {
+        formato: params.formato
+      }
     })
   }
 }

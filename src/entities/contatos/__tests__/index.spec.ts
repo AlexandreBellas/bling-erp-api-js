@@ -1,7 +1,9 @@
 import { Chance } from 'chance'
 import { Contatos } from '..'
 import { InMemoryBlingRepository } from '../../../repositories/bling-in-memory.repository'
+import { IChangeSituationManyResponse } from '../interfaces/change-situation-many.interface'
 import { ICreateResponse } from '../interfaces/create.interface'
+import { IDeleteManyResponse } from '../interfaces/delete-many.interface'
 import { IFindFinalCustomerResponse } from '../interfaces/find-final-customer.interface'
 import { IFindTypesResponse } from '../interfaces/find-types.interface'
 import { IFindResponse } from '../interfaces/find.interface'
@@ -15,7 +17,7 @@ import changeSituationResponse, {
 import createResponse, { createRequestBody } from './create-response'
 import deleteManyResponse from './delete-many-response'
 import deleteResponse from './delete-response'
-import findFinalCustomerResponse from './find-final-customer.response'
+import findFinalCustomerResponse from './find-final-customer-response'
 import findResponse from './find-response'
 import findTypesResponse from './find-types-response'
 import getResponse from './get-response'
@@ -53,7 +55,7 @@ describe('Contatos entity', () => {
     })
     expect(response).toBe(deleteManyResponse)
 
-    const typingResponseTest: null = deleteManyResponse
+    const typingResponseTest: IDeleteManyResponse = deleteManyResponse
     expect(typingResponseTest).toBe(deleteManyResponse)
   })
 
@@ -72,6 +74,22 @@ describe('Contatos entity', () => {
 
     const typingResponseTest: null = deleteResponse
     expect(typingResponseTest).toBe(deleteResponse)
+  })
+
+  it('should forward tipoPessoa filter on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    const params = {
+      tipoPessoa: chance.pickone([1, 2, 3] as const)
+    }
+
+    await entity.get(params)
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'contatos',
+        params: expect.objectContaining(params)
+      })
+    )
   })
 
   it('should get successfully', async () => {
@@ -96,7 +114,8 @@ describe('Contatos entity', () => {
         uf: undefined,
         telefone: undefined,
         idsContatos: undefined,
-        numeroDocumento: undefined
+        numeroDocumento: undefined,
+        tipoPessoa: undefined
       }
     })
     expect(response).toBe(getResponse)
@@ -190,7 +209,8 @@ describe('Contatos entity', () => {
     })
     expect(response).toBe(changeSituationManyResponse)
 
-    const typingResponseTest: null = changeSituationManyResponse
+    const typingResponseTest: IChangeSituationManyResponse =
+      changeSituationManyResponse
     expect(typingResponseTest).toBe(changeSituationManyResponse)
   })
 

@@ -1,5 +1,9 @@
 import IFretePorConta from '../../@shared/types/frete-por-conta.type'
+import IModalidadeIcms from '../../@shared/types/modalidade-icms.type'
+import IOrigem from '../../@shared/types/origem.type'
+import ITipoItem from '../../@shared/types/tipo-item.type'
 import IUF from '../../@shared/types/uf.type'
+import { IFinalidadeNfe } from '../types/finalidade.type'
 import { ISituacaoNfe } from '../types/situacao.type'
 import { ITipoNfe } from '../types/tipo.type'
 
@@ -66,5 +70,62 @@ export interface IFindResponse {
     vendedor?: {
       id: number
     }
+    finalidade?: IFinalidadeNfe
+    tipoNota?: string
+    valorNota?: number
+    valorFrete?: number
+    optanteSimplesNacional?: boolean
+    intermediador?: {
+      cnpj: string
+      nomeUsuario: string
+    }
+    itens?: {
+      codigo: string
+      descricao?: string
+      unidade?: string
+      quantidade?: number
+      valor?: number
+      valorTotal?: number
+      tipo?: ITipoItem
+      pesoBruto?: number
+      pesoLiquido?: number
+      numeroPedidoCompra?: string
+      classificacaoFiscal?: string
+      cest?: string
+      codigoServico?: string
+      origem?: IOrigem
+      informacoesAdicionais?: string
+      gtin?: string
+      cfop?: string
+      impostos?: {
+        valorAproximadoTotalTributos?: number
+        icms?: {
+          st?: number
+          origem?: IOrigem
+          modalidade?: IModalidadeIcms
+          aliquota?: number
+          valor?: number
+        }
+      }
+      unidadeTributavel?: {
+        unidade?: string
+        quantidade?: number
+      }
+      exportacao?: {
+        drawback?: string
+        registroExportacao?: string
+        chaveAcessoNFe?: string
+      }
+    }[]
+    parcelas?: {
+      data: string
+      valor: number
+      observacoes?: string
+      /**
+       * cAut (ou NSU): código de autorização da operação financeira.
+       */
+      caut?: string
+      formaPagamento?: { id: number }
+    }[]
   }
 }

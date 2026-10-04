@@ -19,6 +19,7 @@ export interface IFindResponse {
   }
   loja?: {
     id?: number
+    unidadeNegocio?: { id: number }
   }
   desconto?: number
   outrasDespesas?: number
@@ -49,7 +50,7 @@ export interface IFindResponse {
     observacoes?: string
     formaPagamento?: {
       id?: number
-    }[]
+    }
   }[]
   vendedor?: {
     id?: number

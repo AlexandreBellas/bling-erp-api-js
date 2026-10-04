@@ -1,3 +1,4 @@
+import IFiltroSaldoEstoque from '../../@shared/types/filtro-saldo-estoque.type'
 import { ICriterio } from '../types/criterio.type'
 import { IFormato } from '../types/formato.type'
 import { ISituacao } from '../types/situacao.type'
@@ -51,6 +52,8 @@ export interface IGetParams {
   idLoja?: number
   /**
    * Código do produto
+   *
+   * @deprecated Não consta na documentação oficial do endpoint. Use `codigos`.
    */
   codigo?: string
   /**
@@ -65,6 +68,18 @@ export interface IGetParams {
    * Códigos (SKU) dos produtos
    */
   codigos?: string[]
+  /**
+   * GTINs dos produtos
+   */
+  gtins?: string[]
+  /**
+   * Filtra o saldo em estoque. `0` zerado, `1` positivo, `2` negativo.
+   */
+  filtroSaldoEstoque?: IFiltroSaldoEstoque
+  /**
+   * Depósito considerado no filtro de saldo
+   */
+  filtroSaldoEstoqueDeposito?: number
 }
 
 export interface IGetResponse {

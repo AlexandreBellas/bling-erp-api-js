@@ -33,6 +33,30 @@ export default {
     },
     serie: 1,
     valorNota: 10.3,
+    finalidade: 1 as const,
+    tipoNota: 'Nota complementar',
+    itens: [
+      {
+        codigo: 'BLG-5',
+        descricao: 'Produto do Bling',
+        unidadeTributavel: {
+          unidade: 'UN',
+          quantidade: 1
+        },
+        exportacao: {
+          drawback: '12345678901',
+          registroExportacao: '123456789012',
+          chaveAcessoNFe: '62634519764512837946527549134679858182373412'
+        }
+      }
+    ],
+    parcelas: [
+      {
+        data: '2023-01-12',
+        valor: 123.45,
+        caut: '123456'
+      }
+    ],
     chaveAcesso: 'string',
     xml: 'string',
     linkDanfe: 'string',

@@ -131,13 +131,13 @@ export class OrdensDeProducao extends Entity {
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Produtos/.idOrdemProducao__situacoes
+   * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Produ%C3%A7%C3%A3o/put_ordens_producao__idOrdemProducao__situacoes
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
   ): Promise<null> {
     const { idOrdemProducao, ...body } = params
-    return await this.repository.update({
+    return await this.repository.replace({
       endpoint: 'ordens-producao',
       id: `${idOrdemProducao}/situacoes`,
       body

@@ -28,7 +28,9 @@ export class ContasContabeis extends Entity {
         ocultarContasIntegracaoPagamento:
           params?.ocultarContasIntegracaoPagamento,
         ocultarTipoContaBancaria: params?.ocultarTipoContaBancaria,
-        situacoes: params?.situacoes
+        situacoes: params?.situacoes,
+        aliasIntegracao: params?.aliasIntegracao,
+        ordenacao: params?.ordenacao
       }
     })
   }

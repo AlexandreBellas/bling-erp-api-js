@@ -1,4 +1,5 @@
 import IUF from '../../@shared/types/uf.type'
+import { IIndicadorUsoConsumoPessoal } from '../types/indicador-uso-consumo-pessoal.type'
 
 export interface ICreateBody {
   numero?: string
@@ -11,6 +12,10 @@ export interface ICreateBody {
     numeroDocumento: string
     email: string
     ie?: string
+    /**
+     * Inscrição municipal.
+     */
+    im?: string
     telefone?: string
     endereco?: {
       endereco?: string
@@ -26,6 +31,7 @@ export interface ICreateBody {
   codigoVerificacao?: string
   data?: string
   reterISS?: boolean
+  baseCalculo?: number
   desconto?: number
   vendedor?: { id: number }
   servicos: {
@@ -40,6 +46,22 @@ export interface ICreateBody {
     observacoes?: string
     formaPagamento?: { id: number }
   }[]
+  tributacaoIbsCbs?: {
+    indicadorOperacao: string
+    tipoOperacao: string
+    tipoEnteGovernamental?: string
+    indicadorUsoConsumoPessoal?: IIndicadorUsoConsumoPessoal
+    tributacao: {
+      codigoSituacaoTributaria: string
+      classificacaoTributaria: string
+      codigoCreditoPresumido?: string
+      cstRegimeRegular?: string
+      classificacaoTributariaRegular?: string
+      percentualDiferimentoEstadual?: number
+      percentualDiferimentoMunicipal?: number
+      percentualDiferimentoCBS?: number
+    }
+  }
 }
 
 export interface ICreateResponse {

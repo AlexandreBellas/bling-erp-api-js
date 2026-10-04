@@ -73,7 +73,7 @@ describe('Homologação entity', () => {
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'homologacao/produtos',
-      id: String(idProdutoHomologacao),
+      id: `${idProdutoHomologacao}/situacoes`,
       body: changeSituationRequest,
       headers: {
         'x-bling-homologacao': hash
@@ -174,7 +174,7 @@ describe('Homologação entity', () => {
       body: {
         situacao: 'I'
       },
-      id: String(id),
+      id: `${id}/situacoes`,
       headers: {
         'x-bling-homologacao': hash
       },

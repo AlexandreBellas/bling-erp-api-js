@@ -35,5 +35,7 @@ export interface IGetResponse {
     fixa?: boolean
     padrao?: IPadrao
     finalidade: IFinalidade
+    juros?: number
+    multa?: number
   }[]
 }

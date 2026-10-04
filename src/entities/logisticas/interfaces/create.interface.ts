@@ -10,6 +10,7 @@ export interface ICreateBody {
     codigo?: string
     transportador?: { id: number }
     aliases?: string[]
+    ativo?: boolean
   }[]
 }
 

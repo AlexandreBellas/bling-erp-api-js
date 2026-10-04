@@ -131,7 +131,7 @@ describe('Campos customizados entity', () => {
   })
 
   it('should update successfully', async () => {
-    const spy = jest.spyOn(repository, 'update')
+    const spy = jest.spyOn(repository, 'replace')
     const idCampoCustomizado = chance.natural()
     repository.setResponse(updateResponse)
 

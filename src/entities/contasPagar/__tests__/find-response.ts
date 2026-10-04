@@ -1,7 +1,7 @@
 export default {
   data: {
     id: 12345678,
-    situacao: 1,
+    situacao: 1 as const,
     vencimento: '2023-01-12',
     valor: 1500.75,
     contato: {
@@ -25,7 +25,7 @@ export default {
     },
     borderos: [0],
     ocorrencia: {
-      tipo: 1
+      tipo: 1 as const
     }
   }
 }

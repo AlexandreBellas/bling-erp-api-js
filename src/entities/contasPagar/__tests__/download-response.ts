@@ -17,5 +17,6 @@ export const downloadRequestBody = {
   juros: 10.5,
   desconto: 10.5,
   acrescimo: 10.5,
-  valorRecebido: 100.5
+  valorRecebido: 100.5,
+  tarifa: 1.5
 }

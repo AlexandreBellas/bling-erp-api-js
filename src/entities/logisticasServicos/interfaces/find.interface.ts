@@ -15,6 +15,7 @@ export interface IFindResponse {
     freteItem: number
     estimativaEntrega: number
     idCodigoServico?: string
+    nomeTransportador?: string
     logistica: { id: number }
     transportador: { id: number }
   }

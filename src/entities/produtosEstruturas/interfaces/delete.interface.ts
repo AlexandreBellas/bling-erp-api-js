@@ -1,4 +1,4 @@
-import { IDefaultErrorFieldsResponse } from '../../@shared/interfaces/error.interface'
+import { IDefaultErrorResponse } from '../../@shared/interfaces/error.interface'
 
 export interface IDeleteParams {
   /**
@@ -9,6 +9,6 @@ export interface IDeleteParams {
 
 export interface IDeleteResponse {
   data: {
-    alertas?: IDefaultErrorFieldsResponse[]
+    alertas?: IDefaultErrorResponse['error'][]
   }
 }

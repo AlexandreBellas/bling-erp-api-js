@@ -13,3 +13,11 @@
  * - `6`: Etiqueta parcialmente comprada
  */
 export type ISituacao = -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6
+
+/**
+ * Tipagem referente ao filtro de situação da listagem de remessas por logística.
+ *
+ * Aceita todos os valores de {@link ISituacao} e `-4`, presente no enum da
+ * referência sem descrição.
+ */
+export type ISituacaoFiltro = ISituacao | -4

@@ -36,6 +36,11 @@ OAuth HTTP (`/oauth/token`, `/oauth/revoke`) lives in `src/auth/oauth-client.ts`
 
 `src/repositories/bling-in-memory.repository.ts` is unchanged and auth-agnostic.
 
+## Redirects and query names
+
+- `preserveRedirect: true` stops axios from following redirects (`maxRedirects: 0`) and treats HTTP 302 as success. The result is `{ headers, ...body }`, with header names lowercased by axios (`Location` arrives as `location`). Use it when the reference documents a 302 and a `Location` header, as in documentos compartilhados. Combine it with `shouldIncludeHeadersInResponse` only when the caller also needs the headers of a JSON body.
+- Array query parameters keep the TypeScript name without `[]`. Axios appends `[]` when it serializes an array, which matches the wire name in the reference (`idsProdutos` in the library, `idsProdutos[]` in the OpenAPI document).
+
 ## Rules for Changes
 
 - Add new HTTP patterns only here — never in entity classes.

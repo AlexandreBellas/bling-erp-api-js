@@ -72,6 +72,20 @@ describe('NFS-es entity', () => {
     expect(typingResponseTest).toBe(getResponse)
   })
 
+  it('should forward the extended situation filter on get', async () => {
+    const spy = jest.spyOn(repository, 'index')
+    repository.setResponse(getResponse)
+
+    await entity.get({ situacao: 4 })
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: 'nfse',
+        params: expect.objectContaining({ situacao: 4 })
+      })
+    )
+  })
+
   it('should find successfully', async () => {
     const spy = jest.spyOn(repository, 'show')
     const idNotaServico = chance.natural()
@@ -134,8 +148,8 @@ describe('NFS-es entity', () => {
     })
     expect(response).toBe(sendResponse)
 
-    const typingResponseTest: ISendResponse = sendResponse
-    expect(typingResponseTest).toBe(sendResponse)
+    const typedReturn: ISendResponse = response
+    expect(typedReturn).toBe(sendResponse)
   })
 
   it('should cancel successfully', async () => {

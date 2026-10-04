@@ -45,6 +45,14 @@ export const createRequestBody = {
   itensPorCaixa: 1,
   gtin: '1234567890123',
   gtinEmbalagem: '1234567890123',
+  duns: [
+    {
+      codigo: '12345678901234',
+      quantidade: 10
+    }
+  ],
+  artigoPerigoso: false,
+  descricaoEmbalagemDiscreta: 'Embalagem discreta',
   tipoProducao: 'P' as const,
   condicao: 0 as const,
   freteGratis: false,
@@ -66,7 +74,7 @@ export const createRequestBody = {
     largura: 1,
     altura: 1,
     profundidade: 1,
-    unidadeMedida: 1
+    unidadeMedida: 1 as const
   },
   tributacao: {
     origem: 0,
@@ -152,6 +160,14 @@ export const createRequestBody = {
       itensPorCaixa: 1,
       gtin: '1234567890123',
       gtinEmbalagem: '1234567890123',
+      duns: [
+        {
+          codigo: '12345678901234',
+          quantidade: 10
+        }
+      ],
+      artigoPerigoso: false,
+      descricaoEmbalagemDiscreta: 'Embalagem discreta',
       tipoProducao: 'P' as const,
       condicao: 0 as const,
       freteGratis: false,
@@ -173,7 +189,7 @@ export const createRequestBody = {
         largura: 1,
         altura: 1,
         profundidade: 1,
-        unidadeMedida: 1
+        unidadeMedida: 1 as const
       },
       tributacao: {
         origem: 0,

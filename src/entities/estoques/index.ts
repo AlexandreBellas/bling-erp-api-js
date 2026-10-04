@@ -32,7 +32,11 @@ export class Estoques extends Entity {
     return await this.repository.show({
       endpoint: 'estoques/saldos',
       id: String(params.idDeposito),
-      params: { idsProdutos: params.idsProdutos, codigos: params.codigos }
+      params: {
+        idsProdutos: params.idsProdutos,
+        codigos: params.codigos,
+        filtroSaldoEstoque: params.filtroSaldoEstoque
+      }
     })
   }
 
@@ -51,7 +55,11 @@ export class Estoques extends Entity {
   ): Promise<IGetBalancesResponse> {
     return await this.repository.index({
       endpoint: 'estoques/saldos',
-      params: { idsProdutos: params.idsProdutos, codigos: params.codigos }
+      params: {
+        idsProdutos: params.idsProdutos,
+        codigos: params.codigos,
+        filtroSaldoEstoque: params.filtroSaldoEstoque
+      }
     })
   }
 

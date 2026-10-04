@@ -15,6 +15,7 @@ export const updateRequestBody = {
     id: 12345678
   },
   situacao: {
+    id: 12345678,
     valor: 0 as const
   },
   ordemCompra: '351635',
@@ -45,6 +46,10 @@ export const updateRequestBody = {
       valor: 149.99,
       quantidade: 12,
       aliquotaIPI: 15.85,
+      notaFiscal: {
+        id: 12345678,
+        quantidade: 12
+      },
       descricaoDetalhada: 'Descrição do item do pedido.',
       produto: {
         id: 12345678

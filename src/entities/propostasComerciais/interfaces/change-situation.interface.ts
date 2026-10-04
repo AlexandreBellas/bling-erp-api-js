@@ -1,3 +1,5 @@
+import { ISituacao } from '../types/situacao.type'
+
 export interface IChangeSituationParams {
   /**
    * ID da proposta comercial
@@ -6,5 +8,5 @@ export interface IChangeSituationParams {
 }
 
 export interface IChangeSituationBody {
-  situacao: string
+  situacao: ISituacao
 }

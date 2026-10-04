@@ -9,6 +9,7 @@ export default {
       freteItem: 12.45,
       estimativaEntrega: 2,
       idCodigoServico: '13112',
+      nomeTransportador: 'Transportadora Teste',
       logistica: {
         id: 12345678
       },

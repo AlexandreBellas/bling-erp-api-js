@@ -12,6 +12,10 @@ export interface IDownloadBody {
   desconto?: number
   acrescimo?: number
   valorRecebido?: number
+  /**
+   * Valor da tarifa quando a forma de pagamento possui taxas.
+   */
+  tarifa?: number
 }
 
 export interface IDownloadResponse {

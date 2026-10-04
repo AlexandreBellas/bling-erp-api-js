@@ -12,7 +12,7 @@ para Javascript/TypeScript. O mais completo existente.
 
 Cobre autenticações JWT, fluxo OAuth e token opaco (legado).
 
-Atualizado com a versão `v313` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2024-v313)).
+Atualizado com a versão `v354` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2026-v354)).
 
 ## Instalação
 
@@ -105,9 +105,12 @@ Entenda o [fluxo de autorização](https://developer.bling.com.br/aplicativos#fl
 
 ## Entidades disponíveis
 
-Todas as entidaA construção é sempredes do Bling atualmente são permitidas para interação. São elas:
+Todas as entidades do Bling atualmente são permitidas para interação. São elas:
 
+- [x] Anúncios (`.anuncios`)
+- [x] Anúncios - Categorias (`.anunciosCategorias`)
 - [x] Borderos (`.borderos`)
+- [x] Caixas e Bancos (`.caixas`)
 - [x] Campos customizados (`.camposCustomizados`)
 - [x] Canais de Venda (`.canaisDeVenda`)
 - [x] Categorias - Lojas (`.categoriasLojas`)
@@ -120,11 +123,13 @@ Todas as entidaA construção é sempredes do Bling atualmente são permitidas p
 - [x] Contatos - Tipos (`.contatosTipos`)
 - [x] Contratos (`.contratos`)
 - [x] Depósitos (`.depositos`)
+- [x] Documentos Compartilhados (`.documentosCompartilhados`)
 - [x] Empresas (`.empresas`)
 - [x] Estoques (`.estoques`)
 - [x] Formas de Pagamento (`.formasDePagamento`)
 - [x] Grupos de Produtos (`.gruposDeProdutos`)
 - [x] Homologação (`.homologacao`)
+- [x] Listas de Preços (`.listasPrecos`)
 - [x] Logísticas (`.logisticas`)
 - [x] Logísticas - Etiquetas (`.logisticasEtiquetas`)
 - [x] Logísticas - Objetos (`.logisticasObjetos`)
@@ -136,12 +141,15 @@ Todas as entidaA construção é sempredes do Bling atualmente são permitidas p
 - [x] Notas Fiscais Eletrônicas (`.nfes`)
 - [x] Notificações (`.notificacoes`)
 - [x] Ordens de Produção (`.ordensDeProducao`)
+- [x] Ordens de Serviço (`.ordensServico`)
 - [x] Pedidos - Compras (`.pedidosCompras`)
 - [x] Pedidos - Vendas (`.pedidosVendas`)
 - [x] Produtos (`.produtos`)
 - [x] Produtos - Estruturas (`.produtosEstruturas`)
 - [x] Produtos - Fornecedores (`.produtosFornecedores`)
 - [x] Produtos - Lojas (`.produtosLojas`)
+- [x] Produtos - Lotes (`.produtosLotes`)
+- [x] Produtos - Lotes Lançamentos (`.produtosLotesLancamentos`)
 - [x] Produtos - Variações (`.produtosVariacoes`)
 - [x] Propostas Comerciais (`.propostasComerciais`)
 - [x] Situações (`.situacoes`)

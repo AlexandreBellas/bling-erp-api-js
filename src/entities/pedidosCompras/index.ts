@@ -1,8 +1,5 @@
 import { Entity } from '../@shared/entity'
-import {
-  IChangeSituationBody,
-  IChangeSituationParams
-} from './interfaces/change-situation.interface'
+import { IChangeSituationParams } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IDeleteParams } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
@@ -60,7 +57,8 @@ export class PedidosCompras extends Entity {
         valorSituacao: params?.valorSituacao,
         idSituacao: params?.idSituacao,
         dataInicial: this.prepareStringOrDateParam(params?.dataInicial),
-        dataFinal: this.prepareStringOrDateParam(params?.dataFinal)
+        dataFinal: this.prepareStringOrDateParam(params?.dataFinal),
+        idsNotasFiscais: params?.idsNotasFiscais
       }
     })
   }
@@ -85,21 +83,18 @@ export class PedidosCompras extends Entity {
   /**
    * Altera a situação de um pedido de compra.
    *
-   * @param {IChangeSituationParams & IChangeSituationBody} params Parâmetros da busca.
+   * @param {IChangeSituationParams} params Parâmetros da busca.
    *
    * @returns {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
-   * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/patch_pedidos_compras__idPedidoCompra__situacoes
+   * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/patch_pedidos_compras__idPedidoCompra__situacoes__idSituacao_
    */
-  public async changeSituation(
-    params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
-    const { idPedidoCompra, ...body } = params
+  public async changeSituation(params: IChangeSituationParams): Promise<null> {
     return await this.repository.update({
       endpoint: 'pedidos/compras',
-      id: `${idPedidoCompra}/situacoes`,
-      body
+      id: `${params.idPedidoCompra}/situacoes/${params.idSituacao}`,
+      body: {}
     })
   }
 

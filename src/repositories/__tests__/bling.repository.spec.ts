@@ -290,3 +290,101 @@ describe('BlingRepository interceptors', () => {
     expect(adapter.mock.calls[1]?.[0].method).toBe('put')
   })
 })
+
+describe('BlingRepository response options', () => {
+  const plain = (value: unknown) => JSON.parse(JSON.stringify(value))
+
+  const makeRepository = (
+    response: { data: unknown; status?: number; headers?: object } = {
+      data: { data: { id: 1 } }
+    }
+  ) => {
+    const repository = new BlingRepository({
+      baseUrl: 'https://api.bling.com.br/Api/v3',
+      authProvider: new JwtAuthProvider({
+        method: 'jwt',
+        accessToken: 'jwt-token'
+      })
+    })
+    const adapter = jest.fn(async (config) => ({
+      data: response.data,
+      status: response.status ?? 200,
+      statusText: 'OK',
+      headers: response.headers ?? { 'x-test': 'header' },
+      config
+    }))
+    ;(
+      repository as unknown as { api: { defaults: { adapter: jest.Mock } } }
+    ).api.defaults.adapter = adapter
+
+    return { repository, adapter }
+  }
+
+  it('should return only the response body without flags', async () => {
+    const { repository, adapter } = makeRepository()
+
+    const response = await repository.show({ endpoint: 'produtos', id: '1' })
+
+    expect(plain(response)).toEqual({ data: { id: 1 } })
+    const config = adapter.mock.calls[0]?.[0]
+    expect(config?.maxRedirects).toBeUndefined()
+    expect(config?.validateStatus?.(302)).toBe(false)
+  })
+
+  it('should merge response headers when shouldIncludeHeadersInResponse is set', async () => {
+    const { repository } = makeRepository()
+
+    const response = await repository.index({
+      endpoint: 'homologacao/produtos',
+      shouldIncludeHeadersInResponse: true
+    })
+
+    expect(plain(response)).toEqual({
+      headers: { 'x-test': 'header' },
+      data: { id: 1 }
+    })
+  })
+
+  it('should not follow redirects and accept 302 when preserveRedirect is set', async () => {
+    const { repository, adapter } = makeRepository({
+      data: '',
+      status: 302,
+      headers: { location: 'https://download.example/file.pdf' }
+    })
+
+    const response = await repository.show({
+      endpoint: 'documentos-compartilhados',
+      id: 'abc',
+      preserveRedirect: true
+    })
+
+    const config = adapter.mock.calls[0]?.[0]
+    expect(config?.maxRedirects).toBe(0)
+    expect(config?.validateStatus?.(200)).toBe(true)
+    expect(config?.validateStatus?.(302)).toBe(true)
+    expect(config?.validateStatus?.(404)).toBe(false)
+    expect(config?.validateStatus?.(500)).toBe(false)
+    expect(plain(response)).toEqual({
+      headers: { location: 'https://download.example/file.pdf' }
+    })
+  })
+
+  it('should treat a non-object body as empty when headers are included', async () => {
+    const { repository } = makeRepository({ data: null })
+
+    const response = await repository.index({
+      endpoint: 'produtos',
+      shouldIncludeHeadersInResponse: true
+    })
+
+    expect(plain(response)).toEqual({ headers: { 'x-test': 'header' } })
+  })
+
+  it('should apply preserveRedirect on index too', async () => {
+    const { repository, adapter } = makeRepository()
+
+    await repository.index({ endpoint: 'produtos', preserveRedirect: true })
+
+    expect(adapter.mock.calls[0]?.[0]?.maxRedirects).toBe(0)
+  })
+})

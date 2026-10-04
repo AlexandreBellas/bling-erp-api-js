@@ -45,7 +45,9 @@ export class Logisticas extends Entity {
         pagina: params?.pagina,
         limite: params?.limite,
         tipoIntegracao: params?.tipoIntegracao,
-        situacao: params?.situacao
+        tiposIntegracoes: params?.tiposIntegracoes,
+        situacao: params?.situacao,
+        logisticasReversas: params?.logisticasReversas
       }
     })
   }
@@ -63,7 +65,10 @@ export class Logisticas extends Entity {
   public async find(params: IFindParams): Promise<IFindResponse> {
     return await this.repository.show({
       endpoint: 'logisticas',
-      id: String(params.idLogistica)
+      id: String(params.idLogistica),
+      params: {
+        listarServicosInativos: params.listarServicosInativos
+      }
     })
   }
 

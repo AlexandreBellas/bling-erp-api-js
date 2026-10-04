@@ -21,5 +21,10 @@ export const updateRequestBody = {
   },
   categoria: {
     id: 12345678
+  },
+  ocorrencia: {
+    tipo: 2 as const,
+    diaVencimento: 10,
+    numeroParcelas: 3
   }
 }

@@ -14,7 +14,8 @@ export const createRequestBody = {
       estimativaEntrega: 2,
       codigo: 'ABC1234',
       transportador: { id: 12345678 },
-      aliases: ['ALIAS1']
+      aliases: ['ALIAS1'],
+      ativo: true
     }
   ]
 }

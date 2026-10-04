@@ -40,6 +40,12 @@ interface ContasReceberOcorrenciaSemanalDTO {
   dataLimite?: string
 }
 
+export type IOcorrencia =
+  | ContasReceberOcorrenciaUnicaDTO
+  | ContasReceberOcorrenciaParceladaDTO
+  | ContasReceberOcorrenciaDTO
+  | ContasReceberOcorrenciaSemanalDTO
+
 export interface ICreateBody {
   vencimento: string
   valor: number
@@ -52,11 +58,7 @@ export interface ICreateBody {
   historico?: string
   portador?: { id: number }
   categoria?: { id: number }
-  ocorrencia?:
-    | ContasReceberOcorrenciaUnicaDTO
-    | ContasReceberOcorrenciaParceladaDTO
-    | ContasReceberOcorrenciaDTO
-    | ContasReceberOcorrenciaSemanalDTO
+  ocorrencia?: IOcorrencia
 }
 
 export interface ICreateResponse {

@@ -8,6 +8,7 @@ export default {
     situacao: 'A' as const,
     formato: 'S' as const,
     descricaoCurta: 'Descrição curta',
+    imagemURL: 'https://www.bling.com.br/imagens/produto.jpg',
     dataValidade: '2020-01-01',
     unidade: 'UN',
     pesoLiquido: 1,
@@ -16,6 +17,14 @@ export default {
     itensPorCaixa: 1,
     gtin: '1234567890123',
     gtinEmbalagem: '1234567890123',
+    duns: [
+      {
+        codigo: '12345678901234',
+        quantidade: 10
+      }
+    ],
+    artigoPerigoso: false,
+    descricaoEmbalagemDiscreta: 'Embalagem discreta',
     tipoProducao: 'P' as const,
     condicao: 0 as const,
     freteGratis: false,
@@ -30,14 +39,25 @@ export default {
       minimo: 1,
       maximo: 100,
       crossdocking: 1,
-      localizacao: '14A'
+      localizacao: '14A',
+      saldoVirtualTotal: 1
+    },
+    fornecedor: {
+      id: 12345678,
+      contato: {
+        id: 12345678,
+        nome: 'Fornecedor Teste'
+      },
+      codigo: 'FORN123',
+      precoCusto: 10.5,
+      precoCompra: 12.5
     },
     actionEstoque: '',
     dimensoes: {
       largura: 1,
       altura: 1,
       profundidade: 1,
-      unidadeMedida: 1
+      unidadeMedida: 1 as const
     },
     tributacao: {
       origem: 0,
@@ -79,6 +99,20 @@ export default {
           {
             link: 'https://shutterstock.com/lalala123'
           }
+        ],
+        internas: [
+          {
+            link: 'https://www.bling.com.br/imagens/original.jpg',
+            linkMiniatura: 'https://www.bling.com.br/imagens/miniatura.jpg',
+            validade: '2020-01-01 00:00:00',
+            ordem: 1,
+            anexo: {
+              id: 12345678
+            },
+            anexoVinculo: {
+              id: 12345678
+            }
+          }
         ]
       }
     },
@@ -115,6 +149,7 @@ export default {
         situacao: 'A' as const,
         formato: 'S' as const,
         descricaoCurta: 'Descrição curta',
+        imagemURL: 'https://www.bling.com.br/imagens/produto.jpg',
         dataValidade: '2020-01-01',
         unidade: 'UN',
         pesoLiquido: 1,
@@ -123,6 +158,14 @@ export default {
         itensPorCaixa: 1,
         gtin: '1234567890123',
         gtinEmbalagem: '1234567890123',
+        duns: [
+          {
+            codigo: '12345678901234',
+            quantidade: 10
+          }
+        ],
+        artigoPerigoso: false,
+        descricaoEmbalagemDiscreta: 'Embalagem discreta',
         tipoProducao: 'P' as const,
         condicao: 0 as const,
         freteGratis: false,
@@ -137,14 +180,25 @@ export default {
           minimo: 1,
           maximo: 100,
           crossdocking: 1,
-          localizacao: '14A'
+          localizacao: '14A',
+          saldoVirtualTotal: 1
+        },
+        fornecedor: {
+          id: 12345678,
+          contato: {
+            id: 12345678,
+            nome: 'Fornecedor Teste'
+          },
+          codigo: 'FORN123',
+          precoCusto: 10.5,
+          precoCompra: 12.5
         },
         actionEstoque: '',
         dimensoes: {
           largura: 1,
           altura: 1,
           profundidade: 1,
-          unidadeMedida: 1
+          unidadeMedida: 1 as const
         },
         tributacao: {
           origem: 0,
@@ -186,6 +240,20 @@ export default {
               {
                 link: 'https://shutterstock.com/lalala123'
               }
+            ],
+            internas: [
+              {
+                link: 'https://www.bling.com.br/imagens/original.jpg',
+                linkMiniatura: 'https://www.bling.com.br/imagens/miniatura.jpg',
+                validade: '2020-01-01 00:00:00',
+                ordem: 1,
+                anexo: {
+                  id: 12345678
+                },
+                anexoVinculo: {
+                  id: 12345678
+                }
+              }
             ]
           }
         },
@@ -217,6 +285,7 @@ export default {
           nome: 'Tamanho:G;Cor:Verde',
           ordem: 1,
           produtoPai: {
+            id: 12345678,
             cloneInfo: true
           }
         }

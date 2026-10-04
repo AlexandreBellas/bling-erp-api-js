@@ -7,6 +7,7 @@ import { ISituacao } from '../types/situacao.type'
 import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
 import { ITipo } from '../types/tipo.type'
+import { IUnidadeMedida } from '../types/unidade-medida.type'
 
 export interface IReplaceParams {
   /**
@@ -32,6 +33,12 @@ export interface IReplaceBody {
   itensPorCaixa?: number
   gtin?: string
   gtinEmbalagem?: string
+  descricaoEmbalagemDiscreta?: string
+  duns?: {
+    codigo: string
+    quantidade: number
+  }[]
+  artigoPerigoso?: boolean
   tipoProducao?: ITipoProducao
   condicao?: ICondicao
   freteGratis?: boolean
@@ -51,7 +58,7 @@ export interface IReplaceBody {
     largura?: number
     altura?: number
     profundidade?: number
-    unidadeMedida?: number
+    unidadeMedida?: IUnidadeMedida
   }
   tributacao?: {
     origem?: number
@@ -120,6 +127,12 @@ export interface IReplaceBody {
     itensPorCaixa?: number
     gtin?: string
     gtinEmbalagem?: string
+    descricaoEmbalagemDiscreta?: string
+    duns?: {
+      codigo: string
+      quantidade: number
+    }[]
+    artigoPerigoso?: boolean
     tipoProducao?: ITipoProducao
     condicao?: ICondicao
     freteGratis?: boolean
@@ -139,7 +152,7 @@ export interface IReplaceBody {
       largura?: number
       altura?: number
       profundidade?: number
-      unidadeMedida?: number
+      unidadeMedida?: IUnidadeMedida
     }
     tributacao?: {
       origem?: number

@@ -1,10 +1,14 @@
-import { ISituacao } from '../types/situacao.type'
+import { ISituacao, ISituacaoFiltro } from '../types/situacao.type'
 
 export interface IGetByLogisticParams {
   /**
    * ID da logística
    */
   idLogistica: number
+  /**
+   * Filtro obrigatório de situação da remessa.
+   */
+  situacao: ISituacaoFiltro
 }
 
 export interface IGetByLogisticResponse {

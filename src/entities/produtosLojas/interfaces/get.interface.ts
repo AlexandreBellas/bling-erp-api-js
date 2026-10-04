@@ -31,8 +31,16 @@ export interface IGetParams {
 
 export interface IGetResponse {
   data: {
-    categoriasProdutos: {
-      id: 12345678
+    id: number
+    codigo: string
+    preco?: number
+    precoPromocional?: number
+    produto: { id: number }
+    loja: { id: number }
+    fornecedorLoja?: { id: number }
+    marcaLoja?: { id: number }
+    categoriasProdutos?: {
+      id: number
     }[]
   }[]
 }

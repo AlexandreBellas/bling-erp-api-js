@@ -16,6 +16,18 @@ export interface IGetParams {
    */
   idTransportador?: number
   /**
+   * Chave de acesso da NFC-e
+   */
+  chaveAcesso?: number
+  /**
+   * Número da nota
+   */
+  numero?: number
+  /**
+   * Série da nota
+   */
+  serie?: number
+  /**
    *
    */
   situacao?: ISituacaoNfce

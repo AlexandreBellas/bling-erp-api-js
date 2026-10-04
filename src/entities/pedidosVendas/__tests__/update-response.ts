@@ -34,7 +34,10 @@ export const updateRequestBody = {
     numeroDocumento: '30188025000121'
   },
   loja: {
-    id: 12345678
+    id: 12345678,
+    unidadeNegocio: {
+      id: 12345678
+    }
   },
   numeroPedidoCompra: '123',
   outrasDespesas: 2,
@@ -65,6 +68,9 @@ export const updateRequestBody = {
       produto: {
         id: 12345678
       },
+      naturezaOperacao: {
+        id: 12345678
+      },
       comissao: {
         base: 10,
         aliquota: 2,
@@ -78,6 +84,7 @@ export const updateRequestBody = {
       dataVencimento: '2023-01-12',
       valor: 123.45,
       observacoes: 'Observação da parcela',
+      caut: '123456',
       formaPagamento: {
         id: 12345678
       }

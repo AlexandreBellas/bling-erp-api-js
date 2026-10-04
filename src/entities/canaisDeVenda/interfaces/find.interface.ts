@@ -14,6 +14,7 @@ export interface IFindResponse {
       cnpj: string
       unidadeNegocio: string
       deposito: { id: number }
+      idUnidadeNegocio?: number
       padrao: boolean
     }[]
   }
