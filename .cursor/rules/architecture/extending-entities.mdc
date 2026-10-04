@@ -37,7 +37,7 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 
 - Bling **PATCH** partial updates → `repository.update` (`src/entities/camposCustomizados/index.ts`).
 - Bling **PUT** full resource replace → `repository.replace` (`src/entities/contatos/index.ts` `update` method).
-- Verify against Bling docs; the repository maps both to HTTP PATCH in `src/repositories/bling.repository.ts`.
+- Verify against Bling docs. `replace` maps to HTTP PUT in `src/repositories/bling.repository.ts`.
 
 ## Special Cases
 

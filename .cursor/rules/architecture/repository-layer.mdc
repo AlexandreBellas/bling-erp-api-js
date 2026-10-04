@@ -18,7 +18,7 @@ alwaysApply: false
 | `show` | GET `endpoint/id` | Single resource or nested path via composite `id` |
 | `store` | POST | Create, action endpoints that POST a body |
 | `update` | PATCH `endpoint/id` | Partial updates, some situation changes |
-| `replace` | PATCH `endpoint/id` | Full replacements (despite "replace" name; see `BlingRepository.replace`) |
+| `replace` | PUT `endpoint/id` | Full replacements |
 | `destroy` | DELETE `endpoint/id` | Delete single or bulk (empty `id` + query params) |
 
 ## Implementation
