@@ -113,6 +113,9 @@ export interface IUpdateResponse {
   data: {
     id: number
     alertas?: IDefaultErrorFieldsResponse[]
-    rastreamento?: { description?: string }
+    /**
+     * Objeto de rastreamento. O contrato oficial não declara propriedades.
+     */
+    rastreamento?: Record<string, unknown>
   }
 }
