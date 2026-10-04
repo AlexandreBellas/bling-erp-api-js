@@ -5,5 +5,5 @@ export interface IChangeSituationParams {
 }
 
 export interface IChangeSituationBody {
-  situacao: ISituacao
+  situacao?: ISituacao
 }

@@ -18,7 +18,7 @@ export interface IFindResponse {
     totalProdutos?: number
     total?: number
     fornecedor: { id: number }
-    situacao?: { id?: number; valor: ISituacao }
+    situacao?: { id: number; valor: ISituacao }
     ordemCompra: string
     observacoes?: string
     observacoesInternas?: string

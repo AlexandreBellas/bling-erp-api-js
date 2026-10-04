@@ -7,6 +7,10 @@ export interface IUpdateParams {
   idProduto: number
 }
 
-export interface IUpdateBody extends Partial<IReplaceBody> {}
+export interface IUpdateBody extends Partial<
+  Omit<IReplaceBody, 'variacoes'>
+> {
+  variacoes?: Partial<NonNullable<IReplaceBody['variacoes']>[number]>[]
+}
 
 export type IUpdateResponse = IReplaceResponse

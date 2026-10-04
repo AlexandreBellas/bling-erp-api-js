@@ -14,7 +14,7 @@ export interface IUpdateBody {
   data?: string
   dataPrevista?: string
   fornecedor: { id: number }
-  situacao?: { id?: number; valor: ISituacao }
+  situacao?: { id: number; valor: ISituacao }
   ordemCompra?: string
   observacoes?: string
   observacoesInternas?: string

@@ -15,7 +15,7 @@ export interface IUpdateBody {
     id?: number
   }
   loja?: {
-    id?: number
+    id: number
     unidadeNegocio?: { id: number }
   }
   desconto?: number

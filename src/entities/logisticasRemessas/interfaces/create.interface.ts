@@ -5,7 +5,7 @@ export interface ICreateBody {
   situacao: ISituacao
   descricao: string
   logistica?: { id: number }
-  objetos: string[]
+  objetos?: string[]
 }
 
 export interface ICreateResponse {

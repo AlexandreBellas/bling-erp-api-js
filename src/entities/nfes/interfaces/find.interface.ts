@@ -19,9 +19,9 @@ export interface IFindResponse {
     id?: number
     tipo: ITipoNfe
     situacao?: ISituacaoNfe
-    numero?: string
+    numero: string
     dataEmissao?: string
-    dataOperacao?: string
+    dataOperacao: string
     contato: {
       id?: number
       nome: string
@@ -41,7 +41,7 @@ export interface IFindResponse {
         pais?: string
       }
     }
-    naturezaOperacao?: { id: number }
+    naturezaOperacao: { id: number }
     loja?: { id: number }
     serie?: number
     chaveAcesso?: string

@@ -3,7 +3,7 @@ export default {
     alertas: [
       {
         error: {
-          type: 'VALIDATION_ERROR',
+          type: 'VALIDATION_ERROR' as const,
           message: 'Não foi possível salvar a venda',
           description:
             'A venda não pode ser salva, pois ocorreram problemas em sua validação.',

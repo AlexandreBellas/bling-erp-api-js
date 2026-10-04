@@ -12,6 +12,18 @@
 export type ISituacao = 1 | 2 | 3 | 4 | 5 | 6 | 7
 
 /**
+ * Situação das contas no retorno de boletos.
+ *
+ * `1`: Em aberto
+ * `2`: Recebido
+ * `3`: Parcialmente recebido
+ * `4`: Devolvido
+ * `5`: Cancelado
+ * `6`: Devolvido parcial
+ */
+export type ISituacaoBoleto = 1 | 2 | 3 | 4 | 5 | 6
+
+/**
  * Tipagem representativa da situação em formato `string`.
  */
 export type ISituacaoString =

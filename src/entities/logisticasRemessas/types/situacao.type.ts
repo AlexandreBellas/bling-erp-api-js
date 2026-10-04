@@ -9,15 +9,13 @@
  * - `2`: Pronto para envio
  * - `3`: Despachado
  * - `4`: Pronto para envio
- * - `5`: Etiqueta comprada
- * - `6`: Etiqueta parcialmente comprada
  */
-export type ISituacao = -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6
+export type ISituacao = -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4
 
 /**
  * Tipagem referente ao filtro de situação da listagem de remessas por logística.
  *
- * Aceita todos os valores de {@link ISituacao} e `-4`, presente no enum da
- * referência sem descrição.
+ * Além de {@link ISituacao}, a query aceita `-4`, `5` (etiqueta comprada) e
+ * `6` (etiqueta parcialmente comprada).
  */
-export type ISituacaoFiltro = ISituacao | -4
+export type ISituacaoFiltro = ISituacao | -4 | 5 | 6

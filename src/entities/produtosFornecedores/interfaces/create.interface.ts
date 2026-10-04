@@ -5,8 +5,8 @@ export interface ICreateBody {
   precoCusto?: number
   precoCompra?: number
   padrao?: boolean
-  produto: { id: number }
-  fornecedor: { id: number }
+  produto?: { id: number }
+  fornecedor?: { id: number }
   garantia?: number
 }
 

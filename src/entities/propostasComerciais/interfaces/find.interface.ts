@@ -18,7 +18,7 @@ export interface IFindResponse {
     id?: number
   }
   loja?: {
-    id?: number
+    id: number
     unidadeNegocio?: { id: number }
   }
   desconto?: number

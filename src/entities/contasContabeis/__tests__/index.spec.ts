@@ -50,7 +50,6 @@ describe('Contas contábeis entity', () => {
         limite: undefined,
         pagina: undefined,
         ocultarInvisiveis: undefined,
-        ocultarContasIntegracaoPagamento: undefined,
         ocultarTipoContaBancaria: undefined,
         situacoes: undefined,
         aliasIntegracao: undefined,

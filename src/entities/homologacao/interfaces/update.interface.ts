@@ -10,9 +10,9 @@ export interface IUpdateHeaders {
 }
 
 export interface IUpdateBody {
-  nome: string
-  preco: number
-  codigo: string
+  nome?: string
+  preco?: number
+  codigo?: string
 }
 
 export interface IUpdateResponse {

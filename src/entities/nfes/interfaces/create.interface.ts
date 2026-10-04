@@ -12,15 +12,15 @@ import { IEspecie } from '../types/especie.type'
 
 export interface ICreateBody {
   tipo: ITipoNfe
-  numero?: string
-  dataOperacao?: string
+  numero: string
+  dataOperacao: string
   contato: {
     nome: string
     tipoPessoa: ITipoPessoa
     numeroDocumento: string
     ie?: string
     rg?: string
-    contribuinte?: IContribuinte
+    contribuinte: IContribuinte
     telefone?: string
     email?: string
     endereco?: {
@@ -34,7 +34,7 @@ export interface ICreateBody {
       pais?: string
     }
   }
-  naturezaOperacao?: { id: number }
+  naturezaOperacao: { id: number }
   loja?: {
     id: number
     numero?: string
@@ -112,7 +112,7 @@ export interface ICreateBody {
     }
   }[]
 
-  parcelas: {
+  parcelas?: {
     data: string
     valor: number
     observacoes?: string
@@ -148,7 +148,7 @@ export interface ICreateBody {
       pesoBruto?: number
       pesoLiquido?: number
     }
-    volumes: {
+    volumes?: {
       servico: string
       codigoRastreamento?: string
     }[]

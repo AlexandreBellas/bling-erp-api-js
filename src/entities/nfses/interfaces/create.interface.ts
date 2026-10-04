@@ -6,7 +6,7 @@ export interface ICreateBody {
   numeroRPS: string
   serie: string
   dataEmissao?: string
-  contato: {
+  contato?: {
     id: number
     nome: string
     numeroDocumento: string
@@ -34,13 +34,13 @@ export interface ICreateBody {
   baseCalculo?: number
   desconto?: number
   vendedor?: { id: number }
-  servicos: {
+  servicos?: {
     codigo: string
     descricao: string
     valor: number
   }[]
 
-  parcelas: {
+  parcelas?: {
     data: string
     valor: number
     observacoes?: string

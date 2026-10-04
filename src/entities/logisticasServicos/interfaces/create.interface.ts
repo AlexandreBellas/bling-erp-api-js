@@ -8,7 +8,7 @@ export interface ICreateBody {
     freteItem: number
     estimativaEntrega: number
     idCodigoServico?: string
-    transportador: { id: number }
+    transportador?: { id: number }
   }[]
 }
 

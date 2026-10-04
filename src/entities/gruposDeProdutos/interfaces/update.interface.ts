@@ -8,7 +8,7 @@ export interface IUpdateParams {
 export interface IUpdateBody {
   id?: number
   nome: string
-  grupoProdutoPai: {
+  grupoProdutoPai?: {
     id: number
   }
 }

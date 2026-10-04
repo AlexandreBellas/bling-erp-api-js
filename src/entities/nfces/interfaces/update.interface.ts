@@ -19,15 +19,15 @@ export interface IUpdateParams {
 
 export interface IUpdateBody {
   tipo: ITipoNfce
-  numero?: string
-  dataOperacao?: string
+  numero: string
+  dataOperacao: string
   contato: {
     nome: string
     tipoPessoa: ITipoPessoa
     numeroDocumento: string
     ie?: string
     rg?: string
-    contribuinte?: IContribuinte
+    contribuinte: IContribuinte
     telefone?: string
     email?: string
     endereco?: {
@@ -41,10 +41,10 @@ export interface IUpdateBody {
       pais?: string
     }
   }
-  naturezaOperacao?: { id: number }
+  naturezaOperacao: { id: number }
   loja?: {
     id: number
-    numero: string
+    numero?: string
   }
   finalidade?: IFinalidadeNfce
   seguro?: number
@@ -155,7 +155,7 @@ export interface IUpdateBody {
       pesoBruto?: number
       pesoLiquido?: number
     }
-    volumes: {
+    volumes?: {
       servico: string
       codigoRastreamento?: string
     }[]

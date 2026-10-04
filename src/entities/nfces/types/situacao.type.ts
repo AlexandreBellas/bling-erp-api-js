@@ -12,6 +12,12 @@
  * - `9`: Denegada
  * - `10`: Consulta situação
  * - `11`: Bloqueada
- * - `12`: Valor presente no enum da referência, sem descrição
  */
-export type ISituacaoNfce = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+export type ISituacaoNfce = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
+
+/**
+ * Filtro de situação na listagem de NFC-e.
+ *
+ * Inclui `12`, aceito apenas na query da listagem.
+ */
+export type ISituacaoNfceFiltro = ISituacaoNfce | 12

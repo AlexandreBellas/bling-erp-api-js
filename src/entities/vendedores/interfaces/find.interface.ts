@@ -1,4 +1,4 @@
-import { ISituacao } from '../types/situacao.type'
+import { ISituacaoContato } from '../types/situacao.type'
 
 export interface IFindParams {
   /**
@@ -15,7 +15,7 @@ export interface IFindResponse {
     contato: {
       id: number
       nome: string
-      situacao: ISituacao
+      situacao: ISituacaoContato
     }
     comissoes: {
       descontoMaximo: number

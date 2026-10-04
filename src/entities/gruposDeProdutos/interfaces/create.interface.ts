@@ -1,7 +1,7 @@
 export interface ICreateBody {
   id?: number
   nome: string
-  grupoProdutoPai: {
+  grupoProdutoPai?: {
     id: number
   }
 }

@@ -19,10 +19,6 @@ export interface IObtainTaxBody {
   uf: IUF
   municipio: { id: number }
   /**
-   * @deprecated Não consta na documentação oficial do endpoint.
-   */
-  calcularImpostos?: boolean
-  /**
    * Se false, os valores das regras de tributação de cada imposto serão zerados.
    */
   obterRegras?: boolean

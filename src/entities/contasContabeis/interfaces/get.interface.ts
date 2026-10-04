@@ -6,10 +6,6 @@ export interface IGetParams {
   pagina?: number
   limite?: number
   ocultarInvisiveis?: boolean
-  /**
-   * @deprecated Não consta na documentação oficial do endpoint.
-   */
-  ocultarContasIntegracaoPagamento?: boolean
   ocultarTipoContaBancaria?: boolean
   situacoes?: ISituacao[]
   /**

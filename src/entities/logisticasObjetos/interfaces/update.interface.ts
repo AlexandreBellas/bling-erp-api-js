@@ -8,7 +8,7 @@ export interface IUpdateParams {
 }
 
 export interface IUpdateBody {
-  rastreamento: {
+  rastreamento?: {
     codigo: string
     descricao: string
     situacao: ISituacao

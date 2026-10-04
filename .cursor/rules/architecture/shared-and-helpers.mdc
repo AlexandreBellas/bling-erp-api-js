@@ -33,6 +33,7 @@ Cross-resource domain unions imported by multiple modules:
 | `origem.type.ts` | Product origin |
 | `tipo-item.type.ts` | Item type |
 | `modelo-documento-referenciado.type.ts` | Referenced document model |
+| `error-type.type.ts` | API error `type` union used by `IDefaultErrorResponse` |
 
 Add here only when **two or more** modules share the **same** Bling value set. Same property name (`situacao`) with different unions stays in each entity’s `types/`.
 

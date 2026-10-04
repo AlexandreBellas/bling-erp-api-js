@@ -13,14 +13,14 @@ export interface IUpdateParams {
 }
 
 export interface IUpdateBody {
-  nome?: string
+  nome: string
   codigo?: string
-  situacao?: ISituacao
+  situacao: ISituacao
   numeroDocumento?: string
   telefone?: string
   celular?: string
   fantasia?: string
-  tipo?: ITipoPessoa
+  tipo: ITipoPessoa
   indicadorIe?: IIndicadorIE
   ie?: string
   rg?: string

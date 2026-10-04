@@ -41,6 +41,8 @@ Use Bling's official reference as the source of truth: https://developer.bling.c
 - Check the verb against the OpenAPI spec, not against sibling methods or the `@see` link. `camposCustomizados.update` and `ordensDeProducao.changeSituation` used `update` (PATCH) for operations the spec defines as PUT.
 - `readOnly` fields of the spec do not belong in input types (`ICreateBody`, `IUpdateBody`); `writeOnly` fields do not belong in response types.
 - Request optionality follows the OpenAPI `required` array, including nested objects. A field omitted from `required` stays optional on the interface, including the body of a situation change.
+- A list filter whose enum differs from the resource field gets its own type (`ISituacaoFiltro`, `ITipoFiltro`). Do not widen the resource union to include filter-only values, and do not narrow the filter to the resource enum.
+- When the schema `type` is `string` and `enum` contains numeric-looking values (`"0"`, `"1"`), the TypeScript union stays strings. When `type` is `integer` and `enum` is stored as numeric strings, the union stays numbers.
 - A root `oneOf` that pairs the resource DTO with the DTO of a nested object (grupos de produtos: `GruposProdutosDadosDTO` or `GruposProdutosGrupoProdutoPaiDTO`) follows the resource DTO. The nested DTO's `required` applies only inside that object.
 - Every parameter declared in `IGetParams`/`IFindParams` must be forwarded in `params`; a declared but unforwarded filter is silently dropped (`contasReceber.get` dropped `idContato` and `boletoGerado`).
 

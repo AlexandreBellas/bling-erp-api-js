@@ -22,6 +22,7 @@ export interface IUpdateBody {
     tipoPessoa?: ITipoPessoa
     numeroDocumento?: string
   }
+  situacao?: { id: number }
   loja?: {
     id: number
     unidadeNegocio?: { id: number }
@@ -35,6 +36,7 @@ export interface IUpdateBody {
     unidade?: IDescontoUnidade
   }
   categoria?: { id: number }
+  notaFiscal?: { id: number }
   tributacao?: {
     totalICMS?: number
     totalIPI?: number

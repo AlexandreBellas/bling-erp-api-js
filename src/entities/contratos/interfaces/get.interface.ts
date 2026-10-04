@@ -1,4 +1,4 @@
-import { ISituacao } from '../types/situacao.type'
+import { ISituacao, ISituacaoFiltro } from '../types/situacao.type'
 
 export interface IGetParams {
   /**
@@ -28,7 +28,7 @@ export interface IGetParams {
   /**
    *
    */
-  situacao?: ISituacao
+  situacao?: ISituacaoFiltro
   /**
    * ID do contato
    */

@@ -17,7 +17,7 @@ export interface IUpdateBody {
     minimo?: number
     maximo?: number
   }
-  agrupadores: { id: number }[]
+  agrupadores?: { id: number }[]
 }
 
 export interface IUpdateResponse {

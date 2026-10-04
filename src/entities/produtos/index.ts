@@ -106,7 +106,6 @@ export class Produtos extends Entity {
         ),
         idCategoria: params?.idCategoria,
         idLoja: params?.idLoja,
-        codigo: params?.codigo,
         nome: params?.nome,
         idsProdutos: params?.idsProdutos,
         codigos: params?.codigos,

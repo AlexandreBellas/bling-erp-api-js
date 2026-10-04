@@ -116,7 +116,6 @@ describe('Produtos entity', () => {
         dataAlteracaoFinal: undefined,
         idCategoria: undefined,
         idLoja: undefined,
-        codigo: undefined,
         nome: undefined,
         idsProdutos: undefined,
         codigos: undefined,

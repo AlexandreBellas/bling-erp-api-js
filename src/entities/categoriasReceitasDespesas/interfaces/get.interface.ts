@@ -1,11 +1,11 @@
-import { ISituacao } from '../types/situacao.type'
-import { ITipo } from '../types/tipo.type'
+import { ISituacaoFiltro } from '../types/situacao.type'
+import { ITipo, ITipoFiltro } from '../types/tipo.type'
 
 export interface IGetParams {
   pagina?: number
   limite?: number
-  tipo?: ITipo
-  situacao?: ISituacao
+  tipo?: ITipoFiltro
+  situacao?: ISituacaoFiltro
 }
 
 export interface IGetResponse {

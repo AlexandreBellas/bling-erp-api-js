@@ -8,7 +8,7 @@ export interface ICreateBody {
     id?: number
   }
   loja?: {
-    id?: number
+    id: number
     unidadeNegocio?: { id: number }
   }
   desconto?: number

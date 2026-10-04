@@ -1,4 +1,4 @@
-import { ISituacao } from '../types/situacao.type'
+import { ISituacao, ISituacaoBoleto } from '../types/situacao.type'
 
 export interface IGetBankSlipsParams {
   idOrigem: number
@@ -18,6 +18,6 @@ export interface IGetBankSlipsResponse {
     numeroExterno: string
     vencimento: string
     valor: number
-    situacao: ISituacao
+    situacao: ISituacaoBoleto
   }[]
 }

@@ -4,7 +4,7 @@ export interface ICreateBody {
   descricao: string
   situacao: ISituacao
   servicos?: {
-    descricao: string
+    descricao?: string
     freteItem?: number
     estimativaEntrega?: number
     codigo?: string

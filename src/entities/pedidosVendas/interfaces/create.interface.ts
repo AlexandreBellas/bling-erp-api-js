@@ -29,6 +29,7 @@ export interface ICreateBody {
     unidade?: IDescontoUnidade
   }
   categoria?: { id: number }
+  notaFiscal?: { id: number }
   tributacao?: {
     totalICMS?: number
     totalIPI?: number
@@ -105,6 +106,9 @@ export interface ICreateResponse {
   data: {
     id: number
     alertas?: IDefaultErrorFieldsResponse[]
-    rastreamento?: { description?: string }
+    /**
+     * Objeto de rastreamento. O contrato oficial não declara propriedades.
+     */
+    rastreamento?: Record<string, unknown>
   }
 }

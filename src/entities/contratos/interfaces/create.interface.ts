@@ -29,7 +29,7 @@ export interface ICreateBody {
     valor: number
     dataFim: string
   }
-  contaContabil: { id: number }
+  contaContabil: { id?: number }
   formaPagamento: { id: number }
   notaFiscal?: {
     mes?: INotaFiscalMes
@@ -43,12 +43,12 @@ export interface ICreateBody {
     }
     item?: {
       codigoServico?: string
-      produto?: { id: number }
+      produto?: { id?: number }
     }
   }
   cobranca: {
     dataBase?: string
-    contato?: { id: number }
+    contato?: { id?: number }
     vencimento?: {
       tipo?: ITipoVencimento
       dia?: number

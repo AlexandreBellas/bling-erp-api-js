@@ -1,3 +1,5 @@
+import IErrorType from '../types/error-type.type'
+
 interface IDefaultErrorFieldsCollectionItemResponse {
   index: number
   code: number
@@ -19,7 +21,7 @@ export interface IDefaultErrorFieldsResponse {
  */
 export interface IDefaultErrorResponse {
   error: {
-    type: string
+    type: IErrorType
     message: string
     description: string
     fields?: IDefaultErrorFieldsResponse[]

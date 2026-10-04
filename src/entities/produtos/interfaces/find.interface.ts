@@ -2,7 +2,7 @@ import { IActionEstoque } from '../types/action-estoque.type'
 import { ICondicao } from '../types/condicao.type'
 import { IEstruturaLancamentoEstoque } from '../types/estrutura-lancamento-estoque.type'
 import { IEstruturaTipoEstoque } from '../types/estrutura-tipo-estoque.type'
-import { IFormato } from '../types/formato.type'
+import { IFormato, IFormatoVariacao } from '../types/formato.type'
 import { ISituacao } from '../types/situacao.type'
 import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
@@ -133,13 +133,12 @@ export interface IFindResponse {
     }[]
     variacoes: {
       id?: number
-      idProdutoPai?: number
       nome: string
       codigo?: string
       preco?: number
       tipo: ITipo
       situacao: ISituacao
-      formato: IFormato
+      formato: IFormatoVariacao
       descricaoCurta?: string
       imagemURL?: string
       dataValidade?: string

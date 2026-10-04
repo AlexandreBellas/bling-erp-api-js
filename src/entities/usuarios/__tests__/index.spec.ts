@@ -36,29 +36,29 @@ describe('Usuários entity', () => {
 
   it('should change password successfully', async () => {
     const spy = jest.spyOn(repository, 'update')
-    const password = chance.word()
+    const body = { hash: chance.hash(), password: chance.word() }
     repository.setResponse(changePasswordResponse)
 
-    const response = await entity.changePassword(password)
+    const response = await entity.changePassword(body)
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'usuarios/redefinir-senha',
       id: '',
-      body: password
+      body
     })
     expect(response).toBe(changePasswordResponse)
   })
 
   it('should recover password successfully', async () => {
     const spy = jest.spyOn(repository, 'store')
-    const email = chance.email()
+    const body = { email: chance.email() }
     repository.setResponse(recoverPasswordResponse)
 
-    const response = await entity.recoverPassword(email)
+    const response = await entity.recoverPassword(body)
 
     expect(spy).toHaveBeenCalledWith({
       endpoint: 'usuarios/recuperar-senha',
-      body: email
+      body
     })
     expect(response).toBe(recoverPasswordResponse)
   })

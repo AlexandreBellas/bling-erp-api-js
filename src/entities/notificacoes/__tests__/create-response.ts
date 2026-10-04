@@ -19,7 +19,7 @@ export default {
       enquadramentos: [
         {
           tamanhoEmpresa: ['micro', 'pequena'],
-          idMunicipio: ['2704104', '2704203'],
+          idMunicipio: [2704104, 2704203],
           uf: ['SP' as const, 'RS' as const],
           crt: [1 as const, 2 as const]
         }

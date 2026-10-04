@@ -1,5 +1,9 @@
 import { Entity } from '../@shared/entity'
-import { IRecoverPasswordResponse } from './interfaces/recover-password.interface'
+import { IChangePasswordBody } from './interfaces/change-password.interface'
+import {
+  IRecoverPasswordBody,
+  IRecoverPasswordResponse
+} from './interfaces/recover-password.interface'
 import {
   IValidateHashParams,
   IValidateHashResponse
@@ -33,25 +37,25 @@ export class Usuarios extends Entity {
   /**
    * Redefine senha do usuário.
    *
-   * @param {string} password A nova senha.
+   * @param {IChangePasswordBody} body Hash de recuperação e a nova senha.
    *
    * @return {Promise<null>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Usu%C3%A1rios/patch_usuarios_redefinir_senha
    */
-  public async changePassword(password: string): Promise<null> {
+  public async changePassword(body: IChangePasswordBody): Promise<null> {
     return await this.repository.update({
       endpoint: 'usuarios/redefinir-senha',
       id: '',
-      body: password
+      body
     })
   }
 
   /**
    * Envia solicitação de recuperação de senha.
    *
-   * @param {string} email O e-mail para solicitar a recuperação.
+   * @param {IRecoverPasswordBody} body E-mail para solicitar a recuperação.
    *
    * @returns {Promise<IRecoverPasswordResponse>}
    * @throws {BlingApiException|BlingInternalException}
@@ -59,11 +63,11 @@ export class Usuarios extends Entity {
    * @see https://developer.bling.com.br/referencia#/Usu%C3%A1rios/post_usuarios_recuperar_senha
    */
   public async recoverPassword(
-    email: string
+    body: IRecoverPasswordBody
   ): Promise<IRecoverPasswordResponse> {
     return await this.repository.store({
       endpoint: 'usuarios/recuperar-senha',
-      body: email
+      body
     })
   }
 }

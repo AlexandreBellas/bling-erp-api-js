@@ -1,4 +1,4 @@
-import { ISituacaoNfse } from '../types/situacao.type'
+import { ISituacaoNfse, ISituacaoNfseFiltro } from '../types/situacao.type'
 
 export interface IGetParams {
   /**
@@ -12,7 +12,7 @@ export interface IGetParams {
   /**
    *
    */
-  situacao?: ISituacaoNfse
+  situacao?: ISituacaoNfseFiltro
   /**
    * Data incial do período de emissão
    */

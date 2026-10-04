@@ -1,4 +1,4 @@
-import { ISituacao } from '../types/situacao.type'
+import { ISituacao, ISituacaoContato } from '../types/situacao.type'
 
 export interface IGetParams {
   /**
@@ -43,7 +43,7 @@ export interface IGetResponse {
     contato: {
       id: number
       nome: string
-      situacao: ISituacao
+      situacao: ISituacaoContato
     }
   }
 }

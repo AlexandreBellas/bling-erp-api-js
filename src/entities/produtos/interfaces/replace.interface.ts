@@ -2,7 +2,7 @@ import { IActionEstoque } from '../types/action-estoque.type'
 import { ICondicao } from '../types/condicao.type'
 import { IEstruturaLancamentoEstoque } from '../types/estrutura-lancamento-estoque.type'
 import { IEstruturaTipoEstoque } from '../types/estrutura-tipo-estoque.type'
-import { IFormato } from '../types/formato.type'
+import { IFormato, IFormatoVariacao } from '../types/formato.type'
 import { ISituacao } from '../types/situacao.type'
 import { ITipoArmamento } from '../types/tipo-armamento.type'
 import { ITipoProducao } from '../types/tipo-producao.type'
@@ -110,14 +110,21 @@ export interface IReplaceBody {
     valor?: string
     item?: string
   }[]
-  variacoes: {
+  fornecedor?: {
+    id?: number
+    contato?: { id?: number; nome?: string }
+    codigo?: string
+    precoCusto?: number
+    precoCompra?: number
+  }
+  variacoes?: {
     id?: number
     nome: string
     codigo?: string
     preco?: number
     tipo: ITipo
     situacao: ISituacao
-    formato: IFormato
+    formato?: IFormatoVariacao
     descricaoCurta?: string
     dataValidade?: string
     unidade?: string
@@ -204,6 +211,13 @@ export interface IReplaceBody {
       valor?: string
       item?: string
     }[]
+    fornecedor?: {
+      id?: number
+      contato?: { id?: number; nome?: string }
+      codigo?: string
+      precoCusto?: number
+      precoCompra?: number
+    }
     variacao: {
       nome: string
       ordem: number
@@ -214,7 +228,7 @@ export interface IReplaceBody {
 
 interface ICreateResponseActionItem {
   id?: number
-  variations?: any
+  variations?: Record<string, unknown>
   warnings?: string[]
 }
 

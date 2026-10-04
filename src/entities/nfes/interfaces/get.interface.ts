@@ -1,6 +1,6 @@
 import IUF from '../../@shared/types/uf.type'
 import { ISituacaoNfe } from '../types/situacao.type'
-import { ITipoNfe } from '../types/tipo.type'
+import { ITipoNfe, ITipoNfeFiltro } from '../types/tipo.type'
 
 export interface IGetParams {
   /**
@@ -38,7 +38,7 @@ export interface IGetParams {
   /**
    *
    */
-  tipo?: ITipoNfe
+  tipo?: ITipoNfeFiltro
   /**
    * Data e hora incial de emissão
    */
@@ -54,10 +54,10 @@ export interface IGetResponse {
     id?: number
     tipo: ITipoNfe
     situacao?: ISituacaoNfe
-    numero?: string
+    numero: string
     chaveAcesso?: string
     dataEmissao?: string
-    dataOperacao?: string
+    dataOperacao: string
     contato: {
       id?: number
       nome: string
@@ -77,7 +77,7 @@ export interface IGetResponse {
         pais?: string
       }
     }
-    naturezaOperacao?: { id: number }
+    naturezaOperacao: { id: number }
     loja?: { id: number }
   }[]
 }

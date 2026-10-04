@@ -51,12 +51,6 @@ export interface IGetParams {
    */
   idLoja?: number
   /**
-   * Código do produto
-   *
-   * @deprecated Não consta na documentação oficial do endpoint. Use `codigos`.
-   */
-  codigo?: string
-  /**
    * Nome do produto
    */
   nome?: string

@@ -30,7 +30,7 @@ export interface ICreateResponse {
     dataPerigo?: string
     enquadramentos?: {
       tamanhoEmpresa?: string[]
-      idMunicipio?: string[]
+      idMunicipio?: number[]
       uf?: IUF[]
       crt?: ICRT[]
     }[]

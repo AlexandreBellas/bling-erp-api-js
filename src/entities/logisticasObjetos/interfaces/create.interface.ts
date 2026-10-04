@@ -1,10 +1,10 @@
 import { ISituacao } from '../types/situacao.type'
 
 export interface ICreateBody {
-  pedidoVenda: { id: number }
-  notaFiscal: { id: number }
-  servico: { id: number }
-  rastreamento: {
+  pedidoVenda?: { id: number }
+  notaFiscal?: { id: number }
+  servico?: { id: number }
+  rastreamento?: {
     codigo: string
     descricao: string
     situacao: ISituacao

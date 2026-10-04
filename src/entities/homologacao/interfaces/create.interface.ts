@@ -3,9 +3,9 @@ export interface ICreateHeaders {
 }
 
 export interface ICreateBody {
-  nome: string
-  preco: number
-  codigo: string
+  nome?: string
+  preco?: number
+  codigo?: string
 }
 
 export interface ICreateResponse {

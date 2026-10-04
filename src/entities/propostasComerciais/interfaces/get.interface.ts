@@ -37,7 +37,7 @@ export interface IGetResponse {
       id?: number
     }
     loja?: {
-      id?: number
+      id: number
       unidadeNegocio?: { id: number }
     }
   }[]

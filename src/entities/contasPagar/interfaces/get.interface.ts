@@ -1,4 +1,4 @@
-import { ISituacao } from '../types/situacao.type'
+import { ISituacao, ISituacaoFiltro } from '../types/situacao.type'
 
 export interface IGetParams {
   pagina?: number
@@ -9,7 +9,7 @@ export interface IGetParams {
   dataVencimentoFinal?: Date | string
   dataPagamentoInicial?: Date | string
   dataPagamentoFinal?: Date | string
-  situacao?: ISituacao
+  situacao?: ISituacaoFiltro
   idContato?: number
 }
 

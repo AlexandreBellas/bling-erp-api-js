@@ -10,7 +10,7 @@ export interface IChangeSituationHeaders {
 }
 
 export interface IChangeSituationBody {
-  situacao: string
+  situacao?: string
 }
 
 export interface IChangeSituationResponse {
