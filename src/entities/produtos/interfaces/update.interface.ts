@@ -7,9 +7,7 @@ export interface IUpdateParams {
   idProduto: number
 }
 
-export interface IUpdateBody extends Partial<
-  Omit<IReplaceBody, 'variacoes'>
-> {
+export interface IUpdateBody extends Partial<Omit<IReplaceBody, 'variacoes'>> {
   variacoes?: Partial<NonNullable<IReplaceBody['variacoes']>[number]>[]
 }
 
