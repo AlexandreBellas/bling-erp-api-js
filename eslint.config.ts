@@ -1,5 +1,5 @@
 import js from '@eslint/js'
-import apiLibrary from 'code-conventions/eslint/api-library/ts'
+import apiLibrary from 'code-conventions/eslint/api-library'
 import prettier from 'eslint-plugin-prettier/recommended'
 import { Config, defineConfig } from 'eslint/config'
 import tseslint from 'typescript-eslint'
@@ -27,7 +27,7 @@ export default defineConfig(
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
-      ],
+      ]
     }
   },
   {
