@@ -1,4 +1,4 @@
-name: On commit => execute test workflow
+name: On commit workflows
 
 on: push
 
@@ -13,6 +13,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Run linting
+        run: npm run lint
 
       - name: Build project
         run: npm run build
