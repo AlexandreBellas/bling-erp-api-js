@@ -11,6 +11,7 @@ alwaysApply: false
 - **ESLint v10** — `npm run lint` (`eslint --fix 'src/**/*.ts'`), flat config in `eslint.config.ts`
 - **Prettier** — `npm run format` (`prettier --write 'src/**/*.ts'`)
 - Stack: `@eslint/js` recommended, `typescript-eslint` recommended, `eslint-plugin-prettier/recommended`
+- `eslint.config.ts` also spreads `apiLibrary.configs.recommended` from `code-conventions/eslint/api-library`. The plugin key is `api-library`. Those rules are correctness checks for entity modules: repository-only HTTP, repository call shape, forwarded filters, facade registration, and the rest of the entity contract. Interfaces use an `I` prefix (`@typescript-eslint/naming-convention`). Do not add the React `reactjs` plugin from `code-conventions/eslint/reactjs` here.
 
 Node floor: `^20.19.0 || ^22.13.0 || >=24` (ESLint v10). CI uses Node 22.
 

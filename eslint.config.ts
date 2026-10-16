@@ -1,11 +1,13 @@
 import js from '@eslint/js'
-import { defineConfig } from 'eslint/config'
-import tseslint from 'typescript-eslint'
+import apiLibrary from 'code-conventions/eslint/api-library/ts'
 import prettier from 'eslint-plugin-prettier/recommended'
+import { Config, defineConfig } from 'eslint/config'
+import tseslint from 'typescript-eslint'
 
 export default defineConfig(
   js.configs.recommended,
   tseslint.configs.recommended,
+  ...(apiLibrary.configs.recommended as Config[]),
   prettier,
   {
     files: ['src/entities/**', 'src/auth/**'],
@@ -25,6 +27,21 @@ export default defineConfig(
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+      ],
+    }
+  },
+  {
+    ignores: ['src/helpers/types/*'],
+    rules: {
+      '@typescript-eslint/naming-convention': [
+        'warn',
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          prefix: ['I'],
+          filter: { regex: '^I|^(Window)$', match: false }
+        },
+        { selector: 'typeAlias', format: ['PascalCase'], prefix: ['I'] }
       ]
     }
   },

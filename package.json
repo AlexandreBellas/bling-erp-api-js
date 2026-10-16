@@ -53,6 +53,7 @@
     "@types/jest": "^29.5.14",
     "@types/uuid": "^9.0.7",
     "chance": "^1.1.13",
+    "code-conventions": "file:../code-conventions",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -69,6 +70,7 @@
     "access": "public"
   },
   "allowScripts": {
-    "unrs-resolver@1.12.2": true
+    "unrs-resolver@1.12.2": true,
+    "file:../../code-conventions": true
   }
 }
