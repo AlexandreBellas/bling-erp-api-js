@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idTransicao: number
 }
+
+export type IDeleteResponse = null

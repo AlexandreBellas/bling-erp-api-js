@@ -1,5 +1,8 @@
 import { Entity } from '../@shared/entity'
-import { IChangePasswordBody } from './interfaces/change-password.interface'
+import {
+  IChangePasswordBody,
+  IChangePasswordResponse
+} from './interfaces/change-password.interface'
 import {
   IRecoverPasswordBody,
   IRecoverPasswordResponse
@@ -39,12 +42,14 @@ export class Usuarios extends Entity {
    *
    * @param {IChangePasswordBody} body Hash de recuperação e a nova senha.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IChangePasswordResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Usu%C3%A1rios/patch_usuarios_redefinir_senha
    */
-  public async changePassword(body: IChangePasswordBody): Promise<null> {
+  public async changePassword(
+    body: IChangePasswordBody
+  ): Promise<IChangePasswordResponse> {
     return await this.repository.update({
       endpoint: 'usuarios/redefinir-senha',
       id: '',
