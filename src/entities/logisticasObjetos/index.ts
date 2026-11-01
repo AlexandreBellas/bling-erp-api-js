@@ -1,6 +1,6 @@
 import { Entity } from '../@shared/entity'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import {
   IUpdateBody,
@@ -19,12 +19,12 @@ export class LogisticasObjetos extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Log%C3%ADsticas%20-%20Objetos/delete_logisticas_objetos__idObjeto_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'logisticas/objetos',
       id: String(params.idObjeto)

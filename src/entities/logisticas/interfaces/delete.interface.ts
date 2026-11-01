@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idLogistica: number
 }
+
+export type IDeleteResponse = null

@@ -2,14 +2,14 @@ import { ICodigoFiscal } from '../types/codigo-fiscal.type'
 import { IOrigemSituacao } from '../types/origem-situacao.type'
 import { ISituacao } from '../types/situacao.type'
 
-interface ContasReceberOcorrenciaUnicaDTO {
+interface IContasReceberOcorrenciaUnicaDTO {
   /**
    * `1`: Única
    */
   tipo: 1
 }
 
-interface ContasReceberOcorrenciaParceladaDTO {
+interface IContasReceberOcorrenciaParceladaDTO {
   /**
    * `2`: Parcelada
    */
@@ -19,7 +19,7 @@ interface ContasReceberOcorrenciaParceladaDTO {
   numeroParcelas: number
 }
 
-interface ContasReceberOcorrenciaDTO {
+interface IContasReceberOcorrenciaDTO {
   /**
    * `3`: Mensal
    * `4`: Bimestral
@@ -34,7 +34,7 @@ interface ContasReceberOcorrenciaDTO {
   dataLimite: string
 }
 
-interface ContasReceberOcorrenciaSemanalDTO {
+interface IContasReceberOcorrenciaSemanalDTO {
   /**
    * `9`: Semanal
    */
@@ -86,9 +86,9 @@ export interface IFindResponse {
     vendedor?: { id: number }
     borderos: number[]
     ocorrencia:
-      | ContasReceberOcorrenciaUnicaDTO
-      | ContasReceberOcorrenciaParceladaDTO
-      | ContasReceberOcorrenciaDTO
-      | ContasReceberOcorrenciaSemanalDTO
+      | IContasReceberOcorrenciaUnicaDTO
+      | IContasReceberOcorrenciaParceladaDTO
+      | IContasReceberOcorrenciaDTO
+      | IContasReceberOcorrenciaSemanalDTO
   }
 }

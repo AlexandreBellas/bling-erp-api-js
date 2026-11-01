@@ -4,3 +4,5 @@ export interface IPostStockParams {
    */
   idNotaFiscalConsumidor: number
 }
+
+export type IPostStockResponse = null

@@ -11,4 +11,4 @@
  * - `11`: Outras Despesas
  * - `13`: IR e CSLL
  */
-export type IGrupoDRE = 1 | 2 | 3 | 7 | 8 | 9 | 10 | 11 | 13
+export type IGrupoDre = 1 | 2 | 3 | 7 | 8 | 9 | 10 | 11 | 13

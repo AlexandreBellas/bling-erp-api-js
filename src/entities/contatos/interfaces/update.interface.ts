@@ -1,6 +1,6 @@
 import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
 import IUF from '../../@shared/types/uf.type'
-import { IIndicadorIE } from '../types/indicador-ie.type'
+import { IIndicadorIe } from '../types/indicador-ie.type'
 import { IOrgaoPublico } from '../types/orgao-publico.type'
 import { ISexo } from '../types/sexo.type'
 import { ISituacao } from '../types/situacao.type'
@@ -21,7 +21,7 @@ export interface IUpdateBody {
   celular?: string
   fantasia?: string
   tipo: ITipoPessoa
-  indicadorIe?: IIndicadorIE
+  indicadorIe?: IIndicadorIe
   ie?: string
   rg?: string
   orgaoEmissor?: string
@@ -70,3 +70,5 @@ export interface IUpdateBody {
     descricao?: string
   }[]
 }
+
+export type IUpdateResponse = null

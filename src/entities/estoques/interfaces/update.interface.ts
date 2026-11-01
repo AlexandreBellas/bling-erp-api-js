@@ -13,3 +13,5 @@ export interface IUpdateBody {
   precoCusto?: number
   observacoes?: string
 }
+
+export type IUpdateResponse = null

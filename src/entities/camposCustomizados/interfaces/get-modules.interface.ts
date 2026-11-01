@@ -1,4 +1,4 @@
-export interface IGetModuleResponse {
+export interface IGetModulesResponse {
   data: {
     id: number
     nome: string

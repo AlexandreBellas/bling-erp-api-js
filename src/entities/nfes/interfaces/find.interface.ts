@@ -3,9 +3,9 @@ import IModalidadeIcms from '../../@shared/types/modalidade-icms.type'
 import IOrigem from '../../@shared/types/origem.type'
 import ITipoItem from '../../@shared/types/tipo-item.type'
 import IUF from '../../@shared/types/uf.type'
-import { IFinalidadeNfe } from '../types/finalidade.type'
-import { ISituacaoNfe } from '../types/situacao.type'
-import { ITipoNfe } from '../types/tipo.type'
+import { IFinalidade } from '../types/finalidade.type'
+import { ISituacao } from '../types/situacao.type'
+import { ITipo } from '../types/tipo.type'
 
 export interface IFindParams {
   /**
@@ -17,8 +17,8 @@ export interface IFindParams {
 export interface IFindResponse {
   data: {
     id?: number
-    tipo: ITipoNfe
-    situacao?: ISituacaoNfe
+    tipo: ITipo
+    situacao?: ISituacao
     numero: string
     dataEmissao?: string
     dataOperacao: string
@@ -70,7 +70,7 @@ export interface IFindResponse {
     vendedor?: {
       id: number
     }
-    finalidade?: IFinalidadeNfe
+    finalidade?: IFinalidade
     tipoNota?: string
     valorNota?: number
     valorFrete?: number

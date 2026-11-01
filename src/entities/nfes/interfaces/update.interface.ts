@@ -7,8 +7,8 @@ import IOrigem from '../../@shared/types/origem.type'
 import ITipoItem from '../../@shared/types/tipo-item.type'
 import ITipoPessoa from '../../@shared/types/tipoPessoa.type'
 import IUF from '../../@shared/types/uf.type'
-import { IFinalidadeNfe } from '../types/finalidade.type'
-import { ITipoNfe } from '../types/tipo.type'
+import { IFinalidade } from '../types/finalidade.type'
+import { ITipo } from '../types/tipo.type'
 import { IEspecie } from '../types/especie.type'
 
 export interface IUpdateParams {
@@ -19,7 +19,7 @@ export interface IUpdateParams {
 }
 
 export interface IUpdateBody {
-  tipo: ITipoNfe
+  tipo: ITipo
   numero: string
   dataOperacao: string
   contato: {
@@ -47,7 +47,7 @@ export interface IUpdateBody {
     id: number
     numero?: string
   }
-  finalidade?: IFinalidadeNfe
+  finalidade?: IFinalidade
   seguro?: number
   despesas?: number
   desconto?: number

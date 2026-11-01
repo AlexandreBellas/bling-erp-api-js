@@ -10,3 +10,5 @@ export interface ISetDefaultParams {
 export interface ISetDefaultBody {
   padrao: IPadraoDefinicao
 }
+
+export type ISetDefaultResponse = null

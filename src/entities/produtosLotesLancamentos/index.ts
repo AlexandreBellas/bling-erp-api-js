@@ -22,7 +22,11 @@ import {
   ICreateBody,
   ICreateResponse
 } from './interfaces/create.interface'
-import { IUpdateParams, IUpdateBody } from './interfaces/update.interface'
+import {
+  IUpdateParams,
+  IUpdateBody,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com lançamentos de lotes de produtos.
@@ -168,12 +172,14 @@ export class ProdutosLotesLancamentos extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IUpdateResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Lotes%20Lan%C3%A7amentos/patch_produtos_lotes_lancamentos__idLancamento_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idLancamento, ...body } = params
     return await this.repository.update({
       endpoint: 'produtos/lotes/lancamentos',

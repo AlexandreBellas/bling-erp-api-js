@@ -12,3 +12,5 @@ export interface IPauseParams {
    */
   idLoja: number
 }
+
+export type IPauseResponse = null

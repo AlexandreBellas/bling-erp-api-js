@@ -13,3 +13,5 @@ export interface IChangeStatusBody {
    */
   status: IStatus12
 }
+
+export type IChangeStatusResponse = null

@@ -1,14 +1,19 @@
 import { Entity } from '../@shared/entity'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGenerateOverDemandResponse } from './interfaces/generate-over-demand.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Ordens de Produção.
@@ -21,12 +26,12 @@ export class OrdensDeProducao extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Produ%C3%A7%C3%A3o/delete_ordens_producao__idOrdemProducao_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'ordens-producao',
       id: String(params.idOrdemProducao)
@@ -108,12 +113,14 @@ export class OrdensDeProducao extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Produ%C3%A7%C3%A3o/put_ordens_producao__idOrdemProducao_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idOrdemProducao, ...body } = params
 
     return await this.repository.replace({
@@ -128,14 +135,14 @@ export class OrdensDeProducao extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Parâmetros da alteração.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Produ%C3%A7%C3%A3o/put_ordens_producao__idOrdemProducao__situacoes
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     const { idOrdemProducao, ...body } = params
     return await this.repository.replace({
       endpoint: 'ordens-producao',

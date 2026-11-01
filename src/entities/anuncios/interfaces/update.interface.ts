@@ -127,3 +127,5 @@ export interface IUpdateBody {
   } | null
   variacoes?: IAnunciosSaveRequestBaseWrite[]
 }
+
+export type IUpdateResponse = null

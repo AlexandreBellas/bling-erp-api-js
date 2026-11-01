@@ -1,6 +1,6 @@
 import { Entity } from '../@shared/entity'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import {
   IDownloadBody,
   IDownloadParams,
@@ -25,12 +25,12 @@ export class ContasPagar extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contas%20a%20Pagar/delete_contas_pagar__idContaPagar_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'contas/pagar',
       id: String(params.idContaPagar)

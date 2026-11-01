@@ -4,7 +4,7 @@ import {
   IDeleteManyParams,
   IDeleteManyResponse
 } from './interfaces/delete-many.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import {
@@ -44,12 +44,12 @@ export class CategoriasReceitasDespesas extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Categorias%20-%20Receitas%20e%20Despesas/delete_categorias_receitas_despesas__idCategoria_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'categorias/receitas-despesas',
       id: String(params.idCategoria)

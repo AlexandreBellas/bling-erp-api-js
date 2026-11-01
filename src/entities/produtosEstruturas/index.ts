@@ -1,13 +1,24 @@
 import { Entity } from '../@shared/entity'
-import { IAddComponentParameter } from './interfaces/add-component.interface'
+import {
+  IAddComponentParameter,
+  IAddComponentResponse
+} from './interfaces/add-component.interface'
 import {
   IChangeComponentBody,
-  IChangeComponentParams
+  IChangeComponentParams,
+  IChangeComponentResponse
 } from './interfaces/change-component.interface'
-import { IDeleteComponentsParams } from './interfaces/delete-components.interface'
+import {
+  IDeleteComponentsParams,
+  IDeleteComponentsResponse
+} from './interfaces/delete-components.interface'
 import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
-import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Produtos - Estruturas.
@@ -20,14 +31,14 @@ export class ProdutosEstruturas extends Entity {
    *
    * @param {IDeleteComponentsParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteComponentsResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Estruturas/delete_produtos_estruturas__idProdutoEstrutura__componentes
    */
   public async deleteComponents(
     params: IDeleteComponentsParams
-  ): Promise<null> {
+  ): Promise<IDeleteComponentsResponse> {
     return await this.repository.destroy({
       endpoint: 'produtos/estruturas',
       id: `${params.idProdutoEstrutura}/componentes`,
@@ -75,14 +86,14 @@ export class ProdutosEstruturas extends Entity {
    *
    * @param {IChangeComponentParams & IChangeComponentBody} params O conteúdo para a alteração.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeComponentResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Estruturas/patch_produtos_estruturas__idProdutoEstrutura__componentes__idComponente_
    */
   public async changeComponent(
     params: IChangeComponentParams & IChangeComponentBody
-  ): Promise<null> {
+  ): Promise<IChangeComponentResponse> {
     const { idComponente, idProdutoEstrutura, ...body } = params
     return await this.repository.update({
       endpoint: 'produtos/estruturas',
@@ -96,12 +107,14 @@ export class ProdutosEstruturas extends Entity {
    *
    * @param {IAddComponentParameter} parameters O conteúdo para a adição.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IAddComponentResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Estruturas/post_produtos_estruturas__idProdutoEstrutura__componentes
    */
-  public async addComponent(parameters: IAddComponentParameter): Promise<null> {
+  public async addComponent(
+    parameters: IAddComponentParameter
+  ): Promise<IAddComponentResponse> {
     return await this.repository.store({
       endpoint: `produtos/estruturas/${parameters.params.idProdutoEstrutura}/componentes`,
       body: parameters.body
@@ -113,12 +126,14 @@ export class ProdutosEstruturas extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Estruturas/put_produtos_estruturas__idProdutoEstrutura_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idProdutoEstrutura, ...body } = params
 
     return await this.repository.replace({

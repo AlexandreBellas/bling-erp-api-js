@@ -4,3 +4,5 @@ export interface IReverseAccountsParams {
    */
   idPedidoCompra: number
 }
+
+export type IReverseAccountsResponse = null

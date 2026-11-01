@@ -1,11 +1,11 @@
-interface ContasReceberOcorrenciaUnicaDTO {
+interface IContasReceberOcorrenciaUnicaDTO {
   /**
    * `1`: Única
    */
   tipo: 1
 }
 
-interface ContasReceberOcorrenciaParceladaDTO {
+interface IContasReceberOcorrenciaParceladaDTO {
   /**
    * `2`: Parcelada
    */
@@ -15,7 +15,7 @@ interface ContasReceberOcorrenciaParceladaDTO {
   numeroParcelas?: number
 }
 
-interface ContasReceberOcorrenciaDTO {
+interface IContasReceberOcorrenciaDTO {
   /**
    * `3`: Mensal
    * `4`: Bimestral
@@ -30,7 +30,7 @@ interface ContasReceberOcorrenciaDTO {
   dataLimite?: string
 }
 
-interface ContasReceberOcorrenciaSemanalDTO {
+interface IContasReceberOcorrenciaSemanalDTO {
   /**
    * `9`: Semanal
    */
@@ -41,10 +41,10 @@ interface ContasReceberOcorrenciaSemanalDTO {
 }
 
 export type IOcorrencia =
-  | ContasReceberOcorrenciaUnicaDTO
-  | ContasReceberOcorrenciaParceladaDTO
-  | ContasReceberOcorrenciaDTO
-  | ContasReceberOcorrenciaSemanalDTO
+  | IContasReceberOcorrenciaUnicaDTO
+  | IContasReceberOcorrenciaParceladaDTO
+  | IContasReceberOcorrenciaDTO
+  | IContasReceberOcorrenciaSemanalDTO
 
 export interface ICreateBody {
   vencimento: string

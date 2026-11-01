@@ -10,3 +10,5 @@ export interface IChangeSituationParams {
 export interface IChangeSituationBody {
   situacao?: ISituacao
 }
+
+export type IChangeSituationResponse = null

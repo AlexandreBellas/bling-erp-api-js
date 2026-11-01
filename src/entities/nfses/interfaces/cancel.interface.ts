@@ -11,3 +11,5 @@ export interface ICancelBody {
   codigoMotivo?: ICancelarCodigoMotivo
   justificativa?: string
 }
+
+export type ICancelResponse = null

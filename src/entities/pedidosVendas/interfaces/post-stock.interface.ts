@@ -4,3 +4,5 @@ export interface IPostStockParams {
    */
   idPedidoVenda: number
 }
+
+export type IPostStockResponse = null

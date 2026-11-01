@@ -4,3 +4,5 @@ export interface IReverseAccountsParams {
    */
   idNotaFiscal: number
 }
+
+export type IReverseAccountsResponse = null

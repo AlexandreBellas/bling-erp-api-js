@@ -6,4 +6,4 @@
  * _ `2`: Preço Tabelado Máximo (valor)
  * _ `3`: Valor da operação
  */
-export type IModalidadeBaseCalculoICMSST = 0 | 1 | 2 | 3
+export type IModalidadeBaseCalculoIcmsSt = 0 | 1 | 2 | 3

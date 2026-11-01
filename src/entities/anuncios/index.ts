@@ -2,10 +2,17 @@ import { Entity } from '../@shared/entity'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IUpdateParams, IUpdateBody } from './interfaces/update.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
-import { IPublishParams } from './interfaces/publish.interface'
-import { IPauseParams } from './interfaces/pause.interface'
+import {
+  IUpdateParams,
+  IUpdateBody,
+  IUpdateResponse
+} from './interfaces/update.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
+import {
+  IPublishParams,
+  IPublishResponse
+} from './interfaces/publish.interface'
+import { IPauseParams, IPauseResponse } from './interfaces/pause.interface'
 
 /**
  * Entidade para interação com anúncios.
@@ -80,12 +87,14 @@ export class Anuncios extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IUpdateResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/An%C3%BAncios/put_anuncios__idAnuncio_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idAnuncio, ...body } = params
     return await this.repository.replace({
       endpoint: 'anuncios',
@@ -99,12 +108,12 @@ export class Anuncios extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/An%C3%BAncios/delete_anuncios__idAnuncio_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'anuncios',
       id: String(params.idAnuncio),
@@ -120,12 +129,12 @@ export class Anuncios extends Entity {
    *
    * @param {IPublishParams} params Parâmetros da operação.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IPublishResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/An%C3%BAncios/post_anuncios__idAnuncio__publicar
    */
-  public async publish(params: IPublishParams): Promise<null> {
+  public async publish(params: IPublishParams): Promise<IPublishResponse> {
     return await this.repository.store({
       endpoint: `anuncios/${params.idAnuncio}/publicar`,
       params: {
@@ -141,12 +150,12 @@ export class Anuncios extends Entity {
    *
    * @param {IPauseParams} params Parâmetros da operação.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IPauseResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/An%C3%BAncios/post_anuncios__idAnuncio__pausar
    */
-  public async pause(params: IPauseParams): Promise<null> {
+  public async pause(params: IPauseParams): Promise<IPauseResponse> {
     return await this.repository.store({
       endpoint: `anuncios/${params.idAnuncio}/pausar`,
       params: {

@@ -1,13 +1,13 @@
 import { ISituacao } from '../types/situacao.type'
 
-interface ContasPagarOcorrenciaUnicaDTO {
+interface IContasPagarOcorrenciaUnicaDTO {
   /**
    * `1`: Única
    */
   tipo: 1
 }
 
-interface ContasPagarOcorrenciaParceladaDTO {
+interface IContasPagarOcorrenciaParceladaDTO {
   /**
    * `2`: Parcelada
    */
@@ -17,7 +17,7 @@ interface ContasPagarOcorrenciaParceladaDTO {
   numeroParcelas: number
 }
 
-interface ContasPagarOcorrenciaDTO {
+interface IContasPagarOcorrenciaDTO {
   /**
    * `3`: Mensal
    * `4`: Bimestral
@@ -32,7 +32,7 @@ interface ContasPagarOcorrenciaDTO {
   dataLimite: string
 }
 
-interface ContasPagarOcorrenciaSemanalDTO {
+interface IContasPagarOcorrenciaSemanalDTO {
   /**
    * `9`: Semanal
    */
@@ -65,9 +65,9 @@ export interface IFindResponse {
     categoria: { id: number }
     borderos: number[]
     ocorrencia:
-      | ContasPagarOcorrenciaUnicaDTO
-      | ContasPagarOcorrenciaParceladaDTO
-      | ContasPagarOcorrenciaDTO
-      | ContasPagarOcorrenciaSemanalDTO
+      | IContasPagarOcorrenciaUnicaDTO
+      | IContasPagarOcorrenciaParceladaDTO
+      | IContasPagarOcorrenciaDTO
+      | IContasPagarOcorrenciaSemanalDTO
   }
 }

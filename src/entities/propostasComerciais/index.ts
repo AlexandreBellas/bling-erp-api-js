@@ -1,17 +1,22 @@
 import { Entity } from '../@shared/entity'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import {
   IDeleteManyParams,
   IDeleteManyResponse
 } from './interfaces/delete-many.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com propostas comerciais.
@@ -44,12 +49,12 @@ export class PropostasComerciais extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Propostas%20Comerciais/delete_propostas_comerciais__idPropostaComercial_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'propostas-comerciais',
       id: String(params.idPropostaComercial)
@@ -102,14 +107,14 @@ export class PropostasComerciais extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Parâmetros da alteração.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Propostas%20Comerciais/patch_propostas_comerciais__idPropostaComercial__situacoes
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     const { idPropostaComercial, ...body } = params
     return await this.repository.update({
       endpoint: 'propostas-comerciais',
@@ -140,12 +145,14 @@ export class PropostasComerciais extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Propostas%20Comerciais/put_propostas_comerciais__idPropostaComercial_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idPropostaComercial, ...body } = params
 
     return await this.repository.replace({

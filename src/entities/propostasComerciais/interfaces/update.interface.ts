@@ -65,3 +65,5 @@ export interface IUpdateBody {
     volumes?: {}
   }
 }
+
+export type IUpdateResponse = null

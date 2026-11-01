@@ -15,7 +15,7 @@
  * - `11`: Deficiente Não Condutor
  * - `90`: Solicitado pelo Fisco
  */
-export type IMotivoDesoneracaoICMS =
+export type IMotivoDesoneracaoIcms =
   | 0
   | 1
   | 3

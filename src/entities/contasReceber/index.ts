@@ -1,7 +1,10 @@
 import { Entity } from '../@shared/entity'
-import { ICancelBankSlipsBody } from './interfaces/cancel-bank-slips.interface'
+import {
+  ICancelBankSlipsBody,
+  ICancelBankSlipsResponse
+} from './interfaces/cancel-bank-slips.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import {
   IDownloadBody,
   IDownloadParams,
@@ -13,7 +16,11 @@ import {
   IGetBankSlipsResponse
 } from './interfaces/get-bank-slips.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Contas a Receber.
@@ -26,12 +33,12 @@ export class ContasReceber extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/delete_contas_receber__idContaReceber_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'contas/receber',
       id: String(params.idContaReceber)
@@ -149,12 +156,14 @@ export class ContasReceber extends Entity {
    *
    * @param {ICancelBankSlipsBody} body Parâmetros do cancelamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<ICancelBankSlipsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/post_contas_receber_boletos_cancelar
    */
-  public async cancelBankSlips(body: ICancelBankSlipsBody): Promise<null> {
+  public async cancelBankSlips(
+    body: ICancelBankSlipsBody
+  ): Promise<ICancelBankSlipsResponse> {
     return await this.repository.store({
       endpoint: 'contas/receber/boletos/cancelar',
       body
@@ -166,12 +175,14 @@ export class ContasReceber extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contas%20a%20Receber/put_contas_receber__idContaReceber_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idContaReceber, ...body } = params
 
     return await this.repository.replace({

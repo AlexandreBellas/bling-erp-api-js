@@ -8,4 +8,4 @@
  * - `5`: Crédito
  * - `6`: Débito
  */
-export type IFinalidadeNfe = 1 | 2 | 3 | 4 | 5 | 6
+export type IFinalidade = 1 | 2 | 3 | 4 | 5 | 6

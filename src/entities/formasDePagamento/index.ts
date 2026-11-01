@@ -1,15 +1,17 @@
 import { Entity } from '../@shared/entity'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import {
   ISetDefaultBody,
-  ISetDefaultParams
+  ISetDefaultParams,
+  ISetDefaultResponse
 } from './interfaces/set-default.interface'
 import {
   IUpdateBody,
@@ -28,12 +30,12 @@ export class FormasDePagamento extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Formas%20de%20Pagamentos/delete_formas_pagamentos__idFormaPagamento_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'formas-pagamentos',
       id: String(params.idFormaPagamento)
@@ -124,14 +126,14 @@ export class FormasDePagamento extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IChangeSituationResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Formas%20de%20Pagamentos/patch_formas_pagamentos__idFormaPagamento__situacao
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     const { idFormaPagamento, ...body } = params
 
     return await this.repository.update({
@@ -146,14 +148,14 @@ export class FormasDePagamento extends Entity {
    *
    * @param {ISetDefaultParams & ISetDefaultBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<ISetDefaultResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Formas%20de%20Pagamentos/patch_formas_pagamentos__idFormaPagamento__padrao
    */
   public async setDefault(
     params: ISetDefaultParams & ISetDefaultBody
-  ): Promise<null> {
+  ): Promise<ISetDefaultResponse> {
     const { idFormaPagamento, ...body } = params
 
     return await this.repository.update({

@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idFormaPagamento: number
 }
+
+export type IDeleteResponse = null

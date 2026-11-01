@@ -1,5 +1,8 @@
 import { Entity } from '../@shared/entity'
-import { IDeleteManyParams } from './interfaces/delete-many.interface'
+import {
+  IDeleteManyParams,
+  IDeleteManyResponse
+} from './interfaces/delete-many.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import {
@@ -10,11 +13,19 @@ import {
   IUpdateManyBody,
   IUpdateManyResponse
 } from './interfaces/update-many.interface'
-import { IUpdateParams, IUpdateBody } from './interfaces/update.interface'
-import { IDisableLotControlParams } from './interfaces/disable-lot-control.interface'
+import {
+  IUpdateParams,
+  IUpdateBody,
+  IUpdateResponse
+} from './interfaces/update.interface'
+import {
+  IDisableLotControlParams,
+  IDisableLotControlResponse
+} from './interfaces/disable-lot-control.interface'
 import {
   IChangeStatusParams,
-  IChangeStatusBody
+  IChangeStatusBody,
+  IChangeStatusResponse
 } from './interfaces/change-status.interface'
 
 /**
@@ -28,12 +39,14 @@ export class ProdutosLotes extends Entity {
    *
    * @param {IDeleteManyParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteManyResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Lotes/delete_produtos_lotes
    */
-  public async deleteMany(params: IDeleteManyParams): Promise<null> {
+  public async deleteMany(
+    params: IDeleteManyParams
+  ): Promise<IDeleteManyResponse> {
     return await this.repository.destroy({
       endpoint: 'produtos/lotes',
       id: '',
@@ -149,12 +162,14 @@ export class ProdutosLotes extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IUpdateResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Lotes/put_produtos_lotes__idLote_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idLote, ...body } = params
     return await this.repository.replace({
       endpoint: 'produtos/lotes',
@@ -168,14 +183,14 @@ export class ProdutosLotes extends Entity {
    *
    * @param {IDisableLotControlParams} params Parâmetros da operação.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDisableLotControlResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Lotes/post_produtos__idProduto__lotes_controla_lote_desativar
    */
   public async disableLotControl(
     params: IDisableLotControlParams
-  ): Promise<null> {
+  ): Promise<IDisableLotControlResponse> {
     return await this.repository.store({
       endpoint: `produtos/${params.idProduto}/lotes/controla-lote/desativar`,
       body: {}
@@ -187,14 +202,14 @@ export class ProdutosLotes extends Entity {
    *
    * @param {IChangeStatusParams & IChangeStatusBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IChangeStatusResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos%20-%20Lotes/patch_produtos_lotes__idLote__status
    */
   public async changeStatus(
     params: IChangeStatusParams & IChangeStatusBody
-  ): Promise<null> {
+  ): Promise<IChangeStatusResponse> {
     const { idLote, ...body } = params
     return await this.repository.update({
       endpoint: 'produtos/lotes',

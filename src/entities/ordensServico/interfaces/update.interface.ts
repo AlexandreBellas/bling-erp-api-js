@@ -136,3 +136,5 @@ export interface IUpdateBody {
   pecas?: IOrdensServicoItemPecaDTOWrite[]
   parcelas?: IOrdensServicoParcelaDTOWrite[]
 }
+
+export type IUpdateResponse = null

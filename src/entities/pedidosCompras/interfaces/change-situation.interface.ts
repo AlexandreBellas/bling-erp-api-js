@@ -8,3 +8,5 @@ export interface IChangeSituationParams {
    */
   idSituacao: number
 }
+
+export type IChangeSituationResponse = null

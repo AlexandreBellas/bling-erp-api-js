@@ -8,4 +8,4 @@
  * - `'P'`: Processando (externa)
  * - `'C'`: Cancelado (externa)
  */
-export type ISituacaoREHNPC = 'R' | 'E' | 'H' | 'N' | 'P' | 'C'
+export type ISituacaoRehnpc = 'R' | 'E' | 'H' | 'N' | 'P' | 'C'

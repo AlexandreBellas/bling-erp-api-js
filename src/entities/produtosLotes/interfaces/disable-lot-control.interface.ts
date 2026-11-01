@@ -4,3 +4,5 @@ export interface IDisableLotControlParams {
    */
   idProduto: number
 }
+
+export type IDisableLotControlResponse = null

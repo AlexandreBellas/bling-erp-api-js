@@ -1,10 +1,17 @@
 import { Entity } from '../@shared/entity'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IUpdateParams, IUpdateBody } from './interfaces/update.interface'
-import { IChangeSituationParams } from './interfaces/change-situation.interface'
+import {
+  IUpdateParams,
+  IUpdateBody,
+  IUpdateResponse
+} from './interfaces/update.interface'
+import {
+  IChangeSituationParams,
+  IChangeSituationResponse
+} from './interfaces/change-situation.interface'
 
 /**
  * Entidade para interação com ordens de serviço.
@@ -17,12 +24,12 @@ export class OrdensServico extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Servi%C3%A7o/delete_ordens_servico__idOrdemServico_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'ordens/servico',
       id: String(params.idOrdemServico)
@@ -117,12 +124,14 @@ export class OrdensServico extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IUpdateResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Servi%C3%A7o/put_ordens_servico__idOrdemServico_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idOrdemServico, ...body } = params
     return await this.repository.replace({
       endpoint: 'ordens/servico',
@@ -136,12 +145,14 @@ export class OrdensServico extends Entity {
    *
    * @param {IChangeSituationParams} params Os parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IChangeSituationResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Ordens%20de%20Servi%C3%A7o/patch_ordens_servico__idOrdemServico__situacoes__idSituacao_
    */
-  public async changeSituation(params: IChangeSituationParams): Promise<null> {
+  public async changeSituation(
+    params: IChangeSituationParams
+  ): Promise<IChangeSituationResponse> {
     return await this.repository.update({
       endpoint: 'ordens/servico',
       id: `${params.idOrdemServico}/situacoes/${params.idSituacao}`,

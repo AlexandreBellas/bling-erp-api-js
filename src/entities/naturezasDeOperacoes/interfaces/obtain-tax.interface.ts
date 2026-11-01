@@ -1,8 +1,8 @@
 import ICRT from '../../@shared/types/crt.type'
 import IOrigem from '../../@shared/types/origem.type'
 import IUF from '../../@shared/types/uf.type'
-import { IModalidadeBaseCalculoICMSST } from '../types/modalidade-base-calculo-icms-st.type'
-import { IMotivoDesoneracaoICMS } from '../types/motivo-desoneracao-icms.type'
+import { IModalidadeBaseCalculoIcmsSt } from '../types/modalidade-base-calculo-icms-st.type'
+import { IMotivoDesoneracaoIcms } from '../types/motivo-desoneracao-icms.type'
 import { ITipoNota } from '../types/tipo-nota.type'
 import { ITributacao } from '../types/tributacao.type'
 import { ITipoPartilha } from '../types/tipo-partilha.type'
@@ -75,7 +75,7 @@ export interface IObtainTaxResponse {
       porcentagemIcmsUfDestino?: number
       tipoPartilha?: ITipoPartilha
       valorIcmsDesonerado?: number
-      motivoDesoneracaoIcms?: IMotivoDesoneracaoICMS
+      motivoDesoneracaoIcms?: IMotivoDesoneracaoIcms
       baseDiferimento?: number
       valorBaseDiferimento?: number
       valorPresumido?: number
@@ -176,7 +176,7 @@ export interface IObtainTaxResponse {
       observacoes?: string
       informacoesAdicionaisFisco?: string
       percentualAdicionado?: number
-      modalidadeBaseCalculo?: IModalidadeBaseCalculoICMSST
+      modalidadeBaseCalculo?: IModalidadeBaseCalculoIcmsSt
       valorPauta?: number
     }
     pisSt?: {

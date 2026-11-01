@@ -1,7 +1,8 @@
 import { Entity } from '../@shared/entity'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
@@ -61,14 +62,14 @@ export class LogisticasServicos extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Dados da atualização.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Log%C3%ADsticas%20-%20Servi%C3%A7os/patch_logisticas__idLogisticaServico__situacoes
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     const { idLogisticaServico, ...body } = params
     return await this.repository.update({
       endpoint: 'logisticas',

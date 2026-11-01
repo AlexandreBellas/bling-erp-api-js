@@ -3,9 +3,9 @@ import IModalidadeIcms from '../../@shared/types/modalidade-icms.type'
 import IOrigem from '../../@shared/types/origem.type'
 import ITipoItem from '../../@shared/types/tipo-item.type'
 import IUF from '../../@shared/types/uf.type'
-import { IFinalidadeNfce } from '../types/finalidade.type'
-import { ISituacaoNfce } from '../types/situacao.type'
-import { ITipoNfce } from '../types/tipo.type'
+import { IFinalidade } from '../types/finalidade.type'
+import { ISituacao } from '../types/situacao.type'
+import { ITipo } from '../types/tipo.type'
 
 export interface IFindParams {
   /**
@@ -17,8 +17,8 @@ export interface IFindParams {
 export interface IFindResponse {
   data: {
     id?: number
-    tipo: ITipoNfce
-    situacao?: ISituacaoNfce
+    tipo: ITipo
+    situacao?: ISituacao
     numero: string
     dataEmissao?: string
     dataOperacao: string
@@ -71,7 +71,7 @@ export interface IFindResponse {
     vendedor?: {
       id: number
     }
-    finalidade?: IFinalidadeNfce
+    finalidade?: IFinalidade
     tipoNota?: string
     valorFrete?: number
     optanteSimplesNacional?: boolean

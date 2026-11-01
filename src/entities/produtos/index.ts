@@ -5,14 +5,15 @@ import {
 } from './interfaces/change-situation-many.interface'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import {
   IDeleteManyParams,
   IDeleteManyResponse
 } from './interfaces/delete-many.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import {
@@ -57,12 +58,12 @@ export class Produtos extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos/delete_produtos__idProduto_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'produtos',
       id: String(params.idProduto)
@@ -138,14 +139,14 @@ export class Produtos extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Parâmetros da alteração.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Produtos/patch_produtos__idProduto__situacoes
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     const { idProduto, ...body } = params
     return await this.repository.update({
       endpoint: 'produtos',

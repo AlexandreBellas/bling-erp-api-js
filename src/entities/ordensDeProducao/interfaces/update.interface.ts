@@ -28,3 +28,5 @@ export interface IUpdateBody {
 
   observacoes?: string
 }
+
+export type IUpdateResponse = null

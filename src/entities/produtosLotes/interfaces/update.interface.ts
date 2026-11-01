@@ -12,3 +12,5 @@ export interface IUpdateBody {
   diasPermitidoVenda?: number
   codigoAgregacao?: string
 }
+
+export type IUpdateResponse = null

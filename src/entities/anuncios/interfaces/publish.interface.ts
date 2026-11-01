@@ -12,3 +12,5 @@ export interface IPublishParams {
    */
   idLoja: number
 }
+
+export type IPublishResponse = null

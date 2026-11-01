@@ -85,3 +85,5 @@ export interface IUpdateConfigurationsBody {
     }
   }
 }
+
+export type IUpdateConfigurationsResponse = null

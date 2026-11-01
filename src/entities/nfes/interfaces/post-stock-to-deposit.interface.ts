@@ -8,3 +8,5 @@ export interface IPostStockToDepositParams {
    */
   idDeposito: number
 }
+
+export type IPostStockToDepositResponse = null

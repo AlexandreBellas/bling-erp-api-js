@@ -4,7 +4,7 @@
  * - `0`: Entrada
  * - `1`: Saída
  */
-export type ITipoNfe = 0 | 1
+export type ITipo = 0 | 1
 
 /**
  * Filtro de tipo na listagem de NF-e.
@@ -14,4 +14,4 @@ export type ITipoNfe = 0 | 1
  * - `'0'`: Entrada
  * - `'1'`: Saída
  */
-export type ITipoNfeFiltro = '0' | '1'
+export type ITipoFiltro = '0' | '1'

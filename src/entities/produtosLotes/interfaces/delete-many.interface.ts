@@ -4,3 +4,5 @@ export interface IDeleteManyParams {
    */
   idsLotes: number[]
 }
+
+export type IDeleteManyResponse = null

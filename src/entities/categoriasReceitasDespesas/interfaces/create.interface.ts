@@ -1,4 +1,4 @@
-import { IGrupoDRE } from '../types/grupo-dre.type'
+import { IGrupoDre } from '../types/grupo-dre.type'
 import { ITipo } from '../types/tipo.type'
 
 export interface ICreateBody {
@@ -8,7 +8,7 @@ export interface ICreateBody {
    * Id da categoria pai. Se for a categoria raíz será 0.
    */
   idCategoriaPai?: number
-  grupoDRE?: IGrupoDRE
+  grupoDRE?: IGrupoDre
 }
 
 export interface ICreateResponse {

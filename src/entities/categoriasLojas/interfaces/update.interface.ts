@@ -8,3 +8,5 @@ export interface IUpdateBody {
   codigo: string
   categoriaProduto: { id: number }
 }
+
+export type IUpdateResponse = null

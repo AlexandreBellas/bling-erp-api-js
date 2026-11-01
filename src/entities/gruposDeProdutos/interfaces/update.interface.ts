@@ -12,3 +12,5 @@ export interface IUpdateBody {
     id: number
   }
 }
+
+export type IUpdateResponse = null

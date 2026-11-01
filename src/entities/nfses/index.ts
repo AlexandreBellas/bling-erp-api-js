@@ -1,12 +1,19 @@
 import { Entity } from '../@shared/entity'
-import { ICancelBody, ICancelParams } from './interfaces/cancel.interface'
+import {
+  ICancelBody,
+  ICancelParams,
+  ICancelResponse
+} from './interfaces/cancel.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetConfigurationsResponse } from './interfaces/get-configurations.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { ISendParams, ISendResponse } from './interfaces/send.interface'
-import { IUpdateConfigurationsBody } from './interfaces/update-configurations.interface'
+import {
+  IUpdateConfigurationsBody,
+  IUpdateConfigurationsResponse
+} from './interfaces/update-configurations.interface'
 
 /**
  * Entidade para interação com notas fiscais de serviço eletrônicas.
@@ -19,12 +26,12 @@ export class Nfses extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Servi%C3%A7o%20Eletr%C3%B4nicas/delete_nfse__idNotaServico_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'nfse',
       id: String(params.idNotaServico)
@@ -128,12 +135,14 @@ export class Nfses extends Entity {
    *
    * @param {ICancelParams & ICancelBody} params Os parâmetros de envio.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<ICancelResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Servi%C3%A7o%20Eletr%C3%B4nicas/post_nfse__idNotaServico__cancelar
    */
-  public async cancel(params: ICancelParams & ICancelBody): Promise<null> {
+  public async cancel(
+    params: ICancelParams & ICancelBody
+  ): Promise<ICancelResponse> {
     const { idNotaServico, ...body } = params
     return await this.repository.store({
       endpoint: `nfse/${idNotaServico}/cancelar`,
@@ -146,14 +155,14 @@ export class Nfses extends Entity {
    *
    * @param {IUpdateConfigurationsBody} body Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateConfigurationsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20de%20Servi%C3%A7o%20Eletr%C3%B4nicas/put_nfse_configuracoes
    */
   public async updateConfigurations(
     body: IUpdateConfigurationsBody
-  ): Promise<null> {
+  ): Promise<IUpdateConfigurationsResponse> {
     return await this.repository.replace({
       endpoint: 'nfse/configuracoes',
       id: '',

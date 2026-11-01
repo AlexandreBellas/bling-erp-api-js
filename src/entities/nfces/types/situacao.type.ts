@@ -13,11 +13,11 @@
  * - `10`: Consulta situação
  * - `11`: Bloqueada
  */
-export type ISituacaoNfce = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
+export type ISituacao = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
 
 /**
  * Filtro de situação na listagem de NFC-e.
  *
  * Inclui `12`, aceito apenas na query da listagem.
  */
-export type ISituacaoNfceFiltro = ISituacaoNfce | 12
+export type ISituacaoFiltro = ISituacao | 12

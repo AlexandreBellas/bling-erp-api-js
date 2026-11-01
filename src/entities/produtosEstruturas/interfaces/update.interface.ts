@@ -16,3 +16,5 @@ export interface IUpdateBody {
     quantidade: number
   }[]
 }
+
+export type IUpdateResponse = null

@@ -11,3 +11,5 @@ export interface IUpdateBody {
   descricao: string
   situacao: ISituacao
 }
+
+export type IUpdateResponse = null

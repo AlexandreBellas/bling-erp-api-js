@@ -8,7 +8,7 @@ export interface IFindParams {
 /**
  * Interface de resposta bem sucedida ao encontrar um borderô.
  */
-export interface IFindSuccessResponse {
+export interface IFindResponse {
   data: {
     id: number
     data: string

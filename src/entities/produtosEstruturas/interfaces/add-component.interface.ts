@@ -14,3 +14,5 @@ export interface IAddComponentParameter {
   params: IAddComponentParams
   body: IAddComponentBody[]
 }
+
+export type IAddComponentResponse = null

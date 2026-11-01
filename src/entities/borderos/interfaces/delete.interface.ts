@@ -4,3 +4,5 @@
 export interface IDeleteParams {
   idBordero: number
 }
+
+export type IDeleteResponse = null

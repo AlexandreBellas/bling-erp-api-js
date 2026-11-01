@@ -1,4 +1,4 @@
-import { ISituacaoNfse } from '../types/situacao.type'
+import { ISituacao } from '../types/situacao.type'
 
 export interface ISendParams {
   /**
@@ -13,7 +13,7 @@ export interface ISendResponse {
     numero?: string
     numeroRPS: string
     serie: string
-    situacao?: ISituacaoNfse
+    situacao?: ISituacao
     dataEmissao?: string
     valor?: number
     contato: {

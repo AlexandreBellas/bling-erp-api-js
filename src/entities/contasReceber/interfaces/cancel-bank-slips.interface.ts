@@ -13,3 +13,5 @@ export interface ICancelBankSlipsBody {
   }
   motivo: string
 }
+
+export type ICancelBankSlipsResponse = null

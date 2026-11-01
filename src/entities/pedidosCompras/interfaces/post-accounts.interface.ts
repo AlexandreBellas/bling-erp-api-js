@@ -4,3 +4,5 @@ export interface IPostAccountsParams {
    */
   idPedidoCompra: number
 }
+
+export type IPostAccountsResponse = null

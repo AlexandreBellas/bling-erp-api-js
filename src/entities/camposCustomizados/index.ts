@@ -1,17 +1,18 @@
 import { Entity } from '../@shared/entity'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import {
   IFindByModuleParams,
   IFindByModuleResponse
 } from './interfaces/find-by-module.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
-import { IGetModuleResponse } from './interfaces/get-modules.interface'
-import { IGetTypeResponse } from './interfaces/get-types.interface'
+import { IGetModulesResponse } from './interfaces/get-modules.interface'
+import { IGetTypesResponse } from './interfaces/get-types.interface'
 import {
   IUpdateBody,
   IUpdateParams,
@@ -29,12 +30,12 @@ export class CamposCustomizados extends Entity {
    *
    * @param params Parâmetros da deleção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/delete_campos_customizados__idCampoCustomizado_
    */
-  async delete(params: IDeleteParams): Promise<null> {
+  async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'campos-customizados',
       id: String(params.idCampoCustomizado)
@@ -44,12 +45,12 @@ export class CamposCustomizados extends Entity {
   /**
    * Obtém módulos que possuem campos customizados.
    *
-   * @returns {Promise<IGetModuleResponse>}
+   * @returns {Promise<IGetModulesResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/get_campos_customizados_modulos
    */
-  async getModules(): Promise<IGetModuleResponse> {
+  async getModules(): Promise<IGetModulesResponse> {
     return await this.repository.index({
       endpoint: 'campos-customizados/modulos'
     })
@@ -58,12 +59,12 @@ export class CamposCustomizados extends Entity {
   /**
    * Obtém tipos de campos customizados.
    *
-   * @returns {Promise<IGetTypeResponse>}
+   * @returns {Promise<IGetTypesResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/get_campos_customizados_tipos
    */
-  async getTypes(): Promise<IGetTypeResponse> {
+  async getTypes(): Promise<IGetTypesResponse> {
     return await this.repository.index({
       endpoint: 'campos-customizados/tipos'
     })
@@ -112,14 +113,14 @@ export class CamposCustomizados extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Parâmetros da atualização.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IChangeSituationResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Campos%20Customizados/patch_campos_customizados__idCampoCustomizado__situacoes
    */
   async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     return await this.repository.update({
       endpoint: 'campos-customizados',
       id: `${params.idCampoCustomizado}/situacoes`,

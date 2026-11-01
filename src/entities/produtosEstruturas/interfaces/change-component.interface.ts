@@ -13,3 +13,5 @@ export interface IChangeComponentBody {
   produto: { id: number }
   quantidade: number
 }
+
+export type IChangeComponentResponse = null

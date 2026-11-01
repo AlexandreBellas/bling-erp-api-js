@@ -4,3 +4,5 @@ export interface IPostAccountsParams {
    */
   idNotaFiscalConsumidor: number
 }
+
+export type IPostAccountsResponse = null

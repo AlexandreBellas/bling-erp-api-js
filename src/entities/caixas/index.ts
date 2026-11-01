@@ -1,5 +1,5 @@
 import { Entity } from '../@shared/entity'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
@@ -20,12 +20,12 @@ export class Caixas extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Caixas%20e%20Bancos/delete_caixas__idCaixa_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'caixas',
       id: String(params.idCaixa)

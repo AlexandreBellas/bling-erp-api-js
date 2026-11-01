@@ -1,6 +1,6 @@
 import IUF from '../../@shared/types/uf.type'
-import { ISituacaoNfce, ISituacaoNfceFiltro } from '../types/situacao.type'
-import { ITipoNfce } from '../types/tipo.type'
+import { ISituacao, ISituacaoFiltro } from '../types/situacao.type'
+import { ITipo } from '../types/tipo.type'
 
 export interface IGetParams {
   /**
@@ -30,7 +30,7 @@ export interface IGetParams {
   /**
    *
    */
-  situacao?: ISituacaoNfceFiltro
+  situacao?: ISituacaoFiltro
   /**
    * Data incial para filtragem das notas fiscais
    */
@@ -44,8 +44,8 @@ export interface IGetParams {
 export interface IGetResponse {
   data: {
     id?: number
-    tipo: ITipoNfce
-    situacao?: ISituacaoNfce
+    tipo: ITipo
+    situacao?: ISituacao
     numero: string
     chaveAcesso?: string
     dataEmissao?: string

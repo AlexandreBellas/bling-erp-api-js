@@ -4,10 +4,14 @@ import {
   IDeleteManyParams,
   IDeleteManyResponse
 } from './interfaces/delete-many.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Grupos de Produtos.
@@ -40,12 +44,12 @@ export class GruposDeProdutos extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Grupos%20de%20Produtos/delete_grupos_produtos__idGrupoProduto_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'grupos-produtos',
       id: String(params.idGrupoProduto)
@@ -113,12 +117,14 @@ export class GruposDeProdutos extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Grupos%20de%20Produtos/put_grupos_produtos__idGrupoProduto_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idGrupoProduto, ...body } = params
 
     return await this.repository.replace({

@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idProdutoFornecedor: number
 }
+
+export type IDeleteResponse = null

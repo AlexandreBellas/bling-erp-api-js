@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idPropostaComercial: number
 }
+
+export type IDeleteResponse = null

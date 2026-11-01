@@ -8,3 +8,5 @@ export interface IDeleteComponentsParams {
    */
   idsComponentes: number[]
 }
+
+export type IDeleteComponentsResponse = null

@@ -5,4 +5,4 @@
  * - `2`: Contribuinte isento de Inscrição no cadastro de Contribuintes
  * - `9`: Não Contribuinte
  */
-export type IIndicadorIE = 1 | 2 | 9
+export type IIndicadorIe = 1 | 2 | 9

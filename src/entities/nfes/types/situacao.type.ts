@@ -13,4 +13,4 @@
  * - `10`: Consulta situação
  * - `11`: Bloqueada
  */
-export type ISituacaoNfe = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
+export type ISituacao = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11

@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idRemessa: number
 }
+
+export type IDeleteResponse = null

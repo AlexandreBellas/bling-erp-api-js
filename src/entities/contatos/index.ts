@@ -5,14 +5,15 @@ import {
 } from './interfaces/change-situation-many.interface'
 import {
   IChangeSituationBody,
-  IChangeSituationParams
+  IChangeSituationParams,
+  IChangeSituationResponse
 } from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
 import {
   IDeleteManyParams,
   IDeleteManyResponse
 } from './interfaces/delete-many.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindFinalCustomerResponse } from './interfaces/find-final-customer.interface'
 import {
   IFindTypesParams,
@@ -20,7 +21,11 @@ import {
 } from './interfaces/find-types.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IUpdateBody, IUpdateParams } from './interfaces/update.interface'
+import {
+  IUpdateBody,
+  IUpdateParams,
+  IUpdateResponse
+} from './interfaces/update.interface'
 
 /**
  * Entidade para interação com Contatos.
@@ -55,12 +60,12 @@ export class Contatos extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contatos/delete_contatos__idContato_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'contatos',
       id: String(params.idContato)
@@ -167,14 +172,14 @@ export class Contatos extends Entity {
    *
    * @param {IChangeSituationParams & IChangeSituationBody} params Os parâmetros para a alteração.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contatos/patch_contatos__idContato__situacoes
    */
   public async changeSituation(
     params: IChangeSituationParams & IChangeSituationBody
-  ): Promise<null> {
+  ): Promise<IChangeSituationResponse> {
     const { idContato, ...body } = params
     return await this.repository.update({
       endpoint: 'contatos',
@@ -224,12 +229,14 @@ export class Contatos extends Entity {
    *
    * @param {IUpdateParams & IUpdateBody} params Os parâmetros da atualização.
    *
-   * @return {Promise<null>}
+   * @return {Promise<IUpdateResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Contatos/put_contatos__idContato_
    */
-  public async update(params: IUpdateParams & IUpdateBody): Promise<null> {
+  public async update(
+    params: IUpdateParams & IUpdateBody
+  ): Promise<IUpdateResponse> {
     const { idContato, ...body } = params
 
     return await this.repository.replace({

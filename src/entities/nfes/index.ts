@@ -7,11 +7,26 @@ import {
 import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IPostAccountsParams } from './interfaces/post-accounts.interface'
-import { IPostStockToDepositParams } from './interfaces/post-stock-to-deposit.interface'
-import { IPostStockParams } from './interfaces/post-stock.interface'
-import { IReverseAccountsParams } from './interfaces/reverse-accounts.interface'
-import { IReverseStockParams } from './interfaces/reverse-stock.interface'
+import {
+  IPostAccountsParams,
+  IPostAccountsResponse
+} from './interfaces/post-accounts.interface'
+import {
+  IPostStockToDepositParams,
+  IPostStockToDepositResponse
+} from './interfaces/post-stock-to-deposit.interface'
+import {
+  IPostStockParams,
+  IPostStockResponse
+} from './interfaces/post-stock.interface'
+import {
+  IReverseAccountsParams,
+  IReverseAccountsResponse
+} from './interfaces/reverse-accounts.interface'
+import {
+  IReverseStockParams,
+  IReverseStockResponse
+} from './interfaces/reverse-stock.interface'
 import { ISendParams, ISendResponse } from './interfaces/send.interface'
 import {
   IUpdateBody,
@@ -137,12 +152,14 @@ export class Nfes extends Entity {
    *
    * @param {IPostAccountsParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IPostAccountsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__lancar_contas
    */
-  public async postAccounts(params: IPostAccountsParams): Promise<null> {
+  public async postAccounts(
+    params: IPostAccountsParams
+  ): Promise<IPostAccountsResponse> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/lancar-contas`,
       body: {}
@@ -154,12 +171,14 @@ export class Nfes extends Entity {
    *
    * @param {IReverseAccountsParams} params O conteúdo para o estorno.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IReverseAccountsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__estornar_contas
    */
-  public async reverseAccounts(params: IReverseAccountsParams): Promise<null> {
+  public async reverseAccounts(
+    params: IReverseAccountsParams
+  ): Promise<IReverseAccountsResponse> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/estornar-contas`,
       body: {}
@@ -171,12 +190,14 @@ export class Nfes extends Entity {
    *
    * @param {IPostStockParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IPostStockResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__lancar_estoque
    */
-  public async postStock(params: IPostStockParams): Promise<null> {
+  public async postStock(
+    params: IPostStockParams
+  ): Promise<IPostStockResponse> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/lancar-estoque`,
       body: {}
@@ -188,14 +209,14 @@ export class Nfes extends Entity {
    *
    * @param {IPostStockToDepositParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IPostStockToDepositResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__lancar_estoque__idDeposito_
    */
   public async postStockToDeposit(
     params: IPostStockToDepositParams
-  ): Promise<null> {
+  ): Promise<IPostStockToDepositResponse> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/lancar-estoque/${params.idDeposito}`,
       body: {}
@@ -207,12 +228,14 @@ export class Nfes extends Entity {
    *
    * @param {IReverseStockParams} params O conteúdo para o estorno.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IReverseStockResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Notas%20Fiscais%20Eletr%C3%B4nicas/post_nfe__idNotaFiscal__estornar_estoque
    */
-  public async reverseStock(params: IReverseStockParams): Promise<null> {
+  public async reverseStock(
+    params: IReverseStockParams
+  ): Promise<IReverseStockResponse> {
     return await this.repository.store({
       endpoint: `nfe/${params.idNotaFiscal}/estornar-estoque`,
       body: {}

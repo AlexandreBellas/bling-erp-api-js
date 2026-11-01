@@ -4,3 +4,5 @@ export interface IDeleteParams {
    */
   idNotaServico: number
 }
+
+export type IDeleteResponse = null

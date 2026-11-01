@@ -11,3 +11,5 @@ export interface IChangeSituationBody {
   observacoes?: string
   considerarPerdas?: boolean
 }
+
+export type IChangeSituationResponse = null

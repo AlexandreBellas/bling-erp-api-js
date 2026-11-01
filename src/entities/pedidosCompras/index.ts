@@ -1,13 +1,28 @@
 import { Entity } from '../@shared/entity'
-import { IChangeSituationParams } from './interfaces/change-situation.interface'
+import {
+  IChangeSituationParams,
+  IChangeSituationResponse
+} from './interfaces/change-situation.interface'
 import { ICreateBody, ICreateResponse } from './interfaces/create.interface'
-import { IDeleteParams } from './interfaces/delete.interface'
+import { IDeleteParams, IDeleteResponse } from './interfaces/delete.interface'
 import { IFindParams, IFindResponse } from './interfaces/find.interface'
 import { IGetParams, IGetResponse } from './interfaces/get.interface'
-import { IPostAccountsParams } from './interfaces/post-accounts.interface'
-import { IPostStockParams } from './interfaces/post-stock.interface'
-import { IReverseAccountsParams } from './interfaces/reverse-accounts.interface'
-import { IReverseStockParams } from './interfaces/reverse-stock.interface'
+import {
+  IPostAccountsParams,
+  IPostAccountsResponse
+} from './interfaces/post-accounts.interface'
+import {
+  IPostStockParams,
+  IPostStockResponse
+} from './interfaces/post-stock.interface'
+import {
+  IReverseAccountsParams,
+  IReverseAccountsResponse
+} from './interfaces/reverse-accounts.interface'
+import {
+  IReverseStockParams,
+  IReverseStockResponse
+} from './interfaces/reverse-stock.interface'
 import {
   IUpdateBody,
   IUpdateParams,
@@ -25,12 +40,12 @@ export class PedidosCompras extends Entity {
    *
    * @param {IDeleteParams} params Parâmetros da remoção.
    *
-   * @returns {Promise<null>} Não há retorno.
+   * @returns {Promise<IDeleteResponse>} Não há retorno.
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/delete_pedidos_compras__idPedidoCompra_
    */
-  public async delete(params: IDeleteParams): Promise<null> {
+  public async delete(params: IDeleteParams): Promise<IDeleteResponse> {
     return await this.repository.destroy({
       endpoint: 'pedidos/compras',
       id: String(params.idPedidoCompra)
@@ -85,12 +100,14 @@ export class PedidosCompras extends Entity {
    *
    * @param {IChangeSituationParams} params Parâmetros da busca.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IChangeSituationResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/patch_pedidos_compras__idPedidoCompra__situacoes__idSituacao_
    */
-  public async changeSituation(params: IChangeSituationParams): Promise<null> {
+  public async changeSituation(
+    params: IChangeSituationParams
+  ): Promise<IChangeSituationResponse> {
     return await this.repository.update({
       endpoint: 'pedidos/compras',
       id: `${params.idPedidoCompra}/situacoes/${params.idSituacao}`,
@@ -120,12 +137,14 @@ export class PedidosCompras extends Entity {
    *
    * @param {IPostAccountsParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IPostAccountsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/post_pedidos_compras__idPedidoCompra__lancar_contas
    */
-  public async postAccounts(params: IPostAccountsParams): Promise<null> {
+  public async postAccounts(
+    params: IPostAccountsParams
+  ): Promise<IPostAccountsResponse> {
     return await this.repository.store({
       endpoint: `pedidos/compras/${params.idPedidoCompra}/lancar-contas`,
       body: {}
@@ -137,12 +156,14 @@ export class PedidosCompras extends Entity {
    *
    * @param {IReverseAccountsParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IReverseAccountsResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/post_pedidos_compras__idPedidoCompra__estornar_contas
    */
-  public async reverseAccounts(params: IReverseAccountsParams): Promise<null> {
+  public async reverseAccounts(
+    params: IReverseAccountsParams
+  ): Promise<IReverseAccountsResponse> {
     return await this.repository.store({
       endpoint: `pedidos/compras/${params.idPedidoCompra}/estornar-contas`,
       body: {}
@@ -154,12 +175,14 @@ export class PedidosCompras extends Entity {
    *
    * @param {IPostStockParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IPostStockResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/post_pedidos_compras__idPedidoCompra__lancar_estoque
    */
-  public async postStock(params: IPostStockParams): Promise<null> {
+  public async postStock(
+    params: IPostStockParams
+  ): Promise<IPostStockResponse> {
     return await this.repository.store({
       endpoint: `pedidos/compras/${params.idPedidoCompra}/lancar-estoque`,
       body: {}
@@ -171,12 +194,14 @@ export class PedidosCompras extends Entity {
    *
    * @param {IReverseStockParams} params O conteúdo para o lançamento.
    *
-   * @returns {Promise<null>}
+   * @returns {Promise<IReverseStockResponse>}
    * @throws {BlingApiException|BlingInternalException}
    *
    * @see https://developer.bling.com.br/referencia#/Pedidos%20-%20Compras/post_pedidos_compras__idPedidoCompra__estornar_estoque
    */
-  public async reverseStock(params: IReverseStockParams): Promise<null> {
+  public async reverseStock(
+    params: IReverseStockParams
+  ): Promise<IReverseStockResponse> {
     return await this.repository.store({
       endpoint: `pedidos/compras/${params.idPedidoCompra}/estornar-estoque`,
       body: {}

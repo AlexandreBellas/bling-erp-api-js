@@ -4,3 +4,5 @@ export interface IPostStockParams {
    */
   idNotaFiscal: number
 }
+
+export type IPostStockResponse = null

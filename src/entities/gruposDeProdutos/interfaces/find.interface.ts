@@ -5,7 +5,7 @@ export interface IFindParams {
   idGrupoProduto: number
 }
 
-interface GruposProdutosDadosDTO {
+interface IGruposProdutosDadosDTO {
   id?: number
   nome: string
   grupoProdutoPai?: {
@@ -14,11 +14,11 @@ interface GruposProdutosDadosDTO {
   }
 }
 
-interface GruposProdutosGrupoProdutoPaiDTO {
+interface IGruposProdutosGrupoProdutoPaiDTO {
   id: number
   nome?: string
 }
 
 export interface IFindResponse {
-  data: GruposProdutosDadosDTO | GruposProdutosGrupoProdutoPaiDTO
+  data: IGruposProdutosDadosDTO | IGruposProdutosGrupoProdutoPaiDTO
 }

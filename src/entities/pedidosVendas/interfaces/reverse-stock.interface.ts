@@ -4,3 +4,5 @@ export interface IReverseStockParams {
    */
   idPedidoVenda: number
 }
+
+export type IReverseStockResponse = null

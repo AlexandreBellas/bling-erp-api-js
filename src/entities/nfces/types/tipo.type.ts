@@ -4,4 +4,4 @@
  * - `0`: Entrada
  * - `1`: Saída
  */
-export type ITipoNfce = 0 | 1
+export type ITipo = 0 | 1

@@ -8,3 +8,5 @@ export interface IChangeSituationParams {
 export interface IChangeSituationBody {
   ativo: boolean
 }
+
+export type IChangeSituationResponse = null

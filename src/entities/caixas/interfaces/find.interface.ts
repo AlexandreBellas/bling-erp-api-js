@@ -1,6 +1,6 @@
 import { IDebCred } from '../types/deb-cred.type'
 import { ISaldo } from '../types/saldo.type'
-import { ISituacaoREHNPC } from '../types/situacao-rehnpc.type'
+import { ISituacaoRehnpc } from '../types/situacao-rehnpc.type'
 import { ITipoLancamento } from '../types/tipo-lancamento.type'
 import { ITipo } from '../types/tipo.type'
 import { ITransferencia } from '../types/transferencia.type'
@@ -66,7 +66,7 @@ export interface IFindResponse {
   /**
    * Situação do lançamento `R` - Registrado `E` - Excluído `H` - Escondido `N` - Não registrado `P` - Processando (externa) `C` - Cancelado (externa)
    */
-  situacao?: ISituacaoREHNPC
+  situacao?: ISituacaoRehnpc
   /**
    * Tipo do lançamento `1` - Débito `2` - Crédito
    */
