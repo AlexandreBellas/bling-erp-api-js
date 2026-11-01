@@ -7,10 +7,9 @@ import tseslint from 'typescript-eslint'
 const require = createRequire(import.meta.url)
 
 /**
- * `code-conventions` lives in a sibling checkout (`file:../code-conventions`).
- * CI does not have that directory: npm install leaves a dangling link, and a
- * static import aborts lint before any rule runs. Load the plugin when the
- * checkout is present and continue with the in-repo config otherwise.
+ * `code-conventions` is an optional GitHub dependency. npm installs it when
+ * this environment can read AlexandreBellas/code-conventions and skips it
+ * otherwise. A static import would abort lint in the skip case.
  */
 function loadApiLibraryConfigs(): Config[] {
   try {

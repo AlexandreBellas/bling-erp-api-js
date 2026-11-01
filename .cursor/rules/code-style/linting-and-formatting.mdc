@@ -11,7 +11,7 @@ alwaysApply: false
 - **ESLint v10** — `npm run lint` (`eslint --fix 'src/**/*.ts'`), flat config in `eslint.config.ts`
 - **Prettier** — `npm run format` (`prettier --write 'src/**/*.ts'`)
 - Stack: `@eslint/js` recommended, `typescript-eslint` recommended, `eslint-plugin-prettier/recommended`
-- `eslint.config.ts` spreads `apiLibrary.configs.recommended` from `code-conventions/eslint/api-library` when that module resolves. The package is the sibling checkout `file:../code-conventions`; if it is absent (GitHub Actions), the config skips the plugin instead of failing to load. The plugin key is `api-library`. Those rules are correctness checks for entity modules: repository-only HTTP, repository call shape, forwarded filters, facade registration, and the rest of the entity contract. Interfaces use an `I` prefix (`@typescript-eslint/naming-convention`). Do not add the React `reactjs` plugin from `code-conventions/eslint/reactjs` here.
+- `eslint.config.ts` spreads `apiLibrary.configs.recommended` from `code-conventions/eslint/api-library` when that module resolves. The package is the optional dependency `github:AlexandreBellas/code-conventions`; npm installs it when the machine can read that repo and skips it otherwise, and the config does the same. The plugin key is `api-library`. Those rules are correctness checks for entity modules: repository-only HTTP, repository call shape, forwarded filters, facade registration, and the rest of the entity contract. Interfaces use an `I` prefix (`@typescript-eslint/naming-convention`). Do not add the React `reactjs` plugin from `code-conventions/eslint/reactjs` here.
 
 Node floor: `^20.19.0 || ^22.13.0 || >=24` (ESLint v10). CI uses Node 22.
 
