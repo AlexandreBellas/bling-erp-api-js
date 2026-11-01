@@ -12,7 +12,7 @@ para Javascript/TypeScript. O mais completo existente.
 
 Cobre autenticações JWT, fluxo OAuth e token opaco (legado).
 
-Atualizado com a versão `v354` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2026-v354)).
+Atualizado com a versão `v357` da API ([veja o registro de alterações](https://developer.bling.com.br/changelogs#2026-v357)).
 
 ## Instalação
 

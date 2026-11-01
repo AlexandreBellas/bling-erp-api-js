@@ -20,6 +20,7 @@ export interface ICreateBody {
   orgaoEmissor?: string
   email?: string
   emailNotaFiscal?: string
+  informacoesContato?: string
   inscricaoMunicipal?: string
   orgaoPublico?: IOrgaoPublico
   endereco?: {
