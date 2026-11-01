@@ -22,6 +22,7 @@ export interface IFindFinalCustomerResponse {
     orgaoEmissor: string
     email: string
     emailNotaFiscal?: string
+    informacoesContato?: string
     inscricaoMunicipal?: string
     orgaoPublico?: IOrgaoPublico
     endereco: {

@@ -15,6 +15,7 @@ export default {
     orgaoEmissor: '1234567890',
     email: 'contato@email.com',
     emailNotaFiscal: 'nfe@email.com',
+    informacoesContato: 'Atendimento de segunda a sexta, das 8h às 18h',
     inscricaoMunicipal: '123456789',
     orgaoPublico: 'N' as const,
     endereco: {
