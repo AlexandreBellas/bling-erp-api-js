@@ -14,25 +14,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Require code-conventions plugin
-        run: |
-          node <<'EOF'
-          try {
-            const loaded = require('code-conventions/eslint/api-library')
-            const plugin = loaded.configs ? loaded : loaded.default
-            const recommended = plugin && plugin.configs && plugin.configs.recommended
-            if (!recommended) {
-              console.error('code-conventions loaded but configs.recommended is missing')
-              process.exit(1)
-            }
-            console.log('code-conventions plugin loaded')
-          } catch (error) {
-            console.error('code-conventions was not installed, so its ESLint rules are not active.')
-            console.error(error.message)
-            process.exit(1)
-          }
-          EOF
-
       - name: Run linting
         run: npm run lint
 

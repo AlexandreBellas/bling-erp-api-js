@@ -1,43 +1,13 @@
-import { createRequire } from 'node:module'
 import js from '@eslint/js'
+import apiLibrary from 'code-conventions/eslint/api-library'
 import prettier from 'eslint-plugin-prettier/recommended'
 import { Config, defineConfig } from 'eslint/config'
 import tseslint from 'typescript-eslint'
 
-const require = createRequire(import.meta.url)
-
-/**
- * `code-conventions` is an optional GitHub dependency. npm installs it when
- * this environment can read AlexandreBellas/code-conventions and skips it
- * otherwise. A static import would abort lint in the skip case.
- */
-function loadApiLibraryConfigs(): Config[] {
-  try {
-    const loaded = require('code-conventions/eslint/api-library') as {
-      configs?: { recommended?: Config[] }
-      default?: { configs?: { recommended?: Config[] } }
-    }
-    const apiLibrary = loaded.configs ? loaded : loaded.default
-
-    return apiLibrary?.configs?.recommended ?? []
-  } catch (error) {
-    const code =
-      typeof error === 'object' && error !== null && 'code' in error
-        ? (error as { code?: string }).code
-        : undefined
-
-    if (code !== 'MODULE_NOT_FOUND') {
-      throw error
-    }
-
-    return []
-  }
-}
-
 export default defineConfig(
   js.configs.recommended,
   tseslint.configs.recommended,
-  ...loadApiLibraryConfigs(),
+  ...(apiLibrary.configs.recommended as Config[]),
   prettier,
   {
     files: ['src/entities/**', 'src/auth/**'],
