@@ -13,11 +13,13 @@ const require = createRequire(import.meta.url)
  */
 function loadApiLibraryConfigs(): Config[] {
   try {
-    const apiLibrary = require('code-conventions/eslint/api-library') as {
+    const loaded = require('code-conventions/eslint/api-library') as {
       configs?: { recommended?: Config[] }
+      default?: { configs?: { recommended?: Config[] } }
     }
+    const apiLibrary = loaded.configs ? loaded : loaded.default
 
-    return apiLibrary.configs?.recommended ?? []
+    return apiLibrary?.configs?.recommended ?? []
   } catch (error) {
     const code =
       typeof error === 'object' && error !== null && 'code' in error

@@ -12,28 +12,22 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        env:
-          CODE_CONVENTIONS_TOKEN: ${{ secrets.CODE_CONVENTIONS_TOKEN }}
-        run: |
-          if [ -n "$CODE_CONVENTIONS_TOKEN" ]; then
-            auth=$(printf 'x-access-token:%s' "$CODE_CONVENTIONS_TOKEN" | base64 -w0)
-            git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${auth}"
-          fi
-          npm install
+        run: npm install
 
       - name: Require code-conventions plugin
         run: |
           node <<'EOF'
           try {
-            const plugin = require('code-conventions/eslint/api-library')
-            if (!plugin.configs || !plugin.configs.recommended) {
+            const loaded = require('code-conventions/eslint/api-library')
+            const plugin = loaded.configs ? loaded : loaded.default
+            const recommended = plugin && plugin.configs && plugin.configs.recommended
+            if (!recommended) {
               console.error('code-conventions loaded but configs.recommended is missing')
               process.exit(1)
             }
             console.log('code-conventions plugin loaded')
           } catch (error) {
             console.error('code-conventions was not installed, so its ESLint rules are not active.')
-            console.error('Add repository secret CODE_CONVENTIONS_TOKEN: a fine-grained PAT with Contents: Read on AlexandreBellas/code-conventions.')
             console.error(error.message)
             process.exit(1)
           }
